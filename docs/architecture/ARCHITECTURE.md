@@ -82,7 +82,7 @@ flowchart LR
 | **Event context & roles** | `core/context` | Event contexts, share codes, Admin → TO role mapping per server, permission checks | — |
 | **Cost governor** | `core/cost` | Ledger, per-case ceiling, degradation ladder | 0012 |
 | **LlmPort / Anthropic adapter** | `adapters/anthropic` | Task-role routing, structured outputs, caching, usage reporting | 0002 |
-| **SttPort / STT sidecar** | `adapters/stt` | Local transcription, with cloud as a fallback | 0015 |
+| **SttPort / STT sidecar** | `adapters/stt` | Local transcription on the host GPU (no cloud STT in the MVP) | 0015 |
 | **Stores** | `adapters/sqlite` | Runtime database: cases (event log), contexts, ledger, retention job | 0004 |
 | **Build pipeline** | `pipeline` | Import, diff, derive (AI through Batch), review queue, bundle, release report | 0007 |
 | **Eval harness** | `eval` | Golden replay with the player simulator, graders, variant generation, release gate | 0013 |

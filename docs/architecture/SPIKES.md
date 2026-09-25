@@ -18,21 +18,20 @@ Running order: **S2 → S3 → S1.** S2 unblocks the MVP's only input path. S3 d
 
 1. A minimal discord.js bot joins a voice channel on a test server when a slash command summons it (a listening window only).
 2. Receive per-user Opus streams through `@discordjs/voice`. Confirm that it works with Discord's current voice encryption (DAVE end-to-end encryption), with the current library versions.
-3. Decode to PCM, cut utterances at silence, and send them to a local Whisper-class model running as a sidecar on the owner's host. Also send the same audio to one cloud STT service, as the comparison.
+3. Decode to PCM, cut utterances at silence, and send them to a local Whisper-class model running as a sidecar on the owner's host, on the GPU. There is no cloud comparison: the owner has no speech-to-text API access, and the MVP is local-only (ADR-0015).
 4. **Test set:** 20 scripted judge-call utterances with 3–4 speakers, including card names (for example *Smothering Tithe*, *Orcish Bowmasters*, *Kinnan, Bonder Prodigy*) and rules terms, spoken by at least two people, with some crosstalk.
 5. Measure:
     - per-speaker attribution accuracy;
     - word error rate, and **card-name accuracy after the card resolver** (ADR-0005);
     - time from end of utterance to transcript;
-    - CPU/GPU load on the host;
-    - cloud cost per minute.
+    - CPU/GPU load on the host, including while the owner uses the desktop for other things (for example gaming).
 6. Check the consent flow: audio from a user without consent is dropped before decoding.
 
 **Pass criteria (all must hold):**
 
 - Audio is received and correctly attributed for ≥ 95% of utterances.
 - ≥ 95% of card names are resolved correctly after the resolver. Rules terms are transcribed well enough that `understand` extracts the same claims as from the typed text in ≥ 90% of utterances.
-- The median time from end of utterance to transcript is ≤ 3 s on local STT, or the cloud cost stays within NFR-COST-1 at the expected voice share.
+- The median time from end of utterance to transcript is ≤ 3 s on local STT.
 - No audio is persisted, and there is a working consent gate.
 
 **Fail:** receiving voice is unsupported or broken under the current encryption, or any criterion misses by a wide margin. Then voice is dropped from the MVP (D22), and ADR-0015 is superseded.
