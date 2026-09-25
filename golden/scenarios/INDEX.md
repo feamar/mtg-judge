@@ -1,0 +1,26 @@
+# Scenario Index
+
+**Total scenarios: 18**
+
+This index is maintained by AI. Descriptions are intentionally brief and non-exhaustive; open the scenario file for the full facts and requirements context.
+
+| Scenario | File | Source status | Short description |
+|---|---|---|---|
+| Wheel of Fortune / Flare of Duplication / Smothering Tithe | `wheel-of-fortune-flare-smothering-tithe.md` | **SOURCE CHECK REQUIRED** | Missed-trigger Judge Call involving two Wheel resolutions, visual board-state verification, trigger-count reconstruction, and whether the stack became empty. |
+| Judge, what is priority? | `judge-what-is-priority.md` | **SOURCE CHECK REQUIRED** | Player asks for a minimal in-game explanation of priority; captures canonical answers and context-sensitive explanation depth. |
+| Etali — casting spells during resolution | `etali-casting-during-resolution.md` | **SOURCE CHECK REQUIRED** | Casting creature, sorcery, and artifact spells during Etali's resolving ability; priority, timing permission, stack order, and no intervening priority window. |
+| Kinnan and Deathrite Shaman | `kinnan-deathrite-shaman.md` | **SOURCE CHECK REQUIRED** | Whether Deathrite Shaman is tapped for mana for Kinnan; distinguishes producing mana from activating a mana ability. |
+| Kinnan and Selvala — current Oracle text | `kinnan-selvala-current-oracle.md` | **SOURCE CHECK REQUIRED** | Current Selvala interaction with Kinnan; mana ability versus ability that produces mana, Oracle-version sensitivity, and explaining the ruling when asked why. |
+| Kinnan, Delney, and Treasure | `kinnan-delney-treasure.md` | **SOURCE CHECK REQUIRED** | Treasure mana with Kinnan; combines tap for mana, triggered mana abilities, and triggering an additional time. |
+| Forgotten untap discovered later in the same turn | `forgotten-untap-same-turn.md` | **SOURCE CHECK REQUIRED** | IPG partial fix for a permanent that should have untapped; tests clarification of a rules-critical ambiguity. |
+| The One Ring / Carpet of Flowers — Missed Trigger investigation | `one-ring-carpet-of-flowers-missed-trigger-investigation.md` | **VALIDATED** | Multi-stage Missed Trigger call testing objective infraction analysis, neutral investigation, hypothesis revision, protected integrity escalation, and human Judge handoff. |
+| Faerie Mastermind / Smothering Tithe / Orcish Bowmasters — APNAP repeated sequence | `faerie-mastermind-smothering-tithe-orcish-bowmasters-apnap-loop.md` | **VALIDATED** | Multiplayer APNAP trigger ordering lets Tithe triggers resolve above Bowmasters triggers; tests repeated activations, priority, shortcut handling, and turn-order sensitivity. |
+| Blatant Thievery / Seize the Spotlight — Player leaves | `blatant-thievery-seize-the-spotlight-player-leaves.md` | **VALIDATED** | Multiple control-changing effects; when B leaves only B's effect ends, C keeps control until Seize expires, testing layers, timestamps, and state recalculation. |
+| Blood Moon / Yavimaya — dependency before timestamp | `blood-moon-yavimaya-dependency.md` | **VALIDATED** | Layer-4 dependency removes Yavimaya's effect before timestamp matters; tests dependency detection before timestamp fallback. |
+| Blood Moon / Urza's Saga — type change and current Saga rules | `blood-moon-urzas-saga.md` | **VALIDATED** | Blood Moon makes Urza's Saga a nonbasic Enchantment Land — Mountain and removes its abilities; tests type-changing effects plus version-sensitive Saga behavior. |
+| Silence / The Gitrog Monster — cleanup priority | `silence-gitrog-cleanup-priority.md` | **VALIDATED** | Silence expires during cleanup before a Gitrog trigger is put onto the stack; tests the exceptional cleanup priority window and casting spells after "this turn" effects end. |
+| Silence / Commander discard — cleanup priority from a state-based action | `silence-commander-discard-cleanup-priority.md` | **VALIDATED** | Discarding a commander in cleanup creates a state-based-action branch under CR 514.3a after Silence expires; tests cleanup priority without relying on a triggered ability. |
+| Flash / Gaea's Cradle — mana ability during resolution | `flash-gaeas-cradle-mana-during-resolution.md` | **VALIDATED** | Flash puts a fifth creature onto the battlefield before requesting payment; CR 605.3a then permits Gaea's Cradle to be activated for five mana during resolution. |
+| Underworld Breach / Lion's Eye Diamond — priority after mana ability | `underworld-breach-led-priority.md` | **VALIDATED** | LED's mana ability resolves without passing priority; its controller can begin casting LED with escape before another player receives priority, while the Judge answer must avoid play advice. |
+| Demonic Tutor — Search decision vs. CR 608.2d choice | `demonic-tutor-search-vs-choice.md` | **VALIDATED** | Distinguishes a decision made while performing the Search action from an announced rules-defined choice under CR 608.2d; tests CR 701.23 against an overly broad resolution-choice heuristic. |
+| Prowess — unannounced triggers before combat damage | `prowess-unannounced-before-combat-damage.md` | **VALIDATED** | Unannounced prowess triggers are not missed merely because blockers were declared; tests IPG 2.1 awareness timing for non-visible P/T modifications. |
