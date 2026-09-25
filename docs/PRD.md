@@ -400,3 +400,9 @@ The **golden test set** is the definition of correct. It is the benchmark for ev
     - rules questions are answered from an **approved rulings library**, and only questions the library doesn't cover get an AI answer, marked as not reviewed (see `docs/architecture/OWNER-ANSWERS.md`, ADR-0008).
 
   The PM should revise the text of D29 and FR-INV-2 to match, with a decision-log entry. Until then the architecture follows the owner's answer.
+- [ ] **OQ-31.** *(Raised by the architect, 2026-09-25.)* The owner is exporting about 2,000 historical questions and answers from the cEDH league's ticket bot, to build scenarios and a held-out set. These are league players' messages, reused for a new purpose (GDPR, NFR-PRIV-1). What does the owner want to do?
+    - (a) pseudonymise by script, and store privately outside this public repository (ADR-0017 §4). This is the minimum in all cases;
+    - (b) also tell league players, for example with a note in the league server, that past tickets are used anonymously to build the AI judge;
+    - (c) also offer an opt-out.
+
+  How long is the private copy kept? Given D39's 7-day rule for live records, should the raw export be deleted once pseudonymised scenarios have been made from it?
