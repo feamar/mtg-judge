@@ -4,7 +4,7 @@ Status: Proposed. **Planned, not run.** Spike code comes after the product owner
 
 Each spike is throwaway code in `spikes/<id>/`. It is never merged into the product packages. Each spike ends with a one-page report in `docs/architecture/spikes/<id>-report.md`, containing the measured results, pass or fail against the criteria below, and the ADRs to confirm or supersede.
 
-Running order: **S2 → S3 → S1.** S2 unblocks the MVP's only input path. S3 decides whether the cost model holds. S1 is optional scope (D22).
+Running order: **S2 → S3 → S1.** S2 unblocks the MVP's only input path. S3 measures how much the deterministic judge covers on real text, and what the AI edge costs. S1 is optional scope (D22).
 
 ---
 
@@ -30,7 +30,7 @@ Running order: **S2 → S3 → S1.** S2 unblocks the MVP's only input path. S3 d
 **Pass criteria (all must hold):**
 
 - Audio is received and correctly attributed for ≥ 95% of utterances.
-- ≥ 95% of card names are resolved correctly after the resolver. Rules terms are transcribed well enough that `understand` extracts the same claims as from the typed text in ≥ 90% of utterances.
+- ≥ 95% of card names are resolved correctly after the resolver. Rules terms are transcribed well enough that matching (with `interpret` where needed) finds the same entry or procedure as for the typed text in ≥ 90% of utterances.
 - The median time from end of utterance to transcript is ≤ 3 s on local STT.
 - No audio is persisted, and there is a working consent gate.
 
@@ -88,41 +88,44 @@ The spike must confirm this on the owner's actual configuration, and record the 
 
 ---
 
-## S3: Cost per case
+## S3: Coverage and cost per case
 
-**Requirements:** NFR-COST-1, NFR-COST-2, NFR-LAT-1, NFR-ACC-1, P2, OQ-25 · **ADRs at stake:** 0002, 0005, 0008, 0012 · Tests the cost model in ARCHITECTURE.md §9
+**Requirements:** NFR-COST-1, NFR-ACC-1, NFR-LAT-1, P2, FR-Q-1, FR-Q-2, FR-INV-2 · **ADRs at stake:** 0002, 0005, 0008, 0012 · Tests ARCHITECTURE.md §9
 
-**Question:** does one realistic cEDH case, run end to end on the proposed architecture, cost within $0.05–0.10, including everything, and answer within single-digit seconds per reply?
+**Question:** on realistic player text, how much can the deterministic judge handle on its own (matching, library answers, button-driven investigation)? And what does the rest (`interpret`, the `reason` fallback) cost per case?
 
-**Constraint (owner, 2026-09-25):** no paid API spend for building or testing (ADR-0016). The spike therefore runs the model calls through the owner's Pro subscription, and **computes** the API cost from token counts instead of paying it.
+**Constraint (owner, 2026-09-25):** no paid API spend for build or test (ADR-0016). AI calls in the spike run through the owner's Pro plan, and their API cost is **computed** from token counts, not paid.
+
+**Prerequisite from the product owner:** about 30 real judge-call texts from past events, as players actually wrote them. Pseudonymise them first, or I pseudonymise them in the spike. About three quarters should be rules questions and a quarter disputes, matching OQ-25. None of these may be golden cases already.
 
 **Method:**
 
 1. **Minimal vertical slice** (throwaway):
-    - a bundle containing only what the cases need: CR sections for priority, the stack, and triggered abilities; IPG 2.1; the MTRA Missed Trigger section; Oracle text for the cards involved;
-    - one hand-written Missed Trigger procedure;
-    - the four task roles on the proposed models;
-    - the verifier checks that need no semantics;
-    - a CLI front end instead of Discord.
-2. **Cases:**
-    - (a) a rules question: *Judge, what is priority?*;
-    - (b) a rules interaction: *Faerie Mastermind / Smothering Tithe / Orcish Bowmasters APNAP*, a validated scenario;
-    - (c) a dispute: *The One Ring / Carpet of Flowers*, a validated scenario, played by the owner or scripted replies, through to a ruling or a handoff.
-3. Run each case 5 times on the **baseline** routing and 5 times on the **lean** routing (ADR-0012 L1), through the subscription route (ADR-0016). Record every call's exact input and output, per role.
-4. **Compute the cost:**
-    - count each recorded input and output with Anthropic's token-counting endpoint. That needs the API account the live bot will need anyway. It is documented as free of charge; the spike confirms that before using it. If it isn't free, estimate at about 4 characters per token, with a ±20% margin;
-    - add a margin for the `reason` role's thinking tokens, which the subscription route doesn't expose. Use +100% of visible output for baseline and +50% for lean;
-    - determine the cached versus uncached split from the prompt structure: the stable prefix must be byte-identical across turns, which is checked deterministically;
-    - apply the API prices, and project the monthly cost at 200 and 430 cases using the owner's case mix: 75% rules questions, 25% disputes (owner's estimate, 2026-09-25).
-5. **Latency** measured on the subscription route is indicative only. Real API latency is confirmed from the ledger in the first live cases (ADR-0016 §7).
-6. Check the answers against the scenario's expected ruling and citations. A cheap run that gets the ruling wrong counts as a fail for that routing.
+    - card resolver over Scryfall `oracle_cards`;
+    - a starter lexicon;
+    - library entries authored from the validated golden scenarios;
+    - one Missed Trigger procedure (MTRA) with approved question wording;
+    - the decision-graph engine and guard;
+    - the verifier;
+    - a CLI front end whose buttons are numbered choices.
+2. **Deterministic run:** push the 30 texts through matching. Record for each: matched without AI / needed a choice question / needed `interpret` / library miss.
+3. **AI edge run:** for the texts that need it, run `interpret` and the `reason` fallback through the Pro plan. Record the exact inputs and outputs.
+4. **Cost:**
+    - count the tokens of the recorded calls, with Anthropic's token-counting endpoint if it's free, or at about 4 characters per token (±20%) otherwise;
+    - add +100% on `reason` output for thinking;
+    - apply API prices, and project to 200 and 430 cases a month.
+5. **Correctness:** the owner marks each outcome right or wrong, whether library answer, fallback answer, or ruling.
+6. **Investigation feel:** the owner plays the One Ring dispute through the buttons and notes any question that felt unnatural or unnecessary.
 
 **Pass criteria:**
 
-- The computed mean cost per case for the mix, margins included, is ≤ $0.10 on at least one routing that gets all three cases right, and the projection at 430 cases a month is ≤ $20 on that routing (with ladder levels allowed). Otherwise the report states the monthly volume at which the cap is reached.
-- Indicative p90 reply latency ≤ 9 s (NFR-LAT-1), with a typing indicator shown during the `reason` step. This is confirmed on the live bot.
-- The stable prompt prefix on warm Haiku turns is byte-identical and above Haiku's minimum cacheable length, so that ≥ 80% of prefix tokens would be cache reads.
+- Every match the deterministic matcher makes without AI is correct: no confidently wrong matches.
+- 100% of library answers and procedure rulings are judged correct by the owner. Fallback answers are either correct, or verified-then-escalated (none wrong and shown as correct).
+- The projected AI cost at 430 cases a month is ≤ $20, including margins.
+- Indicative reply latency: deterministic replies ≤ 2 s; fallback replies ≤ 9 s (NFR-LAT-1), confirmed later on the live bot.
 
-**Fail:** no routing is both correct and within budget. The report then quantifies the gap and lists the options: a cheaper `reason` model with more verification, a bigger share of deterministic answers, a TO's own key, or a budget change. Choosing among them is the owner's decision.
+**The report states:** the deterministic hit rate on real text, the top missing lexicon terms and library entries (the first authoring backlog), and whether the button-driven investigation is acceptable to the owner.
 
-**Time box:** 4 working days. **Paid spend: $0.** About 30 case runs on the owner's Pro plan, within its usage limits.
+**Fail:** confidently wrong matches, or fallback answers wrong but shown as correct. The report then proposes stricter matching thresholds, or escalating instead of falling back. Choosing is the owner's decision.
+
+**Time box:** 4 working days. **Paid spend: $0.**

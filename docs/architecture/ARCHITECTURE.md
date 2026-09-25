@@ -2,180 +2,213 @@
 
 Status: Proposed (PR `arch/v1`) · Date: 2026-09-25 · Author: architect role (Claude) · Approver: Frank (product owner)
 
-This document turns [`docs/PRD.md`](../PRD.md) into a technical design. It does not change any requirement. Where the PRD is silent or unclear, the gap is raised as an open question in PRD §12 (OQ-22 onwards). Decisions are recorded in [`adr/`](adr/README.md). The other deliverables are:
+This document turns [`docs/PRD.md`](../PRD.md) into a technical design. It does not change any requirement. Where the PRD is silent or unclear, or where the owner has asked for a change, the point is raised as an open question in PRD §12 (OQ-22 onwards). Decisions are recorded in [`adr/`](adr/README.md). The owner's answers from the architecture session are in [OWNER-ANSWERS.md](OWNER-ANSWERS.md). The other deliverables are:
 
 - [SEQUENCE.md](SEQUENCE.md): one judge call, end to end;
 - [SPIKES.md](SPIKES.md): the three technical spikes;
 - [TRACEABILITY.md](TRACEABILITY.md): every FR and NFR mapped to components.
 
+## 0. The idea in one paragraph
+
+**The judge is deterministic. AI sits only at its edges.**
+
+- **Build time:** every ruling the judge can give is prepared as data and approved by the owner. That covers concept explanations ("what is priority?"), known card interactions (Kinnan + Selvala), and the investigation procedure for each infraction. Each one is a small decision graph: the facts that decide it, a pre-worded question for each fact, and an approved answer with citations for each branch.
+- **Run time:** the judge matches the player's words to those entries (card names, keywords), asks the deciding questions as choices, and returns the approved answer. The penalty comes from a table lookup.
+- **AI is called only** when a player's free text can't be matched, or when a rules question has no approved entry yet. That answer is then marked as not from the library, checked by the verifier, and logged so the entry can be added.
+
+Most cases therefore use no AI, cost nothing, and give the same ruling every time.
+
 ## 1. Design drivers
 
 | Driver | Source | What it forces |
 | --- | --- | --- |
-| Deterministic first, AI last; spend at build time | P2 | Lookups, penalties, procedures, and citations are data in a bundle. The model only understands, selects, and words. |
-| $0.05–0.10 per case, all in | NFR-COST-1 | Cheap models for most turns, caching, no extra hosting cost, a cost governor |
-| 100% of easy cases correct; no invented citations; `UNRESOLVED` is valid | NFR-ACC-1..3, FR-RUL-9 | A deterministic guard before ruling, a verifier after, and citations restricted to retrieved IDs |
-| Multiplayer from day one | §4, R3 | Seats are an ordered list of N. Procedures address roles (`activePlayer`, `opponentFurthestFromActive`), never "the opponent". |
-| Protected information | FR-ESC-4, D6 | Typed audiences; the model writing to players never sees protected content |
-| Existing ticket bot, pluggable | FR-INT-1, D37, R13 | A `TicketSource` plugin |
-| Pick up tickets opened during an outage | NFR-AVAIL-1 | Event-sourced cases and reconciliation on startup |
-| Don't rule out the phone app, WhatsApp, vision, on-device inference, languages, or scale | D31, §4, NFR-EXT-1 | Ports and adapters; an I/O-free `core`; a portable SQLite knowledge bundle; locale catalogs |
-| Provider replaceable | D41, NFR-TECH-1 | `LlmPort` with task roles; models chosen in config |
+| Deterministic first, AI last; spend at build time | P2 | Answers, questions, penalties, fixes, and citations are approved data. At run time, AI only interprets unmatched free text and answers questions the library doesn't cover yet. |
+| Deterministic questions (owner, 2026-09-25) | D29 / FR-INV-2, OQ-30 | The next question is chosen by the procedure, with pre-written, approved wording. Choices are asked as buttons where possible. |
+| Library miss → AI answer, marked (owner, 2026-09-25) | FR-Q-1, FR-RUL-9 | A fallback `reason` path with a verifier, a visible marker, and a miss log that feeds the library |
+| $0.05–0.10 per case, all in | NFR-COST-1 | Most cases are $0. AI calls happen only on the fallback paths. |
+| 100% of easy cases correct; no invented citations; `UNRESOLVED` is valid | NFR-ACC-1..3, FR-RUL-9 | Approved answers are checked at build time. Fallback answers go through the verifier. |
+| Multiplayer from day one | §4, R3 | Seats are an ordered list of N. Questions address roles (`activePlayer`, `opponentFurthestFromActive`). |
+| Protected information | FR-ESC-4, D6 | Typed audiences; fixed templates; AI prompts get a player-safe projection only |
+| Existing ticket bot (Tickets, in thread mode) | FR-INT-1, D37, R13 | A `TicketSource` plugin |
+| Pick up tickets opened during an outage | NFR-AVAIL-1 | Event-sourced cases; reconciliation on startup |
+| Don't rule out the phone app, WhatsApp, vision, on-device use, languages, or scale | D31, §4, NFR-EXT-1 | `core` emits front-end-neutral questions (choice, seat, number, text); a portable SQLite bundle; locale catalogs |
+| Provider replaceable | D41, NFR-TECH-1 | `LlmPort`, used by two roles only |
 
 ## 2. Components
 
 ```mermaid
 flowchart LR
   subgraph FrontEnds["Front-end adapters"]
-    DISC["Discord adapter<br/>gateway · slash commands · outbox"]
-    TS["TicketSource plugins"]
+    DISC["Discord adapter<br/>threads · buttons · slash commands · outbox"]
+    TS["TicketSource (Tickets thread mode)"]
     VOICE["Voice adapter (if S1 passes)"]
   end
-  subgraph Core["core (no I/O)"]
-    ORCH["Case orchestrator<br/>(event-sourced state machine)"]
-    INV["Investigation engine<br/>facts · hypotheses · guard"]
-    COMP["Ruling composer"]
+  subgraph Core["core (no I/O, deterministic)"]
+    ORCH["Case orchestrator<br/>(event-sourced)"]
+    MATCH["Matcher<br/>cards · lexicon · entries"]
+    ENG["Decision-graph engine<br/>facts · branches · guard · next question"]
+    COMP["Ruling composer<br/>templates · penalty table"]
     VER["Verifier"]
     ESC["Escalation policy"]
-    AUD["Audience guard / Outbox rules"]
+    AUD["Audience guard"]
     KNOW["Knowledge service"]
     CTX["Event context & roles"]
-    GOV["Cost governor"]
+    GOV["Spend cap"]
   end
-  subgraph Ports["Adapters behind ports"]
-    LLM["LlmPort → Anthropic adapter"]
-    STT["SttPort → local STT sidecar"]
-    STORE["CaseStore / ContextStore / Ledger → SQLite"]
+  subgraph Edge["AI edge (only when needed)"]
+    INT["interpret (Haiku)"]
+    RSN["reason fallback (Sonnet)"]
+  end
+  subgraph Ports["Adapters"]
+    LLM["LlmPort → Anthropic API"]
+    STORE["SQLite runtime store"]
     BUNDLE[("Knowledge bundle<br/>SQLite, read-only")]
+    STT["SttPort → local STT"]
   end
-  subgraph Offline["Offline (owner's machine or CI)"]
-    PIPE["Build pipeline CLI<br/>import · diff · derive · review · bundle"]
-    EVAL["Golden eval harness<br/>scripted players · graders · gate"]
-    AUTH["Knowledge & case author sessions<br/>(Claude Code, owner's Pro plan)"]
-    AUTH --> PIPE
+  subgraph Build["Build time"]
+    AUTH["Author sessions (Claude Code, owner's Pro plan)<br/>entries · procedures · wording · golden cases"]
+    PIPE["Build pipeline (deterministic)<br/>import · diff · validate · bundle"]
+    TEST["Tests: deterministic golden suite in CI<br/>+ small AI sets on Pro"]
   end
-  DISC --> ORCH
-  TS --> DISC
+  TS --> DISC --> ORCH
   VOICE --> STT --> ORCH
-  ORCH --> INV --> COMP --> VER --> ESC
+  ORCH --> MATCH --> ENG --> COMP --> VER --> ESC
   ORCH --> AUD --> DISC
-  INV & COMP & ORCH --> LLM
-  INV & COMP & VER --> KNOW --> BUNDLE
+  MATCH -. no confident match .-> INT
+  ENG -. free-text answer .-> INT
+  MATCH -. no library entry .-> RSN
+  INT & RSN --> LLM --> GOV
+  MATCH & ENG & COMP & VER --> KNOW --> BUNDLE
   ORCH --> STORE
   ORCH --> CTX
-  LLM --> GOV
-  PIPE --> BUNDLE
-  EVAL --> ORCH
-  EVAL --> BUNDLE
+  AUTH --> PIPE --> BUNDLE
+  TEST --> ORCH
 ```
 
 | Component | Package | Responsibility | ADR |
 | --- | --- | --- | --- |
-| **Discord adapter** | `adapters/discord` | Gateway connection, intents, turning Discord events into `InboundMessage{caseRef, author→seat, modality, text, attachments}`, slash commands (`/judge context …`, `/judge admin …`, `/judge export`, `/judge doctor`), and sending from the Outbox with idempotency keys | 0010, 0011 |
-| **TicketSource plugins** | `adapters/discord/tickets` | Detect, parse, list, and track closure of the existing ticket bot's containers | 0010 |
-| **Voice adapter** | `adapters/discord/voice` | Only if spike S1 passes: listening window, consent, per-user audio to `SttPort` | 0015 |
-| **Case orchestrator** | `core/engine` | Owns the case lifecycle (§5.1). Folds `CaseEvent`s into state. Runs the per-case queue. Calls the other `core` components in order. Handles catch-up. | 0011 |
-| **Investigation engine** | `core/engine` | Claims → facts (with origin), disputes, hypothesis set, decisive-fact computation, next-question candidates, the ruling guard | 0008 |
-| **Ruling composer** | `core/engine` | Builds the `Ruling`: the `reason` role supplies the chain and explanation; the penalty table and procedure supply the penalty and fix; picks the delivery pattern | 0008 |
-| **Verifier** | `core/engine` | Deterministic checks on every ruling and answer before it reaches players (§5.6) | 0008 |
-| **Escalation policy** | `core/engine` | Evaluates FR-ESC-1 (a)–(e), builds the handoff package, runs the stop rule | 0008, 0009 |
-| **Audience guard** | `core/engine` | Typed audiences, player-safe projection for prompts, output lint | 0009 |
-| **Knowledge service** | `core/knowledge` | Read-only queries on the bundle: section by ID, card resolver, concept index, cross-references, FTS, penalty table, procedures, glossary, mnemonics, locale catalogs | 0005, 0006, 0007 |
-| **Event context & roles** | `core/context` | Event contexts, share codes, Admin → TO role mapping per server, permission checks | — |
-| **Cost governor** | `core/cost` | Ledger, per-case ceiling, degradation ladder | 0012 |
-| **LlmPort / Anthropic adapter** | `adapters/anthropic` | Task-role routing, structured outputs, caching, usage reporting | 0002 |
-| **SttPort / STT sidecar** | `adapters/stt` | Local transcription on the host GPU (no cloud STT in the MVP) | 0015 |
-| **Stores** | `adapters/sqlite` | Runtime database: cases (event log), contexts, ledger, retention job | 0004 |
-| **Build pipeline** | `pipeline` | Deterministic: import, diff, export work packets, validate returned drafts, review queue, bundle, release report | 0007, 0016 |
-| **Knowledge author / case author** | Claude Code sessions | AI drafting of procedures, penalty rows, concept tags, and mnemonics; writing golden cases. Runs on the owner's Pro subscription. | 0013, 0016 |
-| **Eval harness** | `eval` | Golden replay with scripted players, graders, variant generation, and the release gate. Model calls go through the eval-only subscription adapter. | 0013, 0016 |
-| **App** | `app` | Composition root: wires adapters into `core` from config | 0001 |
+| **Discord adapter** | `adapters/discord` | Gateway; turns events into `InboundMessage{caseRef, author→seat, text | choice}`; renders core `Question`s as buttons, select menus, or text; slash commands; outbox with idempotency | 0010, 0011 |
+| **TicketSource** | `adapters/discord/tickets` | Detect, parse, list, and track close/reopen of Tickets threads | 0010 |
+| **Voice adapter** | `adapters/discord/voice` | Only if spike S1 passes | 0015 |
+| **Case orchestrator** | `core/engine` | Case lifecycle (§5.1); folds `CaseEvent`s into state; per-case queue; catch-up | 0011 |
+| **Matcher** | `core/engine` | Finds the relevant entries deterministically: card resolver, concept/intent lexicon, candidate `RulingEntry`s and `Procedure`s; asks a choice question when there are several candidates | 0005, 0008 |
+| **Decision-graph engine** | `core/engine` | For the live entries and procedures: facts with origin, disputes, branch evaluation, next decisive question, the guard | 0008 |
+| **Ruling composer** | `core/engine` | Fills the approved answer template for the selected branch; penalty from the table; fix steps from the branch; delivery pattern from the branch | 0008 |
+| **Verifier** | `core/engine` | Deterministic checks. Trivial for library answers (checked at build time); essential for AI fallback answers (§5.6) | 0008 |
+| **Escalation policy** | `core/engine` | FR-ESC-1 (a)–(e), handoff package, stop rule | 0008, 0009 |
+| **Audience guard** | `core/engine` | Typed audiences, player-safe projection for AI prompts, output lint | 0009 |
+| **Knowledge service** | `core/knowledge` | Read-only bundle queries: sections, cards, lexicon, entries, procedures, penalty table, templates, glossary | 0005–0007 |
+| **Event context & roles** | `core/context` | Contexts, join codes, Admin → TO role mapping, permission checks | — |
+| **Spend cap** | `core/cost` | Ledger of AI calls; monthly cap; questions-only mode at the cap | 0012 |
+| **AI edge** | `adapters/anthropic` behind `LlmPort` | `interpret` (free text → structured) and `reason` (library miss → cited answer) | 0002 |
+| **Stores** | `adapters/sqlite` | Runtime database, retention job | 0004 |
+| **Author sessions** | Claude Code, owner's Pro plan | Write procedures, ruling entries, question wording, answer templates, lexicon entries, and golden cases; the owner approves each one | 0016 |
+| **Build pipeline** | `pipeline` | Deterministic: import sources, diff, validate authored files, bundle, release report | 0007 |
+| **Tests** | `eval` | Deterministic golden suite (CI, no AI); small AI sets (`interpret`, `reason` fallback) run on the Pro plan | 0013, 0016 |
 
-**Dependency rule:** `core` depends only on its own port interfaces. Adapters depend on `core`. Nothing in `core` imports Discord, Anthropic, SQLite, or Node-only APIs (ADR-0001). That is what makes a new front end, provider, or storage an adapter-level change.
+**Dependency rule:** `core` depends only on port interfaces, and imports nothing from Discord, Anthropic, SQLite, or Node-only APIs (ADR-0001).
 
 ## 3. Data model
 
-TypeScript-flavoured sketches. The field names are guidance for the planner, not a frozen schema.
+TypeScript-flavoured sketches: guidance for the planner, not a frozen schema.
 
-### 3.1 Knowledge (build time, read-only at run time)
+### 3.1 Knowledge bundle (build time, read-only at run time)
 
 ```ts
-SourceDocument { docId, title, version, effectiveDate, origin: {url} | {manualTranscript: {by, on}},
-                 retrievedAt, contentHash }
-Section        { sectionId /* "CR:603.3b", "IPG:2.1", "MTRA:hidden-card-error" */, docId, number,
-                 title?, text, parentId?, order, textHash, refs: SectionId[], concepts: ConceptId[] }
-Card           { oracleId, name, aliases[], manaCost?, typeLine, oracleText, faces?[], colorIdentity[],
-                 rulings: { date, text, source: "wotc" }[], dataVersion }
-Concept        { conceptId, label(i18n), coreSections: SectionId[], mnemonicId?, derivation }
-Mnemonic       { mnemonicId, conceptId, text(i18n), sourceSections[], approvedBy, approvedOn }   // FR-Q-4
-PolicyFramework{ frameworkId /* "IPG-MTR", "IPG-MTR+MTRA@2025-06-24", "IPG-MTR+ADD-PT@…" */,
-                 baseDocs: ["MTR","IPG"], addendum?: docId, edits: AddendumEdit[] }            // OQ-20
-Infraction     { infractionId /* "GPE-MT" Missed Trigger, "GPE-HCE", … */, category, name,
-                 definitionSections[], frameworkAvailability[] }
-PenaltyRow     { frameworkId, infractionId, basePenalty /* "No Penalty" | "Warning" | "Turn Skip" | … */,
-                 upgradePath?, downgradeNote?, sourceSections[] }                               // FR-POL-1
-Procedure      { procedureId, frameworkId, infractionId, facts: FactSpec[], branches: Branch[],
-                 stop: StopRule[], sourceSections[], derivation: "ai-draft"|"reviewed" }      // FR-INV-1, ADR-0008
-GlossaryTerm   { term, docId, sectionId }                                                       // NFR-I18N-1
-BundleManifest { bundleVersion, pipelineVersion, builtAt, docs: {docId, version, hash}[],
-                 cardData: {updatedAt, hash}, precedence: LayerId[] /* OQ-4 */, approvedBy?, approvedOn? }
+// Sources (ADR-0007)
+SourceDocument { docId, version, effectiveDate, origin, contentHash }
+Section        { sectionId /* "CR:603.3b" */, docId, number, title?, text, parentId?, refs[], textHash }
+Card           { oracleId, name, aliases[], typeLine, oracleText, faces?[], rulings[{date, text}], dataVersion }
+
+// Shared decision-graph building blocks (ADR-0008)
+FactSpec   { factId, valueType: "yesno"|"choice"|"seat"|"number"|"text", options?: OptionId[],
+             askWho: RoleExpr /* "activePlayer", "controllerOf(trigger)", "allAtTable" … */,
+             question: I18nKey /* pre-worded, approved */, whyItMatters: I18nKey,
+             evidenceHint?, cheapToCollect: bool, derivedBy?: DerivationRule /* e.g. countOpponentsInGame */ }
+Branch     { branchId, when: Predicate /* over facts */, answer: I18nKey /* approved template */,
+             shortAnswer: I18nKey /* in-game minimum, FR-Q-5 */, chain: CitationStep[],
+             fixSteps?: I18nKey[], penaltyRef?: {infractionId}, deliveryPattern?, escalate?: Reason }
+CitationStep { source: SectionId | CardRef, proposition: I18nKey, consequence: I18nKey }   // PRD §8
+
+// Rules questions: the approved rulings library
+RulingEntry { entryId, kind: "concept"|"interaction", cards: OracleId[], concepts: ConceptId[],
+              intents: IntentId[] /* "how-much-mana", "does-it-trigger", … */,
+              facts: FactSpec[], branches: Branch[], mnemonic?: I18nKey /* FR-Q-4 */,
+              sourceCases: GoldenCaseId[], approvedBy, approvedOn, derivation: "reviewed" }
+
+// Disputes: one procedure per framework per infraction (FR-INV-1)
+Procedure   { procedureId, frameworkId, infractionId, triggers: LexiconMatch[],
+              facts: FactSpec[], branches: Branch[], integritySignals: Predicate[] /* OQ-14 */,
+              stop: StopRule[], sourceSections[], approvedBy, approvedOn }
+PenaltyRow  { frameworkId, infractionId, basePenalty, upgradePath?, sourceSections[] }   // FR-POL-1
+PolicyFramework { frameworkId, baseDocs, addendum?, edits: AddendumEdit[] }            // OQ-20
+
+// Matching and wording
+Lexicon     { term /* "wheel", "tithe", "forgot my trigger" */, maps: {conceptId|intentId|infractionId|oracleId}, locale }
+Template    { key: I18nKey, locale, text /* with {variables} */, approvedBy }          // ADR-0014
+BundleManifest { bundleVersion, docs[{docId, version, hash}], cardData, precedence[] /* OQ-4 */, approvedBy, approvedOn }
 ```
 
-### 3.2 Event context and roles (runtime)
+A **concept** entry, such as priority, has no facts and one branch. An **interaction** entry has facts when the answer depends on game state. For example, Faerie Mastermind / Smothering Tithe / Orcish Bowmasters asks who is the active player and where each controller sits in turn order. A **procedure** is the same structure, plus a penalty, a fix, and integrity signals.
+
+### 3.2 Event context and roles
 
 ```ts
 EventContext { eventId, guildId, name, format: "cEDH", rel: "Competitive", frameworkId, language: "en",
                judgeRoleId, toRoleId, judgeOnlyChannelId, playerChannelIds[],
-               ticketSource: { id, config },               // ADR-0010, OQ-21/22
-               shareCode,                                  // FR-CTX-4: a join code, used with /judge join <code> (owner, 2026-09-25)
-               escalation: { confidenceThreshold, alwaysEscalate: CategoryId[] },   // OQ-7
-               budget: { payer: "owner" | "to-key" } , createdBy, updatedAt }
-GuildRoleMapping { guildId, toRoleId, setByAdminUserId }   // FR-ADM-1, D40
+               ticketSource: { id: "discord-private-thread", config: { panelChannelId, ticketBotUserId } },
+               joinCode,                                         // FR-CTX-4 (OQ-28)
+               escalation: { alwaysEscalate: CategoryId[] },     // OQ-7
+               createdBy, updatedAt }
+GuildRoleMapping { guildId, toRoleId, setByAdminUserId }        // FR-ADM-1
 ```
-
-Format, REL, and framework are IDs looked up in the bundle, never enums hard-coded in the engine (NFR-EXT-1).
 
 ### 3.3 Case (runtime, event-sourced, 7-day retention)
 
 ```ts
-Case         { caseId, eventId | null, containerRef, openedAt, closedAt?, status, systemVersion, bundleVersion }
-Participant  { caseId, seat: "P1".."Pn" | "judge" | "to", discordUserId, displayNameAtOpen, isReporter }
-Seating      { order: Seat[], activeSeat?, eliminated: Seat[] }          // only filled when a procedure asks (FR-INV-3)
-CaseEvent    { caseId, seq, at, type, payload, systemVersion, bundleVersion }   // ADR-0011
-
-Claim        { claimId, bySeat, text, kind: "event"|"state"|"assertion", messageRef }   // FR-RUL-4
-Fact         { factId /* procedure FactSpec id or ad-hoc */, value, origin: "reported"|"observed"|"derived",
-               basis: { claimIds[] } | { evidenceId } | { sections[], computation },
-               confirmedBy: Seat[] }
-Dispute      { factId, versions: { value, bySeat[] }[], status: "open"|"resolved-by-judgement"|"immaterial"|"escalated",
-               judgementBasis?: FactId[] }                                          // FR-RUL-2
-Evidence     { evidenceId, kind: "text"|"voice-transcript"|"image"|"stream-observation", ref }  // D31
-Hypothesis   { hypId, kind: "infraction"|"rules-question"|"integrity", procedureId?, status: "live"|"dropped",
-               supporting: FactId[], contradicting: FactId[], note }               // FR-RUL-6
-QuestionAsked{ factId, hypIds[], whyItMatters, audience, askedSeat, messageRef }   // FR-INV-2
-Ruling       { outcome: "ruling"|"answer"|"unresolved"|"escalated", decision, fixSteps[], penalty?: PenaltyRow & { label: "base, assuming no earlier infractions" },
-               chain: { source: SectionId | CardRef, proposition, consequence }[],   // PRD §8
-               explanation, deliveryPattern, confidenceSignals, verifier: VerificationResult }
-InvestigationNote { signals[], inconsistencies[], suggestedQuestions[] }          // FR-ESC-4, staff-only
-Handoff      { summary, established: Fact[], disputed: Dispute[], citations[], provisionalReading, reason }   // FR-ESC-3
+Case          { caseId, eventId | null, containerRef, openedAt, closedAt?, status, systemVersion, bundleVersion }
+Participant   { caseId, seat: "P1".."Pn" | "judge" | "to", discordUserId, isReporter }
+Seating       { order: Seat[], activeSeat?, eliminated: Seat[] }        // only when a graph asks (FR-INV-3)
+CaseEvent     { caseId, seq, at, type, payload, systemVersion, bundleVersion }     // ADR-0011
+Candidate     { ref: entryId | procedureId, status: "live"|"dropped", reason }     // FR-RUL-6
+Claim         { claimId, bySeat, kind: "event"|"state"|"assertion", text, via: "choice"|"normalizer"|"interpret" }  // FR-RUL-4
+Fact          { factId, value, origin: "reported"|"observed"|"derived", basis, confirmedBy: Seat[] }
+Dispute       { factId, versions[{value, bySeat[]}], status, judgementBasis? }     // FR-RUL-2
+QuestionAsked { factId, candidateRefs[], whyItMatters, audience, askedSeat }        // FR-INV-2
+Ruling        { outcome: "library"|"ai-fallback"|"unresolved"|"escalated", ref?, branchId?, text, chain[],
+                penalty?: PenaltyRow & { label: "base, assuming no earlier infractions" }, fixSteps[], verifier }
+InvestigationNote { signals[], inconsistencies[], suggestedQuestions[] }            // FR-ESC-4, staff-only
+Handoff       { summary, established[], disputed[], citations[], provisionalReading, reason }   // FR-ESC-3
+LibraryMiss   { caseId, question (pseudonymised), cards[], concepts[], aiAnswerRef }   // feeds the library
 ```
 
 ### 3.4 Golden case
 
-See ADR-0013. It is the same vocabulary as the runtime (`FactSpec` IDs, `branchId`, `SectionId`), so the graders compare like with like.
+ADR-0013. A golden case holds the **raw player text**, the **scripted choices** for each fact, and the expected outcome in the same IDs (`entryId`/`procedureId`, `branchId`, `SectionId`).
 
-## 4. Build pipeline versus runtime
+## 4. Build time versus run time
 
-| | Build pipeline (offline) | Runtime (always on) |
+| | Build time | Run time |
 | --- | --- | --- |
-| Runs | Manually, on a new source version (D25), or when artifacts change | 24/7 on the host |
-| Inputs | CR, MTR, IPG, addenda, Scryfall bulk, locale sources | Discord events; knowledge bundle |
-| AI use | Heavy, but outside the pipeline code: knowledge author sessions in Claude Code draft concept tags, procedures, penalty rows, addendum edits, mnemonics, and glossary checks from exported work packets | Light: Haiku 4.5 / Sonnet 5 for `understand`, `investigate`, `reason`, `phrase` |
-| Output | `knowledge-<v>.sqlite`, diff report, release report, stale-case list | Case logs, Discord messages, handoffs, ledger |
-| Human step | Owner reviews diffs and AI drafts (OQ-27) and approves the release (FR-BUILD-3) | Human judges take handoffs |
-| Paid by | The owner's Claude Pro subscription: no paid API spend, bounded by the plan's usage limits (owner, 2026-09-25; ADR-0016) | Anthropic API credits, $20 a month cap |
+| Where | The owner's desktop: Claude Code sessions plus the `pipeline` CLI | 24/7 on the owner's desktop |
+| AI | **Author sessions** on the owner's Pro plan write entries, procedures, wording, lexicon terms, and golden cases. The pipeline code itself never calls a model. | Only `interpret` and the `reason` fallback, on API credits |
+| Human step | The owner approves every entry, procedure, penalty row, and template (OQ-27), and approves the release (FR-BUILD-3) | Human judges take handoffs |
+| Output | `knowledge-<v>.sqlite`, source diff, release report, stale-entry list | Case logs, messages, handoffs, library-miss log |
+| Paid by | Pro subscription, no API spend (ADR-0016) | API credits, $20 a month cap |
 
-Pipeline stages: `import → normalise → diff → export work packets → (knowledge author drafts in Claude Code) → validate (schema, every sourceSection resolves, every infraction has a penalty row per framework, every branch cites a section) → review queue → bundle → eval (ADR-0013) → release report → owner approval → promote`.
+**Pipeline:**
+
+1. import the sources;
+2. show the diff;
+3. flag entries and procedures that cite a changed section as **stale**;
+4. author sessions update the flagged items;
+5. validate (schema; every citation resolves; every infraction has a penalty row per framework; every `FactSpec` has approved wording; every template variable is defined);
+6. run the deterministic golden suite;
+7. produce the release report;
+8. the owner approves;
+9. bundle.
+
+**The library grows from real cases:** each `LibraryMiss` from the live bot, and each golden case, is a candidate for a new `RulingEntry`, written in an author session and approved by the owner.
 
 ## 5. Runtime behaviour
 
@@ -183,196 +216,190 @@ Pipeline stages: `import → normalise → diff → export work packets → (kno
 
 ```mermaid
 stateDiagram-v2
-  [*] --> Detected: TicketSource match
-  Detected --> Intake: greeting (disputes) / direct answer path (single-player question)
-  Intake --> Answering: case type = rules question
-  Intake --> Investigating: case type = dispute
-  Answering --> Delivered: verified answer
-  Answering --> Escalated: verifier fails twice / unresolved
+  [*] --> Detected: Tickets thread found
+  Detected --> Matching: greeting (disputes) or direct answer path
+  Matching --> Matching: ask a choice (which card / which question / what kind of help)
+  Matching --> Answering: rules question → entry found
+  Matching --> Fallback: rules question → no entry
+  Matching --> Investigating: dispute → procedure(s) found
+  Matching --> Escalated: dispute → no procedure
+  Answering --> Answering: ask a deciding fact of the entry
+  Answering --> Delivered: approved answer
+  Fallback --> Delivered: AI answer, verified, marked
+  Fallback --> Escalated: verifier fails / unresolved
   Investigating --> Investigating: next decisive question
-  Investigating --> Confirming: guard passes, reconstruction needed (FR-RUL-5)
-  Investigating --> Composing: guard passes, no reconstruction
-  Confirming --> Investigating: players correct the summary
-  Confirming --> Composing: confirmed
-  Composing --> Delivered: verified
-  Composing --> Escalated: verifier fails / FR-ESC-1 trigger
-  Investigating --> Held: integrity stop rule (FR-ESC-4)
+  Investigating --> Confirming: guard passes (FR-RUL-5)
+  Confirming --> Investigating: "something's wrong"
+  Confirming --> Delivered: ruling + penalty + fix
+  Investigating --> Held: integrity stop rule
   Held --> Escalated
-  Delivered --> Contested: player contests (FR-ESC-1c)
-  Contested --> Escalated
+  Delivered --> Escalated: player taps "ask a human judge" (FR-ESC-1c)
   Delivered --> Closed
-  Escalated --> Closed: human judge closes ticket
+  Escalated --> Closed
   Closed --> [*]
 ```
 
-- **No event context in the server (FR-CTX-2):** only the `Answering` path is available. A dispute gets a catalog reply saying the judge can't rule on penalties here, and that a human judge should be called.
-- The **case type** comes from the `understand` role (rules question versus dispute), with a deterministic override: a ticket naming more than one player, or asking about something that already happened in a game, is treated as a dispute. The AI may downgrade that to a rules question only if no infraction hypothesis survives.
+**No event context on the server (FR-CTX-2):** only rules questions are answered. A dispute gets a template reply saying the judge can't rule here, and that a human judge should be called.
 
-### 5.2 One turn
+### 5.2 Matching (deterministic first)
 
-1. The inbound message is appended as `MessageReceived`, with its author mapped to a seat.
-2. **`understand`** (Haiku) turns the message into claims, card mentions, concept tags, and case-type hints.
-3. The **card resolver** runs. On any ambiguity the engine asks which card is meant (FR-Q-2) before going further.
-4. **Investigation engine** (deterministic) updates facts, disputes, and hypotheses, then computes the decisive unknown facts (ADR-0008).
-5. If the guard is not satisfied, **`investigate`** (Haiku) picks and words the next question from the candidates. The engine records `QuestionAsked`, and the outbox sends it to the right audience.
-6. If the guard is satisfied, the engine confirms its understanding when that's required (FR-RUL-5). Then **`reason`** (Sonnet) builds the chain from the retrieved sections, and the engine fills the penalty and fix.
-7. The **verifier** runs (§5.6). Then the **escalation policy** runs (§6).
-8. **`phrase`** (Haiku) renders the result in the delivery pattern and at the depth rule (FR-Q-5: minimum explanation during a game). The output lint runs, then the outbox sends.
+1. **Card resolver** (ADR-0005): exact, then normalised, then fuzzy card names found in the text. More than one plausible card gives a choice question: "Did you mean [Kinnan, Bonder Prodigy] [Kinnan, …]?" (FR-Q-2).
+2. **Lexicon:** player vocabulary ("wheel", "tithe", "forgot my trigger", "what is priority") is mapped to concepts, intents, and infractions. The lexicon is authored and approved at build time, and grows from `LibraryMiss` logs.
+3. **Candidates:**
+    - rules questions look for `RulingEntry`s whose cards ⊆ the mentioned cards and whose concepts or intents match;
+    - disputes look for `Procedure`s whose triggers match, in the event's framework.
+4. **Outcome:**
+    - one candidate: proceed;
+    - several: ask a choice question listing them, in plain words from their templates;
+    - none: call **`interpret`** (Haiku) on the text, which maps the free text onto the closed lists of cards, concepts, intents, and infractions, then match again.
+
+   Whether a case is a rules question or a dispute is decided the same way. If it's unclear, a choice decides it: "What can I help with? [A rules question] [Something happened in the game]".
+5. **Still nothing:**
+    - a rules question goes to the **`reason` fallback** (§5.3);
+    - a dispute is escalated with the facts gathered so far (FR-ESC-2).
 
 ### 5.3 Rules questions (FR-Q-1..5)
 
-Retrieval runs in the ADR-0005 order. `reason` receives only the retrieved sections, the Oracle text, and the rulings, and may cite only those IDs. For a concept with an approved mnemonic, the answer leads with the mnemonic and cites only the sections that decide this particular case (FR-Q-4 AC). The full chain is kept in the case log and shown if the player asks "why?" or "citations?". Questions about MTR procedure, such as "how many points is a draw worth?", are answered from the text and never applied to real event data (FR-Q-3, NG1).
+**Library hit:**
 
-### 5.4 Disputes and the hybrid investigation (D29)
+- the engine asks the entry's deciding facts, if any (for example "Whose turn is it? [P1] [P2] [P3] [P4]"), then returns the branch's approved **short** answer during a game (FR-Q-5). The mnemonic comes first where the entry has one (FR-Q-4);
+- two buttons follow: [Why?] shows the full answer and the citation chain; [Ask a human judge];
+- there is no AI call.
 
-See ADR-0008 for the mechanism. Two golden scenarios show why it is built this way.
+**Library miss (owner, 2026-09-25):**
 
-- **Wheel of Fortune / Flare / Smothering Tithe:** the player's claim "28 missed triggers" becomes `Claim{assertion}`. The trigger count is a `derived` fact computed from the opponents still in the game, which is `observed` if the players stream the table: the procedure's `evidenceHint`. The Missed Trigger procedure's branch predicate depends on whether the stack became empty. That makes `stackBecameEmpty` the one decisive unknown, so the engine asks about the flash casts and the empty stack, and nothing else.
-- **The One Ring / Carpet of Flowers:** the objective Missed Trigger branch is decided from game actions (Player 2 let a targeting action proceed). An integrity hypothesis is opened in parallel. It writes only to `InvestigationNote`s, and questioning stays neutral (ADR-0009). The new explanation lowers the integrity hypothesis but does not change the Missed Trigger branch (FR-RUL-6 AC, FR-RUL-7).
+- `reason` (Sonnet) receives only the retrieved sections, Oracle text, and rulings (ADR-0005), and may cite only those IDs;
+- the verifier runs (§5.6);
+- the answer is shown with a **marker**, a template such as *"This answer was worked out for this question and hasn't been reviewed yet"*;
+- the case writes a `LibraryMiss`, which becomes a library candidate;
+- if the verifier fails, the answer is `UNRESOLVED` and escalated (FR-RUL-9).
+
+**MTR procedure questions** ("how many points is a draw worth?") are ordinary library entries citing the MTR or addendum. They are never applied to event data (FR-Q-3, NG1).
+
+### 5.4 Disputes: deterministic investigation
+
+See ADR-0008.
+
+- The engine keeps every matching procedure **live** (FR-RUL-6). Each turn it computes the **decisive unknown facts**: the ones whose value would change the branch, penalty, fix, or escalation.
+- It asks one of them, choosing by the procedure's stated priority order, then by which fact splits the live branches most evenly.
+- Each question uses its approved wording, is addressed to the `askWho` role, and is rendered as buttons where the value type allows. The question is logged with `whyItMatters` (FR-INV-2).
+- A **typed answer** instead of a button goes through a deterministic normaliser (yes/no, numbers, seat mentions). Only if that fails does `interpret` map it onto the fact's options.
+- **The guard** allows a ruling only when exactly one branch is true and no decisive fact is unknown. Before that, **confirming** shows a template summary of the established facts with [That's right] [Something's wrong] (FR-RUL-5).
+- **Contradictory answers** from different seats open a `Dispute`:
+    - if both versions select the same branch, it's immaterial, and the judge rules on the agreed facts;
+    - otherwise it asks the procedure's follow-up question, or escalates (FR-RUL-2, FR-ESC-1e).
+
+Two golden scenarios show how this plays out:
+
+- **Wheel of Fortune / Flare / Smothering Tithe:**
+    - "28 missed triggers" is a `Claim{assertion}`, not a fact;
+    - the trigger count is a `derived` fact (`derivedBy: countOpponentsInGame`);
+    - the Missed Trigger procedure's branches depend on `stackBecameEmpty`, so the judge asks exactly that: "After the triggers were missed, did the stack become empty at any point? [Yes] [No] [Not sure]".
+- **The One Ring / Carpet of Flowers:**
+    - the Missed Trigger branch follows from the game actions;
+    - the procedure's **integrity signal** (a player invoked an effect after letting an action it would have prevented go ahead) opens a staff-only note, and questioning stays neutral;
+    - the explanation lowers the signal but doesn't change the branch (FR-RUL-6 AC, FR-RUL-7).
 
 ### 5.5 Penalties (FR-POL-1..3)
 
-- The penalty comes from a `PenaltyRow` lookup by `(frameworkId, infractionId)`. The model never chooses it.
-- The FR-POL-1 AC works like this: the MTRA framework's rows replace Game Loss with Turn Skip on the Deck Problem upgrade path, as data.
-- Every penalty is labelled as the base penalty, assuming no earlier infractions, and a copy goes to `Staff` (FR-POL-3).
-- The **delivery pattern** (FR-POL-2) is picked in two steps. First a deterministic default comes from the branch (`deliveryDefault`) and the severity. Then the `phrase` role may pick another of the five patterns only by giving a reason, which is recorded. The golden graders compare the chosen pattern with the expected one.
+- The penalty is a `PenaltyRow` lookup. For the FR-POL-1 AC, the MTRA rows replace Game Loss with Turn Skip.
+- Every penalty is labelled as the base penalty, assuming no earlier infractions, and copied to `Staff` (FR-POL-3).
+- The **delivery pattern** (FR-POL-2) is set on the branch at build time and approved with it. Golden cases check it.
 
 ### 5.6 Verifier
 
-It runs on every ruling and answer. All checks are deterministic.
-
-| Check | Requirement |
-| --- | --- |
-| Every `chain.source` resolves to a section or card in the loaded bundle | NFR-ACC-3 |
-| Every cited ID was in this turn's retrieval set (no citing from memory) | §5, NFR-ACC-3 |
-| The penalty equals the table lookup; the fix steps equal the branch's steps | FR-POL-1 |
-| Every decisive fact of the chosen branch is established; each judgement call lists the facts it rests on | FR-INV-2, FR-RUL-2 |
-| No claim with `kind: assertion` is used as a fact | FR-RUL-4 |
-| The chain is non-empty for every material step; a missing link gives `UNRESOLVED` | FR-RUL-3, FR-RUL-9 |
-| Player-facing text passes the output lint (protected terms, hidden information) | FR-ESC-4, FR-RUL-8 |
-| Glossary terms are kept in English | NFR-I18N-1 |
-
-A semantic "does this section really support this proposition" check is **not** a runtime step in v1, for cost reasons. It runs in the eval harness on every golden case. If spike S3 shows there's room in the budget, it can become a runtime check for the `reason` role on hard cases.
-
-**Play advice (FR-RUL-8)** is prevented at three points:
-
-- the `reason` and `phrase` prompts;
-- a lint on the reply: suggestions of the form "you should" or "your best line" are blocked;
-- golden cases such as Underworld Breach / LED, which specifically test that an answer contains no play advice.
+| Check | Applies to | Requirement |
+| --- | --- | --- |
+| Every citation resolves in the loaded bundle | build time for library answers; every fallback answer | NFR-ACC-3 |
+| Fallback answers cite only IDs from their retrieval set | fallback | §5, NFR-ACC-3 |
+| Penalty = table lookup; fix = branch steps | disputes | FR-POL-1 |
+| Every decisive fact of the chosen branch is established | disputes, entries with facts | FR-INV-2, FR-RUL-2 |
+| No `assertion` claim is used as a fact | all | FR-RUL-4 |
+| Output lint: protected terms, hidden information, play-advice phrases | fallback text and filled templates | FR-ESC-4, FR-RUL-8 |
+| Glossary terms kept in English | all | NFR-I18N-1 |
 
 ## 6. Escalation, handoff, and protected information
 
-- **Triggers (FR-ESC-1):** the escalation policy checks each of (a)–(e) at the end of every turn:
-    - (a) the confidence signals are below the threshold (ADR-0008 §Confidence; OQ-7);
-    - (b) the category is on `alwaysEscalate`;
-    - (c) the `understand` role marks a message as contesting the ruling. Contesting is detected by the model but *confirmed* with a catalog question ("Would you like me to call a human judge to review this?"), so a misread doesn't escalate by accident;
-    - (d) the integrity stop rule fired;
-    - (e) a decisive dispute remains open and the two versions select different branches.
-- **Before escalating (FR-ESC-2):** the engine asks any remaining candidate questions whose `FactSpec.cheapToCollect` is true, except under an integrity stop.
-- **Handoff (FR-ESC-3)** goes to `Staff` with the summary, the established and disputed facts, the citations, the provisional reading, the reason, and a link to the ticket. Players get the FR-ESC-5 catalog message.
-- **Protected information:** ADR-0009. Investigation notes go to `Staff` only. The player-safe projection means the model writing player text never sees them.
-- **Human takeover:** once escalated, the bot stops speaking in the ticket unless a judge invokes it (for example `/judge resume` or `/judge note`). It keeps recording, so the case record is complete.
+- **FR-ESC-1:**
+    - (a) replaced by concrete signals, because a deterministic ruling has no "confidence": an unresolved dispute, a verifier failure, a fallback marked `UNRESOLVED`, or a dispute with no procedure (OQ-7);
+    - (b) `alwaysEscalate` categories;
+    - (c) the **[Ask a human judge]** button under every ruling and answer, or typed text that `interpret` recognises as a contest, confirmed with a button;
+    - (d) the integrity stop rule;
+    - (e) an open decisive dispute.
+- **FR-ESC-2:** before handing off, the engine asks the remaining `cheapToCollect` questions (except under an integrity stop).
+- **FR-ESC-3 / FR-ESC-5:** the handoff package goes to `Staff`; players get a fixed template.
+- **FR-ESC-4 / ADR-0009:**
+    - notes are staff-only and are produced from procedure signals;
+    - player text comes from fixed templates, or from AI prompts that see only a player-safe projection;
+    - the output lint runs on everything sent to players.
+- **Human takeover:** after escalation the bot stays quiet in the thread unless a judge invokes it, and it keeps recording.
 
 ## 7. Hosting and deployment
 
 See ADR-0003.
 
-- One Docker Compose stack on the owner's always-on machine: `bot`, plus `stt` only if voice ships. Outbound connections only.
-- Releases:
-    - **code** is released by the git tag → image build → `docker compose pull && up -d`;
-    - a **bundle** is released by copying the approved `knowledge-<v>.sqlite` into the data volume and running `/judge admin bundle use <v>`. That switch happens at the next case boundary; cases already open finish on the bundle they started with (NFR-VER-1).
-- Configuration comes from an env file (secrets) plus the `config.yaml` model routing and price table.
-- **Observability:** structured logs, and a daily summary to the owner-only channel covering cases, escalations, spend, ladder level, and verifier failures.
-- **Host:** the owner's desktop (i9-10900, 32 GB, RTX 2070 SUPER), running Windows 10 Home, whose end of security updates the owner accepted as a risk for the pilot (ADR-0003).
-- **Runtime:** Docker Compose if CPU virtualization can be switched on; otherwise the same build runs as a Windows service.
-- **Owner prerequisites:** the Discord application needs the Message Content intent, and the bot needs the permissions in ADR-0010.
+- **Host:** the owner's always-on desktop (i9-10900, 32 GB, RTX 2070 SUPER), on Windows 10 Home. The end of its security updates is accepted as a risk for the pilot.
+- **Runtime:** Docker Compose if CPU virtualization can be switched on; otherwise a Windows service. Outbound connections only.
+- **Releases:** code by a git tag and redeploy; a knowledge bundle by copying the approved file and restarting the bot. Open cases resume from their log, and each keeps the bundle version it started with (NFR-VER-1).
+- **Observability:** logs, plus a daily owner-channel summary: cases, library hit rate, library misses, escalations, AI spend.
 
 ## 8. How the long-term vision stays open (D31, §4)
 
 | Future capability | What keeps it possible |
 | --- | --- |
-| Phone app, web, WhatsApp | Front ends are adapters that turn their events into `InboundMessage` and render `OutboundMessage{audience}`. The Discord wording lives in the adapter's catalog. Nothing in `core` knows Discord. |
-| Photo, video, and streams | `Evidence` items and `Fact{origin: observed}` already exist. A vision adapter produces evidence; procedures carry `evidenceHint`. |
-| On-device rules data and inference | The knowledge bundle is a portable SQLite file. `core` is I/O-free TypeScript. `LlmPort` can target an on-device model. |
-| Other languages | ADR-0014 |
-| 1v1, Regular REL (JAR), Limited | Format, REL, and framework are IDs in the bundle. JAR becomes another framework with its own procedures. `Seating` handles N = 2 as a special case. |
-| Penalty history (Post-MVP 4) | `PenaltyRow.upgradePath` is already data. A future `PenaltyHistory` store would feed the lookup. No engine redesign. |
-| Very large scale, 10k+ corpus | Repository ports allow PostgreSQL. Cases partition by ID with a single writer per partition (ADR-0011). The eval harness batches. |
+| Phone app, web, WhatsApp | `core` emits neutral `Question{valueType, options}` and `Outbound{audience}`. Each front end renders them its own way: buttons, a numbered list, or speech. |
+| Voice (phone, several players at one device) | Voice has no buttons, so `interpret` is used more often. It is the same edge. |
+| Photo, video, streams | `Evidence` + `Fact{origin: observed}`; procedures carry `evidenceHint` |
+| On-device use | The bundle is a portable SQLite file, and the deterministic core needs no model at all. Only misses need AI, which could later be on-device. |
+| Other languages | Templates and lexicon are per locale (ADR-0014); rulings are data, not prose generated at run time |
+| 1v1, JAR, Limited | Format, REL, and framework are IDs; new procedures and entries are data |
+| Penalty history | `PenaltyRow.upgradePath` is data; add a history store later |
+| Very large scale, 10k+ corpus | Deterministic lookups scale cheaply; PostgreSQL behind the repository ports; cases partitioned by ID |
 
 ## 9. Cost model at pilot volume
 
-**Assumptions** (to be replaced with measurements from spike S3). Prices: Haiku 4.5 $1/$5 and Sonnet 5 $2/$10 per million input/output tokens; cache reads 0.1×, 5-minute cache writes 1.25×.
+AI calls happen only on the edges. Prices: Haiku 4.5 $1/$5, Sonnet 5 $2/$10 per million input/output tokens.
 
-| Call type | Input | Output | Cost |
-| --- | --- | --- | --- |
-| Haiku, cold (writes the 5k cached prefix) | 5k written + 2.5k new | 300 | $0.0103 |
-| Haiku, warm (same case, within 5 minutes) | 5k cache read + 2.5k new | 300 | $0.0045 |
-| Sonnet `reason`, baseline | 9k uncached | 1.5k including thinking | $0.033 |
-| Sonnet `reason`, lean (lower effort, trimmed retrieval) | 6k | 700 | $0.019 |
-
-| Case type | Calls | Baseline | Lean |
-| --- | --- | --- | --- |
-| Rules question | 1 Haiku cold + 1 Sonnet (Sonnet also words the answer) | $0.043 | $0.029 |
-| Dispute | 1 Haiku cold + 5 Haiku warm + 2 Sonnet + 1 Haiku warm (handoff or summary) | $0.103 | $0.075 |
-| **Mix: 75% questions, 25% disputes** (owner's estimate, 2026-09-25) | | **$0.058** | **$0.041** |
-
-| Monthly | 200 cases | 430 cases |
+| Path | AI calls | Cost |
 | --- | --- | --- |
-| AI, baseline | $11.65 | $25.05 |
-| AI, lean | $8.15 | $17.52 |
-| Hosting | $0 extra (owner's desktop, ADR-0003) | $0 extra |
-| Speech-to-text | $0 (local only, ADR-0015) | $0 |
-| **Total, baseline / lean** | **$11.65 / $8.15** | **$25.05 / $17.52** |
+| Rules question, library hit | none | $0 |
+| Rules question, library miss | 1 `interpret` + 1 `reason` | about $0.03–0.04 |
+| Dispute, answered by buttons | none, or 1 `interpret` for the opening description | $0–0.01 |
+| Dispute with free-text answers | 1–3 `interpret` | about $0.01–0.03 |
 
-What this shows:
+The biggest unknown is the **library hit rate**, which starts low and grows as misses become entries. Using the owner's 75/25 mix of questions to disputes:
 
-1. At the **low end** of pilot volume, both routings fit NFR-COST-1 with room to spare.
-2. At the **high end** (about 430 cases a month), the baseline routing is about 25% over the cap. The **lean** routing fits, at about $17.50.
-3. The cost governor (ADR-0012) therefore switches to lean automatically when spend runs ahead of the monthly allowance. At the cap itself, the judge keeps answering rules questions on the cheapest model and hands disputes to human judges (owner, 2026-09-25).
-4. Every figure in the first table is an assumption until spike S3 measures real cases.
+| Library hit rate | Cost per case | 200 cases/month | 430 cases/month |
+| --- | --- | --- | --- |
+| 20% (early) | about $0.025 | about $5 | about $11 |
+| 50% | about $0.017 | about $3.50 | about $7.50 |
+| 80% | about $0.009 | about $2 | about $4 |
 
-### 9.1 Build and evaluation cost
+(Assumptions: a miss costs $0.035 and a dispute averages $0.015.)
 
-**There is no paid spend for build and evaluation.** The owner decided on 2026-09-25 that all of it runs on this account within the Claude Pro subscription (OQ-24, ADR-0016). The limit is the plan's **usage allowance**, which the owner also uses for other work. So the design keeps model use during build and test as small as possible:
+Hosting and speech-to-text add $0 (ADR-0003, ADR-0015). Every case fits NFR-COST-1. The spend cap (ADR-0012) is a safety net, not a routing mechanism.
 
-| Lever | Effect |
-| --- | --- |
-| **Deterministic pipeline.** Pipeline code never calls a model. AI drafting is done by knowledge author sessions in Claude Code, working from exported work packets. | Drafting happens only when sections change |
-| **Scripted player answers.** The engine asks for a `factId` (ADR-0008), so the harness answers from the case's fact sheet using a template. No model plays the players. | No simulator usage at all |
-| **Response cache.** Every model call during eval is keyed by a hash of (model, prompt version, exact input). An unchanged call returns the recorded response. | A change to one role re-runs only that role's calls, and only in the cases it touches |
-| **Affected cases only.** A bundle change re-runs only the cases that cite a changed section, card, or procedure. A prompt change re-runs only the calls of that role. | Normal releases touch a small fraction of cases |
-| **Resumable runner.** It checkpoints after every case. | Long runs spread across usage-limit windows |
-| **Deterministic graders first.** Tone is linted deterministically on every case, and graded by a model only on a 10% sample plus every failing case. | Model grading is a small share |
-| **Deterministic checks in CI** (retrieval recall, citations resolve, penalty lookups, schema) | No model use per commit |
-
-| Run | When | Load on the Pro plan |
-| --- | --- | --- |
-| CI checks | Every commit | None |
-| Typical release (source update, some prompts changed) | Each release | Small: tens of cases |
-| Full uncached replay of ~1,000 cases | Only when the model or the provider changes | Large: spread over several days of limit windows |
-| Initial knowledge build (about 50 procedures and penalty rows, concept tags across the CR, MTR, and IPG) | Once | Several knowledge author sessions, plus the owner's review (OQ-27) |
-| Incremental rebuild (only changed sections are re-derived) | Per new source version | One short session |
+**Build and test** cost $0 in paid spend (ADR-0016). The golden suite is deterministic and runs in CI with no AI. Only two small sets use AI, on the Pro plan: `interpret` (free text → structure) and `reason` (fallback questions).
 
 ## 10. Security and privacy (NFR-PRIV-1, D39)
 
-- **Data minimisation:** prompts carry seat labels, not Discord identities (ADR-0002). Case records hold Discord user IDs only in `Participant`.
-- **Retention:** 7-day deletion job; backups rotate within the same window; exports are pseudonymised (ADR-0004).
-- **Deletion on request:** an Admin command (ADR-0004).
-- **Third-party processor:** pseudonymised player text goes to the AI provider, whose own retention may exceed 7 days and which may process it outside the EU. **The owner accepted this on 2026-09-25 (answer to OQ-23).** Recommended: a short privacy notice for players, linked from the event, saying that the AI judge sends the conversation (without Discord names) to an AI provider. The notice text is a catalog entry (ADR-0014), for the planner to schedule.
+- **Data minimisation:** AI calls happen only on the edges, and carry seat labels instead of Discord identities.
+- **Retention:** 7-day deletion; backups rotate within the same window; `LibraryMiss` records are pseudonymised.
+- **Deletion on request:** an Admin command.
+- **Third-party processor:** accepted by the owner (OQ-23). A short privacy notice for players is recommended.
 - **Voice:** consent per player per event, a listening window only, audio never stored (ADR-0015).
-- **Authorisation:**
-    - FR-CTX-1 and FR-ADM-1 are enforced in `core/context` against Discord role membership, re-read on every command, never cached across events;
-    - the global Admin is a configured Discord user ID;
-    - FR-LOG-2 (who can read records) is enforced on every read command.
-- **Secrets:** env file on the host; a TO-supplied key (if ever used) is encrypted at rest.
+- **Authorisation:** TO and Admin checks on every command; the Admin is a configured user ID; FR-LOG-2 is enforced on every read.
+- **Secrets:** an env file on the host. The API key exists only in the bot's environment.
 
-## 11. Risks the architecture adds or changes
+## 11. Risks
 
 | Risk | Mitigation |
 | --- | --- |
-| Procedure quality: a wrong decisive-fact set gives confident wrong rulings | Procedures cite their sections; golden variants per branch; review (OQ-27); the verifier checks the facts were established |
-| The concept index misses a section, so the model reasons without the deciding rule | Retrieval recall is tested in CI against required citations; lexical-fallback use is logged |
-| Home-host outage during an event | Catch-up on restart (ADR-0011). An owner-channel alert on the next startup. Moving to a VPS is a copy. |
-| Baseline routing exceeds the cap at the high end of pilot volume | The lean routing fits (§9); ADR-0012 switches to it automatically; spike S3 measures |
-| Host OS without security updates (Windows 10 after 13 October 2026), accepted by the owner for the pilot | Outbound-only networking, 7-day retention, seat labels in prompts, secrets readable only by the owner; reviewed before wider use (ADR-0003) |
-| Discord voice receive changes or is unsupported | Voice is isolated in one adapter; spike S1 first (R4) |
+| Library coverage is low at launch, so many questions fall back to AI | The fallback is marked and verified; the miss log feeds new entries; hit rate is reported daily |
+| Matching picks the wrong entry for a question | Cards must be mentioned; ambiguity gives a choice; [Why?] shows the reasoning; [Ask a human judge] is always there; matching is tested on held-out raw texts |
+| A wrong entry or procedure gives the same wrong ruling every time | Owner review of every entry; golden variants per branch; stale flags on source changes |
+| Review load (R12) | Entries are small; most come from cases the owner already validated |
+| Golden cases turned into entries would test themselves | Held-out cases measure matching and fallback on questions the library wasn't built from (ADR-0013) |
+| Home-host outage | Catch-up on restart (ADR-0011) |
+| Host OS without security updates (accepted for the pilot) | Outbound-only, 7-day retention, secrets readable only by the owner (ADR-0003) |
+| Discord voice receive unsupported | Isolated adapter; spike S1 (R4) |

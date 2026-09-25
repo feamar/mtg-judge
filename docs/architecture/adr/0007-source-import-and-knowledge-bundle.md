@@ -30,12 +30,13 @@ Section        { sectionId: "CR:603.3b", docId, number, title?, text, parentId?,
 
 **2. Derived artifacts** are built from sections. Each one keeps `sourceSectionIds[]` (FR-BUILD-2):
 
-- the concept index and mnemonics (ADR-0005, FR-Q-4);
+- the **approved rulings library** (`RulingEntry`s), the concepts with their core sections, mnemonics, and the lexicon (ADR-0005, ADR-0008, FR-Q-4);
+- **templates**: the approved wording for questions and answers (ADR-0014);
 - the **infraction catalog**: one entry per IPG infraction, plus addendum-only infractions;
 - the **penalty tables**: `(frameworkId, infractionId) → basePenalty, upgradePath, notes`, including replacements such as Game Loss → Turn Skip under the MTRA (FR-POL-1);
 - the **procedures**, one per framework per infraction (FR-INV-1, ADR-0008).
 
-AI drafting is done by the knowledge author role in Claude Code sessions on the owner's Pro subscription, working from work packets that the pipeline exports and validates on return (ADR-0016). Every AI-derived record is stored with `derivation: ai-draft|reviewed` and is never presented as source text (the ChatGPT package's rule about the three data layers).
+These are written by the knowledge author role in Claude Code sessions on the owner's Pro subscription, as files in the repository. The pipeline validates them (ADR-0016). A source change flags every entry, procedure, and penalty row that cites a changed section as **stale** until it has been re-checked. Every AI-derived record is stored with `derivation: ai-draft|reviewed` and is never presented as source text (the ChatGPT package's rule about the three data layers).
 
 **3. One knowledge bundle per release.** It contains all imported sections, the derived artifacts, card data (ADR-0006), and the locale catalogs (ADR-0014). The manifest records every document version and hash plus the pipeline version (NFR-VER-1).
 

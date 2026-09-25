@@ -18,4 +18,6 @@ The architect role may only add open questions to the PRD; it doesn't change req
 | Hosting | Where does the bot run? | **The owner's always-on desktop.** | ADR-0003 |
 | Host OS | Windows 10 Home loses security updates by 13 October 2026. | **Accept the risk for now.** | ADR-0003 (accepted risk) |
 | Runtime | Docker or a plain Node service? | **"If it can be docker, use that."** Docker is the default; if virtualization can't be enabled, the fallback is a Windows service. | ADR-0003 |
+| OQ-30 (D29, FR-INV-2) | May the judge choose investigation questions deterministically, with pre-written approved wording (buttons where possible), instead of the AI choosing and wording them? | **Yes, deterministic.** This came from the owner's point that "most of these scenarios shouldn't be using AI at all". PRD text of D29 and FR-INV-2 to be revised. | ADR-0008; ARCHITECTURE.md §0, §5 |
+| Library miss | A rules question that the approved rulings library doesn't cover: what does the judge do? | **AI answer, marked** as not from the approved library, verified, and logged so it can become a library entry. | ADR-0008; ARCHITECTURE.md §5.3 |
 | Speech-to-text | Use the owner's ChatGPT subscription? | The owner has a ChatGPT subscription only, with **no OpenAI API access**. Voice transcription is **local-only** in the MVP. | ADR-0015; SPIKES S1 |

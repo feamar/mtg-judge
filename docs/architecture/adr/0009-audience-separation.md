@@ -22,7 +22,9 @@ A prompt instruction such as "don't mention cheating" is not a guarantee.
     - `InvestigationNote`, `IntegrityHypothesis`, `EscalationRationale`, and `ProvisionalReading` can only be rendered to `Staff`.
     - `Remedy` and `Ruling` can only be rendered to `Table` (FR-INT-3, D9). The engine can't produce a DM containing a remedy step.
     - `InvestigationQuestion` may go to `Table` or `PlayerPrivate`.
-3. **Prompt segregation.** Prompts for the `phrase`, `investigate`, and `understand` roles are assembled from a *player-safe projection* of the case, which has no integrity hypotheses, notes, or rationale. The model writing player-facing text never sees the suspicion, so it can't leak it.
+3. **Fixed templates and prompt segregation.**
+    - Almost all player-facing text is an approved template (ADR-0008), so it can't contain a suspicion.
+    - The two AI roles (`interpret`, `reason`) get only a *player-safe projection* of the case, with no integrity signals, notes, or rationale. The only AI that ever writes text for players (the `reason` fallback) never sees the suspicion, so it can't leak it.
 4. **Stop rule** (FR-ESC-4): when an integrity hypothesis reaches the procedure's stop threshold, the engine freezes questioning. It sends the neutral "a human judge has been called, please don't continue the relevant game actions" message, which is a fixed catalog template and not generated. It then posts the handoff with the notes to `Staff`.
 5. **Output lint (defence in depth):** before sending to `Table` or `PlayerPrivate`, a deterministic check:
     - scans for protected terms from a locale list (for example cheating, intent, suspicion, lying);
