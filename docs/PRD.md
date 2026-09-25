@@ -51,7 +51,7 @@ There are four roles. The **Admin** grants the TO role. Judges and TOs have thei
 | Player | Asks questions, starts disputes, answers the judge's questions and follows its instructions, in the player channel, or in a private message while the judge is investigating | Only the conversation they're in right now. Nothing in the MVP lets players look up earlier interactions. |
 | Judge (human) | Receives handoffs in the **judge-only channel**, or in private messages when they claim the ticket; reviews rulings | All rulings in the current event, plus **investigation notes** |
 | Tournament organizer (TO) | Sets up the **event context** | Same as a judge |
-| Admin | Grants and revokes the TO role. There is one global Admin across all servers: the product owner. | Same as a TO, across every event on every server (assumed) |
+| Admin | On each server, chooses which Discord server role counts as the TO role. There is one global Admin across all servers: the product owner. | Same as a TO, across every event on every server (assumed) |
 
 | Context | Phase | REL | Interface |
 | --- | --- | --- | --- |
@@ -150,7 +150,7 @@ Each requirement has acceptance criteria (AC) written as Given / When / Then. A 
 - **FR-CTX-2.** Every ruling made in a Discord server follows that server's event context. If a server has no context (during the MVP), the judge only answers rules questions and says that it can't rule on penalties. After the MVP it will assume a 1v1 game context.
 - **FR-CTX-3.** The bot MUST NOT store or compute pairings, standings, points, or timers (NG1).
 - **FR-CTX-4.** An event context can be shared through a link. Players in the event's Discord server get the context automatically. Anywhere else, they join it with the link. Only the TO can change a context; a link gives read access only (D32).
-- **FR-ADM-1.** An Admin (in the MVP, the product owner) can grant and revoke the TO role. Only a user holding the TO role can create or edit an event context.
+- **FR-ADM-1.** There is one global Admin (the product owner). On each server, the Admin chooses which existing Discord server role counts as the TO role. Every member of that role is a TO for that server. Only a TO can create or edit an event context (D40).
     - AC: Given a user who is not an Admin, when they try to grant or revoke the TO role, then the bot refuses.
 
 ### 6.2 Interaction
@@ -224,9 +224,9 @@ Each requirement has acceptance criteria (AC) written as Given / When / Then. A 
 
 ### 6.8 Ruling record
 
-- **FR-LOG-1.** Every case is recorded with: the event context, the participants, the transcript, the procedure used, the facts established, the ruling, the penalty, the citations, whether it was escalated, any investigation notes, the system version, and the versions of the source documents.
+- **FR-LOG-1.** Every case is recorded and kept for **7 days**, then deleted (D39). The record holds: the event context, the participants, the transcript, the procedure used, the facts established, the ruling, the penalty, the citations, whether it was escalated, any investigation notes, the system version, and the versions of the source documents.
 - **FR-LOG-2.** Judges and the TO of the event can read the records. Players can't in the MVP.
-- **FR-LOG-3.** Records can be exported as golden-case candidates (§8) and replayed against a newer system version so the results can be compared.
+- **FR-LOG-3.** Within those 7 days, a judge or the product owner can export a record as a golden-case candidate (§8). Exported cases become part of the golden set and are kept. Comparing system versions is done by replaying the golden set, not old records.
 
 ### 6.9 Voice
 
@@ -248,10 +248,12 @@ Each requirement has acceptance criteria (AC) written as Given / When / Then. A 
 | NFR-ACC-3 | No invented citations | Every citation resolves to a real section in the source version currently loaded |
 | NFR-COST-1 | Running cost | Under $20 a month at pilot volume: one TO with 50–100 cases a week, or about 200–430 a month. That leaves roughly $0.05–0.10 per case for everything: hosting, AI model calls, and speech-to-text. |
 | NFR-COST-2 | Degrading under cost pressure | There must be a way to keep costs under the cap: rate limits, routing simple questions to a cheaper model, or TOs supplying their own API key (the architect proposes) |
+| NFR-AVAIL-1 | Availability | The bot runs around the clock. Events usually run for a month, so judge calls can come at any time. Brief restarts are acceptable, but a ticket opened during an outage MUST be picked up when the bot comes back. |
 | NFR-LAT-1 | Response time | Text: every reply within seconds (single digits). Voice: target to be set if voice ships (OQ-9). |
 | NFR-I18N-1 | Ready for other languages | No user-facing text or prompt is hard-coded in English. Language is a setting in the event context. Terms defined in the CR, MTR, or IPG are never translated. |
-| NFR-PRIV-1 | GDPR | The product owner is in the EU. Consent before any voice capture, a defined retention period for records (OQ-10), and deletion on request. |
+| NFR-PRIV-1 | GDPR | The product owner is in the EU. Consent before any voice capture, case records deleted after 7 days (D39), and deletion on request. |
 | NFR-VER-1 | Traceability | Every ruling records the system version and the version of each source document |
+| NFR-TECH-1 | Technology choice | The architect chooses the programming language and the AI model provider. The language must be modern, mainstream, and well supported by Discord libraries. The provider must be easy to use and cheap enough for NFR-COST-1. The provider MUST be replaceable without changing ruling logic (D41). |
 | NFR-EXT-1 | Room to grow | Format, REL, policy framework, front end, and input type are all pluggable. None of them is hard-coded. |
 | NFR-TONE-1 | Tone (P3) | Every reply is precise, friendly, and customer-centric. No sarcasm, no blaming wording, no judgement of a player's character. Checked in every golden case by a written tone rubric (OQ-18). The rubric starts from the stance phrases in P3. |
 | NFR-IMP-1 | Impartiality and consistency (P3) | The same facts give the same ruling, whoever reports them, in whatever order, and however they are worded. Golden-set variants test this by swapping who reports, the order of events, and the wording. |
@@ -326,7 +328,7 @@ The **golden test set** is the definition of correct. It is the benchmark for ev
 | D20 | cEDH is the MVP format. 1v1 comes later. | The owner's priority. 1v1 is a simpler special case. |
 | D21 | One policy framework per event. It sets penalties *and* procedures. | The frameworks differ in substance |
 | D22 | Voice is wanted but can be dropped | Discord voice support is uncertain |
-| D24 | Every ruling is recorded. Judges and the TO can see the records. | Audits, and comparing system versions |
+| D24 | Every ruling is recorded. Judges and the TO can see the records. Records are kept for 7 days (D39). | Audits, and turning real cases into golden cases |
 | D25 | New document versions trigger a manual rebuild | Updates stay deterministic and tested |
 | D27 | The judge asks about the game state only when a procedure needs it | Avoids friction |
 | D28 | No penalty history across the event in the MVP. Penalties are handed off to human judges for recording. | Keeps the MVP small |
@@ -340,6 +342,9 @@ The **golden test set** is the definition of correct. It is the benchmark for ev
 | D36 | Penalty delivery follows one of five patterns chosen by context (FR-POL-2) | Replaces the fixed "penalty first" order. Learning comes first, except where explaining would escalate. |
 | D37 | Integrate with the server's existing ticket bot rather than building ticketing | Matches how the product owner's events already work. Keeps event tooling out of scope (NG1). |
 | D38 | About 1,000 golden cases at launch | A larger benchmark, needed to back the 100% target on easy cases |
+| D39 | Case records are kept for 7 days, then deleted. Cases worth keeping are exported to the golden set. | Minimal data retention (GDPR). The golden set, not the records, is the lasting source for testing. |
+| D40 | One global Admin maps an existing Discord server role to the TO role on each server | Uses roles the server already manages. No separate user administration. |
+| D41 | The architect picks the language and the AI model provider. The owner has no preference beyond easy, cheap, and modern. | The owner's stated preference. The architecture has to keep the provider replaceable. |
 
 ## 11. Risks
 
@@ -355,7 +360,7 @@ The **golden test set** is the definition of correct. It is the benchmark for ev
 | R9 | Without a penalty history, penalties may not be upgraded | Labelled as the base penalty and copied to human judges (FR-POL-3) |
 | R10 | Using Wizards of the Coast's rules text and card data in a published app raises IP questions | To be checked against WotC's Fan Content Policy before any public release (OQ-12) |
 | R11 | Two sets of requirements (this PRD and the ChatGPT package) drift apart, and AI roles follow the wrong one | This PRD is the master copy (§0). The ChatGPT files become reference inputs only. |
-| R12 | Validating about 1,000 golden cases is a large review load for one person | Generate cases in families of variants so one review covers several cases; review hard cases first; track review throughput |
+| R12 | Validating about 1,000 golden cases is a large review load for one person | The product owner expects to be able to produce many cases himself. Also generate cases in families of variants so one review covers several cases, and review hard cases first. |
 | R13 | Depending on a third-party ticket bot whose thread format can change, and which may differ between servers | Detecting tickets is behind a pluggable adapter (FR-INT-1); cover it with integration tests on the real bot's threads |
 
 ## 12. Open questions
@@ -368,13 +373,13 @@ The **golden test set** is the definition of correct. It is the benchmark for ev
 - [ ] **OQ-7.** What confidence threshold triggers escalation, and which rule categories always escalate?
 - [x] **OQ-8.** Resolved: 50–100 cases a week per TO (NFR-COST-1).
 - [ ] **OQ-9.** Partly resolved: text replies within seconds (NFR-LAT-1). Voice target still open.
-- [ ] **OQ-10.** Record retention. **Contradiction:** the product owner answered "we do not keep case records", but D24 and FR-LOG-1 to FR-LOG-3 require records for audits, comparing versions, and new golden cases. Which one holds? If records are kept, for how long?
+- [x] **OQ-10.** Resolved: case records are kept for 7 days (D39).
 - [ ] **OQ-11.** Partly resolved: about 1,000 golden cases at launch (D38). Easy/hard split still open.
 - [ ] **OQ-12.** Does WotC's Fan Content Policy allow using the rules text and card text this way?
 - [x] **OQ-13.** Resolved: hybrid investigation (D29).
 - [ ] **OQ-14.** Within the MVP, which signals count as "suspected cheating"? The product owner to list them.
 - [x] **OQ-15.** Resolved: delivery patterns in FR-POL-2 (D36).
-- [ ] **OQ-16.** Partly resolved: one global Admin across all servers. Still open: is the TO role a Discord role the bot assigns, or a permission inside the bot?
+- [x] **OQ-16.** Resolved: one global Admin, who maps an existing Discord server role to the TO role on each server (D40).
 - [x] **OQ-17.** Resolved: private messages are allowed for investigations only (D9, FR-INT-3).
 - [ ] **OQ-18.** What goes in the tone rubric? For example sample phrasings to use and to avoid, and how to deliver a penalty.
 - [x] **OQ-19.** Resolved: use the server's existing ticket bot (D37).
