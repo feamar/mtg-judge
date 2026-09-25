@@ -18,7 +18,7 @@ Status values: **Proposed** (in review in a PR), **Accepted** (merged by the pro
 | [0010](0010-ticket-detection-adapter.md) | Ticket detection is a `TicketSource` plugin, configured per event context | Proposed |
 | [0011](0011-durable-case-log-and-catch-up.md) | Cases are append-only event logs; on startup the bot reconciles open tickets | Proposed |
 | [0012](0012-cost-governor.md) | A budget ledger and a degradation ladder enforce NFR-COST-1/2 | Proposed |
-| [0013](0013-golden-evaluation-harness.md) | Golden cases are replayed against the engine with a constrained player simulator | Proposed |
+| [0013](0013-golden-evaluation-harness.md) | Golden cases are replayed against the engine with scripted players, a response cache, and affected-case selection | Proposed |
 | [0014](0014-internationalisation.md) | All user-facing text and prompts come from locale catalogs; CR/MTR/IPG terms are a protected glossary | Proposed |
 | [0015](0015-speech-to-text.md) | Voice, if it ships, goes through an `SttPort`; local transcription only | Proposed (depends on spike S1) |
 | [0016](0016-build-and-eval-on-pro-subscription.md) | Build and evaluation run on the owner's Claude Pro subscription; the paid API is used only by the live bot | Proposed |
