@@ -96,7 +96,7 @@ The spike must confirm this on the owner's actual configuration, and record the 
 
 **Constraint (owner, 2026-09-25):** no paid API spend for build or test (ADR-0016). AI calls in the spike run through the owner's Pro plan, and their API cost is **computed** from token counts, not paid.
 
-**Prerequisite from the product owner:** about 30 real judge-call texts from past events, as players actually wrote them. Pseudonymise them first, or I pseudonymise them in the spike. About three quarters should be rules questions and a quarter disputes, matching OQ-25. None of these may be golden cases already.
+**Prerequisite from the product owner:** about 30 real judge-call texts from past events, as players actually wrote them, drawn from the **non-held-out**, pseudonymised part of the league history export (ADR-0017 §4). About three quarters should be rules questions and a quarter disputes, matching OQ-25. None of these may be golden cases already.
 
 **Method:**
 
