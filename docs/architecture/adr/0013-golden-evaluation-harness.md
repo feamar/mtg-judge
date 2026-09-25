@@ -63,4 +63,5 @@ The 18 current scenarios are the owner's real cases, and the AI roles have read 
 ## Consequences
 
 - Almost all testing is free, fast, and repeatable.
-- A golden case turned into a library entry will always pass. That proves the lookup, not the judge's reach. Coverage is measured by the held-out cases and the live library hit rate.
+- **Scenarios are also the material strategies are derived from** (ADR-0017). Each `AnswerStrategy` must reproduce every validated scenario in its `derivedFrom` list, and that check is part of the deterministic suite.
+- A scenario a strategy was derived from will always pass, so it proves the encoding, not the reach. Reach is measured by **held-out scenarios with other cards and phrasings**, and by the live hit rate.

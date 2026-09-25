@@ -12,7 +12,12 @@ This document turns [`docs/PRD.md`](../PRD.md) into a technical design. It does 
 
 **The judge is deterministic. AI sits only at its edges.**
 
-- **Build time:** every ruling the judge can give is prepared as data and approved by the owner. That covers concept explanations ("what is priority?"), known card interactions (Kinnan + Selvala), and the investigation procedure for each infraction. Each one is a small decision graph: the facts that decide it, a pre-worded question for each fact, and an approved answer with citations for each branch.
+- **Build time:** every ruling the judge can give is prepared as data and approved by the owner. It's a small decision graph: the facts that decide it, a pre-worded question for each fact, and an approved answer with citations for each branch. There are three kinds:
+    - concept explanations ("what is priority?");
+    - **answering strategies**: how a *kind* of rules question is answered for any cards with the right properties, for example "does tapping X trigger Kinnan?" (ADR-0017);
+    - the investigation procedure for each infraction.
+- **Card knowledge is prefetched:** each card's rules-relevant features, such as "is this ability a mana ability?", are computed at build time. A strategy can then answer about cards no scenario ever mentioned.
+- **Strategies come from scenarios:** many scenarios are written in families, their proper answers are settled with the owner, and each family is abstracted into a strategy that must reproduce all of them.
 - **Run time:** the judge matches the player's words to those entries (card names, keywords), asks the deciding questions as choices, and returns the approved answer. The penalty comes from a table lookup.
 - **AI is called only** when a player's free text can't be matched, or when a rules question has no approved entry yet. That answer is then marked as not from the library, checked by the verifier, and logged so the entry can be added.
 
@@ -91,7 +96,7 @@ flowchart LR
 | **TicketSource** | `adapters/discord/tickets` | Detect, parse, list, and track close/reopen of Tickets threads | 0010 |
 | **Voice adapter** | `adapters/discord/voice` | Only if spike S1 passes | 0015 |
 | **Case orchestrator** | `core/engine` | Case lifecycle (§5.1); folds `CaseEvent`s into state; per-case queue; catch-up | 0011 |
-| **Matcher** | `core/engine` | Finds the relevant entries deterministically: card resolver, concept/intent lexicon, candidate `RulingEntry`s and `Procedure`s; asks a choice question when there are several candidates | 0005, 0008 |
+| **Matcher** | `core/engine` | Finds the relevant graph deterministically: card resolver, concept/intent lexicon, then candidate `RulingEntry`s, `AnswerStrategy`s (through the mentioned cards' features), and `Procedure`s; asks a choice question when there are several candidates | 0005, 0008, 0017 |
 | **Decision-graph engine** | `core/engine` | For the live entries and procedures: facts with origin, disputes, branch evaluation, next decisive question, the guard | 0008 |
 | **Ruling composer** | `core/engine` | Fills the approved answer template for the selected branch; penalty from the table; fix steps from the branch; delivery pattern from the branch | 0008 |
 | **Verifier** | `core/engine` | Deterministic checks. Trivial for library answers (checked at build time); essential for AI fallback answers (§5.6) | 0008 |
@@ -119,6 +124,8 @@ TypeScript-flavoured sketches: guidance for the planner, not a frozen schema.
 SourceDocument { docId, version, effectiveDate, origin, contentHash }
 Section        { sectionId /* "CR:603.3b" */, docId, number, title?, text, parentId?, refs[], textHash }
 Card           { oracleId, name, aliases[], typeLine, oracleText, faces?[], rulings[{date, text}], dataVersion }
+CardFeatures   { oracleId, abilities[{ kind, costHasTap, addsMana, targets, isManaAbility, usesStack,
+                 triggerEvent?, effectKinds[] }], derivation /* parser | ai-draft | reviewed */ }   // prefetched, ADR-0017
 
 // Shared decision-graph building blocks (ADR-0008)
 FactSpec   { factId, valueType: "yesno"|"choice"|"seat"|"number"|"text", options?: OptionId[],
@@ -136,6 +143,11 @@ RulingEntry { entryId, kind: "concept"|"interaction", cards: OracleId[], concept
               facts: FactSpec[], branches: Branch[], mnemonic?: I18nKey /* FR-Q-4 */,
               sourceCases: GoldenCaseId[], approvedBy, approvedOn, derivation: "reviewed" }
 
+// Rules questions, generalised: one strategy per kind of question (ADR-0017)
+AnswerStrategy { strategyId, intent, appliesWhen: Predicate /* over card features + concepts */,
+                 facts: FactSpec[] /* many derivedBy card features */, branches: Branch[] /* templates with {card} */,
+                 derivedFrom: GoldenCaseId[], approvedBy, approvedOn }
+
 // Disputes: one procedure per framework per infraction (FR-INV-1)
 Procedure   { procedureId, frameworkId, infractionId, triggers: LexiconMatch[],
               facts: FactSpec[], branches: Branch[], integritySignals: Predicate[] /* OQ-14 */,
@@ -149,7 +161,7 @@ Template    { key: I18nKey, locale, text /* with {variables} */, approvedBy }   
 BundleManifest { bundleVersion, docs[{docId, version, hash}], cardData, precedence[] /* OQ-4 */, approvedBy, approvedOn }
 ```
 
-A **concept** entry, such as priority, has no facts and one branch. An **interaction** entry has facts when the answer depends on game state. For example, Faerie Mastermind / Smothering Tithe / Orcish Bowmasters asks who is the active player and where each controller sits in turn order. A **procedure** is the same structure, plus a penalty, a fix, and integrity signals.
+An **answering strategy** is the general form: for example, "does tapping X trigger Kinnan?" decides on X's `isManaAbility` feature, and so covers Deathrite Shaman, Selvala, and every other card of that shape. `RulingEntry` remains for concepts and for genuine one-offs. A **concept** entry, such as priority, has no facts and one branch. An **interaction** entry has facts when the answer depends on game state. For example, Faerie Mastermind / Smothering Tithe / Orcish Bowmasters asks who is the active player and where each controller sits in turn order. A **procedure** is the same structure, plus a penalty, a fix, and integrity signals.
 
 ### 3.2 Event context and roles
 
@@ -208,7 +220,15 @@ ADR-0013. A golden case holds the **raw player text**, the **scripted choices** 
 8. the owner approves;
 9. bundle.
 
-**The library grows from real cases:** each `LibraryMiss` from the live bot, and each golden case, is a candidate for a new `RulingEntry`, written in an author session and approved by the owner.
+**The scenario workshop** (ADR-0017) is the main build-time activity:
+
+1. write scenarios in families with the owner;
+2. settle their proper answers;
+3. abstract each family into an `AnswerStrategy`, plus the card features it needs;
+4. prove that the strategy reproduces every scenario in its family;
+5. the owner approves it.
+
+Card features are prefetched: the deterministic Oracle parser first, then author sessions tag the rest. Each `LibraryMiss` from the live bot, and each exported case, becomes a new scenario. So the library grows by strategies, not by single card pairs.
 
 ## 5. Runtime behaviour
 
@@ -246,7 +266,7 @@ stateDiagram-v2
 1. **Card resolver** (ADR-0005): exact, then normalised, then fuzzy card names found in the text. More than one plausible card gives a choice question: "Did you mean [Kinnan, Bonder Prodigy] [Kinnan, …]?" (FR-Q-2).
 2. **Lexicon:** player vocabulary ("wheel", "tithe", "forgot my trigger", "what is priority") is mapped to concepts, intents, and infractions. The lexicon is authored and approved at build time, and grows from `LibraryMiss` logs.
 3. **Candidates:**
-    - rules questions look for `RulingEntry`s whose cards ⊆ the mentioned cards and whose concepts or intents match;
+    - rules questions look first for `RulingEntry`s whose cards ⊆ the mentioned cards and whose concepts or intents match, then for `AnswerStrategy`s whose `appliesWhen` holds for the mentioned cards' **prefetched features** and the matched intent (ADR-0017);
     - disputes look for `Procedure`s whose triggers match, in the event's framework.
 4. **Outcome:**
     - one candidate: proceed;
@@ -367,7 +387,7 @@ AI calls happen only on the edges. Prices: Haiku 4.5 $1/$5, Sonnet 5 $2/$10 per 
 | Dispute, answered by buttons | none, or 1 `interpret` for the opening description | $0–0.01 |
 | Dispute with free-text answers | 1–3 `interpret` | about $0.01–0.03 |
 
-The biggest unknown is the **library hit rate**, which starts low and grows as misses become entries. Using the owner's 75/25 mix of questions to disputes:
+The biggest unknown is the **library hit rate**. It starts low and grows as scenario families become strategies. Because a strategy covers every card with the right features, the rate should climb much faster than with per-combination entries (ADR-0017). Using the owner's 75/25 mix of questions to disputes:
 
 | Library hit rate | Cost per case | 200 cases/month | 430 cases/month |
 | --- | --- | --- | --- |
@@ -396,10 +416,11 @@ Hosting and speech-to-text add $0 (ADR-0003, ADR-0015). Every case fits NFR-COST
 | Risk | Mitigation |
 | --- | --- |
 | Library coverage is low at launch, so many questions fall back to AI | The fallback is marked and verified; the miss log feeds new entries; hit rate is reported daily |
+| A wrong prefetched card feature makes every answer about that card wrong | Features used by strategies are reviewed; `ai-draft` features can be excluded per strategy; [Why?] shows the feature ("not a mana ability, CR 605.1a"); stale flags on Oracle/CR changes (ADR-0017) |
 | Matching picks the wrong entry for a question | Cards must be mentioned; ambiguity gives a choice; [Why?] shows the reasoning; [Ask a human judge] is always there; matching is tested on held-out raw texts |
 | A wrong entry or procedure gives the same wrong ruling every time | Owner review of every entry; golden variants per branch; stale flags on source changes |
 | Review load (R12) | Entries are small; most come from cases the owner already validated |
-| Golden cases turned into entries would test themselves | Held-out cases measure matching and fallback on questions the library wasn't built from (ADR-0013) |
+| Scenarios a strategy was derived from would test themselves | Held-out scenarios use other cards and phrasings, so they measure whether strategies generalise (ADR-0013, ADR-0017) |
 | Home-host outage | Catch-up on restart (ADR-0011) |
 | Host OS without security updates (accepted for the pilot) | Outbound-only, 7-day retention, secrets readable only by the owner (ADR-0003) |
 | Discord voice receive unsupported | Isolated adapter; spike S1 (R4) |

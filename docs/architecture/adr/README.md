@@ -22,6 +22,7 @@ Status values: **Proposed** (in review in a PR), **Accepted** (merged by the pro
 | [0014](0014-internationalisation.md) | All user-facing text and prompts come from locale catalogs; CR/MTR/IPG terms are a protected glossary | Proposed |
 | [0015](0015-speech-to-text.md) | Voice, if it ships, goes through an `SttPort`; local transcription only | Proposed (depends on spike S1) |
 | [0016](0016-build-and-eval-on-pro-subscription.md) | Authoring and the small AI test sets run on the owner's Claude Pro subscription; the paid API is used only by the live bot | Proposed |
+| [0017](0017-answer-strategies-and-card-features.md) | Answering strategies over prefetched card features; strategies are derived from scenario families | Proposed |
 
 ## Template
 
