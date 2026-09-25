@@ -280,7 +280,9 @@ See ADR-0003.
     - a **bundle** is released by copying the approved `knowledge-<v>.sqlite` into the data volume and running `/judge admin bundle use <v>`. That switch happens at the next case boundary; cases already open finish on the bundle they started with (NFR-VER-1).
 - Configuration comes from an env file (secrets) plus the `config.yaml` model routing and price table.
 - **Observability:** structured logs, and a daily summary to the owner-only channel covering cases, escalations, spend, ladder level, and verifier failures.
-- **Owner prerequisites:** the host OS must still receive security updates, and Docker must be installed. Beyond that, the Discord application needs the Message Content intent and the bot needs the permissions in ADR-0010.
+- **Host:** the owner's desktop (i9-10900, 32 GB, RTX 2070 SUPER), running Windows 10 Home, whose end of security updates the owner accepted as a risk for the pilot (ADR-0003).
+- **Runtime:** Docker Compose if CPU virtualization can be switched on; otherwise the same build runs as a Windows service.
+- **Owner prerequisites:** the Discord application needs the Message Content intent, and the bot needs the permissions in ADR-0010.
 
 ## 8. How the long-term vision stays open (D31, §4)
 
@@ -351,4 +353,5 @@ What this shows:
 | The concept index misses a section, so the model reasons without the deciding rule | Retrieval recall is tested in CI against required citations; lexical-fallback use is logged |
 | Home-host outage during an event | Catch-up on restart (ADR-0011). An owner-channel alert on the next startup. Moving to a VPS is a copy. |
 | The high end of the cost range exceeds the cap | §9, ADR-0012, spike S3, OQ-25/26 |
+| Host OS without security updates (Windows 10 after 13 October 2026), accepted by the owner for the pilot | Outbound-only networking, 7-day retention, seat labels in prompts, secrets readable only by the owner; reviewed before wider use (ADR-0003) |
 | Discord voice receive changes or is unsupported | Voice is isolated in one adapter; spike S1 first (R4) |

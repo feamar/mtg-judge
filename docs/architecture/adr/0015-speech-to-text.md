@@ -15,7 +15,7 @@ Voice is in the MVP only if spike S1 succeeds (D22). If it ships, it uses the sa
     - each player who speaks must have consented once per event, recorded as a case event;
     - audio from users without consent is dropped without being decoded.
 - **Audio is never stored.** Only the transcript is kept, under the normal 7-day rule.
-- **Local first:** a Whisper-class model in an `stt` sidecar on the host, at $0 marginal cost. A cloud STT adapter exists as the fallback if S1 shows local transcription is too slow or inaccurate on the owner's hardware. Its cost then goes through the ledger (ADR-0012).
+- **Local first:** a Whisper-class model in an `stt` sidecar on the host, at $0 marginal cost. The host has an NVIDIA RTX 2070 SUPER (ADR-0003), so GPU transcription is realistic. With the Windows-service fallback, the sidecar runs as a second local process. A cloud STT adapter exists as the fallback if S1 shows local transcription is too slow or inaccurate on the owner's hardware. Its cost then goes through the ledger (ADR-0012).
 
 ## Consequences
 
