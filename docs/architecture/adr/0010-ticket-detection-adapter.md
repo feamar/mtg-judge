@@ -11,7 +11,15 @@ There is a Discord detail that matters here: **a thread belongs to a parent text
 - (a) a new *private channel* per ticket, under a category;
 - (b) a new *private thread* per ticket, under a fixed channel.
 
-FR-INT-1 and FR-CTX-1 mention both "thread" and "category". **Owner's answer to OQ-22 (2026-09-25): the ticket bot creates a thread per ticket**, which is pattern (b). The bot's display name is "Ticket Bot" (OQ-21). That name is generic, so the event context identifies it by its Discord user ID (`ticketBotUserId` in the source config), never by name.
+FR-INT-1 and FR-CTX-1 mention both "thread" and "category". **Owner's answer to OQ-22 (2026-09-25): the ticket bot creates a thread per ticket**, which is pattern (b). The bot's display name is "Ticket Bot" (OQ-21). It is **Tickets** (https://tickets.bot) running in *thread mode*. According to its documentation (read on 2026-09-25):
+
+- each ticket is a **private thread under the panel channel**;
+- staff are added through a button in a mandatory notification channel, or automatically when they are on the panel's **Support Teams + "Mention On Open"** lists;
+- threads can be **reopened** after closing;
+- an optional **form** collects the description first;
+- **auto-close** is optional.
+
+Because the display name is generic, the event context identifies the bot by its Discord user ID (`ticketBotUserId` in the source config), never by name.
 
 ## Decision
 
@@ -28,7 +36,10 @@ TicketInfo { containerRef, reporterUserIds[], mentionedUserIds[], description, o
 
 - The **event context** stores `ticketSource: { id, config }`. For example: category ID for pattern (a); parent channel ID for pattern (b); title regex; ticket bot user ID.
 - The MVP ships **only the thread source** (`discord-private-thread`), because that's what the owner's server uses. The channel-in-category source is a later plugin for other servers; the interface already allows it. OQ-21 (the bot's name) tells us whether a parser specific to that bot is needed.
-- The event context's "ticket category" field (FR-CTX-1) is filled with the **parent channel** that the ticket bot opens threads under. That is how the PRD field applies to the thread pattern; see OQ-22.
+- The event context's "ticket category" field (FR-CTX-1) is filled with the **parent channel** that the ticket bot opens threads under. For Tickets that is the panel channel. That is how the PRD field applies to the thread pattern; see OQ-22.
+- **Getting into private threads.** The preferred way is to add the judge bot's role to the panel's Support Teams and Mention On Open lists, so Tickets adds the judge to every ticket (no extra Discord permission needed). The fallback is to give the judge bot *Manage Threads* on the panel channel. Spike S2 decides between them.
+- **Reopened tickets:** a reopen within 7 days resumes the existing case (its log is still retained). After that it starts a new case, which records the earlier ticket's ID.
+- **Auto-close:** if the server enables auto-close for inactivity, an escalated case waiting for a human judge could be closed by Tickets. The TO setup checklist warns about this.
 - **`parse` may return `"not-yet"`:** many ticket bots post the description a moment after the container is created, or only after the player fills in a form. The adapter waits for the first message by the ticket bot or the reporter, up to a configurable timeout.
 
 **Required Discord permissions:**

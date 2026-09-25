@@ -1,4 +1,4 @@
-# ADR-0013: Golden evaluation harness with a constrained player simulator
+# ADR-0013: Golden evaluation harness with scripted players
 
 Status: Proposed · Date: 2026-09-25 · Requirements: §8, NFR-ACC-1..3, NFR-TONE-1, NFR-IMP-1, FR-POL-2, FR-INV-2, FR-ESC-4, FR-BUILD-3, D38, OQ-11, OQ-29
 
@@ -41,10 +41,10 @@ GoldenCase { id, family, variantOf?, set: dev|regression|heldout, tag: easy|hard
     - Cases the owner marks held-out are saved to a **separate private location**, for example a private `mtg-judge-heldout` repository or a folder outside this repo. It is never opened in architect, planner, engineer, or QA sessions.
     - The eval runner reads that location only at release time, and reports held-out results as aggregates (pass rate, failing case IDs), never case contents.
     - Development and regression cases are written in this repository as normal.
-6. **Cost:** the owner asked (2026-09-25) for this to be much cheaper. ARCHITECTURE.md §9.1 has the estimates.
+6. **Cost:** there is no paid spend; replays use the Pro subscription (ADR-0016). The levers below keep runs small enough for its usage limits. ARCHITECTURE.md §9.1 has the details.
     - **Response cache:** every eval model call is keyed by a hash of (model, prompt version, exact input). Unchanged calls replay their recorded response at $0, so a change re-runs only the calls downstream of it.
     - **Affected-case selection:** a bundle change selects the cases citing changed sections, cards, or procedures; a prompt change re-runs that role's calls only. A full uncached replay is needed only when the model or the provider changes.
-    - **Batch API:** uncached calls across cases run in lockstep (turn 1 of every case in one batch, then turn 2, …), at 50% off.
+    - **Subscription route:** uncached calls go through the eval-only subscription adapter, on the owner's Pro plan with no paid API spend (ADR-0016). The runner is resumable and works within the plan's usage limits.
     - **Model grading only for tone,** on a 10% sample plus every failure.
     - **CI:** retrieval-recall and deterministic checks run free on every commit.
     - **Consistency:** because the cache makes replays deterministic, a small uncached sample (for example 5% of cases, run 3 times) runs at each release to catch variation from the model itself.

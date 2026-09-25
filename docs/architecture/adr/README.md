@@ -20,7 +20,8 @@ Status values: **Proposed** (in review in a PR), **Accepted** (merged by the pro
 | [0012](0012-cost-governor.md) | A budget ledger and a degradation ladder enforce NFR-COST-1/2 | Proposed |
 | [0013](0013-golden-evaluation-harness.md) | Golden cases are replayed against the engine with a constrained player simulator | Proposed |
 | [0014](0014-internationalisation.md) | All user-facing text and prompts come from locale catalogs; CR/MTR/IPG terms are a protected glossary | Proposed |
-| [0015](0015-speech-to-text.md) | Voice, if it ships, goes through an `SttPort`; local transcription first | Proposed (depends on spike S1) |
+| [0015](0015-speech-to-text.md) | Voice, if it ships, goes through an `SttPort`; local transcription only | Proposed (depends on spike S1) |
+| [0016](0016-build-and-eval-on-pro-subscription.md) | Build and evaluation run on the owner's Claude Pro subscription; the paid API is used only by the live bot | Proposed |
 
 ## Template
 

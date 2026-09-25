@@ -50,7 +50,9 @@ flowchart LR
   end
   subgraph Offline["Offline (owner's machine or CI)"]
     PIPE["Build pipeline CLI<br/>import · diff · derive · review · bundle"]
-    EVAL["Golden eval harness<br/>simulator · graders · gate"]
+    EVAL["Golden eval harness<br/>scripted players · graders · gate"]
+    AUTH["Knowledge & case author sessions<br/>(Claude Code, owner's Pro plan)"]
+    AUTH --> PIPE
   end
   DISC --> ORCH
   TS --> DISC
@@ -84,8 +86,9 @@ flowchart LR
 | **LlmPort / Anthropic adapter** | `adapters/anthropic` | Task-role routing, structured outputs, caching, usage reporting | 0002 |
 | **SttPort / STT sidecar** | `adapters/stt` | Local transcription on the host GPU (no cloud STT in the MVP) | 0015 |
 | **Stores** | `adapters/sqlite` | Runtime database: cases (event log), contexts, ledger, retention job | 0004 |
-| **Build pipeline** | `pipeline` | Import, diff, derive (AI through Batch), review queue, bundle, release report | 0007 |
-| **Eval harness** | `eval` | Golden replay with the player simulator, graders, variant generation, release gate | 0013 |
+| **Build pipeline** | `pipeline` | Deterministic: import, diff, export work packets, validate returned drafts, review queue, bundle, release report | 0007, 0016 |
+| **Knowledge author / case author** | Claude Code sessions | AI drafting of procedures, penalty rows, concept tags, and mnemonics; writing golden cases. Runs on the owner's Pro subscription. | 0013, 0016 |
+| **Eval harness** | `eval` | Golden replay with scripted players, graders, variant generation, and the release gate. Model calls go through the eval-only subscription adapter. | 0013, 0016 |
 | **App** | `app` | Composition root: wires adapters into `core` from config | 0001 |
 
 **Dependency rule:** `core` depends only on its own port interfaces. Adapters depend on `core`. Nothing in `core` imports Discord, Anthropic, SQLite, or Node-only APIs (ADR-0001). That is what makes a new front end, provider, or storage an adapter-level change.
@@ -167,12 +170,12 @@ See ADR-0013. It is the same vocabulary as the runtime (`FactSpec` IDs, `branchI
 | --- | --- | --- |
 | Runs | Manually, on a new source version (D25), or when artifacts change | 24/7 on the host |
 | Inputs | CR, MTR, IPG, addenda, Scryfall bulk, locale sources | Discord events; knowledge bundle |
-| AI use | Heavy: Opus 5 through the Batch API to draft concept tags, procedures, penalty rows, addendum edits, mnemonic drafts, glossary checks | Light: Haiku 4.5 / Sonnet 5 for `understand`, `investigate`, `reason`, `phrase` |
+| AI use | Heavy, but outside the pipeline code: knowledge author sessions in Claude Code draft concept tags, procedures, penalty rows, addendum edits, mnemonics, and glossary checks from exported work packets | Light: Haiku 4.5 / Sonnet 5 for `understand`, `investigate`, `reason`, `phrase` |
 | Output | `knowledge-<v>.sqlite`, diff report, release report, stale-case list | Case logs, Discord messages, handoffs, ledger |
 | Human step | Owner reviews diffs and AI drafts (OQ-27) and approves the release (FR-BUILD-3) | Human judges take handoffs |
-| Budget scope | `build-eval`, a separate budget (owner answer 2026-09-25; size open as OQ-24) | `runtime`, $20 a month cap |
+| Paid by | The owner's Claude Pro subscription: no paid API spend, bounded by the plan's usage limits (owner, 2026-09-25; ADR-0016) | Anthropic API credits, $20 a month cap |
 
-Pipeline stages: `import → normalise → diff → derive (AI draft) → validate (schema, every sourceSection resolves, every infraction has a penalty row per framework, every branch cites a section) → review queue → bundle → eval (ADR-0013) → release report → owner approval → promote`.
+Pipeline stages: `import → normalise → diff → export work packets → (knowledge author drafts in Claude Code) → validate (schema, every sourceSection resolves, every infraction has a penalty row per framework, every branch cites a section) → review queue → bundle → eval (ADR-0013) → release report → owner approval → promote`.
 
 ## 5. Runtime behaviour
 
@@ -330,33 +333,32 @@ What this shows:
 
 ### 9.1 Build and evaluation cost
 
-The owner asked for this to be **much cheaper** than the first estimate of about $45 per full golden run. The size of the budget is still open (OQ-24). The harness (ADR-0013) now avoids model calls wherever the answer can be computed:
+**There is no paid spend for build and evaluation.** The owner decided on 2026-09-25 that all of it runs on this account within the Claude Pro subscription (OQ-24, ADR-0016). The limit is the plan's **usage allowance**, which the owner also uses for other work. So the design keeps model use during build and test as small as possible:
 
 | Lever | Effect |
 | --- | --- |
-| **Scripted player answers.** The engine asks for a `factId` (ADR-0008), so the harness answers from the case's fact sheet using a template. No model plays the players. | Removes the simulator cost completely |
+| **Deterministic pipeline.** Pipeline code never calls a model. AI drafting is done by knowledge author sessions in Claude Code, working from exported work packets. | Drafting happens only when sections change |
+| **Scripted player answers.** The engine asks for a `factId` (ADR-0008), so the harness answers from the case's fact sheet using a template. No model plays the players. | No simulator usage at all |
 | **Response cache.** Every model call during eval is keyed by a hash of (model, prompt version, exact input). An unchanged call returns the recorded response. | A change to one role re-runs only that role's calls, and only in the cases it touches |
 | **Affected cases only.** A bundle change re-runs only the cases that cite a changed section, card, or procedure. A prompt change re-runs only the calls of that role. | Normal releases touch a small fraction of cases |
-| **Batch API** for every uncached call | 50% off |
-| **Deterministic graders first.** Tone is linted deterministically on every case, and graded by a model only on a 10% sample plus every failing case. | Model grading becomes a rounding error |
-| **Deterministic checks in CI** (retrieval recall, citations resolve, penalty lookups, schema) | $0 per commit |
+| **Resumable runner.** It checkpoints after every case. | Long runs spread across usage-limit windows |
+| **Deterministic graders first.** Tone is linted deterministically on every case, and graded by a model only on a 10% sample plus every failing case. | Model grading is a small share |
+| **Deterministic checks in CI** (retrieval recall, citations resolve, penalty lookups, schema) | No model use per commit |
 
-| Run | When | Estimated cost |
+| Run | When | Load on the Pro plan |
 | --- | --- | --- |
-| CI checks | Every commit | $0 |
-| Typical release (source update, some prompts changed) | Each release | about $1–5 |
-| Full uncached replay of ~1,000 cases (75/25 mix, Batch API) | Only when the model or the provider changes | about $20 on lean routing, about $29 on baseline |
-| Initial knowledge build (draft about 50 procedures and penalty rows, tag concepts across the CR, MTR, and IPG) | Once | about $10 |
-| Incremental rebuild (only changed sections are re-derived) | Per new source version | under $1 |
-
-These are estimates and should be confirmed by spike S3 and by the first pipeline run.
+| CI checks | Every commit | None |
+| Typical release (source update, some prompts changed) | Each release | Small: tens of cases |
+| Full uncached replay of ~1,000 cases | Only when the model or the provider changes | Large: spread over several days of limit windows |
+| Initial knowledge build (about 50 procedures and penalty rows, concept tags across the CR, MTR, and IPG) | Once | Several knowledge author sessions, plus the owner's review (OQ-27) |
+| Incremental rebuild (only changed sections are re-derived) | Per new source version | One short session |
 
 ## 10. Security and privacy (NFR-PRIV-1, D39)
 
 - **Data minimisation:** prompts carry seat labels, not Discord identities (ADR-0002). Case records hold Discord user IDs only in `Participant`.
 - **Retention:** 7-day deletion job; backups rotate within the same window; exports are pseudonymised (ADR-0004).
 - **Deletion on request:** an Admin command (ADR-0004).
-- **Third-party processor:** player text goes to the AI provider, whose own retention may exceed 7 days. That is the owner's decision (OQ-23).
+- **Third-party processor:** pseudonymised player text goes to the AI provider, whose own retention may exceed 7 days and which may process it outside the EU. **The owner accepted this on 2026-09-25 (answer to OQ-23).** Recommended: a short privacy notice for players, linked from the event, saying that the AI judge sends the conversation (without Discord names) to an AI provider. The notice text is a catalog entry (ADR-0014), for the planner to schedule.
 - **Voice:** consent per player per event, a listening window only, audio never stored (ADR-0015).
 - **Authorisation:**
     - FR-CTX-1 and FR-ADM-1 are enforced in `core/context` against Discord role membership, re-read on every command, never cached across events;

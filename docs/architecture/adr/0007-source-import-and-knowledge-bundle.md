@@ -35,7 +35,7 @@ Section        { sectionId: "CR:603.3b", docId, number, title?, text, parentId?,
 - the **penalty tables**: `(frameworkId, infractionId) → basePenalty, upgradePath, notes`, including replacements such as Game Loss → Turn Skip under the MTRA (FR-POL-1);
 - the **procedures**, one per framework per infraction (FR-INV-1, ADR-0008).
 
-AI drafting runs through the Batch API. Every AI-derived record is stored with `derivation: ai-draft|reviewed` and is never presented as source text (the ChatGPT package's rule about the three data layers).
+AI drafting is done by the knowledge author role in Claude Code sessions on the owner's Pro subscription, working from work packets that the pipeline exports and validates on return (ADR-0016). Every AI-derived record is stored with `derivation: ai-draft|reviewed` and is never presented as source text (the ChatGPT package's rule about the three data layers).
 
 **3. One knowledge bundle per release.** It contains all imported sections, the derived artifacts, card data (ADR-0006), and the locale catalogs (ADR-0014). The manifest records every document version and hash plus the pipeline version (NFR-VER-1).
 

@@ -46,23 +46,35 @@ Running order: **S2 → S3 → S1.** S2 unblocks the MVP's only input path. S3 d
 
 **Question:** can the judge detect every ticket the owner's existing ticket bot opens, parse the description and participants, join or post in it, and pick up tickets opened while the judge was offline?
 
-**Known:** the owner's server uses a bot shown as "Ticket Bot", which creates **a thread per ticket** (OQ-21, OQ-22). Step 2 records its Discord user ID, and records exactly what it posts.
+**Known:** the owner's server uses **Tickets** (https://tickets.bot, shown as "Ticket Bot") in **thread mode**: a thread per ticket (OQ-21, OQ-22). Its documentation (docs.tickets.bot, thread-mode page, read on 2026-09-25) says:
+
+- each ticket is a **private thread under the panel channel**, the channel with the "open ticket" button;
+- at first only the opener is in the thread. Staff join through a button in a mandatory **notification channel**, or are added automatically when they are on the panel's **Support Teams and "Mention On Open"** lists (or marked on-call);
+- an optional **form** collects the player's description before the thread is created;
+- closed ticket threads **can be reopened**, and **auto-close** on inactivity is optional.
+
+The spike must confirm this on the owner's actual configuration, and record the bot's Discord user ID.
 
 **Prerequisite from the product owner:** a test server (or a test channel), with "Ticket Bot" installed and configured the same way as on the live server.
 
 **Method:**
 
 1. Install the ticket bot and the spike bot on the test server with the permissions in ADR-0010.
-2. Record the raw gateway events for 10 tickets opened the way players do it today:
-    - the container type (channel in category, or thread in channel: OQ-22);
-    - the naming pattern;
-    - when the first message arrives and what it contains;
+2. Compare two ways for the judge to get into ticket threads, and pick the one that works with no manual step per ticket:
+    - **(A) Mention On Open:** give the judge bot a role, and add that role to the panel's Support Teams and Mention On Open lists, so Tickets adds it to every new thread;
+    - **(B) Manage Threads:** give the judge bot *Manage Threads* on the panel channel, so it sees private threads being created and can join them.
+
+   Also check whether the notification-channel embed is a useful second detection signal, for example during catch-up.
+3. Record the raw gateway events for 10 tickets opened the way players do it today:
+    - the parent channel, and the thread naming pattern;
+    - when the first message arrives and what it contains: the welcome embed, and the form answers if a form is used;
     - who is added, and when;
-    - what closing looks like (archive, lock, delete, rename).
-3. Implement the matching `TicketSource` against the recordings. Replay the recordings as fixtures.
-4. Live check: open 10 more tickets and confirm each is detected, parsed, and answered with a test greeting.
-5. Outage check: stop the bot, open 3 tickets and close 1, restart. Confirm that the 2 still open are picked up with a "sorry for the wait" greeting and that the closed one is ignored.
-6. Private visibility: confirm that the bot can read and post in the ticket without extra manual steps per ticket.
+    - what closing and **reopening** look like (archive, lock);
+    - what auto-close does, if the server uses it.
+4. Implement the `discord-private-thread` `TicketSource` against the recordings. Replay the recordings as fixtures. A reopened ticket within 7 days resumes its existing case; after that it starts a new case.
+5. Live check: open 10 more tickets and confirm each is detected, parsed, and answered with a test greeting.
+6. Outage check: stop the bot, open 3 tickets and close 1, restart. Confirm that the 2 still open are picked up with a "sorry for the wait" greeting and that the closed one is ignored.
+7. Private visibility: confirm that the bot can read and post in every ticket without extra manual steps per ticket.
 
 **Pass criteria:**
 
@@ -70,7 +82,7 @@ Running order: **S2 → S3 → S1.** S2 unblocks the MVP's only input path. S3 d
 - The outage test passes exactly: 2 picked up, 1 ignored, no duplicate greetings after a second restart.
 - No manual step per ticket. Any setup needed per server is documented in a checklist of no more than 10 items.
 
-**Fail:** the ticket bot's containers can't be seen or posted in without manual steps per ticket, or its descriptions can't be parsed reliably. The report then proposes options for the owner (for example a ticket-bot setting, or a different ticket bot). Replacing D37 is the owner's decision.
+**Fail:** neither (A) nor (B) lets the judge see and post in ticket threads without a manual step per ticket, or the descriptions can't be parsed reliably. The report then proposes options for the owner (for example another Tickets setting, or switching Tickets to channel mode). Replacing D37 is the owner's decision.
 
 **Time box:** 2 working days, after the prerequisites are met.
 
@@ -81,6 +93,8 @@ Running order: **S2 → S3 → S1.** S2 unblocks the MVP's only input path. S3 d
 **Requirements:** NFR-COST-1, NFR-COST-2, NFR-LAT-1, NFR-ACC-1, P2, OQ-25 · **ADRs at stake:** 0002, 0005, 0008, 0012 · Tests the cost model in ARCHITECTURE.md §9
 
 **Question:** does one realistic cEDH case, run end to end on the proposed architecture, cost within $0.05–0.10, including everything, and answer within single-digit seconds per reply?
+
+**Constraint (owner, 2026-09-25):** no paid API spend for building or testing (ADR-0016). The spike therefore runs the model calls through the owner's Pro subscription, and **computes** the API cost from token counts instead of paying it.
 
 **Method:**
 
@@ -94,16 +108,21 @@ Running order: **S2 → S3 → S1.** S2 unblocks the MVP's only input path. S3 d
     - (a) a rules question: *Judge, what is priority?*;
     - (b) a rules interaction: *Faerie Mastermind / Smothering Tithe / Orcish Bowmasters APNAP*, a validated scenario;
     - (c) a dispute: *The One Ring / Carpet of Flowers*, a validated scenario, played by the owner or scripted replies, through to a ruling or a handoff.
-3. Run each case 5 times on the **baseline** routing and 5 times on the **lean** routing (ADR-0012 L1). Log tokens by role, cached versus uncached, and latency per reply.
-4. Compute the cost per case, and project the monthly cost at 200 and 430 cases using the owner's case mix: 75% rules questions, 25% disputes (owner's estimate, 2026-09-25).
-5. Check the answers against the scenario's expected ruling and citations. A cheap run that gets the ruling wrong counts as a fail for that routing.
+3. Run each case 5 times on the **baseline** routing and 5 times on the **lean** routing (ADR-0012 L1), through the subscription route (ADR-0016). Record every call's exact input and output, per role.
+4. **Compute the cost:**
+    - count each recorded input and output with Anthropic's token-counting endpoint. That needs the API account the live bot will need anyway. It is documented as free of charge; the spike confirms that before using it. If it isn't free, estimate at about 4 characters per token, with a ±20% margin;
+    - add a margin for the `reason` role's thinking tokens, which the subscription route doesn't expose. Use +100% of visible output for baseline and +50% for lean;
+    - determine the cached versus uncached split from the prompt structure: the stable prefix must be byte-identical across turns, which is checked deterministically;
+    - apply the API prices, and project the monthly cost at 200 and 430 cases using the owner's case mix: 75% rules questions, 25% disputes (owner's estimate, 2026-09-25).
+5. **Latency** measured on the subscription route is indicative only. Real API latency is confirmed from the ledger in the first live cases (ADR-0016 §7).
+6. Check the answers against the scenario's expected ruling and citations. A cheap run that gets the ruling wrong counts as a fail for that routing.
 
 **Pass criteria:**
 
-- The mean cost per case for the mix is ≤ $0.10 on at least one routing that gets all three cases right, and the projection at 430 cases a month is ≤ $20 on that routing (with ladder levels allowed), or the report states the monthly volume at which the cap is reached.
-- p90 reply latency ≤ 9 s (NFR-LAT-1), with a typing indicator shown during the `reason` step.
-- The prompt-cache hit rate on warm Haiku turns is ≥ 80% of the prefix tokens.
+- The computed mean cost per case for the mix, margins included, is ≤ $0.10 on at least one routing that gets all three cases right, and the projection at 430 cases a month is ≤ $20 on that routing (with ladder levels allowed). Otherwise the report states the monthly volume at which the cap is reached.
+- Indicative p90 reply latency ≤ 9 s (NFR-LAT-1), with a typing indicator shown during the `reason` step. This is confirmed on the live bot.
+- The stable prompt prefix on warm Haiku turns is byte-identical and above Haiku's minimum cacheable length, so that ≥ 80% of prefix tokens would be cache reads.
 
 **Fail:** no routing is both correct and within budget. The report then quantifies the gap and lists the options: a cheaper `reason` model with more verification, a bigger share of deterministic answers, a TO's own key, or a budget change. Choosing among them is the owner's decision.
 
-**Time box:** 4 working days. Model spend is capped at **$5**, from the build/eval budget. The estimate is about 30 case runs at $0.04–0.10 each, about $3, and the owner asked for build and evaluation to be much cheaper.
+**Time box:** 4 working days. **Paid spend: $0.** About 30 case runs on the owner's Pro plan, within its usage limits.

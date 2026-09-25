@@ -4,7 +4,7 @@ Status: Proposed · Date: 2026-09-25 · Requirements: NFR-COST-1, NFR-COST-2, R2
 
 ## Context
 
-The runtime cap is $20 a month (NFR-COST-1). With the owner's case-mix estimate (75% rules questions), the lean routing fits the cap at the top of pilot volume and the baseline routing doesn't (ARCHITECTURE.md §9). The product owner confirmed on 2026-09-25 that build and evaluation spend is a **separate budget**, not yet sized (OQ-24). NFR-COST-2 asks the architect to propose how costs are kept under the cap.
+The runtime cap is $20 a month (NFR-COST-1). With the owner's case-mix estimate (75% rules questions), the lean routing fits the cap at the top of pilot volume and the baseline routing doesn't (ARCHITECTURE.md §9). The product owner decided on 2026-09-25 that build and evaluation run on the owner's **Claude Pro subscription**, with no paid API spend (OQ-24, ADR-0016). The ledger therefore governs runtime spend only. NFR-COST-2 asks the architect to propose how costs are kept under the cap.
 
 ## Decision
 
@@ -21,7 +21,7 @@ The runtime cap is $20 a month (NFR-COST-1). With the owner's case-mix estimate 
 
 4. **Bring-your-own key (NFR-COST-2 option):** the event context may hold a TO-supplied API key, stored encrypted. Spend on that key is tracked separately and doesn't count toward the owner's cap. It is not built in the MVP, but the ledger's `payer` field keeps it possible.
 5. **Rate limit** per player per event, against abuse: at most N open question-cases per player per hour, configurable.
-6. **Build and eval spend** runs through the Batch API (50% off) and the eval response cache (ADR-0013). It goes to the `build-eval` scope and is reported per pipeline run. It never touches the runtime cap. Before any run, the pipeline prints its estimated cost; runs above a configurable threshold need the owner's confirmation. The owner asked (2026-09-25) for build and evaluation to be much cheaper than the first estimate.
+6. **Build and eval** make no paid API calls (ADR-0016). Eval runs still record token counts under the `build-eval` scope, as information about usage-limit consumption, never as spend. The live bot's API key is configured only in the bot, never in the pipeline or eval environment.
 
 ## Consequences
 

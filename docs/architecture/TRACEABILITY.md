@@ -62,7 +62,7 @@ Status: Proposed · Date: 2026-09-25 · Covers every FR (PRD §6) and NFR (PRD �
 | NFR-AVAIL-1 | Case orchestrator; TicketSource; host | Event log, catch-up on startup, restart policy | 0003, 0011 | S2, I |
 | NFR-LAT-1 | LlmPort routing; Discord adapter | Haiku on most turns; typing indicator; measured | 0002 | S3 |
 | NFR-I18N-1 | Locale catalogs; Knowledge (glossary); Verifier | No strings in code; protected glossary | 0014 | U (lint for string literals), R |
-| NFR-PRIV-1 | CaseStore (retention, deletion); LlmPort (pseudonymisation); Voice adapter (consent) | 7-day deletion, Admin delete command, seat labels in prompts, voice consent | 0002, 0004, 0015 | U, I; processor question is OQ-23 |
+| NFR-PRIV-1 | CaseStore (retention, deletion); LlmPort (pseudonymisation); Voice adapter (consent) | 7-day deletion, Admin delete command, seat labels in prompts, voice consent | 0002, 0004, 0015 | U, I; third-party processing accepted by the owner (OQ-23) |
 | NFR-VER-1 | CaseStore; Knowledge (manifest) | `systemVersion` and `bundleVersion` on every case event | 0004, 0007, 0011 | U |
 | NFR-TECH-1 | All | TypeScript; Anthropic behind `LlmPort` | 0001, 0002 | R, adapter conformance tests |
 | NFR-EXT-1 | Ports and adapters; Knowledge (IDs for format/REL/framework) | Nothing hard-coded in `core` | 0001, 0007, 0010 | R, U (dependency-rule check) |

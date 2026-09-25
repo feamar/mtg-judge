@@ -8,7 +8,7 @@ At run time the AI only understands what players say, picks the matching procedu
 
 ## Options considered
 
-- **Anthropic Claude (chosen).** Structured outputs and strict tool schemas, prompt caching, a Batch API at 50% off for build and eval runs, and a range of price points in one family (Haiku 4.5 at $1/$5 per million input/output tokens, Sonnet 5 at $2/$10, Opus 5 at $5/$25). Good at the long, careful reading of rules text that a ruling needs.
+- **Anthropic Claude (chosen).** Structured outputs and strict tool schemas, prompt caching, and a range of price points in one family (Haiku 4.5 at $1/$5 per million input/output tokens, Sonnet 5 at $2/$10, Opus 5 at $5/$25). Good at the long, careful reading of rules text that a ruling needs.
 - **Another hosted provider.** Viable; the port keeps this open. There's no reason to prefer one now that outweighs the value of one well-understood provider during the pilot.
 - **Self-hosted open-weight model on the owner's machine.** $0 marginal cost, but accuracy on multi-step CR reasoning is the main risk to NFR-ACC-1, and the owner's machine may not have the GPU for it. It stays possible later through the port (D31, on-device inference).
 
@@ -23,7 +23,7 @@ At run time the AI only understands what players say, picks the matching procedu
 | `investigate` | Choosing the next question from the candidates the engine computed, and wording it | `claude-haiku-4-5` | The engine has already narrowed the choice (ADR-0008) |
 | `reason` | Building the source → proposition → consequence chain for a rules answer or a ruling | `claude-sonnet-5`, adaptive thinking, effort tuned by spike S3 | The accuracy-critical step |
 | `phrase` | Turning a verified ruling into the player-facing reply in the chosen delivery pattern | `claude-haiku-4-5` | Input already fixed and verified |
-| `build-*` | Pipeline extraction (procedures, concept tags, mnemonic drafts) and golden-case drafting | `claude-opus-5` through the Batch API | Runs rarely, offline, 50% off |
+| *(build and test)* | Pipeline drafting (procedures, concept tags, mnemonics) and golden-case writing and replays | Not through `LlmPort` at run time; Claude Code on the owner's Pro subscription | ADR-0016: no paid API spend for build and test |
 
 3. **Prompt caching:** each role has a stable prefix (instructions, output schema, glossary, framework summary) above one cache breakpoint. Volatile case data goes after it. The Haiku prefixes are kept above Haiku's 4,096-token minimum cacheable prefix, or caching is switched off for that role.
 4. **No provider-specific features in the ruling path** beyond what the port abstracts: structured output, caching hints, and an effort level. Adapter conformance tests run the same fixtures against any adapter.
@@ -33,8 +33,9 @@ At run time the AI only understands what players say, picks the matching procedu
 
 - The model mix is the biggest cost lever. It is set in config and measured by spike S3 against the budget; the cost model is in ARCHITECTURE.md §9.
 - Replacing the provider means writing one adapter, passing the conformance tests, and re-running the golden set (the release gate, FR-BUILD-3).
-- Player messages are sent to a third-party processor. Whether that processor's own retention fits D39 is a product-owner question (OQ-23).
+- Player messages, pseudonymised with seat labels, are sent to a third-party processor whose own retention may exceed D39's 7 days and which may process them outside the EU. **The owner accepted this on 2026-09-25 (answer to OQ-23).** A short privacy notice for players is recommended (ARCHITECTURE.md §10).
+- Only the live bot uses the paid API. Build and test run on the owner's Pro subscription (ADR-0016).
 
 ## Revisit when
 
-Spike S3 shows that the default mix can't meet NFR-COST-1 or NFR-LAT-1; the golden set shows the `reason` role needs a stronger model; or the answer to OQ-23 rules out a non-EU processor.
+Spike S3 shows that the default mix can't meet NFR-COST-1 or NFR-LAT-1; the golden set shows the `reason` role needs a stronger model.
