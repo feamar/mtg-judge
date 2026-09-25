@@ -11,7 +11,7 @@ There is a Discord detail that matters here: **a thread belongs to a parent text
 - (a) a new *private channel* per ticket, under a category;
 - (b) a new *private thread* per ticket, under a fixed channel.
 
-FR-INT-1 and FR-CTX-1 mention both "thread" and "category". **Owner's answer to OQ-22 (2026-09-25): the ticket bot creates a thread per ticket**, which is pattern (b). The bot's name (OQ-21) is still needed.
+FR-INT-1 and FR-CTX-1 mention both "thread" and "category". **Owner's answer to OQ-22 (2026-09-25): the ticket bot creates a thread per ticket**, which is pattern (b). The bot's display name is "Ticket Bot" (OQ-21). That name is generic, so the event context identifies it by its Discord user ID (`ticketBotUserId` in the source config), never by name.
 
 ## Decision
 

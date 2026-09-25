@@ -6,7 +6,7 @@ The architect role may only add open questions to the PRD; it doesn't change req
 | --- | --- | --- | --- |
 | OQ-20 | Zero or one addendum per event, amending the MTR, the IPG, or both? | **Yes, confirmed.** | ADR-0007 §6; TRACEABILITY NG4 |
 | OQ-22 | Ticket bot: a channel per ticket, or a thread per ticket? | **A thread per ticket.** The event context's "ticket category" field therefore holds the parent channel the threads are opened under. | ADR-0010 |
-| OQ-21 | Name of the ticket bot | *Still open.* Needed before spike S2. | — |
+| OQ-21 | Name of the ticket bot | **"Ticket Bot"** (the owner's reading of its name). Several public bots have similar generic names, so spike S2 identifies it by its Discord user ID and records its actual thread format. | ADR-0010; SPIKES S2 |
 | OQ-23 | Is sending pseudonymised player text to a non-EU AI provider with its own retention acceptable? | *Still open.* The owner is unsure (answer cut off: "I don…"). | ADR-0002 |
 | OQ-24 | Size of the separate build/eval budget | *Number still open.* The owner's direction: "This should not be that expensive. We need to make it way cheaper." | ADR-0013 §6; ARCHITECTURE.md §9.1; SPIKES S3 cap lowered to $5 |
 | OQ-25 | Share of rules questions vs. disputes | **About 75% rules questions.** | ARCHITECTURE.md §9; SPIKES S3 |

@@ -46,7 +46,9 @@ Running order: **S2 → S3 → S1.** S2 unblocks the MVP's only input path. S3 d
 
 **Question:** can the judge detect every ticket the owner's existing ticket bot opens, parse the description and participants, join or post in it, and pick up tickets opened while the judge was offline?
 
-**Prerequisite from the product owner:** the name of the ticket bot (OQ-21), and a test server (or test category) where the bot can be installed with the same configuration as the live server.
+**Known:** the owner's server uses a bot shown as "Ticket Bot", which creates **a thread per ticket** (OQ-21, OQ-22). Step 2 records its Discord user ID, and records exactly what it posts.
+
+**Prerequisite from the product owner:** a test server (or a test channel), with "Ticket Bot" installed and configured the same way as on the live server.
 
 **Method:**
 
