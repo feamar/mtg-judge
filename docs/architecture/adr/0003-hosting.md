@@ -21,7 +21,7 @@ The bot must run around the clock, but brief restarts are acceptable if tickets 
     - a scheduled `retention` job (it may run inside `bot`);
     - an optional `stt` sidecar, only if voice ships.
     - Restart policy: `unless-stopped`. The stack starts when the machine boots.
-- **Outbound connections only.** The Discord gateway, the AI provider, and Scryfall bulk downloads are all outbound. No port is opened on the owner's router. That rules out a public web URL in the MVP; see OQ-28 on the event-context share link (FR-CTX-4).
+- **Outbound connections only.** The Discord gateway, the AI provider, and Scryfall bulk downloads are all outbound. No port is opened on the owner's router. That rules out a public web URL in the MVP. The owner accepted a join code as the FR-CTX-4 share link (answer to OQ-28, 2026-09-25).
 - **Portability:** the same compose file runs unchanged on a VPS. Moving later is a copy of the data volume plus `docker compose up`.
 - **Secrets** (Discord token, API key) live in an env file outside the repository, readable only by the owner's account.
 - **Backups:** a nightly copy of the knowledge bundle and the runtime database to a second disk. Case records in the backups also expire after 7 days (D39).

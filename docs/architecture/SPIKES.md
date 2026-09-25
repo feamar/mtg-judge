@@ -93,7 +93,7 @@ Running order: **S2 → S3 → S1.** S2 unblocks the MVP's only input path. S3 d
     - (b) a rules interaction: *Faerie Mastermind / Smothering Tithe / Orcish Bowmasters APNAP*, a validated scenario;
     - (c) a dispute: *The One Ring / Carpet of Flowers*, a validated scenario, played by the owner or scripted replies, through to a ruling or a handoff.
 3. Run each case 5 times on the **baseline** routing and 5 times on the **lean** routing (ADR-0012 L1). Log tokens by role, cached versus uncached, and latency per reply.
-4. Compute the cost per case, and project the monthly cost at 200 and 430 cases using the owner's case mix (OQ-25), or 60/40 if OQ-25 is still open.
+4. Compute the cost per case, and project the monthly cost at 200 and 430 cases using the owner's case mix: 75% rules questions, 25% disputes (owner's estimate, 2026-09-25).
 5. Check the answers against the scenario's expected ruling and citations. A cheap run that gets the ruling wrong counts as a fail for that routing.
 
 **Pass criteria:**
@@ -104,4 +104,4 @@ Running order: **S2 → S3 → S1.** S2 unblocks the MVP's only input path. S3 d
 
 **Fail:** no routing is both correct and within budget. The report then quantifies the gap and lists the options: a cheaper `reason` model with more verification, a bigger share of deterministic answers, a TO's own key, or a budget change. Choosing among them is the owner's decision.
 
-**Time box:** 4 working days. Model spend is capped at $15, from the build/eval budget (OQ-24).
+**Time box:** 4 working days. Model spend is capped at **$5**, from the build/eval budget. The estimate is about 30 case runs at $0.04–0.10 each, about $3, and the owner asked for build and evaluation to be much cheaper.

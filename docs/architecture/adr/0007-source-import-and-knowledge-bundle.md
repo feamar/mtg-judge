@@ -58,4 +58,6 @@ AI drafting runs through the Batch API. Every AI-derived record is stored with `
 
 - A citation is always `sectionId @ bundleVersion`, so a ruling from last week can be checked against the exact text it used.
 - Adding a new framework is a data task (importer + edits + procedures + golden cases), not an engine change (NFR-EXT-1).
-- The review load per rebuild is real: every changed AI-derived artifact needs a look. Whether the owner reviews each procedure individually or relies on the golden gate is OQ-27.
+- **The owner reviews each AI-drafted procedure, penalty row, and addendum edit** before the first release (answer to OQ-27, 2026-09-25). After that, only the artifacts that changed in a rebuild are reviewed.
+    - A record moves from `ai-draft` to `reviewed` only by the owner's approval. A bundle with any `ai-draft` procedure or penalty row can't be released.
+    - The review queue presents each item next to the exact source sections it cites, so each review is a side-by-side check.

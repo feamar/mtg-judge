@@ -124,7 +124,7 @@ BundleManifest { bundleVersion, pipelineVersion, builtAt, docs: {docId, version,
 EventContext { eventId, guildId, name, format: "cEDH", rel: "Competitive", frameworkId, language: "en",
                judgeRoleId, toRoleId, judgeOnlyChannelId, playerChannelIds[],
                ticketSource: { id, config },               // ADR-0010, OQ-21/22
-               shareCode,                                  // FR-CTX-4, see OQ-28
+               shareCode,                                  // FR-CTX-4: a join code, used with /judge join <code> (owner, 2026-09-25)
                escalation: { confidenceThreshold, alwaysEscalate: CategoryId[] },   // OQ-7
                budget: { payer: "owner" | "to-key" } , createdBy, updatedAt }
 GuildRoleMapping { guildId, toRoleId, setByAdminUserId }   // FR-ADM-1, D40
@@ -311,26 +311,45 @@ See ADR-0003.
 | --- | --- | --- | --- |
 | Rules question | 1 Haiku cold + 1 Sonnet (Sonnet also words the answer) | $0.043 | $0.029 |
 | Dispute | 1 Haiku cold + 5 Haiku warm + 2 Sonnet + 1 Haiku warm (handoff or summary) | $0.103 | $0.075 |
-| **Mix: 60% questions, 40% disputes** (OQ-25) | | **$0.067** | **$0.048** |
+| **Mix: 75% questions, 25% disputes** (owner's estimate, 2026-09-25) | | **$0.058** | **$0.041** |
 
 | Monthly | 200 cases | 430 cases |
 | --- | --- | --- |
-| AI, baseline | $13.45 | $28.92 |
-| AI, lean | $9.53 | $20.49 |
-| Hosting | $0 extra (owner's machine, ADR-0003) | $0 extra |
-| Speech-to-text | $0 with local STT (ADR-0015); not budgeted otherwise | — |
-| **Total, baseline / lean** | **$13.45 / $9.53** | **$28.92 / $20.49** |
+| AI, baseline | $11.65 | $25.05 |
+| AI, lean | $8.15 | $17.52 |
+| Hosting | $0 extra (owner's desktop, ADR-0003) | $0 extra |
+| Speech-to-text | $0 (local only, ADR-0015) | $0 |
+| **Total, baseline / lean** | **$11.65 / $8.15** | **$25.05 / $17.52** |
 
 What this shows:
 
-1. At the **low end** of pilot volume the design fits NFR-COST-1 with room to spare.
-2. At the **high end** (about 430 cases a month), the baseline routing is about 45% over the cap, and even the lean profile is slightly over.
-3. What closes the gap:
-    - the cost governor's ladder (ADR-0012);
-    - a larger share of rules questions answered on the Haiku-first route;
-    - a measured case mix and number of turns (OQ-25; spike S3). Every assumption in the first table is a guess until S3 measures it;
-    - the product owner's choice of what happens when the cap is hit (OQ-26).
-4. **Build and eval spend is not included** (separate budget, OQ-24). For scale: replaying 1,000 golden cases with about 6 turns each through the Batch API, on the runtime routing plus a simulator, is roughly 1,000 × (≈$0.07 judge + ≈$0.02 simulator) × 0.5 ≈ **$45 per full replay**, before model-graded tone checks. That is why deterministic checks run on every commit and full replays run only at release.
+1. At the **low end** of pilot volume, both routings fit NFR-COST-1 with room to spare.
+2. At the **high end** (about 430 cases a month), the baseline routing is about 25% over the cap. The **lean** routing fits, at about $17.50.
+3. The cost governor (ADR-0012) therefore switches to lean automatically when spend runs ahead of the monthly allowance. At the cap itself, the judge keeps answering rules questions on the cheapest model and hands disputes to human judges (owner, 2026-09-25).
+4. Every figure in the first table is an assumption until spike S3 measures real cases.
+
+### 9.1 Build and evaluation cost
+
+The owner asked for this to be **much cheaper** than the first estimate of about $45 per full golden run. The size of the budget is still open (OQ-24). The harness (ADR-0013) now avoids model calls wherever the answer can be computed:
+
+| Lever | Effect |
+| --- | --- |
+| **Scripted player answers.** The engine asks for a `factId` (ADR-0008), so the harness answers from the case's fact sheet using a template. No model plays the players. | Removes the simulator cost completely |
+| **Response cache.** Every model call during eval is keyed by a hash of (model, prompt version, exact input). An unchanged call returns the recorded response. | A change to one role re-runs only that role's calls, and only in the cases it touches |
+| **Affected cases only.** A bundle change re-runs only the cases that cite a changed section, card, or procedure. A prompt change re-runs only the calls of that role. | Normal releases touch a small fraction of cases |
+| **Batch API** for every uncached call | 50% off |
+| **Deterministic graders first.** Tone is linted deterministically on every case, and graded by a model only on a 10% sample plus every failing case. | Model grading becomes a rounding error |
+| **Deterministic checks in CI** (retrieval recall, citations resolve, penalty lookups, schema) | $0 per commit |
+
+| Run | When | Estimated cost |
+| --- | --- | --- |
+| CI checks | Every commit | $0 |
+| Typical release (source update, some prompts changed) | Each release | about $1–5 |
+| Full uncached replay of ~1,000 cases (75/25 mix, Batch API) | Only when the model or the provider changes | about $20 on lean routing, about $29 on baseline |
+| Initial knowledge build (draft about 50 procedures and penalty rows, tag concepts across the CR, MTR, and IPG) | Once | about $10 |
+| Incremental rebuild (only changed sections are re-derived) | Per new source version | under $1 |
+
+These are estimates and should be confirmed by spike S3 and by the first pipeline run.
 
 ## 10. Security and privacy (NFR-PRIV-1, D39)
 
@@ -352,6 +371,6 @@ What this shows:
 | Procedure quality: a wrong decisive-fact set gives confident wrong rulings | Procedures cite their sections; golden variants per branch; review (OQ-27); the verifier checks the facts were established |
 | The concept index misses a section, so the model reasons without the deciding rule | Retrieval recall is tested in CI against required citations; lexical-fallback use is logged |
 | Home-host outage during an event | Catch-up on restart (ADR-0011). An owner-channel alert on the next startup. Moving to a VPS is a copy. |
-| The high end of the cost range exceeds the cap | §9, ADR-0012, spike S3, OQ-25/26 |
+| Baseline routing exceeds the cap at the high end of pilot volume | The lean routing fits (§9); ADR-0012 switches to it automatically; spike S3 measures |
 | Host OS without security updates (Windows 10 after 13 October 2026), accepted by the owner for the pilot | Outbound-only networking, 7-day retention, seat labels in prompts, secrets readable only by the owner; reviewed before wider use (ADR-0003) |
 | Discord voice receive changes or is unsupported | Voice is isolated in one adapter; spike S1 first (R4) |

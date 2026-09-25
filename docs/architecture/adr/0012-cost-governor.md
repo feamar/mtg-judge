@@ -4,7 +4,7 @@ Status: Proposed · Date: 2026-09-25 · Requirements: NFR-COST-1, NFR-COST-2, R2
 
 ## Context
 
-The runtime cap is $20 a month (NFR-COST-1). The product owner confirmed on 2026-09-25 that build and evaluation spend is a **separate budget**, not yet sized (OQ-24). NFR-COST-2 asks the architect to propose how costs are kept under the cap.
+The runtime cap is $20 a month (NFR-COST-1). With the owner's case-mix estimate (75% rules questions), the lean routing fits the cap at the top of pilot volume and the baseline routing doesn't (ARCHITECTURE.md §9). The product owner confirmed on 2026-09-25 that build and evaluation spend is a **separate budget**, not yet sized (OQ-24). NFR-COST-2 asks the architect to propose how costs are kept under the cap.
 
 ## Decision
 
@@ -17,11 +17,11 @@ The runtime cap is $20 a month (NFR-COST-1). The product owner confirmed on 2026
 | L0 Normal | ≤ 100% | Default model routing |
 | L1 Lean | > 100% | `reason` runs at lower effort, retrieval context is trimmed, the Haiku-first route is used for rules questions tagged simple by the concept index |
 | L2 Essential | > 120%, or 85% of the full monthly cap spent | Only dispute rulings and rules questions; no deep "outside a game" explanations (FR-Q-5); the verifier retry is dropped (a failure escalates instead) |
-| L3 Cap reached | 100% of the cap spent | **Waiting on OQ-26.** The proposed default is to hand every new case to human judges with the intake facts gathered (FR-ESC-2), and tell players neutrally that a human judge will take it. |
+| L3 Cap reached | 100% of the cap spent | **Owner's answer to OQ-26 (2026-09-25): questions only.** Rules questions are still answered, with every role on the cheapest model (Haiku). Disputes are handed to human judges with the intake facts gathered (FR-ESC-2), and players are told neutrally that a human judge will take it. Spend at L3 is still recorded, so the owner can see any overrun. |
 
 4. **Bring-your-own key (NFR-COST-2 option):** the event context may hold a TO-supplied API key, stored encrypted. Spend on that key is tracked separately and doesn't count toward the owner's cap. It is not built in the MVP, but the ledger's `payer` field keeps it possible.
 5. **Rate limit** per player per event, against abuse: at most N open question-cases per player per hour, configurable.
-6. **Build and eval spend** runs through the Batch API (50% off). It goes to the `build-eval` scope and is reported per pipeline run. It never touches the runtime cap.
+6. **Build and eval spend** runs through the Batch API (50% off) and the eval response cache (ADR-0013). It goes to the `build-eval` scope and is reported per pipeline run. It never touches the runtime cap. Before any run, the pipeline prints its estimated cost; runs above a configurable threshold need the owner's confirmation. The owner asked (2026-09-25) for build and evaluation to be much cheaper than the first estimate.
 
 ## Consequences
 

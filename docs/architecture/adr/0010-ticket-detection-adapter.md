@@ -11,7 +11,7 @@ There is a Discord detail that matters here: **a thread belongs to a parent text
 - (a) a new *private channel* per ticket, under a category;
 - (b) a new *private thread* per ticket, under a fixed channel.
 
-FR-INT-1 and FR-CTX-1 mention both "thread" and "category". Which pattern the owner's bot uses is still open (OQ-21, OQ-22).
+FR-INT-1 and FR-CTX-1 mention both "thread" and "category". **Owner's answer to OQ-22 (2026-09-25): the ticket bot creates a thread per ticket**, which is pattern (b). The bot's name (OQ-21) is still needed.
 
 ## Decision
 
@@ -27,7 +27,8 @@ TicketInfo { containerRef, reporterUserIds[], mentionedUserIds[], description, o
 ```
 
 - The **event context** stores `ticketSource: { id, config }`. For example: category ID for pattern (a); parent channel ID for pattern (b); title regex; ticket bot user ID.
-- The MVP ships **both generic sources**. OQ-21 will tell us which config the owner's bot needs, possibly with a parser specific to that bot.
+- The MVP ships **only the thread source** (`discord-private-thread`), because that's what the owner's server uses. The channel-in-category source is a later plugin for other servers; the interface already allows it. OQ-21 (the bot's name) tells us whether a parser specific to that bot is needed.
+- The event context's "ticket category" field (FR-CTX-1) is filled with the **parent channel** that the ticket bot opens threads under. That is how the PRD field applies to the thread pattern; see OQ-22.
 - **`parse` may return `"not-yet"`:** many ticket bots post the description a moment after the container is created, or only after the player fills in a form. The adapter waits for the first message by the ticket bot or the reporter, up to a configurable timeout.
 
 **Required Discord permissions:**

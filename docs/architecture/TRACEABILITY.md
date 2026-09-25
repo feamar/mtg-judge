@@ -11,7 +11,7 @@ Status: Proposed · Date: 2026-09-25 · Covers every FR (PRD §6) and NFR (PRD �
 | FR-CTX-1 | Event context & roles; Discord adapter (slash commands) | `EventContext` fields; TO-role check on create and edit | — | U, I |
 | FR-CTX-2 | Case orchestrator; Event context | No context → rules-question path only, plus the catalog message | — | G, U |
 | FR-CTX-3 | Event context (schema); Knowledge (answers only) | No pairing/standing/timer entities exist; MTR procedure answers only | — | R, U |
-| FR-CTX-4 | Event context | `shareCode`; guild membership gives automatic context; read-only link | — | U; form of link is OQ-28 |
+| FR-CTX-4 | Event context; Discord adapter | Guild membership gives the context automatically; elsewhere a read-only join code (`/judge join <code>`), per the owner's 2026-09-25 answer to OQ-28 | — | U, I |
 | FR-ADM-1 | Event context & roles | Global Admin user ID in config; `GuildRoleMapping` | — | U, I |
 | FR-INT-1 | TicketSource plugins; Discord adapter | Detect, parse, and join the existing bot's containers; pluggable per context | 0010 | S2, I |
 | FR-INT-2 | Discord adapter; Case orchestrator | Author → `Participant.seat` on every message | 0011 | G, U |

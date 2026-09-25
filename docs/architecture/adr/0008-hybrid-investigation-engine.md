@@ -61,5 +61,5 @@ The model's own rating is recorded, but it can only *lower* confidence. The thre
 
 - The FR-INV-2 AC ("asked for each required fact before ruling") becomes a check on the case log, testable without a model.
 - NFR-IMP-1 is helped structurally: facts are keyed by seat role, not by who said them, and the branch predicate doesn't care about wording or order.
-- Procedure quality is now the critical build artifact. Procedures are AI-drafted from the IPG and addenda, then reviewed (OQ-27). The golden set is their main test.
+- Procedure quality is now the critical build artifact. Procedures are AI-drafted from the IPG and addenda, then reviewed one by one by the owner (answer to OQ-27, ADR-0007). The golden set is their main test.
 - Cases that fit no procedure (novel disputes) still work: the hypothesis set stays on rules-question reasoning, and the ordinary escalation rules apply.
