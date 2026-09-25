@@ -62,6 +62,17 @@ AnswerStrategy { strategyId, intent /* "does-X-trigger-Y", "how-much-mana", "who
 5. **The owner approves** the strategy (OQ-27).
 6. **Feed back:** live `LibraryMiss` logs and exported cases (FR-LOG-3) become new scenarios, and the loop starts again.
 
+**4. Historical corpus intake.** The owner is exporting about 2,000 answered questions from the cEDH league's ticket bot history (2026-09-25). The intake runs in this order:
+
+1. **Private storage.** The raw export is **never** committed to this repository, which is public on GitHub. It is kept in a folder outside the repository, or in a separate private repository.
+2. **Held-out split first**, before any AI session reads the data:
+    - a random ~20% is set aside as held-out, stored separately and read only by release test runs (ADR-0013);
+    - the split is recorded as a list of IDs, with no content.
+3. **Pseudonymisation by script.** Discord names, IDs, and mentions become `P1`…`Pn` and `J1`…`Jn`, and message links are removed. This is deterministic, with no AI.
+4. **Deterministic triage.** The card resolver and lexicon tag each question with its cards, intent, and rules-question vs dispute. Frequency counts give the order in which scenario families are written, and the measured case mix (OQ-25).
+5. **Answers are candidates.** Historical answers seed the expected answer of a scenario, but stay SOURCE CHECK REQUIRED until the owner validates them (D23, §8).
+6. **Spike S3's 30 texts** are drawn from the non-held-out part.
+
 ## Consequences
 
 - **Coverage grows by strategy, not by card pair.** That should push the hit rate up much faster, and AI spend down (ARCHITECTURE.md §9).
