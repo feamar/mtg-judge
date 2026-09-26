@@ -72,6 +72,7 @@ AnswerStrategy { strategyId, intent /* "does-X-trigger-Y", "how-much-mana", "who
 4. **Deterministic triage.** The card resolver and lexicon tag each question with its cards, intent, and rules-question vs dispute. Frequency counts give the order in which scenario families are written, and the measured case mix (OQ-25).
 5. **Answers are candidates.** Historical answers seed the expected answer of a scenario, but stay SOURCE CHECK REQUIRED until the owner validates them (D23, §8).
 6. **Spike S3's 30 texts** are drawn from the non-held-out part.
+7. **Retention (owner, 2026-09-26, OQ-31):** the raw export is deleted once the pseudonymised scenarios have been made from it. That includes the held-out part, which is then kept only in its pseudonymised form. The TO agreed to the use. There is no player notice and no opt-out.
 
 ## Consequences
 
