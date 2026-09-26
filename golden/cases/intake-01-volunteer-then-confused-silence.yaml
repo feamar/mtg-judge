@@ -23,7 +23,7 @@ input:
 expect:
   kind: dispute
   intent: missed-trigger
-  answer: "Intake only: ends by silence; then the missed-trigger investigation (not scored in this case)."
+  answer: "Intake only: ends on the wrap-up phrase; then the missed-trigger investigation (not scored in this case)."
   intake:
     narrator: P1
     endedBy: wrap-up
