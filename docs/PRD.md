@@ -411,3 +411,6 @@ The **golden test set** is the definition of correct. It is the benchmark for ev
     - at **Regular REL (JAR)**, the judge may explain to a player that an action won't achieve what they seem to be trying to do.
 
   The PM should reflect this in FR-RUL-8 and in the tone rubric (OQ-18). The architecture already supports it with per-REL answer templates (ADR-0014).
+- [ ] **OQ-33.** *(Raised by the architect, 2026-09-26.)* The owner wants poorly written and transcribed questions to lead to answers as good and clean as for well-written ones, and wants this tested seriously (ADR-0018). What should the release gate require of the robustness suite? The architect proposes:
+    - **zero "confidently wrong"** results, where messy input is resolved to a different question without asking;
+    - thresholds, to be set by the owner, for **canonical accuracy** (messy input gives the same canonical question) and for the **clarification rate** (how often the judge has to ask), per noise severity level and for real human and speech variants.
