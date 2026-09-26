@@ -23,3 +23,11 @@ The architect role may only add open questions to the PRD; it doesn't change req
 | Strategies | How to get cheaper and better coverage | Owner's direction: "add a lot more scenarios, figure out what the proper answers to them are, derive a cheap way to encode those answering strategies and only have AI as a fallback", and "card knowledge can be a prefetch". | ADR-0017; ARCHITECTURE.md §0, §3.1, §4, §5.2 |
 | OQ-31 | Reusing league players' historical tickets | The owner asked the league's **TO**, who agreed and is helping get access to the ticket history. **No notice to players, no opt-out.** The **raw export is kept only until the pseudonymised scenarios have been made from it**, then deleted (2026-09-26). Pseudonymisation and private storage apply throughout. | ADR-0017 §4 |
 | Speech-to-text | Use the owner's ChatGPT subscription? | The owner has a ChatGPT subscription only, with **no OpenAI API access**. Voice transcription is **local-only** in the MVP. | ADR-0015; SPIKES S1 |
+
+## Process decisions (2026-09-26)
+
+| Topic | Decision | Effect |
+| --- | --- | --- |
+| End of the architecture phase | **The architecture phase does not end yet.** It continues until the test cases exist. This overrides the handover's approval gate ("the architecture phase ends only when he merges it"). | `arch/v1` stays unmerged; any PR for it is a draft. The exit criterion for the test cases is agreed separately. |
+| Merging into `main` | **The AI role performs every merge into `main` itself, but asks the product owner before each one.** | Proposed as an AGENTS.md change on branch `process/merge-policy`. |
+| Recreating `main` | The remote `main` branch had been deleted, and the default branch set to `prd/owner-answers-1`. At the owner's request the architect recreated `main` by fast-forwarding it to `prd/owner-answers-1` and pushing. | The owner should set GitHub's default branch back to `main`. |
