@@ -26,6 +26,7 @@ The architect role may only add open questions to the PRD; it doesn't change req
 | New scenarios | The Deflecting Swat / Necropotence and Pact of Negation / uncounterable questions | **Validated by the owner** (2026-09-26), and added to `golden/scenarios/` | golden/scenarios/INDEX.md |
 | Scenario citations | Check existing scenarios' citations against the CR effective 2026-09-25? | **Consider them checked** (2026-09-26). Validation statuses are unchanged. | golden/README.md |
 | Judge Lab import | Add 100 owner-verified CR scenarios (`judge-lab-regression-100.jsonl`) to the test base; the file recorded 98 as "ruling accepted, sources SOURCE CHECK REQUIRED". Mark those fully validated? | **Mark all 100 VALIDATED**, including source mappings (2026-09-26). | golden/cases/judge-lab-*.yaml; golden/import/; golden/tools/import-judge-lab.mjs |
+| Input robustness | How to standardise blurred human and speech-to-text input? | Owner (2026-09-26): testing this phase is important now and later; **"pretty bad text should lead to as good and clean an answer as possible"**. | ADR-0018; golden/tools/noisify.mjs; PRD OQ-33 |
 | Speech-to-text | Use the owner's ChatGPT subscription? | The owner has a ChatGPT subscription only, with **no OpenAI API access**. Voice transcription is **local-only** in the MVP. | ADR-0015; SPIKES S1 |
 
 ## Process decisions (2026-09-26)

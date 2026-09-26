@@ -212,6 +212,40 @@
             "type": "string"
           },
           "description": "Stated assumptions that count as supplied facts."
+        },
+        "variants": {
+          "type": "array",
+          "description": "Messy phrasings that must yield the same canonical question and identical answer (ADR-0018). Generated noise is not stored; it's produced by golden/tools/noisify.mjs at test time.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "text",
+              "kind"
+            ],
+            "properties": {
+              "text": {
+                "type": "string"
+              },
+              "kind": {
+                "enum": [
+                  "human",
+                  "stt"
+                ]
+              },
+              "origin": {
+                "type": "string",
+                "description": "e.g. league-export (pseudonymised), miss-log, owner, S1 recording id"
+              },
+              "expectClarification": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Slots the judge should ask about for this variant instead of resolving (e.g. an ambiguous nickname)."
+              }
+            }
+          }
         }
       }
     },
@@ -336,6 +370,36 @@
                 }
               },
               "consequence": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "canonical": {
+          "type": "object",
+          "description": "Expected canonical question (ADR-0018): what normalisation must produce from the clean input and every variant.",
+          "properties": {
+            "cards": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "intent": {
+              "type": "string"
+            },
+            "seats": {
+              "type": "object"
+            },
+            "stated": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "claims": {
+              "type": "array",
+              "items": {
                 "type": "string"
               }
             }

@@ -25,7 +25,7 @@ Status: Proposed · Date: 2026-09-25 · Covers every FR (PRD §6) and NFR (PRD �
 | FR-RUL-2 | Decision-graph engine; Escalation policy | `Dispute` with judgement-call basis, rule on agreed facts, or escalate | 0008 | G, U |
 | FR-RUL-3 | Ruling composer | `Ruling{decision, fixSteps, chain, explanation}` | 0008 | G |
 | FR-RUL-4 | Decision-graph engine | `Claim` versus `Fact{origin}`; assertions never become facts; verifier check | 0008 | G (Wheel/Tithe), U |
-| FR-RUL-5 | Case orchestrator | `Confirming` state before rulings that depend on reconstruction | 0008 | G |
+| FR-RUL-5 | Case orchestrator; Normaliser (read-back of the canonical question) | `Confirming` state before rulings that depend on reconstruction | 0008 | G |
 | FR-RUL-6 | Decision-graph engine | Several live candidates (entries, procedures), updated each turn | 0008 | G (One Ring AC) |
 | FR-RUL-7 | Decision-graph engine | Infraction from game-action facts only; integrity signals write to staff notes | 0008, 0009 | G (One Ring AC) |
 | FR-RUL-8 | Audience guard; approved templates; `reason` prompt; output lint | Templates reviewed for play advice; hidden-information and play-advice lint on everything sent | 0009 | G (Underworld Breach/LED), U |
@@ -67,7 +67,7 @@ Status: Proposed · Date: 2026-09-25 · Covers every FR (PRD §6) and NFR (PRD �
 | NFR-TECH-1 | All | TypeScript; Anthropic behind `LlmPort` | 0001, 0002 | R, adapter conformance tests |
 | NFR-EXT-1 | Ports and adapters; Knowledge (IDs for format/REL/framework) | Nothing hard-coded in `core` | 0001, 0007, 0010 | R, U (dependency-rule check) |
 | NFR-TONE-1 | Locale catalogs (approved templates) | Each template is checked once against the tone rubric (OQ-18) when approved; the `reason` fallback text is checked in AI set (b) | 0008, 0014 | R, AI set (b) |
-| NFR-IMP-1 | Decision-graph engine | Deterministic by construction: same facts → same branch; variant swaps in the golden set | 0008, 0013 | G (variants) |
+| NFR-IMP-1 | Decision-graph engine; Normaliser | Deterministic by construction: same facts → same branch. Wording variants (generated noise, human, speech) must yield the same canonical question and byte-identical answer | 0008, 0013, 0018 | G (variants); robustness suite |
 
 ## Principles and non-goals
 

@@ -96,6 +96,7 @@ flowchart LR
 | **TicketSource** | `adapters/discord/tickets` | Detect, parse, list, and track close/reopen of Tickets threads | 0010 |
 | **Voice adapter** | `adapters/discord/voice` | Only if spike S1 passes | 0015 |
 | **Case orchestrator** | `core/engine` | Case lifecycle (§5.1); folds `CaseEvent`s into state; per-case queue; catch-up | 0011 |
+| **Normaliser** | `core/engine` | Turns typed or transcribed text into a structured `CanonicalQuestion`: text normalisation, slot extraction (cards with phonetic matching, seats, claims, intent), confidence scoring, and a read-back to the player. Uncertain slots become choice questions; AI (`interpret`) only fills leftovers from closed lists | 0018 |
 | **Matcher** | `core/engine` | Finds the relevant graph deterministically: card resolver, concept/intent lexicon, then candidate `RulingEntry`s, `AnswerStrategy`s (through the mentioned cards' features), and `Procedure`s; asks a choice question when there are several candidates | 0005, 0008, 0017 |
 | **Decision-graph engine** | `core/engine` | For the live entries and procedures: facts with origin, disputes, branch evaluation, next decisive question, the guard | 0008 |
 | **Ruling composer** | `core/engine` | Fills the approved answer template for the selected branch; penalty from the table; fix steps from the branch; delivery pattern from the branch | 0008 |
@@ -199,6 +200,10 @@ Handoff       { summary, established[], disputed[], citations[], provisionalRead
 LibraryMiss   { caseId, question (pseudonymised), cards[], concepts[], aiAnswerRef }   // feeds the library
 ```
 
+### 3.3b Canonical question
+
+See ADR-0018. `CanonicalQuestion { raw, modality, cards[{oracleId, from, via, conf}], seats, intent, stated, claims, unresolved, confirmed }` is the only input the matcher sees. It is never rewritten prose.
+
 ### 3.4 Golden case
 
 ADR-0013. A golden case holds the **raw player text**, the **scripted choices** for each fact, and the expected outcome in the same IDs (`entryId`/`procedureId`, `branchId`, `SectionId`).
@@ -267,6 +272,9 @@ stateDiagram-v2
 **No event context on the server (FR-CTX-2):** only rules questions are answered. A dispute gets a template reply saying the judge can't rule here, and that a human judge should be called.
 
 ### 5.2 Matching (deterministic first)
+
+Matching runs on the **canonical question** produced by the normaliser (ADR-0018), after the player has confirmed the read-back.
+
 
 1. **Card resolver** (ADR-0005): exact, then normalised, then fuzzy card names found in the text. More than one plausible card gives a choice question: "Did you mean [Kinnan, Bonder Prodigy] [Kinnan, …]?" (FR-Q-2).
 2. **Lexicon:** player vocabulary ("wheel", "tithe", "forgot my trigger", "what is priority") is mapped to concepts, intents, and infractions. The lexicon is authored and approved at build time, and grows from `LibraryMiss` logs.
