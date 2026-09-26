@@ -1,0 +1,34 @@
+id: wheel-of-fortune-flare-smothering-tithe
+title: "Wheel of Fortune / Flare of Duplication / Smothering Tithe: missed triggers"
+narrative: golden/scenarios/wheel-of-fortune-flare-smothering-tithe.md
+family: investigation
+validation:
+  status: SOURCE_CHECK_REQUIRED
+  openPoints:
+    - "Which policy framework applied at the real call (MTRA, the Portuguese addendum, or plain IPG)? The remedy differs."
+    - "The current IPG 2.1 text (read 2026-09-26) has no explicit 'stack became empty' clause. Its remedy puts a missed trigger 'at the appropriate place on the stack if possible or on the bottom', and triggers missed before the current phase of the previous turn are dropped. Under the MTRA, the trigger isn't added if significant decisions were made based on it being missed. Owner to state which clause made 'did the stack become empty?' decisive."
+    - "Trigger count check: 2 opponents x 7 cards x 2 Wheels = 28, so the player's count may be right. It stays a claim to verify, not a fact."
+tagProposed: hard
+set: dev
+origin: owner-real-case
+sources: { cr: 2026-09-25, ipg: "blogs.magicjudges.org, read 2026-09-26" }
+context: { format: cEDH, rel: Competitive, framework: null, seats: 4, inGame: true }
+input:
+  raw:
+    - { seat: P1, text: "I cast Wheel of Fortune, copied it with Flare of Duplication, Horn exiled what I drew, then cast some spells, and now I realise I forgot my Smothering Tithe triggers. I have 28 missed triggers, can I still put them on the stack?" }
+  cards: ["Wheel of Fortune", "Flare of Duplication", "Smothering Tithe"]
+  choices:
+    opponentsInGame: 2
+    descriptionComplete: true
+    castWithFlashWhileStackOccupied: "owner to specify"
+    stackBecameEmpty: "owner to specify"
+expect:
+  kind: dispute
+  intent: missed-trigger
+  answer: "Treat '28 missed triggers' as a claim. Derive the count from the opponents still in the game (observed from the table stream). Establish whether the later spells were cast with flash while the stack was occupied, and whether the stack became empty after the triggers were missed. Apply the Missed Trigger remedy of the event's framework to that answer."
+  deciding: ["Number of opponents still in the game", "Whether the stack became empty"]
+  infraction: "Game Play Error — Missed Trigger"
+  requiredCitations: ["Oracle:Smothering Tithe", "CR:603.2", "CR:117.4", "IPG:2.1"]
+  requiredQuestions: [descriptionComplete, castWithFlashWhileStackOccupied, stackBecameEmpty]
+  forbiddenQuestions: [fullBoardState]
+  escalate: false

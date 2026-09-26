@@ -1,0 +1,30 @@
+id: forgotten-untap-same-turn
+title: "Forgotten untap discovered later in the same turn"
+narrative: golden/scenarios/forgotten-untap-same-turn.md
+family: investigation
+validation:
+  status: SOURCE_CHECK_REQUIRED
+  openPoints:
+    - "Checked on blogs.magicjudges.org (2026-09-26): IPG 2.5 has the partial fix 'forgot to untap permanents at the start of their turn and it is still the same turn: untap them'. Owner to validate."
+    - "Penalty and delivery pattern are missing from the narrative. Owner to add them; Game Rule Violation is normally a Warning at Competitive REL, to be confirmed against the current IPG."
+tagProposed: easy
+set: dev
+origin: chatgpt-package
+sources: { cr: 2026-09-25, ipg: "blogs.magicjudges.org, read 2026-09-26" }
+context: { format: cEDH, rel: Competitive, framework: null, seats: 4, inGame: true }
+input:
+  raw:
+    - { seat: P2, text: "Judge, P1 drew and started casting spells and now realises a land wasn't tapped during their untap step." }
+  choices:
+    meaningOfNotTapped: "It should have untapped but didn't"
+    stillSameTurn: true
+expect:
+  kind: dispute
+  intent: game-rule-violation
+  answer: "First clarify: 'not untapped' or 'not tapped'? If it should have untapped and it's still the same turn, apply the IPG 2.5 partial fix and untap it now. The draw and the later spells don't prevent this."
+  deciding: ["The meaning of the ambiguous statement", "It is still the same turn"]
+  infraction: "Game Play Error — Game Rule Violation"
+  fix: ["Untap the permanent(s) that should have untapped."]
+  requiredCitations: ["IPG:2.5"]
+  requiredQuestions: [meaningOfNotTapped, stillSameTurn]
+  escalate: false

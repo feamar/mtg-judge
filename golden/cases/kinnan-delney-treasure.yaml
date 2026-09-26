@@ -1,0 +1,25 @@
+id: kinnan-delney-treasure
+title: "Kinnan, Delney and Treasure"
+narrative: golden/scenarios/kinnan-delney-treasure.md
+family: mana
+variantOf: kinnan-deathrite-shaman
+validation:
+  status: SOURCE_CHECK_REQUIRED
+  openPoints:
+    - "Checked: Kinnan has power 2; Delney makes triggered abilities of creatures with power 2 or less trigger an additional time; CR 603.2d covers 'triggers an additional time'. Owner to validate."
+tagProposed: easy
+set: dev
+origin: chatgpt-package
+sources: { cr: 2026-09-25, oracle: scryfall@2026-09-26 }
+context: { format: cEDH, rel: Competitive, framework: null, seats: 4, inGame: true }
+input:
+  raw:
+    - { seat: P1, text: "Kinnan and Delney are out and I sac a Treasure for blue. How much mana do I get?" }
+  cards: ["Kinnan, Bonder Prodigy", "Delney, Streetwise Lookout"]
+expect:
+  kind: rules-question
+  intent: how-much-mana
+  answer: "Three blue. The Treasure's ability has {T} in its cost and is a mana ability, so the Treasure is tapped for mana and Kinnan triggers. Kinnan has power 2, so under Delney its trigger triggers an additional time: 1 + 1 + 1."
+  deciding: ["The Treasure's ability is a mana ability with {T} in its cost", "Kinnan's power is 2 or less"]
+  requiredCitations: ["Oracle:Kinnan, Bonder Prodigy", "Oracle:Delney, Streetwise Lookout", "CR:106.12", "CR:605.1a", "CR:603.2d"]
+  escalate: false

@@ -1,0 +1,25 @@
+id: pact-of-negation-uncounterable-spell
+title: "Pact of Negation: targeting a spell that can't be countered"
+narrative: golden/scenarios/pact-of-negation-uncounterable-spell.md
+family: targeting
+validation: { status: VALIDATED, by: Frank, on: 2026-09-26 }
+tagProposed: easy
+set: dev
+origin: owner-question
+sources: { cr: 2026-09-25, oracle: scryfall@2026-09-26 }
+context: { format: cEDH, rel: Competitive, framework: null, seats: 4, inGame: true }
+input:
+  raw:
+    - { seat: P1, text: "If a spell is uncounterable and I attempt to counter it with Pact of Negation, do I get the delayed trigger in my next upkeep? Or does Pact fizzle?" }
+  cards: ["Pact of Negation"]
+  choices:
+    targetStillLegalOnResolution: true
+    pactItselfCountered: false
+expect:
+  kind: rules-question
+  intent: counter-vs-uncounterable
+  answer: "Pact doesn't fizzle: the uncounterable spell is still a legal target, so Pact resolves; the counter does nothing; the upkeep trigger is created, so you pay {3}{U}{U} or lose. Contrast: if Pact is countered or its target is illegal on resolution, no trigger."
+  deciding: ["The target is still legal when Pact resolves", "Pact itself isn't countered"]
+  requiredCitations: ["Oracle:Pact of Negation", "Ruling:Pact of Negation@2021-03-19", "CR:608.2b", "CR:101.2", "CR:609.3", "CR:603.7a"]
+  mustNot: [play-advice]
+  escalate: false

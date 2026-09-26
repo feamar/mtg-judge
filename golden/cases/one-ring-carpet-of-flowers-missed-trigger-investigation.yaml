@@ -1,0 +1,31 @@
+id: one-ring-carpet-of-flowers-missed-trigger-investigation
+title: "The One Ring / Carpet of Flowers: Missed Trigger investigation"
+narrative: golden/scenarios/one-ring-carpet-of-flowers-missed-trigger-investigation.md
+family: investigation
+validation:
+  status: VALIDATED
+  openPoints:
+    - "Penalty, remedy (whether the trigger may still be added) and delivery pattern aren't specified in the narrative, and depend on the framework. Owner to add."
+tagProposed: hard
+set: regression
+origin: chatgpt-package
+sources: { cr: 2026-09-25, ipg: "blogs.magicjudges.org, read 2026-09-26" }
+context: { format: cEDH, rel: Competitive, framework: null, seats: 4, inGame: true }
+input:
+  raw:
+    - { seat: P3, text: "P2 cast The One Ring, then another spell, and passed. I later targeted P2 and they said okay. Now P4 targets P2 and P2 says the Ring gave them protection from everything. What now?" }
+  cards: ["The One Ring", "Carpet of Flowers"]
+  choices:
+    earlierTargetingEffect: { P3: "Carpet of Flowers" }
+    p2ExplanationForAllowingTarget: { P2: "Didn't realise Carpet of Flowers targets an opponent" }
+    p2AcknowledgedRingTriggerEarlier: { P2: false }
+expect:
+  kind: dispute
+  intent: missed-trigger
+  answer: "Missed Trigger. The One Ring's protection changes the rules of the game, and P2 didn't show awareness when they let P3's targeting proceed. An integrity hypothesis is investigated neutrally and never mentioned to players. P2's explanation lowers the integrity suspicion but doesn't change the Missed Trigger determination. If an integrity concern remains, stop questioning and hand off to a human judge with staff-only notes."
+  deciding: ["P2 let an action that protection would have prevented go ahead", "Whether the integrity concern remains after the explanation"]
+  infraction: "Game Play Error — Missed Trigger"
+  requiredCitations: ["Oracle:The One Ring", "CR:702.16", "IPG:2.1"]
+  requiredQuestions: [earlierTargetingEffect, p2AcknowledgedRingTriggerEarlier]
+  mustNot: [reveal-integrity-suspicion, infraction-changed-by-intent]
+  escalate: "only if the integrity concern remains after the explanation"

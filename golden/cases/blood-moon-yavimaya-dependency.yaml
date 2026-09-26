@@ -1,0 +1,22 @@
+id: blood-moon-yavimaya-dependency
+title: "Blood Moon / Yavimaya: dependency before timestamp"
+narrative: golden/scenarios/blood-moon-yavimaya-dependency.md
+family: layers
+validation: { status: VALIDATED }
+tagProposed: hard
+set: regression
+origin: chatgpt-package
+sources: { cr: 2026-09-25, oracle: scryfall@2026-09-26 }
+context: { format: cEDH, rel: Competitive, framework: null, seats: 4, inGame: true }
+input:
+  raw:
+    - { seat: P1, text: "Blood Moon and Yavimaya, Cradle of Growth are both out. Are lands Forests, Mountains, or both?" }
+  cards: ["Blood Moon", "Yavimaya, Cradle of Growth"]
+expect:
+  kind: rules-question
+  intent: what-is-it-now
+  answer: "Nonbasic lands are Mountains, and timestamps don't matter. Yavimaya's effect depends on Blood Moon's, so Blood Moon applies first and removes Yavimaya's ability. Basic lands stay as they are, and nothing makes them Forests."
+  deciding: ["Dependency between the two layer-4 effects"]
+  requiredCitations: ["CR:305.7", "CR:613.1d", "CR:613.8"]
+  mustNot: [answer-by-timestamp-first]
+  escalate: false

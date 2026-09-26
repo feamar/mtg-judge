@@ -1,0 +1,26 @@
+id: kinnan-selvala-current-oracle
+title: "Kinnan and Selvala: current Oracle text"
+narrative: golden/scenarios/kinnan-selvala-current-oracle.md
+family: mana
+variantOf: kinnan-deathrite-shaman
+validation:
+  status: SOURCE_CHECK_REQUIRED
+  openPoints:
+    - "The current CR 605.1a (2026-09-25) adds a criterion: a mana ability's cost and effect don't move any card to or from a library. Selvala's current Oracle text ends with 'Then each player draws a card', so it is not a mana ability. The narrative explains this via cards revealed from libraries; the deciding criterion is the draw. Owner to validate this reasoning."
+tagProposed: easy
+set: dev
+origin: chatgpt-package
+sources: { cr: 2026-09-25, oracle: scryfall@2026-09-26 }
+context: { format: cEDH, rel: Competitive, framework: null, seats: 4, inGame: true }
+input:
+  raw:
+    - { seat: P1, text: "With Kinnan out I tap Selvala and one nonland card is revealed. Do I get one mana or two?" }
+    - { seat: P1, text: "Why doesn't Kinnan add one?" }
+  cards: ["Kinnan, Bonder Prodigy", "Selvala, Explorer Returned"]
+expect:
+  kind: rules-question
+  intent: does-X-trigger-Y
+  answer: "One mana. Selvala's ability makes each player draw, which moves cards from a library, so under the current CR 605.1a it is not a mana ability. Tapping Selvala is not tapping it for mana, so Kinnan doesn't trigger. If asked why, the answer separates 'produces mana' from 'is a mana ability'."
+  deciding: ["The effect moves a card from a library, so it is not a mana ability"]
+  requiredCitations: ["Oracle:Kinnan, Bonder Prodigy", "Oracle:Selvala, Explorer Returned", "CR:605.1a", "CR:106.12"]
+  escalate: false

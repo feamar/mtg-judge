@@ -1,0 +1,21 @@
+id: blatant-thievery-seize-the-spotlight-player-leaves
+title: "Blatant Thievery / Seize the Spotlight: a player leaves"
+narrative: golden/scenarios/blatant-thievery-seize-the-spotlight-player-leaves.md
+family: layers
+validation: { status: VALIDATED }
+tagProposed: hard
+set: regression
+origin: chatgpt-package
+sources: { cr: 2026-09-25, oracle: scryfall@2026-09-26 }
+context: { format: cEDH, rel: Competitive, framework: null, seats: 4, inGame: true }
+input:
+  raw:
+    - { seat: P1, text: "P2 stole my Elf with Blatant Thievery, then P3 took it with Seize the Spotlight until end of turn. P2 just lost. Does my Elf come back to me now?" }
+  cards: ["Blatant Thievery", "Seize the Spotlight"]
+expect:
+  kind: rules-question
+  intent: who-controls
+  answer: "No. P2's control effect ends when P2 leaves, but P3's later Seize the Spotlight effect still applies, so P3 keeps control. When it expires at end of turn, no control effect remains and P1 gets the Elf back."
+  deciding: ["Which control effects still exist", "Their timestamps"]
+  requiredCitations: ["CR:613.1b", "CR:613.7", "CR:800.4a"]
+  escalate: false

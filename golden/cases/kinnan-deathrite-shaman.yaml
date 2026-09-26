@@ -1,0 +1,24 @@
+id: kinnan-deathrite-shaman
+title: "Kinnan and Deathrite Shaman"
+narrative: golden/scenarios/kinnan-deathrite-shaman.md
+family: mana
+validation:
+  status: SOURCE_CHECK_REQUIRED
+  openPoints:
+    - "The proposed citations were checked to exist in the CR of 2026-09-25 and against current Oracle text. Owner to validate."
+tagProposed: easy
+set: dev
+origin: chatgpt-package
+sources: { cr: 2026-09-25, oracle: scryfall@2026-09-26 }
+context: { format: cEDH, rel: Competitive, framework: null, seats: 4, inGame: true }
+input:
+  raw:
+    - { seat: P1, text: "I have Kinnan out and tap Deathrite to exile a land from a graveyard. One mana or two?" }
+  cards: ["Kinnan, Bonder Prodigy", "Deathrite Shaman"]
+expect:
+  kind: rules-question
+  intent: does-X-trigger-Y
+  answer: "One mana. Deathrite's first ability has a target, so it is not a mana ability. Tapping Deathrite for it is not tapping it for mana, so Kinnan doesn't trigger."
+  deciding: ["The ability requires a target, so it is not a mana ability"]
+  requiredCitations: ["Oracle:Kinnan, Bonder Prodigy", "Oracle:Deathrite Shaman", "CR:605.1a", "CR:106.12", "CR:106.12a"]
+  escalate: false

@@ -1,0 +1,22 @@
+id: blood-moon-urzas-saga
+title: "Blood Moon / Urza's Saga: type change and current Saga rules"
+narrative: golden/scenarios/blood-moon-urzas-saga.md
+family: layers
+validation: { status: VALIDATED }
+tagProposed: hard
+set: regression
+origin: chatgpt-package
+sources: { cr: 2026-09-25, oracle: scryfall@2026-09-26 }
+context: { format: cEDH, rel: Competitive, framework: null, seats: 4, inGame: true }
+input:
+  raw:
+    - { seat: P1, text: "Blood Moon and Urza's Saga are both out. What is the Saga now, does it get lore counters, and is it sacrificed?" }
+  cards: ["Blood Moon", "Urza's Saga"]
+expect:
+  kind: rules-question
+  intent: what-is-it-now
+  answer: "It's a nonbasic Enchantment Land — Mountain Saga with no chapter abilities. Under the current Saga rules, a Saga with no chapter abilities gets no lore counters and isn't sacrificed for that reason. If it enters under Blood Moon it can enter with no lore counters. If Blood Moon leaves, it regains its chapters."
+  deciding: ["Whether Blood Moon applies", "Whether the Saga has chapter abilities (current rules version)"]
+  requiredCitations: ["CR:305.7", "CR:613.1d", "CR:714.3a", "CR:714.4"]
+  escalate: false
+notes: "Sensitive to the rules version: older rulings say it is sacrificed. The expected answer is tied to CR 2026-09-25."

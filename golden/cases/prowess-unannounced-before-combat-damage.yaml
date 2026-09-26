@@ -1,0 +1,24 @@
+id: prowess-unannounced-before-combat-damage
+title: "Prowess: unannounced triggers before combat damage"
+narrative: golden/scenarios/prowess-unannounced-before-combat-damage.md
+family: investigation
+validation: { status: VALIDATED }
+tagProposed: easy
+set: regression
+origin: chatgpt-package
+sources: { cr: 2026-09-25, ipg: "blogs.magicjudges.org, read 2026-09-26" }
+context: { format: cEDH, rel: Competitive, framework: null, seats: 4, inGame: true }
+input:
+  raw:
+    - { seat: P3, text: "P1 cast four noncreature spells and never said anything about prowess. I blocked, and now they say their creature is +4/+4. Weren't those triggers missed?" }
+  choices:
+    earlierDemonstratedForgotten: false
+expect:
+  kind: dispute
+  intent: missed-trigger
+  answer: "No, not missed, provided the controller hadn't already shown they forgot. Prowess's P/T bonus is non-visible; under IPG 2.1 awareness only has to be shown the first time it visibly matters, such as combat damage. Attacking or letting a block happen doesn't show it was missed. The creature has +4/+4."
+  deciding: ["Whether the controller earlier showed the triggers were forgotten"]
+  infraction: "none"
+  requiredCitations: ["CR:702.108a", "CR:603.2", "IPG:2.1"]
+  requiredQuestions: [earlierDemonstratedForgotten]
+  escalate: false

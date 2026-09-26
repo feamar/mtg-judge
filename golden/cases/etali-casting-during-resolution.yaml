@@ -1,0 +1,26 @@
+id: etali-casting-during-resolution
+title: "Etali: casting spells during resolution"
+narrative: golden/scenarios/etali-casting-during-resolution.md
+family: timing
+validation:
+  status: VALIDATED
+  by: Frank
+  on: 2026-09-23
+  openPoints:
+    - "The scenario file says VALIDATED (2026-09-23); INDEX.md said SOURCE CHECK REQUIRED. Owner to confirm."
+tagProposed: easy
+set: regression
+origin: chatgpt-package
+sources: { cr: 2026-09-25, oracle: scryfall@2026-09-26 }
+context: { format: cEDH, rel: Competitive, framework: null, seats: 4, inGame: true }
+input:
+  raw:
+    - { seat: P1, text: "Etali's trigger exiled a creature, a sorcery and an artifact. Can I cast them all now, even the sorcery, and in what order do they go on the stack?" }
+  cards: ["Etali, Primal Conqueror"]
+expect:
+  kind: rules-question
+  intent: cast-during-resolution
+  answer: "Yes. Etali's resolving ability permits the casts, so no priority is needed and normal timing doesn't apply. Each spell is cast in the order the player chooses and goes on the stack above the still-resolving ability. Nobody gets priority between the casts; afterwards the active player gets priority."
+  requiredCitations: ["Oracle:Etali, Primal Conqueror", "CR:608.2g", "CR:117.2e", "CR:601.2", "CR:117.3b"]
+  mustNot: [play-advice]
+  escalate: false

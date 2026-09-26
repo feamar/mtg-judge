@@ -1,0 +1,23 @@
+id: silence-commander-discard-cleanup-priority
+title: "Silence / commander discard: cleanup priority from a state-based action"
+narrative: golden/scenarios/silence-commander-discard-cleanup-priority.md
+family: timing
+variantOf: silence-gitrog-cleanup-priority
+validation: { status: VALIDATED }
+tagProposed: easy
+set: regression
+origin: chatgpt-package
+sources: { cr: 2026-09-25, oracle: scryfall@2026-09-26 }
+context: { format: cEDH, rel: Competitive, framework: null, seats: 4, inGame: true }
+input:
+  raw:
+    - { seat: P2, text: "I'm Silenced this turn with eight cards in hand, one is my commander. If I discard my commander in cleanup, do I get priority after Silence ends?" }
+  cards: ["Silence"]
+expect:
+  kind: rules-question
+  intent: priority-in-cleanup
+  answer: "Yes. The commander is discarded to the graveyard; 'this turn' effects end (Silence stops); the state-based action that may move the commander to the command zone is performed, so the active player gets priority and spells can be cast. Another cleanup step follows."
+  deciding: ["Whether a trigger or SBA happens in cleanup"]
+  requiredCitations: ["CR:514.1", "CR:514.2", "CR:514.3a", "CR:903.9a"]
+  mustNot: [play-advice]
+  escalate: false

@@ -1,0 +1,27 @@
+id: faerie-mastermind-smothering-tithe-orcish-bowmasters-apnap-loop
+title: "Faerie Mastermind / Smothering Tithe / Orcish Bowmasters: APNAP repeated sequence"
+narrative: golden/scenarios/faerie-mastermind-smothering-tithe-orcish-bowmasters-apnap-loop.md
+family: triggers
+validation:
+  status: VALIDATED
+tagProposed: hard
+set: regression
+origin: chatgpt-package
+sources: { cr: 2026-09-25, mtr: current, oracle: scryfall@2026-09-26 }
+context: { format: cEDH, rel: Competitive, framework: null, seats: 4, inGame: true }
+input:
+  raw:
+    - { seat: P1, text: "It's P2's upkeep. I activate Faerie Mastermind for 2 with Training Grounds; everyone draws. P2 has Bowmasters and I have Tithe. My Tithe triggers go on top of the Bowmasters triggers, so I can loop Mastermind with the Treasures and net one each time, right?" }
+  cards: ["Faerie Mastermind", "Training Grounds", "Smothering Tithe", "Orcish Bowmasters"]
+  choices:
+    activeSeat: P2
+    p1NextAfterP2InTurnOrder: true
+    anyOpponentPaysForTithe: false
+expect:
+  kind: rules-question
+  intent: trigger-order-apnap
+  answer: "Yes, with P2 active. P2's three Bowmasters triggers go on the stack first (APNAP), then P1's three Tithe triggers above them, so the Tithe triggers resolve first. If nobody pays, P1 gets 3 Treasures, spends 2 to activate again and nets 1 per loop. Players still get priority normally; the loop can be proposed as a shortcut under MTR 4.2."
+  deciding: ["Who is the active player", "Turn order of the two controllers"]
+  requiredCitations: ["CR:603.3", "CR:603.3b", "CR:117", "MTR:4.2", "Oracle:Smothering Tithe", "Oracle:Orcish Bowmasters", "Oracle:Faerie Mastermind", "Oracle:Training Grounds"]
+  mustNot: [play-advice]
+  escalate: false
