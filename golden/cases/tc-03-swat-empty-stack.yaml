@@ -1,0 +1,22 @@
+id: tc-03-swat-empty-stack
+title: "Deflecting Swat with no spell or ability on the stack"
+family: targeting
+variantOf: deflecting-swat-necropotence-delayed-trigger
+validation: { status: SOURCE_CHECK_REQUIRED }
+tagProposed: easy
+set: dev
+origin: ai-generated
+sources: { cr: 2026-09-25, oracle: scryfall@2026-09-26 }
+context: { format: cEDH, rel: Competitive, framework: null, seats: 4, inGame: true }
+input:
+  raw:
+    - { seat: P1, text: "The stack is empty. Can I cast Deflecting Swat for free just to have cast a spell?" }
+  cards: ["Deflecting Swat"]
+expect:
+  kind: rules-question
+  intent: can-cast-without-target
+  answer: "No. Swat needs a target spell or ability, and it can't target itself. With nothing else on the stack there is no legal target, so it can't be cast."
+  deciding: ["Another spell or ability is on the stack"]
+  requiredCitations: ["Oracle:Deflecting Swat", "CR:601.2c", "CR:115.5"]
+  mustNot: [play-advice]
+  escalate: false

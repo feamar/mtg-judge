@@ -1,0 +1,22 @@
+id: tc-10-counterspell-abrupt-decay
+title: "Counterspell targeting Abrupt Decay"
+family: targeting
+variantOf: pact-of-negation-uncounterable-spell
+validation: { status: SOURCE_CHECK_REQUIRED }
+tagProposed: easy
+set: dev
+origin: ai-generated
+sources: { cr: 2026-09-25, oracle: scryfall@2026-09-26 }
+context: { format: cEDH, rel: Competitive, framework: null, seats: 4, inGame: true }
+input:
+  raw:
+    - { seat: P2, text: "Can I even cast Counterspell targeting Abrupt Decay? It says it can't be countered." }
+  cards: ["Counterspell", "Abrupt Decay"]
+expect:
+  kind: rules-question
+  intent: counter-vs-uncounterable
+  answer: "Yes, you can target it, and Counterspell resolves, but Abrupt Decay isn't countered and later resolves normally. 'Can't be countered' is not a targeting restriction."
+  deciding: ["'Can't be countered' vs a targeting restriction"]
+  requiredCitations: ["Oracle:Abrupt Decay", "Ruling:Abrupt Decay@2021-03-19", "CR:101.2", "CR:113.6g"]
+  mustNot: [play-advice]
+  escalate: false

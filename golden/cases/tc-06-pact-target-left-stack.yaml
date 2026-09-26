@@ -1,0 +1,23 @@
+id: tc-06-pact-target-left-stack
+title: "Pact of Negation whose target has left the stack"
+family: targeting
+variantOf: pact-of-negation-uncounterable-spell
+validation: { status: SOURCE_CHECK_REQUIRED }
+tagProposed: easy
+set: dev
+origin: ai-generated
+sources: { cr: 2026-09-25, oracle: scryfall@2026-09-26 }
+context: { format: cEDH, rel: Competitive, framework: null, seats: 4, inGame: true }
+input:
+  raw:
+    - { seat: P1, text: "I Pacted a spell, but the spell was removed from the stack before my Pact resolved. Do I still have to pay for Pact on my upkeep?" }
+  cards: ["Pact of Negation"]
+  choices:
+    targetStillLegalOnResolution: false
+expect:
+  kind: rules-question
+  intent: counter-vs-uncounterable
+  answer: "No. Pact's only target is illegal, so Pact doesn't resolve and its upkeep trigger is never created."
+  deciding: ["The target is still legal when Pact resolves"]
+  requiredCitations: ["CR:608.2b", "Ruling:Pact of Negation@2021-03-19"]
+  escalate: false

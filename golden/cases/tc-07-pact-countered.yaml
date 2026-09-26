@@ -1,0 +1,23 @@
+id: tc-07-pact-countered
+title: "Pact of Negation is itself countered"
+family: targeting
+variantOf: pact-of-negation-uncounterable-spell
+validation: { status: SOURCE_CHECK_REQUIRED }
+tagProposed: easy
+set: dev
+origin: ai-generated
+sources: { cr: 2026-09-25, oracle: scryfall@2026-09-26 }
+context: { format: cEDH, rel: Competitive, framework: null, seats: 4, inGame: true }
+input:
+  raw:
+    - { seat: P1, text: "My Pact of Negation got countered. Do I still have to pay for it next upkeep?" }
+  cards: ["Pact of Negation"]
+  choices:
+    pactItselfCountered: true
+expect:
+  kind: rules-question
+  intent: counter-vs-uncounterable
+  answer: "No. A countered spell doesn't resolve and none of its effects happen, so the upkeep trigger is never created."
+  deciding: ["Pact itself is countered"]
+  requiredCitations: ["CR:701.6a", "Ruling:Pact of Negation@2021-03-19"]
+  escalate: false

@@ -1,0 +1,22 @@
+id: tc-05-pyroblast-nonblue
+title: "Pyroblast targeting a non-blue spell"
+family: targeting
+variantOf: tc-04-swat-reb-mode
+validation: { status: SOURCE_CHECK_REQUIRED }
+tagProposed: easy
+set: dev
+origin: ai-generated
+sources: { cr: 2026-09-25, oracle: scryfall@2026-09-26 }
+context: { format: cEDH, rel: Competitive, framework: null, seats: 4, inGame: true }
+input:
+  raw:
+    - { seat: P1, text: "Can I cast Pyroblast targeting a red spell? What happens?" }
+  cards: ["Pyroblast"]
+expect:
+  kind: rules-question
+  intent: can-X-target-Y
+  answer: "Yes. Pyroblast targets any spell and only checks colour when it resolves. It resolves and does nothing to a non-blue spell. Red Elemental Blast, by contrast, can only target a blue spell."
+  deciding: ["The targeting requirement is 'target spell' (Pyroblast) vs 'target blue spell' (REB)"]
+  requiredCitations: ["Oracle:Pyroblast", "Oracle:Red Elemental Blast", "CR:115.1a"]
+  mustNot: [play-advice]
+  escalate: false

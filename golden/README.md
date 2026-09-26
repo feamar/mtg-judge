@@ -27,7 +27,7 @@ Each case holds:
 
 ## Current state (2026-09-26)
 
-- **20 cases**, all converted to the structured format. 18 came from the ChatGPT package, and 2 are from the owner's own questions of 2026-09-26 (Deflecting Swat / Necropotence, Pact of Negation / uncounterable).
+- **30 cases**: the 20 scenarios, all converted to the structured format, plus 10 AI-drafted variants of the targeting-and-countering family (`tc-01` … `tc-10`, SOURCE CHECK REQUIRED, with Oracle text and rulings checked 2026-09-26). 18 came from the ChatGPT package, and 2 are from the owner's own questions of 2026-09-26 (Deflecting Swat / Necropotence, Pact of Negation / uncounterable).
 - **Validation:** 15 VALIDATED, 5 SOURCE CHECK REQUIRED (Kinnan ×3, forgotten untap, Wheel/Tithe). For those five, the citations were checked to exist in the CR of 2026-09-25, and against current Oracle text and the IPG. Each has its open points listed in the case file.
 - **Status conflicts for the owner to settle:** `judge-what-is-priority` and `etali-casting-during-resolution` say VALIDATED in their narrative (2026-09-23), but INDEX.md listed them as SOURCE CHECK REQUIRED. The cases follow the narrative, with an open point.
 - **Citations:** the owner considers the existing scenarios' CR citations checked against the CR effective 2026-09-25 (2026-09-26). All CR rule numbers cited by the 20 cases exist in that version.
