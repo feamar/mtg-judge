@@ -190,6 +190,14 @@
               },
               "text": {
                 "type": "string"
+              },
+              "pauseAfter": {
+                "type": "integer",
+                "description": "Seconds of silence after this message (ADR-0019 silence trigger)."
+              },
+              "volunteer": {
+                "type": "boolean",
+                "description": "This message volunteers to explain (e.g. 'I'll explain')."
               }
             }
           }
@@ -398,6 +406,40 @@
               }
             },
             "claims": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "intake": {
+          "type": "object",
+          "description": "Expected narration-intake behaviour (ADR-0019).",
+          "additionalProperties": false,
+          "properties": {
+            "narrator": {
+              "type": "string"
+            },
+            "endedBy": {
+              "enum": [
+                "question",
+                "arises",
+                "silence",
+                "skip"
+              ]
+            },
+            "prompt": {
+              "enum": [
+                "what-is-your-question",
+                "how-can-i-help",
+                "none"
+              ]
+            },
+            "noInterruption": {
+              "type": "boolean"
+            },
+            "timeline": {
               "type": "array",
               "items": {
                 "type": "string"

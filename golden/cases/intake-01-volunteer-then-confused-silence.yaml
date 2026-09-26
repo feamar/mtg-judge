@@ -1,0 +1,41 @@
+id: intake-01-volunteer-then-confused-silence
+title: "Narration intake: a volunteer explains, then goes quiet, confused"
+family: intake
+validation:
+  status: SOURCE_CHECK_REQUIRED
+  openPoints:
+    - "AI-drafted from the owner's intake procedure (ADR-0019). Owner to confirm the expected behaviour and wording."
+    - "The silence timeout is not decided yet (OQ-34); 60 seconds is assumed here."
+tagProposed: easy
+set: dev
+origin: ai-generated
+sources: { cr: 2026-09-25 }
+context: { format: cEDH, rel: Competitive, framework: null, seats: 4, inGame: true }
+input:
+  raw:
+    - { seat: P2, text: "judge pls, something weird with triggers" }
+    - { seat: P1, text: "I'll explain the situation", volunteer: true }
+    - { seat: P2, text: "ok fine" }
+    - { seat: P1, text: "so p3 casts wheel, i have tithe out, everyone draws 7" }
+    - { seat: P1, text: "then p3 casts two more spells and now p2 says my tithe triggers are gone??", pauseAfter: 75 }
+  choices:
+    volunteerAgreed: { P2: "Yes", P3: "Yes", P4: "Yes" }
+expect:
+  kind: dispute
+  intent: missed-trigger
+  answer: "Intake only: ends by silence; then the missed-trigger investigation (not scored in this case)."
+  intake:
+    narrator: P1
+    endedBy: silence
+    prompt: how-can-i-help
+    noInterruption: true
+    timeline:
+      - "P3 cast Wheel of Fortune"
+      - "P1 controls Smothering Tithe"
+      - "Each player drew seven cards"
+      - "P3 cast two more spells"
+      - "P2 states P1's Tithe triggers are gone (claim)"
+  requiredCitations: []
+  mustNot: [interrupt-narration, reveal-integrity-suspicion]
+  escalate: false
+notes: "Checks: P2 made the call, so the judge first addresses P2; P1's volunteering starts the agreement check; after agreement P1 narrates; the judge stays silent until 75 seconds of silence; the '??' confusion marker gives 'So, how can I help you?' instead of 'So, what is your question?'. P2's 'triggers are gone' is recorded as P2's claim, not merged into P1's account."

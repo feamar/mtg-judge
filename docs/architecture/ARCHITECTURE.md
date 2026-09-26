@@ -247,7 +247,10 @@ Card features are prefetched: the deterministic Oracle parser first, then author
 ```mermaid
 stateDiagram-v2
   [*] --> Detected: Tickets thread found
-  Detected --> Matching: greeting (disputes) or direct answer path
+  Detected --> Narrating: greeting + "tell me what happened, step by step" (ADR-0019)
+  Detected --> Matching: opening text already contains a question (skip)
+  Narrating --> Narrating: follow along silently; volunteer check
+  Narrating --> Matching: a question is formulated / arises / silence prompt answered
   Matching --> Matching: ask a choice (which card / which question / what kind of help)
   Matching --> Answering: rules question → entry found
   Matching --> Fallback: rules question → no entry
@@ -268,6 +271,8 @@ stateDiagram-v2
   Escalated --> Closed
   Closed --> [*]
 ```
+
+**Narration intake (ADR-0019):** unless the opening text already contains a question, the judge asks the caller (or an agreed volunteer) to tell what happened, step by step. It follows along without interrupting, and ends narration when a question is formulated or arises, or after silence ("So, what is your question?" / "So, how can I help you?", chosen by tone).
 
 **No event context on the server (FR-CTX-2):** only rules questions are answered. A dispute gets a template reply saying the judge can't rule here, and that a human judge should be called.
 

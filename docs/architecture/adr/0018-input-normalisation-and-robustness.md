@@ -69,7 +69,7 @@ Library answers are approved templates, so this is a strict equality test, with 
 - **clarification rate:** the judge asked instead of guessing;
 - **confidently wrong:** a different canonical question accepted without clarification. **The target is 0.** Asking is acceptable; guessing wrong is not.
 
-**Release gate:** confidently wrong = 0 on the whole robustness suite. The thresholds for canonical accuracy and clarification rate are the owner's decision (OQ-33).
+**Release gate:** confidently wrong = 0 on the whole robustness suite (owner, OQ-33 point 1). Thresholds for canonical accuracy are to be explored together with the owner once there are baseline measurements (OQ-33 point 2). Clarification rate is **not** a gate: the owner chose a guided narration procedure instead (ADR-0019).
 
 ## Consequences
 

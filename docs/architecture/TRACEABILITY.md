@@ -21,7 +21,7 @@ Status: Proposed · Date: 2026-09-25 · Covers every FR (PRD §6) and NFR (PRD �
 | FR-Q-3 | Knowledge (library entries citing the MTR or addendum) | Answers only; no event data exists to apply them to | 0008 | G |
 | FR-Q-4 | Knowledge (library entries, mnemonics); author sessions | Mnemonic and short answer on the entry, approved by the owner; the chain cites only the deciding rules | 0007, 0008 | G (layers AC), R |
 | FR-Q-5 | Ruling composer | Each branch has an approved short in-game answer; [Why?] shows the full answer and chain | 0008 | G (priority scenario) |
-| FR-RUL-1 | Decision-graph engine | Only decisive facts are candidates | 0008 | G, U |
+| FR-RUL-1 | Decision-graph engine; narration intake (ADR-0019: facts from the narration, only missing ones asked) | Only decisive facts are candidates | 0008 | G, U |
 | FR-RUL-2 | Decision-graph engine; Escalation policy | `Dispute` with judgement-call basis, rule on agreed facts, or escalate | 0008 | G, U |
 | FR-RUL-3 | Ruling composer | `Ruling{decision, fixSteps, chain, explanation}` | 0008 | G |
 | FR-RUL-4 | Decision-graph engine | `Claim` versus `Fact{origin}`; assertions never become facts; verifier check | 0008 | G (Wheel/Tithe), U |
