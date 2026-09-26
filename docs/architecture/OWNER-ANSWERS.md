@@ -28,6 +28,6 @@ The architect role may only add open questions to the PRD; it doesn't change req
 
 | Topic | Decision | Effect |
 | --- | --- | --- |
-| End of the architecture phase | **The architecture phase does not end yet.** It continues until the test cases exist. This overrides the handover's approval gate ("the architecture phase ends only when he merges it"). | `arch/v1` stays unmerged; any PR for it is a draft. The exit criterion for the test cases is agreed separately. |
-| Merging into `main` | **The AI role performs every merge into `main` itself, but asks the product owner before each one.** | Proposed as an AGENTS.md change on branch `process/merge-policy`. |
+| End of the architecture phase | **The architecture phase does not end yet.** It continues until the test cases exist. This overrides the handover's approval gate ("the architecture phase ends only when he merges it"). | `arch/v1` stays unmerged; any PR for it is a draft. **Exit criterion (owner, 2026-09-26):** (1) the 18 existing scenarios are in the structured golden format (ADR-0013) and validated by the owner; (2) the first scenario families from the league export exist, with the held-out part split off and stored privately (ADR-0017 §4). |
+| Merging into `main` | **The AI role performs every merge into `main` itself, but asks the product owner before each one.** | In AGENTS.md; merged into `main` with the owner's yes (2026-09-26). |
 | Recreating `main` | The remote `main` branch had been deleted, and the default branch set to `prd/owner-answers-1`. At the owner's request the architect recreated `main` by fast-forwarding it to `prd/owner-answers-1` and pushing. | The owner should set GitHub's default branch back to `main`. |
