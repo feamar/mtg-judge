@@ -171,3 +171,5 @@ The spike must confirm this on the owner's actual configuration, and record the 
 **The report states:** effort per module, review cost, generalisation, and a recommended list and order of the next modules. That order comes from the league-export triage when it's available.
 
 **Time box:** 3 working days. **Paid spend: $0.** No live AI calls; authoring runs on the Pro plan (ADR-0016). **No prerequisites**, so it can run first.
+
+**S4 status (2026-09-26):** run unattended while the owner was away. See [spikes/S4-report.md](spikes/S4-report.md). 20/20 internal tests pass with no AI at run time, but the expected answers still need the owner's validation, and the generalisation test was weak.

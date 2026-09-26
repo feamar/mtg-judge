@@ -37,8 +37,18 @@ Ability { index, kind: "activated"|"triggered"|"static"|"spell-effect",
           effectKinds[] /* "counter", "change-targets", "type-change", "control-change", "pt-change", "copy", … */,
           additionalEffects: bool /* does more than its main effect, e.g. Pact's upkeep clause */,
           creates: Ability[] /* abilities this effect CREATES: delayed triggers (CR 603.7), emblems, granted abilities */ }
-TargetSpec { what: "spell"|"ability"|"spell-or-ability"|"permanent"|"player"|"any"|…, restrictions? }
+TargetSpec { what: "spell"|"ability"|"spell-or-ability"|"permanent"|"creature"|"player"|"any"|…,
+             restriction?: ControlledTerm /* "blue", "noncreature", "single-target", … from a closed vocabulary */ }
+Modes      { [modeId]: { targets: TargetSpec[], kind, additionalEffects, creates } }   // modal spells: REB, Pyroblast, …
+StackObject{ kind: "spell"|"ability", card, mode?, abilityIndex?, created?: bool, chosenTargets[] }  // what strategies reason about
 ```
+
+Found by spike S4 (2026-09-26):
+
+- **Modal spells need per-mode targets and effects.** Deflecting Swat vs Red Elemental Blast is decided by the *chosen mode's* target spec (CR 700.2a).
+- **Effects can be conditional:** Pyroblast's "counter target spell if it's blue" is a different effect kind from "counter target blue spell", even though both "counter blue".
+- **Restrictions need a controlled vocabulary**, so they are evaluated by code, not read as prose.
+- **Strategies reason about stack objects** (a spell in a chosen mode, or an ability that is printed or created), not about cards alone.
 
 **Abilities created by effects are features too** (found on 2026-09-26 with the owner's Deflecting Swat / Necropotence question). Necropotence's activated ability *creates* a delayed triggered ability ("Put that card into your hand at the beginning of your next end step"), and that created ability has **no targets**. The question "can Deflecting Swat target it, and what happens?" is decided entirely by features of the created ability. So `creates` is modelled recursively, with the same fields as a printed ability.
 
