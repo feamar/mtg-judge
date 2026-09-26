@@ -30,5 +30,7 @@ These rules apply to every AI that reads or changes this repository, whatever it
 
 ## Git
 
-- Work on a branch and open a pull request. Don't push directly to `main`.
+- Work on a branch. A pull request is welcome for review, but not required.
+- **Merges into `main` are done by the AI role, and only after it has asked the product owner, for that specific merge, whether to merge.** Never merge or push to `main` without that explicit yes. A yes covers one merge only. (Product owner, 2026-09-26.)
+- A phase ends only when the product owner says so, even if its branch is ready to merge.
 - Keep commits small and describe *why* in the message.
