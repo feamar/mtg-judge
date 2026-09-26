@@ -419,4 +419,4 @@ The **golden test set** is the definition of correct. It is the benchmark for ev
     - it follows along until a question is formulated or arises, or the players go silent;
     - then it asks "So, what is your question?" or, if the tone suggests it, "So, how can I help you?"
 
-  The PM should add this as a functional requirement (near FR-INT and FR-RUL-1/5) and extend P3's greeting. Open detail for the owner: how long a silence ends the narration (a config default of 60 seconds is proposed).
+  The PM should add this as a functional requirement (near FR-INT and FR-RUL-1/5) and extend P3's greeting. Clarified by the owner on 2026-09-27: "silence" means the story is wrapped up (e.g. "and that's when we called you over", "and that's where we are now"), not a timed pause. Open detail for the owner: a safety net for a stalled narration (proposed: after 3 minutes without a wrap-up, a gentle "Take your time. Is there more to the story, or shall we look at your question?").

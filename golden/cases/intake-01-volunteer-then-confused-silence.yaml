@@ -5,7 +5,7 @@ validation:
   status: SOURCE_CHECK_REQUIRED
   openPoints:
     - "AI-drafted from the owner's intake procedure (ADR-0019). Owner to confirm the expected behaviour and wording."
-    - "The silence timeout is not decided yet (OQ-34); 60 seconds is assumed here."
+    - "Narration ends on the wrap-up phrase, not on the pause (owner, 2026-09-27). The mid-story 40-second pause must not trigger anything."
 tagProposed: easy
 set: dev
 origin: ai-generated
@@ -16,8 +16,8 @@ input:
     - { seat: P2, text: "judge pls, something weird with triggers" }
     - { seat: P1, text: "I'll explain the situation", volunteer: true }
     - { seat: P2, text: "ok fine" }
-    - { seat: P1, text: "so p3 casts wheel, i have tithe out, everyone draws 7" }
-    - { seat: P1, text: "then p3 casts two more spells and now p2 says my tithe triggers are gone??", pauseAfter: 75 }
+    - { seat: P1, text: "so p3 casts wheel, i have tithe out, everyone draws 7", pauseAfter: 40 }
+    - { seat: P1, text: "then p3 casts two more spells and p2 says my tithe triggers are gone?? and thats when we called you over" }
   choices:
     volunteerAgreed: { P2: "Yes", P3: "Yes", P4: "Yes" }
 expect:
@@ -26,7 +26,7 @@ expect:
   answer: "Intake only: ends by silence; then the missed-trigger investigation (not scored in this case)."
   intake:
     narrator: P1
-    endedBy: silence
+    endedBy: wrap-up
     prompt: how-can-i-help
     noInterruption: true
     timeline:
@@ -38,4 +38,4 @@ expect:
   requiredCitations: []
   mustNot: [interrupt-narration, reveal-integrity-suspicion]
   escalate: false
-notes: "Checks: P2 made the call, so the judge first addresses P2; P1's volunteering starts the agreement check; after agreement P1 narrates; the judge stays silent until 75 seconds of silence; the '??' confusion marker gives 'So, how can I help you?' instead of 'So, what is your question?'. P2's 'triggers are gone' is recorded as P2's claim, not merged into P1's account."
+notes: "Checks: P2 made the call, so the judge first addresses P2; P1's volunteering starts the agreement check; after agreement P1 narrates; the judge stays quiet through the 40-second mid-story pause and ends narration on the wrap-up phrase 'thats when we called you over'; the '??' confusion marker gives 'So, how can I help you?' instead of 'So, what is your question?'. P2's 'triggers are gone' is recorded as P2's claim, not merged into P1's account."

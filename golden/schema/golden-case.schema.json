@@ -193,7 +193,7 @@
               },
               "pauseAfter": {
                 "type": "integer",
-                "description": "Seconds of silence after this message (ADR-0019 silence trigger)."
+                "description": "Seconds of pause after this message. A pause alone never ends narration (ADR-0019); used to test the safety net and that the judge does not interrupt mid-story pauses."
               },
               "volunteer": {
                 "type": "boolean",
@@ -425,7 +425,8 @@
               "enum": [
                 "question",
                 "arises",
-                "silence",
+                "wrap-up",
+                "safety-net",
                 "skip"
               ]
             },
