@@ -62,4 +62,4 @@ Tests the difference between "can't be countered" and targeting restrictions, re
 
 - The player wants to counter a *triggered or activated ability* with Pact → not a legal target, because Pact only targets spells (CR 113.9).
 - The uncounterable spell leaves the stack before Pact resolves → Pact's target is illegal, Pact doesn't resolve, and there is no trigger.
-- Mana Drain or another counterspell with an additional effect, against an uncounterable spell → expected: the additional effect still happens (Abrupt Decay ruling). Check the card's own official rulings before validating this variant.
+- Mana Drain against an uncounterable spell → you still get the mana, per Mana Drain's own official ruling (2020-11-10). This is case `tc-09`.
