@@ -1,6 +1,6 @@
 # Product-owner answers given during the architecture phase
 
-The architect role may only add open questions to the PRD; it doesn't change requirements or the decision log. These are the answers Frank (product owner) gave in the architecture session on **2026-09-25**. They are recorded here so they can be moved into PRD §10 (decision log) and §12 (open questions) in a PRD commit that references these IDs. The architecture already follows them.
+The architect role may only add open questions to the PRD; it doesn't change requirements or the decision log. These are the answers Frank (product owner) gave in the architecture sessions on **2026-09-25 and 2026-09-26**. They are recorded here so they can be moved into PRD §10 (decision log) and §12 (open questions) in a PRD commit that references these IDs. The architecture already follows them.
 
 | Topic | Question | Answer | Applied in |
 | --- | --- | --- | --- |
