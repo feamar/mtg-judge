@@ -40,7 +40,7 @@ The judge does **not interrupt**. Clarifying questions, including low-confidence
 | **A question is formulated** | Normaliser: a question intent, or a question sentence with a matched intent | Ends narration, reads back the canonical question and timeline (FR-RUL-5), proceeds |
 | **A question arises** | Another seat contradicts a timeline event (a `Dispute`), or a procedure's trigger matches (e.g. "forgot the trigger"), or a claim is an assertion that needs checking (e.g. "that's 28 missed triggers") | Ends narration, summarises, and asks the deciding question or confirms the dispute |
 | **Story wrapped up** ("silence") | The narrator signals the story has reached the present. Deterministic first: lexicon wrap-up phrases ("that's when we called you (over)", "that's where we are now", "and then we called a judge", "so yeah", "that's it"), or the timeline catching up to the present (a shift to "now" and present tense). Only if markers are absent does `interpret` pick a closed-list label (`still-telling` / `wrapped-up`) | Asks **"So, what is your question?"**, or **"So, how can I help you?"** when the tone calls for it |
-| *Safety net (proposal)* | A long pause (default 3 minutes, configurable) with no wrap-up signal, so the ticket doesn't stall. A pause is **not** a wrap-up: people pause to think mid-story | A gentle template, not the question prompt: *"Take your time. Is there more to the story, or shall we look at your question?"* (proposed; owner to confirm, OQ-34) |
+| *Safety net* | A long pause (default 3 minutes, configurable) with no wrap-up signal, so the ticket doesn't stall. A pause is **not** a wrap-up: people pause to think mid-story | A gentle template, not the question prompt: *"Take your time. Is there more to the story, or shall we look at your question?"* (accepted by the owner, 2026-09-27, OQ-34) |
 
 **5. Tone** picks between the two silence prompts, and also between stance phrases (P3):
 
@@ -66,5 +66,5 @@ The same robustness rule applies (ADR-0018): messy narrations must yield the sam
 
 - Players explain in their own order and words. The judge asks fewer, better-timed questions, and its first substantive message already reflects the whole story.
 - The clarification rate stops being a gate metric (owner, OQ-33). The gate keeps **"confidently wrong" = 0** (OQ-33 point 1). Thresholds for canonical accuracy are to be explored together (OQ-33 point 2).
-- New configuration: the safety-net pause (the owner still needs to confirm it). New lexicon entries: volunteer phrases, **wrap-up phrases**, and tone markers. Wrap-up phrases are collected from the league export like other lexicon terms. New templates: the narration prompt, the volunteer check, the two silence prompts.
+- New configuration: the safety-net pause, default 3 minutes (accepted by the owner, OQ-34). New lexicon entries: volunteer phrases, **wrap-up phrases**, and tone markers. Wrap-up phrases are collected from the league export like other lexicon terms. New templates: the narration prompt, the volunteer check, the two silence prompts.
 - **The PRD doesn't describe this intake yet.** OQ-34 asks the PM to add it as a requirement.
