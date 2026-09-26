@@ -406,3 +406,8 @@ The **golden test set** is the definition of correct. It is the benchmark for ev
     - (c) also offer an opt-out.
 
   How long is the private copy kept? Given D39's 7-day rule for live records, should the raw export be deleted once pseudonymised scenarios have been made from it?
+- [ ] **OQ-32.** *(Raised by the architect, 2026-09-26.)* Where is the line between explaining a rule and play advice (FR-RUL-8)? The owner decided on 2026-09-26:
+    - at **Competitive REL**, answers state what is legal and what happens, never why a player might want to do it;
+    - at **Regular REL (JAR)**, the judge may explain to a player that an action won't achieve what they seem to be trying to do.
+
+  The PM should reflect this in FR-RUL-8 and in the tone rubric (OQ-18). The architecture already supports it with per-REL answer templates (ADR-0014).
