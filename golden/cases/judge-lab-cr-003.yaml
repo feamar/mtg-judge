@@ -1,0 +1,84 @@
+# Imported from judge-lab-regression-100.jsonl by golden/tools/import-judge-lab.mjs. Edit the source record, not this file.
+id: "judge-lab-cr-003"
+title: "An Adventure with a copy"
+family: "Zones"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-26"
+  note: "Owner marked all 100 records fully VALIDATED, including source mappings, on 2026-09-26. Original record: Accepted for addition by project owner on 2026-09-26, excluding CR-049 and CR-060. Source status in record: SOURCE CHECK REQUIRED."
+set: "regression"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "any"
+  rel: "not-material"
+  framework: null
+  inGame: false
+input:
+  raw:
+    - seat: "P1"
+      text: "Alice casts Embereth Blaze, the Adventure on Virtue of Courage. She pays for the copy mode of Return the Favor to copy it. Both resolve with legal targets. What remains in exile, and can she later cast two Virtues?"
+  cards:
+    - "Virtue of Courage"
+    - "Return the Favor"
+  assumptions:
+    - "No unmentioned effects apply."
+    - "Unless specified otherwise, necessary costs can be paid and players pass priority to permit the stated resolutions."
+    - "This is a gameplay ruling, not a tournament-policy ruling."
+expect:
+  kind: "rules-question"
+  answer: "Only the original Virtue of Courage remains in exile for Alice to cast later."
+  propositions:
+    - "The original and copy are Adventure spells and are exiled as they resolve."
+    - "The spell copy then ceases to exist as a state-based action."
+    - "Only the card remains, with the Adventure permission to cast it."
+  chain:
+    - sources:
+        - "CR:715.3c"
+        - "CR:715.3d"
+        - "CR:704.5e"
+        - "Oracle:Virtue of Courage"
+        - "Oracle:Return the Favor"
+      propositions:
+        - "The original and copy are Adventure spells and are exiled as they resolve."
+        - "The spell copy then ceases to exist as a state-based action."
+        - "Only the card remains, with the Adventure permission to cast it."
+      consequence: "Only the original Virtue of Courage remains in exile for Alice to cast later."
+  requiredCitations:
+    - "CR:715.3c"
+    - "CR:715.3d"
+    - "CR:704.5e"
+    - "Oracle:Virtue of Courage"
+    - "Oracle:Return the Favor"
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+  escalate: false
+provenance:
+  sourceQuestionId: "CR-003"
+  scenarioFile: "judge-lab-003-an-adventure-with-a-copy.md"
+  schemaVersion: "1.0"
+  origin: "Original Judge Lab question"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#CR-003"
+  imported_at: "2026-09-26"
+  source_versions:
+    comprehensive_rules:
+      effective_date: "2026-09-25"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    cards:
+      - name: "Virtue of Courage"
+        oracle_id: "af6438b9-3fde-45c9-af69-dff686c1e0de"
+        oracle_mirror: "https://scryfall.com/card/woe/157/virtue-of-courage-embereth-blaze?utm_source=api"
+        gatherer: "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=629658&printed=false"
+      - name: "Return the Favor"
+        oracle_id: "30377bd5-99ab-4888-9ea7-e5a069b527e8"
+        oracle_mirror: "https://scryfall.com/card/otj/142/return-the-favor?utm_source=api"
+        gatherer: "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=655083&printed=false"
+  card_text_provider: "Scryfall Oracle mirror; direct Gatherer access unavailable"
+  oracle_snapshot_date: "2026-09-26"
+  oracle_snapshots:
+    Virtue of Courage: "Virtue of Courage\n{3}{R}{R} · Enchantment\nWhenever a source you control deals noncombat damage to an opponent, you may exile that many cards from the top of your library. You may play those cards this turn.\n\nEmbereth Blaze\n{1}{R} · Instant — Adventure\nEmbereth Blaze deals 2 damage to any target. (Then exile this card. You may cast the enchantment later from exile.)"
+    Return the Favor: "Return the Favor\n{R}{R} · Instant\nSpree (Choose one or more additional costs.)\n+ {1} — Copy target instant spell, sorcery spell, activated ability, or triggered ability. You may choose new targets for the copy.\n+ {1} — Change the target of target spell or ability with a single target."

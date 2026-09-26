@@ -1,0 +1,82 @@
+# Imported from judge-lab-regression-100.jsonl by golden/tools/import-judge-lab.mjs. Edit the source record, not this file.
+id: "judge-lab-cr-072"
+title: "A promised gift on a countered spell"
+family: "Card types & mechanics"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-26"
+  note: "Owner marked all 100 records fully VALIDATED, including source mappings, on 2026-09-26. Original record: Accepted for addition by project owner on 2026-09-26, excluding CR-049 and CR-060. Source status in record: SOURCE CHECK REQUIRED."
+set: "regression"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "any"
+  rel: "not-material"
+  framework: null
+  inGame: false
+input:
+  raw:
+    - seat: "P1"
+      text: "Alice casts Long River’s Pull targeting Bob’s creature spell and promises Bob a card. Bob counters Pull with An Offer You Can’t Refuse. Does Bob draw the promised card?"
+  cards:
+    - "Long River’s Pull"
+    - "An Offer You Can’t Refuse"
+  assumptions:
+    - "No unmentioned effects apply."
+    - "Unless specified otherwise, necessary costs can be paid and players pass priority to permit the stated resolutions."
+    - "This is a gameplay ruling, not a tournament-policy ruling."
+expect:
+  kind: "rules-question"
+  answer: "No. The gift draw happens only if Pull resolves."
+  propositions:
+    - "Promising a gift is done while casting, but giving this gift is an effect of resolution."
+    - "Countering the spell prevents that effect."
+    - "Alice still creates the two Treasures from Offer."
+  chain:
+    - sources:
+        - "CR:702.174a"
+        - "CR:702.174j"
+        - "Oracle:Long River’s Pull"
+        - "Oracle:An Offer You Can’t Refuse"
+      propositions:
+        - "Promising a gift is done while casting, but giving this gift is an effect of resolution."
+        - "Countering the spell prevents that effect."
+        - "Alice still creates the two Treasures from Offer."
+      consequence: "No. The gift draw happens only if Pull resolves."
+  requiredCitations:
+    - "CR:702.174a"
+    - "CR:702.174j"
+    - "Oracle:Long River’s Pull"
+    - "Oracle:An Offer You Can’t Refuse"
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+  escalate: false
+provenance:
+  sourceQuestionId: "CR-072"
+  scenarioFile: "judge-lab-072-a-promised-gift-on-a-countered-spell.md"
+  schemaVersion: "1.0"
+  origin: "Original Judge Lab question"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#CR-072"
+  imported_at: "2026-09-26"
+  source_versions:
+    comprehensive_rules:
+      effective_date: "2026-09-25"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    cards:
+      - name: "Long River’s Pull"
+        oracle_id: "f1993767-1d07-49c8-b8dc-04ec9840a999"
+        oracle_mirror: "https://scryfall.com/card/blb/58/long-rivers-pull?utm_source=api"
+        gatherer: "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=668972&printed=false"
+      - name: "An Offer You Can’t Refuse"
+        oracle_id: "234a734b-ba28-4f1b-9d01-3c3e7d516590"
+        oracle_mirror: "https://scryfall.com/card/fdn/160/an-offer-you-cant-refuse?utm_source=api"
+        gatherer: "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=679902&printed=false"
+  card_text_provider: "Scryfall Oracle mirror; direct Gatherer access unavailable"
+  oracle_snapshot_date: "2026-09-26"
+  oracle_snapshots:
+    Long River’s Pull: "Long River's Pull\n{U}{U} · Instant\nGift a card (You may promise an opponent a gift as you cast this spell. If you do, they draw a card before its other effects.)\nCounter target creature spell. If the gift was promised, instead counter target spell."
+    An Offer You Can’t Refuse: "An Offer You Can't Refuse\n{U} · Instant\nCounter target noncreature spell. Its controller creates two Treasure tokens. (They're artifacts with \"{T}, Sacrifice this token: Add one mana of any color.\")"

@@ -1,0 +1,74 @@
+# Imported from judge-lab-regression-100.jsonl by golden/tools/import-judge-lab.mjs. Edit the source record, not this file.
+id: "judge-lab-cr-025"
+title: "Drawing from an empty library"
+family: "State-based actions"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-26"
+  note: "Owner marked all 100 records fully VALIDATED, including source mappings, on 2026-09-26. Original record: Accepted for addition by project owner on 2026-09-26, excluding CR-049 and CR-060. Source status in record: SOURCE CHECK REQUIRED."
+set: "regression"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "any"
+  rel: "not-material"
+  framework: null
+  inGame: false
+input:
+  raw:
+    - seat: "P1"
+      text: "Alice has one card in her library and activates The One Ring with two burden counters already on it. What happens as its ability resolves?"
+  cards:
+    - "The One Ring"
+  assumptions:
+    - "No unmentioned effects apply."
+    - "Unless specified otherwise, necessary costs can be paid and players pass priority to permit the stated resolutions."
+    - "This is a gameplay ruling, not a tournament-policy ruling."
+expect:
+  kind: "rules-question"
+  answer: "She adds a third burden counter, draws the one remaining card, then fails to draw twice. She loses at the next state-based-action check."
+  propositions:
+    - "Multiple cards are drawn one at a time."
+    - "An attempted draw from an empty library causes a loss when state-based actions are next checked, after the current ability finishes resolving."
+  chain:
+    - sources:
+        - "CR:121.2"
+        - "CR:704.5b"
+        - "CR:704.4"
+        - "Oracle:The One Ring"
+      propositions:
+        - "Multiple cards are drawn one at a time."
+        - "An attempted draw from an empty library causes a loss when state-based actions are next checked, after the current ability finishes resolving."
+      consequence: "She adds a third burden counter, draws the one remaining card, then fails to draw twice. She loses at the next state-based-action check."
+  requiredCitations:
+    - "CR:121.2"
+    - "CR:704.5b"
+    - "CR:704.4"
+    - "Oracle:The One Ring"
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+  escalate: false
+provenance:
+  sourceQuestionId: "CR-025"
+  scenarioFile: "judge-lab-025-drawing-from-an-empty-library.md"
+  schemaVersion: "1.0"
+  origin: "Original Judge Lab question"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#CR-025"
+  imported_at: "2026-09-26"
+  source_versions:
+    comprehensive_rules:
+      effective_date: "2026-09-25"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    cards:
+      - name: "The One Ring"
+        oracle_id: "3aa83ed2-f48b-4ce6-a614-2c54ddf50538"
+        oracle_mirror: "https://scryfall.com/card/ltr/246/the-one-ring?utm_source=api"
+        gatherer: "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=617076&printed=false"
+  card_text_provider: "Scryfall Oracle mirror; direct Gatherer access unavailable"
+  oracle_snapshot_date: "2026-09-26"
+  oracle_snapshots:
+    The One Ring: "The One Ring\n{4} · Legendary Artifact\nIndestructible\nWhen The One Ring enters, if you cast it, you gain protection from everything until your next turn.\nAt the beginning of your upkeep, you lose 1 life for each burden counter on The One Ring.\n{T}: Put a burden counter on The One Ring, then draw a card for each burden counter on The One Ring."

@@ -1,0 +1,74 @@
+# Imported from judge-lab-regression-100.jsonl by golden/tools/import-judge-lab.mjs. Edit the source record, not this file.
+id: "judge-lab-cr-083"
+title: "Craft materials from two zones"
+family: "Card types & mechanics"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-26"
+  note: "Owner marked all 100 records fully VALIDATED, including source mappings, on 2026-09-26. Original record: Accepted for addition by project owner on 2026-09-26, excluding CR-049 and CR-060. Source status in record: SOURCE CHECK REQUIRED."
+set: "regression"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "any"
+  rel: "not-material"
+  framework: null
+  inGame: false
+input:
+  raw:
+    - seat: "P1"
+      text: "Alice activates Tithing Blade’s craft with creature ability. May she exile a creature card from her graveyard rather than a creature she controls? When is Tithing Blade exiled?"
+  cards:
+    - "Tithing Blade"
+  assumptions:
+    - "No unmentioned effects apply."
+    - "Unless specified otherwise, necessary costs can be paid and players pass priority to permit the stated resolutions."
+    - "This is a gameplay ruling, not a tournament-policy ruling."
+expect:
+  kind: "rules-question"
+  answer: "Yes. Tithing Blade and the creature material are exiled while paying the activation cost."
+  propositions:
+    - "Craft can use the described materials among permanents controlled by the player and/or cards in their graveyard."
+    - "Exiling the crafting permanent and the material is part of the cost, before opponents can respond."
+  chain:
+    - sources:
+        - "CR:702.167a"
+        - "CR:702.167b"
+        - "CR:602.2b"
+        - "Oracle:Tithing Blade"
+      propositions:
+        - "Craft can use the described materials among permanents controlled by the player and/or cards in their graveyard."
+        - "Exiling the crafting permanent and the material is part of the cost, before opponents can respond."
+      consequence: "Yes. Tithing Blade and the creature material are exiled while paying the activation cost."
+  requiredCitations:
+    - "CR:702.167a"
+    - "CR:702.167b"
+    - "CR:602.2b"
+    - "Oracle:Tithing Blade"
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+  escalate: false
+provenance:
+  sourceQuestionId: "CR-083"
+  scenarioFile: "judge-lab-083-craft-materials-from-two-zones.md"
+  schemaVersion: "1.0"
+  origin: "Original Judge Lab question"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#CR-083"
+  imported_at: "2026-09-26"
+  source_versions:
+    comprehensive_rules:
+      effective_date: "2026-09-25"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    cards:
+      - name: "Tithing Blade"
+        oracle_id: "883a4180-9ede-4249-a4b8-3a29c998fb63"
+        oracle_mirror: "https://scryfall.com/card/lci/128/tithing-blade-consuming-sepulcher?utm_source=api"
+        gatherer: "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=636834&printed=false"
+  card_text_provider: "Scryfall Oracle mirror; direct Gatherer access unavailable"
+  oracle_snapshot_date: "2026-09-26"
+  oracle_snapshots:
+    Tithing Blade: "Tithing Blade\n{1}{B} · Artifact\nWhen this artifact enters, each opponent sacrifices a creature of their choice.\nCraft with creature {4}{B} ({4}{B}, Exile this artifact, Exile a creature you control or a creature card from your graveyard: Return this card transformed under its owner's control. Craft only as a sorcery.)\n\nConsuming Sepulcher\n · Artifact\nAt the beginning of your upkeep, each opponent loses 1 life and you gain 1 life."

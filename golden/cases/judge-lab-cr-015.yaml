@@ -1,0 +1,72 @@
+# Imported from judge-lab-regression-100.jsonl by golden/tools/import-judge-lab.mjs. Edit the source record, not this file.
+id: "judge-lab-cr-015"
+title: "Convoke and summoning sickness"
+family: "Casting & costs"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-26"
+  note: "Owner marked all 100 records fully VALIDATED, including source mappings, on 2026-09-26. Original record: Accepted for addition by project owner on 2026-09-26, excluding CR-049 and CR-060. Source status in record: SOURCE CHECK REQUIRED."
+set: "regression"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "any"
+  rel: "not-material"
+  framework: null
+  inGame: false
+input:
+  raw:
+    - seat: "P1"
+      text: "Alice controls three untapped white creature tokens that entered this turn. Can she tap them to convoke Knight-Errant of Eos?"
+  cards:
+    - "Knight-Errant of Eos"
+  assumptions:
+    - "No unmentioned effects apply."
+    - "Unless specified otherwise, necessary costs can be paid and players pass priority to permit the stated resolutions."
+    - "This is a gameplay ruling, not a tournament-policy ruling."
+expect:
+  kind: "rules-question"
+  answer: "Yes. Each can pay for {1} or {W} of its cost."
+  propositions:
+    - "Convoke permits tapping creatures while paying the spell’s cost."
+    - "This is not attacking or activating a creature’s ability with the tap symbol, so summoning sickness does not stop it."
+  chain:
+    - sources:
+        - "CR:702.51a"
+        - "CR:302.6"
+        - "Oracle:Knight-Errant of Eos"
+      propositions:
+        - "Convoke permits tapping creatures while paying the spell’s cost."
+        - "This is not attacking or activating a creature’s ability with the tap symbol, so summoning sickness does not stop it."
+      consequence: "Yes. Each can pay for {1} or {W} of its cost."
+  requiredCitations:
+    - "CR:702.51a"
+    - "CR:302.6"
+    - "Oracle:Knight-Errant of Eos"
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+  escalate: false
+provenance:
+  sourceQuestionId: "CR-015"
+  scenarioFile: "judge-lab-015-convoke-and-summoning-sickness.md"
+  schemaVersion: "1.0"
+  origin: "Original Judge Lab question"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#CR-015"
+  imported_at: "2026-09-26"
+  source_versions:
+    comprehensive_rules:
+      effective_date: "2026-09-25"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    cards:
+      - name: "Knight-Errant of Eos"
+        oracle_id: "4bd20d79-0861-494a-a8f2-f6ddb5088004"
+        oracle_mirror: "https://scryfall.com/card/mom/26/knight-errant-of-eos?utm_source=api"
+        gatherer: "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=607043&printed=false"
+  card_text_provider: "Scryfall Oracle mirror; direct Gatherer access unavailable"
+  oracle_snapshot_date: "2026-09-26"
+  oracle_snapshots:
+    Knight-Errant of Eos: "Knight-Errant of Eos\n{4}{W} · Creature — Human Knight\nConvoke\nWhen this creature enters, look at the top six cards of your library. You may reveal up to two creature cards with mana value X or less from among them, where X is the number of creatures that convoked this creature. Put the revealed cards into your hand, then shuffle.\n4/4"

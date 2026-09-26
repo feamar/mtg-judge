@@ -1,0 +1,74 @@
+# Imported from judge-lab-regression-100.jsonl by golden/tools/import-judge-lab.mjs. Edit the source record, not this file.
+id: "judge-lab-cr-040"
+title: "Looking back for a dies trigger"
+family: "Triggers"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-26"
+  note: "Owner marked all 100 records fully VALIDATED, including source mappings, on 2026-09-26. Original record: Accepted for addition by project owner on 2026-09-26, excluding CR-049 and CR-060. Source status in record: SOURCE CHECK REQUIRED."
+set: "regression"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "any"
+  rel: "not-material"
+  framework: null
+  inGame: false
+input:
+  raw:
+    - seat: "P1"
+      text: "Alice controls Gixian Puppeteer and a 2/2 creature. Both die simultaneously. Can Puppeteer’s dies trigger target that 2/2 if its mana value is 3 or less?"
+  cards:
+    - "Gixian Puppeteer"
+  assumptions:
+    - "No unmentioned effects apply."
+    - "Unless specified otherwise, necessary costs can be paid and players pass priority to permit the stated resolutions."
+    - "This is a gameplay ruling, not a tournament-policy ruling."
+expect:
+  kind: "rules-question"
+  answer: "Yes, provided it is another creature card in Alice’s graveyard."
+  propositions:
+    - "Puppeteer’s dies ability triggers using its existence immediately before the creatures left."
+    - "Targets are chosen when the trigger is put on the stack, after both cards have entered the graveyard."
+  chain:
+    - sources:
+        - "CR:603.6c"
+        - "CR:603.10"
+        - "CR:603.3d"
+        - "Oracle:Gixian Puppeteer"
+      propositions:
+        - "Puppeteer’s dies ability triggers using its existence immediately before the creatures left."
+        - "Targets are chosen when the trigger is put on the stack, after both cards have entered the graveyard."
+      consequence: "Yes, provided it is another creature card in Alice’s graveyard."
+  requiredCitations:
+    - "CR:603.6c"
+    - "CR:603.10"
+    - "CR:603.3d"
+    - "Oracle:Gixian Puppeteer"
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+  escalate: false
+provenance:
+  sourceQuestionId: "CR-040"
+  scenarioFile: "judge-lab-040-looking-back-for-a-dies-trigger.md"
+  schemaVersion: "1.0"
+  origin: "Original Judge Lab question"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#CR-040"
+  imported_at: "2026-09-26"
+  source_versions:
+    comprehensive_rules:
+      effective_date: "2026-09-25"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    cards:
+      - name: "Gixian Puppeteer"
+        oracle_id: "9d6a9a37-a245-4503-baeb-9488553798ab"
+        oracle_mirror: "https://scryfall.com/card/bro/99/gixian-puppeteer?utm_source=api"
+        gatherer: "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=583684&printed=false"
+  card_text_provider: "Scryfall Oracle mirror; direct Gatherer access unavailable"
+  oracle_snapshot_date: "2026-09-26"
+  oracle_snapshots:
+    Gixian Puppeteer: "Gixian Puppeteer\n{3}{B} · Creature — Phyrexian Warlock\nWhenever you draw your second card each turn, each opponent loses 2 life and you gain 2 life.\nWhen this creature dies, return another target creature card with mana value 3 or less from your graveyard to the battlefield.\n4/3"

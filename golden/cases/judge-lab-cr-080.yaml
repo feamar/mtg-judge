@@ -1,0 +1,72 @@
+# Imported from judge-lab-regression-100.jsonl by golden/tools/import-judge-lab.mjs. Edit the source record, not this file.
+id: "judge-lab-cr-080"
+title: "Crew does not grant haste"
+family: "Card types & mechanics"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-26"
+  note: "Owner marked all 100 records fully VALIDATED, including source mappings, on 2026-09-26. Original record: Accepted for addition by project owner on 2026-09-26, excluding CR-049 and CR-060. Source status in record: SOURCE CHECK REQUIRED."
+set: "regression"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "any"
+  rel: "not-material"
+  framework: null
+  inGame: false
+input:
+  raw:
+    - seat: "P1"
+      text: "Alice casts Reckoner Bankbuster this turn and crews it. No effect gives it haste. Can it attack?"
+  cards:
+    - "Reckoner Bankbuster"
+  assumptions:
+    - "No unmentioned effects apply."
+    - "Unless specified otherwise, necessary costs can be paid and players pass priority to permit the stated resolutions."
+    - "This is a gameplay ruling, not a tournament-policy ruling."
+expect:
+  kind: "rules-question"
+  answer: "No. The Vehicle has not been under her control since the start of her turn."
+  propositions:
+    - "Once it is a creature, the normal summoning-sickness rule restricts attacking."
+    - "Crewing it does not grant haste."
+  chain:
+    - sources:
+        - "CR:302.6"
+        - "CR:702.122a"
+        - "Oracle:Reckoner Bankbuster"
+      propositions:
+        - "Once it is a creature, the normal summoning-sickness rule restricts attacking."
+        - "Crewing it does not grant haste."
+      consequence: "No. The Vehicle has not been under her control since the start of her turn."
+  requiredCitations:
+    - "CR:302.6"
+    - "CR:702.122a"
+    - "Oracle:Reckoner Bankbuster"
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+  escalate: false
+provenance:
+  sourceQuestionId: "CR-080"
+  scenarioFile: "judge-lab-080-crew-does-not-grant-haste.md"
+  schemaVersion: "1.0"
+  origin: "Original Judge Lab question"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#CR-080"
+  imported_at: "2026-09-26"
+  source_versions:
+    comprehensive_rules:
+      effective_date: "2026-09-25"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    cards:
+      - name: "Reckoner Bankbuster"
+        oracle_id: "b6be94dc-7162-4887-b959-3bda709724eb"
+        oracle_mirror: "https://scryfall.com/card/neo/255/reckoner-bankbuster?utm_source=api"
+        gatherer: "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=548568&printed=false"
+  card_text_provider: "Scryfall Oracle mirror; direct Gatherer access unavailable"
+  oracle_snapshot_date: "2026-09-26"
+  oracle_snapshots:
+    Reckoner Bankbuster: "Reckoner Bankbuster\n{2} · Artifact — Vehicle\nThis Vehicle enters with three charge counters on it.\n{2}, {T}, Remove a charge counter from this Vehicle: Draw a card. Then if there are no charge counters on this Vehicle, create a Treasure token and a 1/1 colorless Pilot creature token with \"This token crews Vehicles as though its power were 2 greater.\"\nCrew 3\n4/4"

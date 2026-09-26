@@ -1,0 +1,72 @@
+# Imported from judge-lab-regression-100.jsonl by golden/tools/import-judge-lab.mjs. Edit the source record, not this file.
+id: "judge-lab-cr-078"
+title: "Reconfigure changes creature status"
+family: "Card types & mechanics"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-26"
+  note: "Owner marked all 100 records fully VALIDATED, including source mappings, on 2026-09-26. Original record: Accepted for addition by project owner on 2026-09-26, excluding CR-049 and CR-060. Source status in record: SOURCE CHECK REQUIRED."
+set: "regression"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "any"
+  rel: "not-material"
+  framework: null
+  inGame: false
+input:
+  raw:
+    - seat: "P1"
+      text: "Alice attaches Rabbit Battery to another creature using reconfigure. Is Rabbit Battery still a creature while attached? Can it attack separately?"
+  cards:
+    - "Rabbit Battery"
+  assumptions:
+    - "No unmentioned effects apply."
+    - "Unless specified otherwise, necessary costs can be paid and players pass priority to permit the stated resolutions."
+    - "This is a gameplay ruling, not a tournament-policy ruling."
+expect:
+  kind: "rules-question"
+  answer: "No. While attached this way, it is a noncreature Equipment and cannot attack."
+  propositions:
+    - "Reconfigure specifically makes the Equipment stop being a creature until it becomes unattached."
+    - "Its bonuses apply to the equipped creature instead."
+  chain:
+    - sources:
+        - "CR:702.151b"
+        - "CR:508.1a"
+        - "Oracle:Rabbit Battery"
+      propositions:
+        - "Reconfigure specifically makes the Equipment stop being a creature until it becomes unattached."
+        - "Its bonuses apply to the equipped creature instead."
+      consequence: "No. While attached this way, it is a noncreature Equipment and cannot attack."
+  requiredCitations:
+    - "CR:702.151b"
+    - "CR:508.1a"
+    - "Oracle:Rabbit Battery"
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+  escalate: false
+provenance:
+  sourceQuestionId: "CR-078"
+  scenarioFile: "judge-lab-078-reconfigure-changes-creature-status.md"
+  schemaVersion: "1.0"
+  origin: "Original Judge Lab question"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#CR-078"
+  imported_at: "2026-09-26"
+  source_versions:
+    comprehensive_rules:
+      effective_date: "2026-09-25"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    cards:
+      - name: "Rabbit Battery"
+        oracle_id: "c739e180-2f14-41ed-8e7e-50b7df985f35"
+        oracle_mirror: "https://scryfall.com/card/neo/157/rabbit-battery?utm_source=api"
+        gatherer: "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=548461&printed=false"
+  card_text_provider: "Scryfall Oracle mirror; direct Gatherer access unavailable"
+  oracle_snapshot_date: "2026-09-26"
+  oracle_snapshots:
+    Rabbit Battery: "Rabbit Battery\n{R} · Artifact Creature — Equipment Rabbit\nHaste\nEquipped creature gets +1/+1 and has haste.\nReconfigure {R} ({R}: Attach to target creature you control; or unattach from a creature. Reconfigure only as a sorcery. While attached, this isn't a creature.)\n1/1"

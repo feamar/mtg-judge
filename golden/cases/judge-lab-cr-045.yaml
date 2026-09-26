@@ -1,0 +1,80 @@
+# Imported from judge-lab-regression-100.jsonl by golden/tools/import-judge-lab.mjs. Edit the source record, not this file.
+id: "judge-lab-cr-045"
+title: "An enters trigger while resolving"
+family: "Triggers"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-26"
+  note: "Owner marked all 100 records fully VALIDATED, including source mappings, on 2026-09-26. Original record: Accepted for addition by project owner on 2026-09-26, excluding CR-049 and CR-060. Source status in record: SOURCE CHECK REQUIRED."
+set: "regression"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "any"
+  rel: "not-material"
+  framework: null
+  inGame: false
+input:
+  raw:
+    - seat: "P1"
+      text: "Alice controls Temporary Lockdown. She casts Resolute Reinforcements. Does Lockdown exile the new Reinforcements or the token it creates?"
+  cards:
+    - "Resolute Reinforcements"
+    - "Temporary Lockdown"
+  assumptions:
+    - "No unmentioned effects apply."
+    - "Unless specified otherwise, necessary costs can be paid and players pass priority to permit the stated resolutions."
+    - "This is a gameplay ruling, not a tournament-policy ruling."
+expect:
+  kind: "rules-question"
+  answer: "No. Lockdown’s enters trigger already resolved; it does not continuously exile new permanents."
+  propositions:
+    - "A triggered ability happens for a specific triggering event."
+    - "Temporary Lockdown’s exile effect acts once when that trigger resolves and does not watch for later permanents."
+  chain:
+    - sources:
+        - "CR:603.2"
+        - "CR:610.1"
+        - "Oracle:Resolute Reinforcements"
+        - "Oracle:Temporary Lockdown"
+      propositions:
+        - "A triggered ability happens for a specific triggering event."
+        - "Temporary Lockdown’s exile effect acts once when that trigger resolves and does not watch for later permanents."
+      consequence: "No. Lockdown’s enters trigger already resolved; it does not continuously exile new permanents."
+  requiredCitations:
+    - "CR:603.2"
+    - "CR:610.1"
+    - "Oracle:Resolute Reinforcements"
+    - "Oracle:Temporary Lockdown"
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+  escalate: false
+provenance:
+  sourceQuestionId: "CR-045"
+  scenarioFile: "judge-lab-045-an-enters-trigger-while-resolving.md"
+  schemaVersion: "1.0"
+  origin: "Original Judge Lab question"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#CR-045"
+  imported_at: "2026-09-26"
+  source_versions:
+    comprehensive_rules:
+      effective_date: "2026-09-25"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    cards:
+      - name: "Resolute Reinforcements"
+        oracle_id: "eaaed253-9b11-47e2-8624-0340ab2207f6"
+        oracle_mirror: "https://scryfall.com/card/fdn/145/resolute-reinforcements?utm_source=api"
+        gatherer: "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=679887&printed=false"
+      - name: "Temporary Lockdown"
+        oracle_id: "b21c99b3-b975-4428-9c9a-326ded2fa8dc"
+        oracle_mirror: "https://scryfall.com/card/dmu/36/temporary-lockdown?utm_source=api"
+        gatherer: "https://gatherer.wizards.com/Pages/Card/Details.aspx?multiverseid=574516&printed=false"
+  card_text_provider: "Scryfall Oracle mirror; direct Gatherer access unavailable"
+  oracle_snapshot_date: "2026-09-26"
+  oracle_snapshots:
+    Resolute Reinforcements: "Resolute Reinforcements\n{1}{W} · Creature — Human Soldier\nFlash (You may cast this spell any time you could cast an instant.)\nWhen this creature enters, create a 1/1 white Soldier creature token.\n1/1"
+    Temporary Lockdown: "Temporary Lockdown\n{1}{W}{W} · Enchantment\nWhen this enchantment enters, exile each nonland permanent with mana value 2 or less until this enchantment leaves the battlefield."

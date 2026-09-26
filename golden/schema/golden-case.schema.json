@@ -5,90 +5,350 @@
   "description": "One golden test case (PRD §8, ADR-0013). Written as YAML in golden/cases/. The narrative Markdown in golden/scenarios/ stays the human-readable view.",
   "type": "object",
   "additionalProperties": false,
-  "required": ["id", "title", "family", "validation", "set", "origin", "sources", "context", "input", "expect"],
+  "required": [
+    "id",
+    "title",
+    "family",
+    "validation",
+    "set",
+    "origin",
+    "sources",
+    "context",
+    "input",
+    "expect"
+  ],
   "properties": {
-    "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
-    "title": { "type": "string" },
-    "narrative": { "type": "string", "description": "Path to the Markdown scenario, if any." },
-    "family": { "type": "string", "description": "Answering family (docs/research legend): targeting, triggers, layers, copy, replacement, timing, costs, mana, zones, commander, lki, investigation." },
-    "variantOf": { "type": "string" },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "title": {
+      "type": "string"
+    },
+    "narrative": {
+      "type": "string",
+      "description": "Path to the Markdown scenario, if any."
+    },
+    "family": {
+      "type": "string",
+      "description": "Answering family (docs/research legend): targeting, triggers, layers, copy, replacement, timing, costs, mana, zones, commander, lki, investigation."
+    },
+    "variantOf": {
+      "type": "string"
+    },
     "validation": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["status"],
+      "required": [
+        "status"
+      ],
       "properties": {
-        "status": { "enum": ["VALIDATED", "SOURCE_CHECK_REQUIRED"] },
-        "by": { "type": "string" },
-        "on": { "type": "string", "format": "date" },
-        "openPoints": { "type": "array", "items": { "type": "string" }, "description": "What the owner still has to confirm." }
+        "status": {
+          "enum": [
+            "VALIDATED",
+            "SOURCE_CHECK_REQUIRED"
+          ]
+        },
+        "by": {
+          "type": "string"
+        },
+        "on": {
+          "type": "string",
+          "format": "date"
+        },
+        "openPoints": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "What the owner still has to confirm."
+        },
+        "note": {
+          "type": "string",
+          "description": "Free-text validation history, e.g. from an imported record."
+        }
       }
     },
-    "tag": { "enum": ["easy", "hard"], "description": "Set by the owner only." },
-    "tagProposed": { "enum": ["easy", "hard"], "description": "Architect's proposal; the owner confirms by setting 'tag'." },
-    "set": { "enum": ["dev", "regression", "heldout"] },
-    "origin": { "enum": ["owner-real-case", "owner-question", "chatgpt-package", "league-export", "ai-generated", "public-qa"] },
+    "tag": {
+      "enum": [
+        "easy",
+        "hard"
+      ],
+      "description": "Set by the owner only."
+    },
+    "tagProposed": {
+      "enum": [
+        "easy",
+        "hard"
+      ],
+      "description": "Architect's proposal; the owner confirms by setting 'tag'."
+    },
+    "set": {
+      "enum": [
+        "dev",
+        "regression",
+        "heldout"
+      ]
+    },
+    "origin": {
+      "enum": [
+        "owner-real-case",
+        "owner-question",
+        "chatgpt-package",
+        "league-export",
+        "ai-generated",
+        "public-qa",
+        "judge-lab"
+      ]
+    },
     "sources": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["cr"],
+      "required": [
+        "cr"
+      ],
       "properties": {
-        "cr": { "type": "string", "description": "CR effective date the expected answer was checked against, e.g. 2026-09-25." },
-        "ipg": { "type": "string" },
-        "mtr": { "type": "string" },
-        "addendum": { "type": "string" },
-        "oracle": { "type": "string", "description": "Card-data date, or 'scryfall@YYYY-MM-DD'." }
+        "cr": {
+          "type": "string",
+          "description": "CR effective date the expected answer was checked against, e.g. 2026-09-25."
+        },
+        "ipg": {
+          "type": "string"
+        },
+        "mtr": {
+          "type": "string"
+        },
+        "addendum": {
+          "type": "string"
+        },
+        "oracle": {
+          "type": "string",
+          "description": "Card-data date, or 'scryfall@YYYY-MM-DD'."
+        }
       }
     },
     "context": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["format", "rel", "seats"],
+      "required": [
+        "format",
+        "rel"
+      ],
       "properties": {
-        "format": { "const": "cEDH" },
-        "rel": { "enum": ["Competitive", "Regular"] },
-        "framework": { "type": ["string", "null"], "description": "null = plain MTR+IPG; else an addendum id such as MTRA@2025-06-24 (OQ-20)." },
-        "seats": { "type": "integer", "minimum": 2 },
-        "inGame": { "type": "boolean", "description": "true = minimum in-game explanation depth applies (FR-Q-5)." }
+        "format": {
+          "enum": [
+            "cEDH",
+            "any"
+          ],
+          "description": "'any' = a general rules question not tied to a format."
+        },
+        "rel": {
+          "enum": [
+            "Competitive",
+            "Regular",
+            "not-material"
+          ],
+          "description": "'not-material' = pure gameplay ruling; REL doesn't change the answer."
+        },
+        "framework": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "null = plain MTR+IPG; else an addendum id such as MTRA@2025-06-24 (OQ-20)."
+        },
+        "seats": {
+          "type": "integer",
+          "minimum": 2
+        },
+        "inGame": {
+          "type": "boolean",
+          "description": "true = minimum in-game explanation depth applies (FR-Q-5)."
+        }
       }
     },
     "input": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["raw"],
+      "required": [
+        "raw"
+      ],
       "properties": {
         "raw": {
-          "type": "array", "minItems": 1,
-          "items": { "type": "object", "additionalProperties": false, "required": ["seat", "text"],
-            "properties": { "seat": { "type": "string" }, "text": { "type": "string" } } }
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "seat",
+              "text"
+            ],
+            "properties": {
+              "seat": {
+                "type": "string"
+              },
+              "text": {
+                "type": "string"
+              }
+            }
+          }
         },
         "choices": {
           "type": "object",
           "description": "Scripted answers to the judge's questions, keyed by fact id. Value may be keyed by seat for per-seat knowledge.",
           "additionalProperties": true
         },
-        "cards": { "type": "array", "items": { "type": "string" }, "description": "Exact card names the resolver must find." }
+        "cards": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Exact card names the resolver must find."
+        },
+        "assumptions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Stated assumptions that count as supplied facts."
+        }
       }
     },
     "expect": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["kind", "answer", "requiredCitations", "escalate"],
+      "required": [
+        "kind",
+        "answer",
+        "requiredCitations",
+        "escalate"
+      ],
       "properties": {
-        "kind": { "enum": ["rules-question", "dispute", "concept"] },
-        "intent": { "type": "string", "description": "Proposed intent id, e.g. does-X-trigger-Y. Becomes an entry/strategy id once those exist." },
-        "answer": { "type": "string", "description": "The expected conclusion in one or two sentences." },
-        "deciding": { "type": "array", "items": { "type": "string" }, "description": "Facts that select the branch; each variant changes one." },
-        "infraction": { "type": "string" },
-        "penalty": { "type": "string" },
-        "fix": { "type": "array", "items": { "type": "string" } },
-        "deliveryPattern": { "enum": ["explain-then-penalty", "penalty-then-explain", "ruling-explain-ruling", "summary-explain-exact", "penalty-only"] },
-        "requiredCitations": { "type": "array", "items": { "type": "string" }, "description": "CR:x, IPG:x, MTR:x, MTRA:x, Oracle:<card>, Ruling:<card>@<date>." },
-        "requiredQuestions": { "type": "array", "items": { "type": "string" } },
-        "forbiddenQuestions": { "type": "array", "items": { "type": "string" } },
-        "mustNot": { "type": "array", "items": { "type": "string" }, "description": "Behaviours that fail the case, e.g. play-advice, reveal-integrity-suspicion." },
-        "escalate": { "oneOf": [ { "type": "boolean" }, { "type": "string" } ] }
+        "kind": {
+          "enum": [
+            "rules-question",
+            "dispute",
+            "concept"
+          ]
+        },
+        "intent": {
+          "type": "string",
+          "description": "Proposed intent id, e.g. does-X-trigger-Y. Becomes an entry/strategy id once those exist."
+        },
+        "answer": {
+          "type": "string",
+          "description": "The expected conclusion in one or two sentences."
+        },
+        "deciding": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Facts that select the branch; each variant changes one."
+        },
+        "infraction": {
+          "type": "string"
+        },
+        "penalty": {
+          "type": "string"
+        },
+        "fix": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "deliveryPattern": {
+          "enum": [
+            "explain-then-penalty",
+            "penalty-then-explain",
+            "ruling-explain-ruling",
+            "summary-explain-exact",
+            "penalty-only"
+          ]
+        },
+        "requiredCitations": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "CR:x, IPG:x, MTR:x, MTRA:x, Oracle:<card>, Ruling:<card>@<date>."
+        },
+        "requiredQuestions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "forbiddenQuestions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "mustNot": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Behaviours that fail the case, e.g. play-advice, reveal-integrity-suspicion."
+        },
+        "escalate": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "propositions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Intermediate propositions the answer must support (PRD §8: tests check intermediate steps)."
+        },
+        "chain": {
+          "type": "array",
+          "description": "Source -> proposition -> consequence steps.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "sources",
+              "propositions",
+              "consequence"
+            ],
+            "properties": {
+              "sources": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "propositions": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "consequence": {
+                "type": "string"
+              }
+            }
+          }
+        }
       }
     },
-    "notes": { "type": "string" }
+    "notes": {
+      "type": "string"
+    },
+    "provenance": {
+      "type": "object",
+      "description": "Where the case came from: source URL, source ids, source versions, card oracle ids. Free-form; kept verbatim on import."
+    }
   }
 }
