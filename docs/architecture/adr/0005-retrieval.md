@@ -20,8 +20,10 @@ At run time the judge first has to find **what** the player is asking about. The
     - player nicknames ("Tithe", "Bowmasters") come from the lexicon;
     - more than one plausible card gives a choice question (FR-Q-2).
 2. **Lexicon:** approved player phrases are mapped to concept, intent, and infraction IDs, per locale. It is authored at build time and grows from `LibraryMiss` logs.
-3. **Library lookup:**
+3. **Library lookup**, deterministic sources in this order (ADR-0017):
     - `RulingEntry`s whose cards ⊆ the resolved cards and whose concepts or intents match;
+    - **official card rulings** of the resolved cards whose tags match the intent;
+    - `AnswerStrategy`s whose `appliesWhen` holds for the cards' prefetched features;
     - for disputes, `Procedure`s whose triggers match, in the event's framework.
 
 **Retrieval** (library misses only, as input for `reason`):

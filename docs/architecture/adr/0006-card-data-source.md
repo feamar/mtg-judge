@@ -20,6 +20,8 @@ OQ-5 leaves the choice between Scryfall and Gatherer to the architect. The judge
 
 - The pipeline downloads the Scryfall **`oracle_cards`** and **`rulings`** bulk files on each build (a manual step, D25). It records their `updated_at` and hash in the bundle manifest, and stores the cards keyed by `oracle_id`.
 - Only rulings whose source is Wizards of the Coast are used as normative card rulings. Any other rulings are dropped.
+- **Official rulings are a first-class, deterministic answer source** (ADR-0017 §5). Each gets build-time tags (intents, concepts) so the matcher can answer a question with the ruling itself. For example, Pact of Negation's ruling on failing to counter an uncounterable spell.
+- **Scryfall access:** requests send a descriptive `User-Agent` and an `Accept` header. Scryfall refused requests without them in a test on 2026-09-26.
 - **Gatherer stays the authority:** the pipeline spot-checks the Oracle text of every card named in the golden set against Gatherer, as a manual review item in each release checklist.
 - **Card knowledge is prefetched:** at build time, each card's rules-relevant features (for example, which abilities are mana abilities) are derived and stored in the bundle next to its Oracle text. Strategies decide on these features without AI (ADR-0017).
 - The runtime never calls Scryfall. Everything comes from the bundle, which keeps run time deterministic and offline-capable (D31).

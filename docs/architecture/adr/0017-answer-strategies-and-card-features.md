@@ -25,13 +25,22 @@ The owner's direction (2026-09-25):
 
 ```
 CardFeatures { oracleId, dataVersion,
-  abilities: [{ index, kind: "activated"|"triggered"|"static"|"spell-effect",
-                costHasTap, addsMana, targets, isLoyalty,
-                isManaAbility /* CR 605.1a/b */, usesStack,
-                triggerEvent? /* "draw", "cast", "etb", "tap-for-mana", "leaves", … */,
-                effectKinds[] /* "type-change", "control-change", "pt-change", "copy", "cast-during-resolution", … */ }],
+  canBeCountered /* false for "can't be countered", CR 113.6g */,
+  abilities: [Ability],
   derivation: { field → "parser" | "ai-draft" | "reviewed" } }
+
+Ability { index, kind: "activated"|"triggered"|"static"|"spell-effect",
+          costHasTap, addsMana, isLoyalty,
+          isManaAbility /* CR 605.1a/b */, usesStack,
+          targets: TargetSpec[] /* empty = untargeted (CR 115.1a–d, 115.10a) */,
+          triggerEvent? /* "draw", "cast", "etb", "tap-for-mana", "leaves", "beginning-of-upkeep", … */,
+          effectKinds[] /* "counter", "change-targets", "type-change", "control-change", "pt-change", "copy", … */,
+          additionalEffects: bool /* does more than its main effect, e.g. Pact's upkeep clause */,
+          creates: Ability[] /* abilities this effect CREATES: delayed triggers (CR 603.7), emblems, granted abilities */ }
+TargetSpec { what: "spell"|"ability"|"spell-or-ability"|"permanent"|"player"|"any"|…, restrictions? }
 ```
+
+**Abilities created by effects are features too** (found on 2026-09-26 with the owner's Deflecting Swat / Necropotence question). Necropotence's activated ability *creates* a delayed triggered ability ("Put that card into your hand at the beginning of your next end step"), and that created ability has **no targets**. The question "can Deflecting Swat target it, and what happens?" is decided entirely by features of the created ability. So `creates` is modelled recursively, with the same fields as a printed ability.
 
 - **The deterministic Oracle parser first:** templated wording such as "{T}: Add {G}." and "Whenever an opponent draws a card, …" covers a large share of abilities for free.
 - **The knowledge author (Claude Code, Pro plan, ADR-0016)** tags what the parser can't.
@@ -50,8 +59,36 @@ AnswerStrategy { strategyId, intent /* "does-X-trigger-Y", "how-much-mana", "who
 ```
 
 - `RulingEntry` stays for **concepts** (priority) and for genuine one-offs that don't generalise.
-- **Matching order:** exact `RulingEntry`, then `AnswerStrategy` (via features), then `interpret` and match again, then the `reason` fallback.
-- **Answer text** is the approved template, filled with card names and the derived facts. **Citations** are the template's section IDs, plus the cards' Oracle text.
+- **Matching order** (deterministic sources first):
+    1. exact `RulingEntry`;
+    2. an **official card ruling** tagged with the matched cards and intent (point 5);
+    3. `AnswerStrategy` (via features);
+    4. `interpret`, then match again;
+    5. the `reason` fallback.
+- **Answer text** is the approved template, filled with card names and the derived facts. **Citations** are the template's section IDs, the cards' Oracle text, and any official card ruling the strategy relies on.
+
+**5. Official card rulings as a deterministic answer source** (found on 2026-09-26 with the owner's Pact of Negation question):
+
+- Wizards' official rulings, which are in the card data (ADR-0006), often answer a player's question word for word. Pact of Negation's ruling (2021-03-19) says that if Pact resolves with a legal target but fails to counter it (for example because the spell can't be countered), the delayed trigger still triggers.
+- The CR itself has no rule that says so directly. There it is an inference: "can't be countered" isn't a targeting restriction, so the target stays legal and Pact resolves (CR 608.2b, 101.2, 609.3, 603.7a). The official ruling states that inference with authority.
+- **At build time,** each official ruling is tagged with its cards (already known) and with intents and concepts, such as `counter-vs-uncounterable` or `target-untargeted-ability`. Tagging follows the same route as features: a keyword parser first, then author sessions. The ruling's *text* is official and needs no review; only its tags do.
+- **At run time,** a question matching a ruling's cards and intent is answered with the ruling's text, quoted and attributed, at no cost.
+- **Strategies cite rulings too.** The "counter vs. can't be countered" strategy cites the CR chain *and* the official rulings on Pact of Negation and Abrupt Decay.
+
+**6. Rules codification: three tiers.** The owner asked whether every CR rule can be codified for a deterministic engine. The decision: *not as a full game engine* (see Options 2). Instead, three tiers, each only as deep as questions require:
+
+| Tier | What | Scope |
+| --- | --- | --- |
+| **1. Structured rules** | Every CR section already becomes a `Section` (ADR-0007). Each also gets a `ruleKind`: `definition`, `condition-effect`, `restriction`, `ordering`, `procedure`, or `judgement`. That tells us what can be codified at all, and which rules strategies may treat as mechanical. | The whole CR. Parser plus author tagging; review only where a strategy or module depends on the tag. |
+| **2. Rule modules** | Small, tested, pure functions in `core`, each implementing one rule area and citing its sections. Examples: `isTargeted` / `isLegalTarget` / `resolvesOrFizzles` (115.1–115.10, 608.2b); `chooseNewTargets` (115.7a–e); `isManaAbility` (605.1a/b); `apnapOrder` (603.3b); `delayedTriggerCreated` (603.7a). Strategies call modules on card features, and the modules' outputs become `derived` facts. | Only the rule areas that questions cluster on, in the order the league-export triage shows. Each module is tested by its scenario family. |
+| **3. Text** | All other rules stay as searchable text, used by the `reason` fallback (ADR-0005). | Everything else |
+
+The owner's two questions of 2026-09-26 show the payoff. Both are answered by a small **targeting and countering** module over card features:
+
+- **Swat → Necropotence's delayed trigger:** a legal target (113.1c, 115.2), no targets to change (115.1d, 115.10a, 115.7d), so no effect.
+- **Pact → an uncounterable spell:** a legal target, so Pact resolves (608.2b); the counter part fails (101.2, 609.3); the created upkeep trigger still exists (603.7a).
+
+Spike S4 measures what one module costs to build (SPIKES.md).
 
 **3. The scenario workshop: how strategies are made**, in author sessions on the Pro plan:
 
@@ -85,4 +122,5 @@ AnswerStrategy { strategyId, intent /* "does-X-trigger-Y", "how-much-mana", "who
     - [Why?] shows the feature-derived facts ("Selvala's ability is not a mana ability, CR 605.1a");
     - the [Ask a human judge] button;
     - staleness flags on Oracle and CR changes.
-- **This is not a rules engine.** Strategies answer the question types that have been worked out. Everything else still falls back, marked.
+- **This is not a rules engine.** Strategies and rule modules answer the question types that have been worked out. Everything else still falls back, marked.
+- **Rule modules are code, not data.** They live in `core`, and they change through the normal branch → owner-approved merge flow, not through a bundle release. Each module names the CR version it implements. A CR update that changes one of its sections flags the module and its scenario family as stale.

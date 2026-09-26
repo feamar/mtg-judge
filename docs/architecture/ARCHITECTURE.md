@@ -122,10 +122,15 @@ TypeScript-flavoured sketches: guidance for the planner, not a frozen schema.
 ```ts
 // Sources (ADR-0007)
 SourceDocument { docId, version, effectiveDate, origin, contentHash }
-Section        { sectionId /* "CR:603.3b" */, docId, number, title?, text, parentId?, refs[], textHash }
+Section        { sectionId /* "CR:603.3b" */, docId, number, title?, text /* original */, searchText /* normalised */,
+                 ruleKind /* definition|condition-effect|restriction|ordering|procedure|judgement */,
+                 parentId?, refs[], textHash }                                                  // ADR-0007
+OfficialRuling { oracleId, date, text /* Wizards, verbatim */, tags: { intents[], concepts[] } }  // answer source, ADR-0017 §5
 Card           { oracleId, name, aliases[], typeLine, oracleText, faces?[], rulings[{date, text}], dataVersion }
-CardFeatures   { oracleId, abilities[{ kind, costHasTap, addsMana, targets, isManaAbility, usesStack,
-                 triggerEvent?, effectKinds[] }], derivation /* parser | ai-draft | reviewed */ }   // prefetched, ADR-0017
+CardFeatures   { oracleId, canBeCountered, abilities[{ kind, costHasTap, addsMana, targets: TargetSpec[],
+                 isManaAbility, usesStack, triggerEvent?, effectKinds[], additionalEffects,
+                 creates: Ability[] /* delayed triggers, emblems, granted abilities */ }],
+                 derivation /* parser | ai-draft | reviewed */ }                                // prefetched, ADR-0017
 
 // Shared decision-graph building blocks (ADR-0008)
 FactSpec   { factId, valueType: "yesno"|"choice"|"seat"|"number"|"text", options?: OptionId[],
@@ -266,7 +271,10 @@ stateDiagram-v2
 1. **Card resolver** (ADR-0005): exact, then normalised, then fuzzy card names found in the text. More than one plausible card gives a choice question: "Did you mean [Kinnan, Bonder Prodigy] [Kinnan, …]?" (FR-Q-2).
 2. **Lexicon:** player vocabulary ("wheel", "tithe", "forgot my trigger", "what is priority") is mapped to concepts, intents, and infractions. The lexicon is authored and approved at build time, and grows from `LibraryMiss` logs.
 3. **Candidates:**
-    - rules questions look first for `RulingEntry`s whose cards ⊆ the mentioned cards and whose concepts or intents match, then for `AnswerStrategy`s whose `appliesWhen` holds for the mentioned cards' **prefetched features** and the matched intent (ADR-0017);
+    - rules questions look, in this order, for:
+        - `RulingEntry`s whose cards ⊆ the mentioned cards and whose concepts or intents match;
+        - an **official card ruling** of those cards tagged with the matched intent, quoted and attributed;
+        - `AnswerStrategy`s whose `appliesWhen` holds for the mentioned cards' **prefetched features** and the matched intent. Strategies may call **rule modules** (tested functions for rule areas such as targeting, mana abilities, APNAP) whose outputs become derived facts (ADR-0017 §5–6);
     - disputes look for `Procedure`s whose triggers match, in the event's framework.
 4. **Outcome:**
     - one candidate: proceed;

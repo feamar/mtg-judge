@@ -1,10 +1,10 @@
 # Technical spike plan
 
-Status: Proposed. **Planned, not run.** Spike code comes after the product owner approves this plan (handover, out-of-scope list). · Date: 2026-09-25
+Status: Proposed. **Planned, not run.** Four spikes: S1–S4. Spike code comes after the product owner approves this plan (handover, out-of-scope list). · Date: 2026-09-25
 
 Each spike is throwaway code in `spikes/<id>/`. It is never merged into the product packages. Each spike ends with a one-page report in `docs/architecture/spikes/<id>-report.md`, containing the measured results, pass or fail against the criteria below, and the ADRs to confirm or supersede.
 
-Running order: **S2 → S3 → S1.** S2 unblocks the MVP's only input path. S3 measures how much the deterministic judge covers on real text, and what the AI edge costs. S1 is optional scope (D22).
+Running order: **S4 and S2 first** (S4 needs no prerequisites), **then S3, then S1.** S2 unblocks the MVP's only input path. S3 measures how much the deterministic judge covers on real text, and what the AI edge costs. S1 is optional scope (D22).
 
 ---
 
@@ -129,3 +129,45 @@ The spike must confirm this on the owner's actual configuration, and record the 
 **Fail:** confidently wrong matches, or fallback answers wrong but shown as correct. The report then proposes stricter matching thresholds, or escalating instead of falling back. Choosing is the owner's decision.
 
 **Time box:** 4 working days. **Paid spend: $0.**
+
+---
+
+## S4: One rule module, end to end
+
+**Requirements:** P2, FR-Q-1, NFR-ACC-1, NFR-ACC-3, NFR-COST-1 · **ADRs at stake:** 0007, 0008, 0017
+
+**Question:** how much work is one tier-2 rule module (ADR-0017 §6) with the card features it needs? How many questions does it answer deterministically, and how much review does it cost the owner? The answer decides how far rules codification is pushed.
+
+**Why this module:** the owner's own questions of 2026-09-26 both fall in **targeting and countering**:
+
+- *Can Deflecting Swat target Necropotence's delayed trigger?*
+- *Does Pact of Negation still give its upkeep trigger if it targets an uncounterable spell?*
+
+**Method:**
+
+1. From the current CR (downloaded and normalised per ADR-0007), implement a pure `core` module that cites its sections:
+    - `isTargeted` (115.1a–d, 115.10a);
+    - `isLegalTarget` (113.1c, 115.2, 115.5);
+    - `resolvesOrFizzles` (608.2b);
+    - `chooseNewTargets` / `changeTargets` (115.7a–e);
+    - `counterOutcome` (701.6a, 101.2, 609.3, 113.6g);
+    - `createdAbilities` (603.7a).
+2. Hand-author `CardFeatures` (including `creates`, `targets`, `canBeCountered`, `additionalEffects`) for about 15 cEDH cards in this area: redirect spells, counterspells with additional effects, uncounterable spells, delayed-trigger creators.
+3. Write two `AnswerStrategy`s: "can X target Y, and what happens?" and "counter effect vs. can't be countered". Tag the relevant official rulings (ADR-0017 §5).
+4. Write a scenario family of about 20 cases: the two questions above, with variants that change one deciding feature. Keep 5 as held-out with **other cards** than the ones the strategies were written from.
+5. Measure:
+    - hours to build;
+    - the owner's review time;
+    - how many of the 20 are answered deterministically and correctly;
+    - how many held-out cases generalise;
+    - whether any answer is confidently wrong.
+
+**Pass criteria:**
+
+- 100% of the 15 development cases are answered correctly with no AI.
+- At least 4 of the 5 held-out cases are answered correctly with no AI; the rest fall back or escalate, and **none is confidently wrong**.
+- The owner's review of the module, features, and strategies takes ≤ 2 hours.
+
+**The report states:** effort per module, review cost, generalisation, and a recommended list and order of the next modules. That order comes from the league-export triage when it's available.
+
+**Time box:** 3 working days. **Paid spend: $0.** No live AI calls; authoring runs on the Pro plan (ADR-0016). **No prerequisites**, so it can run first.

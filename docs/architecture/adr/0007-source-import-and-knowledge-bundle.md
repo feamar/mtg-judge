@@ -23,6 +23,9 @@ Section        { sectionId: "CR:603.3b", docId, number, title?, text, parentId?,
 ```
 
 - **Section IDs are stable and human-readable,** because they are what citations point to.
+- **Text is normalised on import, with the original kept.** Line endings are unified (the CR TXT has CRLF), and typographic quotes, apostrophes, and dashes are mapped to ASCII in a separate `searchText` field; the Unicode `text` stays as the citable original. Oracle text from the card data gets the same treatment.
+    - *Why:* on 2026-09-26 a search of the current CR for "can't be countered" found nothing, because the CR writes "can’t" with a typographic apostrophe. Deterministic matching must not silently miss rules over punctuation.
+- **Each section gets a `ruleKind`**: `definition`, `condition-effect`, `restriction`, `ordering`, `procedure`, or `judgement`. It is drafted by the parser and author sessions, and reviewed where a strategy or rule module depends on it (ADR-0017 §6, tier 1).
 - **The MTR and IPG importers keep the normative text only.** Annotation blocks are stripped and recorded as stripped, so a reviewer can see what was dropped.
 - **Manual transcripts are accepted** with `origin: manual-transcript` and a named transcriber, per `sources/README.md`.
 - **Addenda keep their own numbering.** They also declare what they amend, as `AddendumEdit { addendumSectionId, amends: sectionId|infractionId, kind: replace|add|modify-penalty|modify-procedure }`. The edits are AI-drafted at build time and reviewed.
