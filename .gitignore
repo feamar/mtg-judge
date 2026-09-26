@@ -4,3 +4,11 @@ __pycache__/
 .env
 .venv/
 node_modules/
+
+# League ticket export: personal data, never committed (ADR-0017 §4, OQ-31).
+# Keep raw and held-out data outside this public repository; these rules are a safety net.
+league-export/
+heldout/
+*.raw.json
+*.raw.html
+*.transcript.html

@@ -5,7 +5,7 @@ Status: Proposed (PR `arch/v1`) · Date: 2026-09-25 · Author: architect role (C
 This document turns [`docs/PRD.md`](../PRD.md) into a technical design. It does not change any requirement. Where the PRD is silent or unclear, or where the owner has asked for a change, the point is raised as an open question in PRD §12 (OQ-22 onwards). Decisions are recorded in [`adr/`](adr/README.md). The owner's answers from the architecture session are in [OWNER-ANSWERS.md](OWNER-ANSWERS.md). The other deliverables are:
 
 - [SEQUENCE.md](SEQUENCE.md): one judge call, end to end;
-- [SPIKES.md](SPIKES.md): the three technical spikes;
+- [SPIKES.md](SPIKES.md): the four technical spikes (S4 has been run; see [spikes/S4-report.md](spikes/S4-report.md));
 - [TRACEABILITY.md](TRACEABILITY.md): every FR and NFR mapped to components.
 
 ## 0. The idea in one paragraph
