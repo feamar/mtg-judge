@@ -29,7 +29,7 @@ Each case holds:
 
 ## Current state (2026-09-26)
 
-- **135 cases.**
+- **134 cases.**
     - **100 Judge Lab regression cases** (`judge-lab-cr-001` … `judge-lab-cr-100`): general Comprehensive Rules questions, imported on 2026-09-26 from the owner's `judge-lab-regression-100.jsonl`. The owner marked all 100 **fully VALIDATED**, including their source mappings (2026-09-26). The file itself recorded 98 as "ruling accepted, sources SOURCE CHECK REQUIRED". Every one of their 231 CR citations exists in the CR of 2026-09-25 (checked by the importer). Format `any`, REL not material; no easy/hard tag yet.
     - The 20 converted scenarios.
     - 10 AI-drafted targeting variants (`tc-01` … `tc-10`, SOURCE CHECK REQUIRED).
