@@ -2,6 +2,8 @@
 
 The architect role may only add open questions to the PRD; it doesn't change requirements or the decision log. These are the answers Frank (product owner) gave in the architecture sessions on **2026-09-25 and 2026-09-26**. They are recorded here so they can be moved into PRD §10 (decision log) and §12 (open questions) in a PRD commit that references these IDs. The architecture already follows them.
 
+> **Moved into the PRD on 2026-09-27:** PRD v0.2 records these answers as decisions D42–D56 and the matching requirement changes. The PRD is the master copy; this file remains the dated record of what the owner said.
+
 | Topic | Question | Answer | Applied in |
 | --- | --- | --- | --- |
 | OQ-20 | Zero or one addendum per event, amending the MTR, the IPG, or both? | **Yes, confirmed.** | ADR-0007 §6; TRACEABILITY NG4 |
