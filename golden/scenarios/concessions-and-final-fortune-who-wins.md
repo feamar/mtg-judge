@@ -1,6 +1,6 @@
 # Two opponents concede at instant speed, the last loses to Final Fortune: who wins?
 
-**Status:** SOURCE CHECK REQUIRED (proposed by the architect, 2026-09-27)
+**Status:** `scn-002a` and `scn-002d` VALIDATED BY PROJECT OWNER — 2026-09-27; `scn-002b` and `scn-002c` SOURCE CHECK REQUIRED.
 
 **Origin:** the product owner's scenario `SCN:` of 2026-09-27.
 
@@ -22,6 +22,20 @@ The opening already contains a question, so narration is skipped (ADR-0019). The
 
 The judge states the game result and the MTRA consequence. It doesn't compute points or standings (NG1, FR-CTX-3).
 
+## What actually happened (owner, 2026-09-27)
+
+This was a real case in the owner's **online league**:
+
+- the two opponents conceded while a player was presenting a typical win line (Underworld Breach, Lion's Eye Diamond, Brain Freeze), without waiting for the actual win. That's commonplace online, because people want to get back to their lives;
+- the win line didn't work, and its player lost to Final Fortune's delayed trigger;
+- the TO and judges **softened** the MTRA 2.5 consequence, **by discretion and without policy backing**, to **"You win, and nobody is dropped."**
+
+**How the AI judge handles this (ADR-0020, owner's decision):**
+
+- it never softens by itself;
+- the TO can write the leniency down as an **event policy**, which the judge then applies and cites (`scn-002d`);
+- without one, the judge gives the game result and **refers** the possible drop to the TO in the judge-only channel, instead of announcing it (`scn-002a`).
+
 ## Deciding facts
 
 | Fact | Why it decides |
@@ -29,6 +43,7 @@ The judge states the game result and the MTRA consequence. It doesn't compute po
 | **The order of events:** both concessions before the Final Fortune loss, and the asker is still in the game | CR 104.2a: the asker wins when the last opponent leaves |
 | **When each player conceded** (their own turn, with priority, empty stack?) | MTRA 2.5: dropped from the event, or not |
 | **Framework** | MTRA 2.5 applies only at MTRA events |
+| **Was a win line being presented when they conceded?** | Only matters if an event policy such as `online-concession-leniency` is active |
 | **Was anything offered or agreed in exchange for the concessions?** | If so, IPG 4.4 Bribery and Wagering (Match Loss): escalate to a human judge (variant b) |
 
 ## Open points for the owner

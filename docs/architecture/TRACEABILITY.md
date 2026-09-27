@@ -76,7 +76,7 @@ Status: Proposed · Date: 2026-09-25 · Covers every FR (PRD §6) and NFR (PRD �
 | P1 Teach first | Ruling composer: explanation always present; delivery patterns (FR-POL-2) |
 | P2 Deterministic first | Approved rulings library and procedures, pre-worded questions, penalty tables, guard, verifier. AI only at two edges: `interpret` and the `reason` fallback (ADR-0002, ADR-0008). |
 | P3 Face of the game | Catalog greetings (disputes only), tone rubric, neutral escalation templates (ADR-0009, ADR-0014) |
-| NG1 No event management | No pairing, standing, or timer entities in the data model (§3.2); FR-Q-3 answers only |
+| NG1 No event management | No pairing, standing, or timer entities in the data model (§3.2); FR-Q-3 answers only; drops and other event-management actions are referred to the TO, never executed or announced (ADR-0020) |
 | NG3 No Professional REL | `rel` values come from the bundle, which contains Regular and Competitive only |
 | NG4 No mixing frameworks | `EventContext.frameworkId` is a single value (OQ-20: zero or one addendum) |
 | §4 architecture constraints (player count, English, Discord, text-only) | `Seating` with N seats; ADR-0014; adapters; `Evidence` (ARCHITECTURE.md §8) |

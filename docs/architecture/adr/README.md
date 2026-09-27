@@ -25,6 +25,7 @@ Status values: **Proposed** (in review in a PR), **Accepted** (merged by the pro
 | [0017](0017-answer-strategies-and-card-features.md) | Answering strategies over prefetched card features; strategies are derived from scenario families | Proposed |
 | [0018](0018-input-normalisation-and-robustness.md) | Messy text and speech become a structured canonical question (read back to the player); robustness is tested by requiring identical answers for all variants | Proposed |
 | [0019](0019-guided-narration-intake.md) | Guided narration intake: "tell me what happened, step by step" to the caller (or an agreed volunteer); the judge follows along silently and ends on a question, an arising issue, or silence | Proposed |
+| [0020](0020-event-local-policies-and-referrals.md) | TO-configured event policies (amending tournament policy only) are applied and cited; drops and other event-management actions are referred to the TO, never announced | Proposed |
 
 ## Template
 

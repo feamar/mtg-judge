@@ -1,0 +1,45 @@
+id: scn-002d-concessions-online-league-policy
+title: "Concessions facing a presented win line, online league with a TO concession policy"
+narrative: golden/scenarios/concessions-and-final-fortune-who-wins.md
+family: commander
+variantOf: scn-002a-concessions-final-fortune
+validation:
+  status: VALIDATED
+  by: Frank
+  on: 2026-09-27
+  note: "The owner's real league case. The TO and judges softened MTRA 2.5 by discretion to 'You win, and nobody is dropped' (no policy backing), because online players concede to a presented win line to get back to their lives. Modelled as a TO-configured event policy (ADR-0020); the policy text is the architect's wording."
+tagProposed: easy
+set: dev
+origin: owner-real-case
+sources: { cr: 2026-09-25, addendum: MTRA@2025-06-24, oracle: scryfall@2026-09-27 }
+context:
+  format: cEDH
+  rel: Competitive
+  framework: MTRA@2025-06-24
+  seats: 4
+  inGame: false
+  eventPolicies:
+    - policyId: online-concession-leniency
+      amends: "MTRA:2.5"
+      when: "concededAtInstantSpeed && facingPresentedWinLine"
+      effect: waive-consequence
+      text: "In this online league, players who concede at instant speed while an opponent presents a win line are not dropped from the event."
+input:
+  raw:
+    - { seat: P1, text: "What happens if two of my opponents scooped at instant speed and the last one died to final fortune. Who wins?" }
+  cards: ["Final Fortune", "Underworld Breach", "Lion's Eye Diamond", "Brain Freeze"]
+  choices:
+    readBackConfirmed: true
+    concessionTiming: { P2: "During P4's turn, while P4 presented a win line", P3: "During P4's turn, while P4 presented a win line" }
+    facingPresentedWinLine: true
+    anythingAgreedBeforeConcessions: false
+expect:
+  kind: dispute
+  intent: who-wins
+  answer: "You win the game: P2 and P3 conceded and left the game (CR 104.3a), P4's win line didn't work and P4 lost to Final Fortune's end-step trigger, so all your opponents have left (CR 104.2a). Under this league's event policy, players who concede while a win line is being presented are not dropped, so nobody is dropped."
+  deciding: ["All opponents have left the game", "The concessions came while a win line was presented", "The event policy online-concession-leniency is active"]
+  infraction: "none"
+  requiredCitations: ["CR:104.3a", "CR:104.2a", "Oracle:Final Fortune", "EventPolicy:online-concession-leniency"]
+  requiredQuestions: [readBackConfirmed, concessionTiming, facingPresentedWinLine]
+  mustNot: [compute-points-or-standings, announce-drop, reveal-integrity-suspicion]
+  escalate: false

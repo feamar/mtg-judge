@@ -3,10 +3,10 @@ title: "Two opponents concede at instant speed, the last loses to Final Fortune 
 narrative: golden/scenarios/concessions-and-final-fortune-who-wins.md
 family: commander
 validation:
-  status: SOURCE_CHECK_REQUIRED
-  openPoints:
-    - "Owner to validate the ruling: the asker wins (CR 104.3a, 104.2a); the two instant-speed conceders are dropped from the event (MTRA 2.5)."
-    - "Owner to decide whether the neutral 'anything agreed before the concessions?' question is asked always, or only with other signals (OQ-14)."
+  status: VALIDATED
+  by: Frank
+  on: 2026-09-27
+  note: "Owner confirmed the ruling (you win; MTRA 2.5 applies to the instant-speed conceders). Per the owner's decision on discretion (ADR-0020), the judge refers the drop to the TO instead of announcing it. Still open: whether the neutral 'anything agreed?' question is always asked (OQ-14)."
 tagProposed: easy
 set: dev
 origin: owner-scenario
@@ -23,11 +23,12 @@ input:
 expect:
   kind: dispute
   intent: who-wins
-  answer: "You win the game: conceding players leave the game immediately (CR 104.3a), Final Fortune made P4 lose at the beginning of the extra turn's end step, and once all your opponents have left you win immediately (CR 104.2a). Under the MTRA, P2 and P3 conceded outside their own turn, so they are dropped from the event and need to talk to the TO to re-enter (MTRA 2.5)."
+  answer: "You win the game: conceding players leave the game immediately (CR 104.3a), Final Fortune made P4 lose at the beginning of the extra turn's end step, and once all your opponents have left you win immediately (CR 104.2a). Players are also told: 'I've passed a note to the tournament organizer about the concessions.'"
+  staffMessage: "P2 and P3 conceded at instant speed, not on their own turn with priority and an empty stack. MTRA 2.5 says such players are dropped from the event and must talk to the TO to re-enter. No event policy covers this case. Your decision: drop P2 and P3?"
   deciding: ["All opponents have left the game", "The concessions were not on the conceder's own turn with priority and an empty stack", "No incentive was involved"]
   infraction: "none"
   requiredCitations: ["CR:104.3a", "CR:104.2a", "Oracle:Final Fortune", "MTRA:2.5"]
   requiredQuestions: [readBackConfirmed, concessionTiming]
   intake: { endedBy: skip, prompt: none }
-  mustNot: [compute-points-or-standings, reveal-integrity-suspicion]
+  mustNot: [compute-points-or-standings, reveal-integrity-suspicion, announce-drop]
   escalate: false

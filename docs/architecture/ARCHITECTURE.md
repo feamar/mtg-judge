@@ -176,6 +176,7 @@ EventContext { eventId, guildId, name, format: "cEDH", rel: "Competitive", frame
                judgeRoleId, toRoleId, judgeOnlyChannelId, playerChannelIds[],
                ticketSource: { id: "discord-private-thread", config: { panelChannelId, ticketBotUserId } },
                joinCode,                                         // FR-CTX-4 (OQ-28)
+               eventPolicies: EventPolicy[],                     // TO-set; amend tournament policy only (ADR-0020, OQ-35)
                escalation: { alwaysEscalate: CategoryId[] },     // OQ-7
                createdBy, updatedAt }
 GuildRoleMapping { guildId, toRoleId, setByAdminUserId }        // FR-ADM-1
@@ -367,6 +368,7 @@ Two golden scenarios show how this plays out:
     - (c) the **[Ask a human judge]** button under every ruling and answer, or typed text that `interpret` recognises as a contest, confirmed with a button;
     - (d) the integrity stop rule;
     - (e) an open decisive dispute.
+- **Event-management consequences** (a drop from the event, re-entry, result changes) are **referred to the TO** in the judge-only channel, never announced by the judge, unless a TO-set event policy covers the case, which the judge applies and cites (ADR-0020).
 - **FR-ESC-2:** before handing off, the engine asks the remaining `cheapToCollect` questions (except under an integrity stop).
 - **FR-ESC-3 / FR-ESC-5:** the handoff package goes to `Staff`; players get a fixed template.
 - **FR-ESC-4 / ADR-0009:**

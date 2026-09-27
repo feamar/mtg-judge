@@ -165,6 +165,41 @@
         "inGame": {
           "type": "boolean",
           "description": "true = minimum in-game explanation depth applies (FR-Q-5)."
+        },
+        "eventPolicies": {
+          "type": "array",
+          "description": "TO-configured event policies (ADR-0020). They amend tournament policy only, never game rules.",
+          "items": {
+            "type": "object",
+            "required": [
+              "policyId",
+              "amends",
+              "when",
+              "effect",
+              "text"
+            ],
+            "properties": {
+              "policyId": {
+                "type": "string"
+              },
+              "amends": {
+                "type": "string"
+              },
+              "when": {
+                "type": "string"
+              },
+              "effect": {
+                "enum": [
+                  "replace-consequence",
+                  "waive-consequence",
+                  "add-guidance"
+                ]
+              },
+              "text": {
+                "type": "string"
+              }
+            }
+          }
         }
       }
     },
@@ -448,6 +483,10 @@
               }
             }
           }
+        },
+        "staffMessage": {
+          "type": "string",
+          "description": "Expected judge-only-channel message, e.g. an event-management referral to the TO (ADR-0020)."
         }
       }
     },
