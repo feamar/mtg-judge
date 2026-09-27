@@ -33,6 +33,8 @@ A prompt instruction such as "don't mention cheating" is not a guarantee.
    A hit blocks the message and escalates the case.
 6. **Hidden information inside a remedy** (for example the MTRA Hidden Card Error) is carried out as instructions at the table ("show the set only to P3; P3 chooses; please don't discuss the choice"). The judge never asks for or relays the hidden cards itself.
 
+**7. Major infractions** (ADR-0021): the penalty recommendation for anything more severe than a Warning is a `Staff`-only content type, like investigation notes. Players only get the neutral handoff template.
+
 ## Consequences
 
 - The FR-ESC-4 AC can be tested by inspecting every `Table` and `PlayerPrivate` message in a golden replay.

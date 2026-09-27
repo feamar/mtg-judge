@@ -33,7 +33,7 @@ Each case holds:
     - **100 Judge Lab regression cases** (`judge-lab-cr-001` … `judge-lab-cr-100`): general Comprehensive Rules questions, imported on 2026-09-26 from the owner's `judge-lab-regression-100.jsonl`. The owner marked all 100 **fully VALIDATED**, including their source mappings (2026-09-26). The file itself recorded 98 as "ruling accepted, sources SOURCE CHECK REQUIRED". Every one of their 231 CR citations exists in the CR of 2026-09-25 (checked by the importer). Format `any`, REL not material; no easy/hard tag yet.
     - The 20 converted scenarios.
     - 10 AI-drafted targeting variants (`tc-01` … `tc-10`, SOURCE CHECK REQUIRED).
-    - Owner scenarios given as `SCN:` prompts (from 2026-09-27): `scn-001a..f` (card accidentally shuffled into the library): a–c VALIDATED by the owner, d–f SOURCE CHECK REQUIRED; `scn-002a..d` (concessions and Final Fortune: who wins): a and d VALIDATED, b and c SOURCE CHECK REQUIRED.
+    - Owner scenarios given as `SCN:` prompts (from 2026-09-27): `scn-001a..f` (card accidentally shuffled into the library): a–c VALIDATED by the owner, d–f SOURCE CHECK REQUIRED; `scn-002a..d` (concessions and Final Fortune: who wins): all VALIDATED.
     - One narration-intake example (`intake-01`), SOURCE CHECK REQUIRED.
     - Of the 20 scenarios, 18 came from the ChatGPT package and 2 from the owner's own questions of 2026-09-26.
 - **Validation:** 15 VALIDATED, 5 SOURCE CHECK REQUIRED (Kinnan ×3, forgotten untap, Wheel/Tithe). For those five, the citations were checked to exist in the CR of 2026-09-25, and against current Oracle text and the IPG. Each has its open points listed in the case file.

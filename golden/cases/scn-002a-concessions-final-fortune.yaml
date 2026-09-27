@@ -6,7 +6,7 @@ validation:
   status: VALIDATED
   by: Frank
   on: 2026-09-27
-  note: "Owner confirmed the ruling (you win; MTRA 2.5 applies to the instant-speed conceders). Per the owner's decision on discretion (ADR-0020), the judge refers the drop to the TO instead of announcing it. Still open: whether the neutral 'anything agreed?' question is always asked (OQ-14)."
+  note: "Owner confirmed the ruling (you win; MTRA 2.5 applies to the instant-speed conceders). Per the owner's decision on discretion (ADR-0020), the judge refers the drop to the TO instead of announcing it. The neutral 'anything agreed?' question is not asked: nothing looks off (owner, 2026-09-27)."
 tagProposed: easy
 set: dev
 origin: owner-scenario
@@ -19,7 +19,6 @@ input:
   choices:
     readBackConfirmed: true
     concessionTiming: { P2: "During P4's turn, in response to a spell", P3: "During P4's turn, in response to a spell" }
-    anythingAgreedBeforeConcessions: false
 expect:
   kind: dispute
   intent: who-wins
@@ -30,5 +29,6 @@ expect:
   requiredCitations: ["CR:104.3a", "CR:104.2a", "Oracle:Final Fortune", "MTRA:2.5"]
   requiredQuestions: [readBackConfirmed, concessionTiming]
   intake: { endedBy: skip, prompt: none }
+  forbiddenQuestions: [anythingAgreedBeforeConcessions]
   mustNot: [compute-points-or-standings, reveal-integrity-suspicion, announce-drop]
   escalate: false

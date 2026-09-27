@@ -4,9 +4,10 @@ narrative: golden/scenarios/concessions-and-final-fortune-who-wins.md
 family: commander
 variantOf: scn-002a-concessions-final-fortune
 validation:
-  status: SOURCE_CHECK_REQUIRED
-  openPoints:
-    - "AI-drafted. Owner to confirm: conceding on your own turn with priority and an empty stack is the encouraged way under MTRA 2.5, so there is no drop."
+  status: VALIDATED
+  by: Frank
+  on: 2026-09-27
+  note: "Owner confirmed (2026-09-27): conceding on your own turn with priority and an empty stack means no drop under MTRA 2.5."
 tagProposed: easy
 set: dev
 origin: ai-generated

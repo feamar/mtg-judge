@@ -32,7 +32,6 @@ input:
     readBackConfirmed: true
     concessionTiming: { P2: "During P4's turn, while P4 presented a win line", P3: "During P4's turn, while P4 presented a win line" }
     facingPresentedWinLine: true
-    anythingAgreedBeforeConcessions: false
 expect:
   kind: dispute
   intent: who-wins
@@ -41,5 +40,6 @@ expect:
   infraction: "none"
   requiredCitations: ["CR:104.3a", "CR:104.2a", "Oracle:Final Fortune", "EventPolicy:online-concession-leniency"]
   requiredQuestions: [readBackConfirmed, concessionTiming, facingPresentedWinLine]
+  forbiddenQuestions: [anythingAgreedBeforeConcessions]
   mustNot: [compute-points-or-standings, announce-drop, reveal-integrity-suspicion]
   escalate: false

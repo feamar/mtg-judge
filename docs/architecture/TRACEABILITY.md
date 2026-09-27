@@ -30,13 +30,13 @@ Status: Proposed · Date: 2026-09-25 · Covers every FR (PRD §6) and NFR (PRD �
 | FR-RUL-7 | Decision-graph engine | Infraction from game-action facts only; integrity signals write to staff notes | 0008, 0009 | G (One Ring AC) |
 | FR-RUL-8 | Audience guard; approved templates; `reason` prompt; output lint | Templates reviewed for play advice; hidden-information and play-advice lint on everything sent | 0009 | G (Underworld Breach/LED), U |
 | FR-RUL-9 | Verifier; Ruling composer | `outcome: unresolved` → escalate; counted as success | 0008 | G |
-| FR-POL-1 | Knowledge (penalty tables); Ruling composer; Verifier | `PenaltyRow` lookup; the model never chooses the penalty | 0007, 0008 | G (MTRA Deck Problem AC), U |
+| FR-POL-1 | Knowledge (penalty tables); Ruling composer; Verifier | `PenaltyRow` lookup; the model never chooses the penalty; issued by the bot only up to a Warning, otherwise recommended to a human judge (ADR-0021) | 0007, 0008 | G (MTRA Deck Problem AC), U |
 | FR-POL-2 | Ruling composer; Knowledge (branch) | Delivery pattern set on each branch at build time, approved with it | 0008 | G (pattern per case) |
 | FR-POL-3 | Ruling composer; Outbox | Base-penalty label; copy to `Staff` | 0009 | G, U |
 | FR-INV-1 | Build pipeline; Knowledge | `Procedure` per framework per infraction | 0007, 0008 | R, U (schema validation) |
 | FR-INV-2 | Decision-graph engine | Decisive-fact candidates, deterministic selection with approved wording (owner, 2026-09-25; OQ-30), guard, `QuestionAsked` record | 0008 | G (required facts AC) |
 | FR-INV-3 | Decision-graph engine | Game state asked only when it is a decisive fact | 0008 | G (forbidden questions) |
-| FR-ESC-1 | Escalation policy; Discord adapter ([Ask a human judge] button) | Checks (a)–(e) every turn; (a) uses concrete signals instead of a confidence score (OQ-7) | 0008 | G, U |
+| FR-ESC-1 | Escalation policy; Discord adapter ([Ask a human judge] button) | Checks (a)–(e) every turn, plus (f): base penalty more severe than a Warning, handed off as a recommendation (ADR-0021, OQ-36); (a) uses concrete signals instead of a confidence score (OQ-7) | 0008 | G, U |
 | FR-ESC-2 | Escalation policy; Decision-graph engine | Collect `cheapToCollect` facts before handoff | 0008 | G |
 | FR-ESC-3 | Escalation policy; Outbox | `Handoff` to `Staff` | 0009 | G, U |
 | FR-ESC-4 | Audience guard; Escalation policy | Staff-only notes, player-safe projection, stop rule, lint | 0009 | G (AC: no leak in any player message) |

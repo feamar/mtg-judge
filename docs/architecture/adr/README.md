@@ -26,6 +26,7 @@ Status values: **Proposed** (in review in a PR), **Accepted** (merged by the pro
 | [0018](0018-input-normalisation-and-robustness.md) | Messy text and speech become a structured canonical question (read back to the player); robustness is tested by requiring identical answers for all variants | Proposed |
 | [0019](0019-guided-narration-intake.md) | Guided narration intake: "tell me what happened, step by step" to the caller (or an agreed volunteer); the judge follows along silently and ends on a question, an arising issue, or silence | Proposed |
 | [0020](0020-event-local-policies-and-referrals.md) | TO-configured event policies (amending tournament policy only) are applied and cited; drops and other event-management actions are referred to the TO, never announced | Proposed |
+| [0021](0021-floor-judge-model-major-infractions.md) | Floor-judge model: the bot handles Warning-level and below; major infractions (above a Warning, and any suspected cheating) are detected, investigated and handed to a human judge with a recommendation, without announcing a penalty | Proposed |
 
 ## Template
 

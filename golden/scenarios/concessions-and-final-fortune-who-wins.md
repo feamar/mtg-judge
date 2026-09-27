@@ -1,6 +1,6 @@
 # Two opponents concede at instant speed, the last loses to Final Fortune: who wins?
 
-**Status:** `scn-002a` and `scn-002d` VALIDATED BY PROJECT OWNER — 2026-09-27; `scn-002b` and `scn-002c` SOURCE CHECK REQUIRED.
+**Status:** VALIDATED BY PROJECT OWNER — 2026-09-27 (`scn-002a..d`).
 
 **Origin:** the product owner's scenario `SCN:` of 2026-09-27.
 
@@ -46,9 +46,10 @@ This was a real case in the owner's **online league**:
 | **Was a win line being presented when they conceded?** | Only matters if an event policy such as `online-concession-leniency` is active |
 | **Was anything offered or agreed in exchange for the concessions?** | If so, IPG 4.4 Bribery and Wagering (Match Loss): escalate to a human judge (variant b) |
 
-## Open points for the owner
+## Owner answers (2026-09-27)
 
-1. Should the judge ask the neutral question *"Was anything discussed or agreed before the concessions?"* in **every** case with several concessions, or only when there are other signals (OQ-14)? The question must never reveal a suspicion (FR-ESC-4).
+- The neutral question *"Was anything discussed or agreed before the concessions?"* is asked **only when something else looks off** (OQ-14), never routinely.
+- Variants b and c are right. An incentive for conceding is a **major infraction**, so it goes to a human judge without announcing a penalty (ADR-0021).
 
 ## Normative sources (checked 2026-09-27)
 
