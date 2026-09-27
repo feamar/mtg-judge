@@ -385,3 +385,49 @@ The **golden test set** is the definition of correct. It is the benchmark for ev
 - [x] **OQ-19.** Resolved: use the server's existing ticket bot (D37).
 - [ ] **OQ-20.** FR-CTX-1 says the policy framework field allows "no more than one of IPG and/or MTR". Does this mean an event may pick zero or one addendum, and that the addendum can cover the MTR, the IPG, or both?
 - [ ] **OQ-21.** What is the existing ticket bot called, and what do its threads look like (title, first message, who gets added)? The product owner to check on his server.
+- [ ] **OQ-22.** *(Raised by the architect, 2026-09-25.)* FR-INT-1 and FR-CTX-1 say the ticket bot opens **threads** in a **category**. In Discord, threads belong to a parent channel, and categories contain channels. Does the owner's ticket bot create (a) a new channel per ticket under a category, or (b) a new thread per ticket under a channel? The architecture supports both (ADR-0010). The answer decides which event-context field the TO fills in, and it's needed before spike S2.
+- [ ] **OQ-23.** *(Raised by the architect, 2026-09-25.)* Player messages (pseudonymised: seat labels, no Discord names or IDs) are sent to a third-party AI provider (Anthropic, ADR-0002), which may keep API inputs longer than the 7 days in D39 and may process them outside the EU. Is that acceptable? Options: (a) accept, and document it in a privacy notice for players; (b) accept only with the provider's shortest available retention setting; (c) require EU-only processing, which may rule out some providers or models.
+- [ ] **OQ-24.** *(Raised by the architect, 2026-09-25.)* The owner has confirmed that build and evaluation AI spend is a budget separate from NFR-COST-1. How large is it? For scale: one full replay of about 1,000 golden cases is estimated at about $45 (ARCHITECTURE.md §9), and spike S3 is planned with a $15 cap.
+- [ ] **OQ-25.** *(Raised by the architect, 2026-09-25.)* What share of judge calls are pure rules questions versus disputes, and how many back-and-forth messages does a typical dispute take? The cost model assumes 60% questions and 40% disputes, with about 5 player replies per dispute. At 430 cases a month those assumptions put the baseline at about $29, over the cap (ARCHITECTURE.md §9). The owner's estimate from past events would replace the guess.
+- [ ] **OQ-26.** *(Raised by the architect, 2026-09-25.)* NFR-COST-2 asks the architect to propose a way to stay under the cap (see ADR-0012). What should the judge do once the monthly cap is actually reached? Options: (a) hand every new case to human judges, with the intake facts gathered (proposed default); (b) answer rules questions only, on the cheapest model, and hand disputes to humans; (c) allow a set overrun (for example up to 25%) and alert the owner; (d) stop responding until the next month.
+- [ ] **OQ-27.** *(Raised by the architect, 2026-09-25.)* FR-Q-4 says the owner approves mnemonics. Must the owner also review each AI-drafted **procedure**, **penalty table row**, and **addendum edit** (about 20 infractions × each framework) before a release? Or are the golden-set gate and release approval (FR-BUILD-3) enough for those? The first is safer and is a large one-off review (R12). The second relies on the golden set covering every procedure branch.
+- [ ] **OQ-28.** *(Raised by the architect, 2026-09-25.)* FR-CTX-4 says an event context can be shared "through a link". Hosting on the owner's machine is outbound-only (ADR-0003), so a public web URL would need extra hosting. For the MVP, is a **share code** that a player or server uses with a bot command (for example `/judge join <code>`) acceptable as the "link"? Or must it be a clickable web URL?
+- [ ] **OQ-29.** *(Raised by the architect, 2026-09-25.)* AGENTS.md says held-out cases must never be seen by AI roles while building. The architect (and the PM before) have read all 18 current scenarios, so none of them can serve as held-out cases for those roles. Should the held-out set be drawn only from cases created from now on, and kept outside this repository (proposed in ADR-0013)? Who, other than the owner, may create them?
+- [ ] **OQ-30.** *(Raised by the architect, 2026-09-25.)* D29 and FR-INV-2 say the AI chooses the next investigation question and words it naturally. On 2026-09-25 the owner chose instead:
+    - the next question is chosen **deterministically** from the procedure;
+    - it is asked with **pre-written wording approved at build time**, as buttons or choices where possible;
+    - AI is used only to interpret free text that can't be matched;
+    - rules questions are answered from an **approved rulings library**, and only questions the library doesn't cover get an AI answer, marked as not reviewed (see `docs/architecture/OWNER-ANSWERS.md`, ADR-0008).
+
+  The PM should revise the text of D29 and FR-INV-2 to match, with a decision-log entry. Until then the architecture follows the owner's answer.
+- [ ] **OQ-31.** *(Raised by the architect, 2026-09-25.)* The owner is exporting about 2,000 historical questions and answers from the cEDH league's ticket bot, to build scenarios and a held-out set. These are league players' messages, reused for a new purpose (GDPR, NFR-PRIV-1). What does the owner want to do?
+    - (a) pseudonymise by script, and store privately outside this public repository (ADR-0017 §4). This is the minimum in all cases;
+    - (b) also tell league players, for example with a note in the league server, that past tickets are used anonymously to build the AI judge;
+    - (c) also offer an opt-out.
+
+  How long is the private copy kept? Given D39's 7-day rule for live records, should the raw export be deleted once pseudonymised scenarios have been made from it?
+- [ ] **OQ-32.** *(Raised by the architect, 2026-09-26.)* Where is the line between explaining a rule and play advice (FR-RUL-8)? The owner decided on 2026-09-26:
+    - at **Competitive REL**, answers state what is legal and what happens, never why a player might want to do it;
+    - at **Regular REL (JAR)**, the judge may explain to a player that an action won't achieve what they seem to be trying to do.
+
+  The PM should reflect this in FR-RUL-8 and in the tone rubric (OQ-18). The architecture already supports it with per-REL answer templates (ADR-0014).
+- [ ] **OQ-33.** *(Raised by the architect, 2026-09-26.)* The owner wants poorly written and transcribed questions to lead to answers as good and clean as for well-written ones, and wants this tested seriously (ADR-0018). What should the release gate require of the robustness suite? The architect proposes:
+    - **zero "confidently wrong"** results, where messy input is resolved to a different question without asking;
+    - thresholds, to be set by the owner, for **canonical accuracy** (messy input gives the same canonical question) and for the **clarification rate** (how often the judge has to ask), per noise severity level and for real human and speech variants.
+- [ ] **OQ-34.** *(Raised by the architect, 2026-09-27.)* The owner decided on an intake procedure that the PRD doesn't describe yet (ADR-0019):
+    - the judge asks "Tell me what happened, step by step", addressed first to the player who made the call, or, if everyone agrees, to the player who matters most on their own initiative;
+    - it follows along until a question is formulated or arises, or the players go silent;
+    - then it asks "So, what is your question?" or, if the tone suggests it, "So, how can I help you?"
+
+  The PM should add this as a functional requirement (near FR-INT and FR-RUL-1/5) and extend P3's greeting. Clarified by the owner on 2026-09-27: "silence" means the story is wrapped up (e.g. "and that's when we called you over", "and that's where we are now"), not a timed pause. Open detail for the owner: a safety net for a stalled narration (proposed: after 3 minutes without a wrap-up, a gentle "Take your time. Is there more to the story, or shall we look at your question?").
+- [ ] **OQ-35.** *(Raised by the architect, 2026-09-27.)* The owner decided how the AI judge handles discretionary softening by the TO or judges (ADR-0020):
+    - the TO can set **event policies** in the event context, which amend tournament policy only (never game rules); the judge applies and cites them;
+    - **event-management consequences** such as dropping a player are **referred to the TO** in the judge-only channel, never announced by the judge.
+
+  The PM should add `eventPolicies` to FR-CTX-1, and the referral rule next to NG1/FR-CTX-3.
+- [ ] **OQ-36.** *(Raised by the architect, 2026-09-27.)* The owner decided that the bot works like a floor judge (ADR-0021): major infractions go to a human judge, as floor judges hand them to the head judge. The bot detects and investigates them and hands off a recommendation, without announcing a penalty to players. It issues penalties itself only up to a Warning. The PM should:
+    - add a trigger to FR-ESC-1: "(f) the infraction's base penalty, after the event's framework, is more severe than a Warning";
+    - limit FR-POL-1/3 to penalties up to a Warning issued by the bot;
+    - record this as a partial answer to OQ-7.
+
+  Open for the owner: is "more severe than a Warning" the right threshold? Under the MTRA it includes Turn Skips, such as Unsporting Conduct — Minor and Slow Play.
