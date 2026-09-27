@@ -1,38 +1,39 @@
 id: scn-001b-shuffled-card-from-hand
-title: "Card accidentally shuffled into the library: from the player's hand"
+title: "Card accidentally shuffled into the library: unknown card (from the hand), MTRA"
 narrative: golden/scenarios/card-accidentally-shuffled-into-library.md
 family: investigation
 variantOf: scn-001a-shuffled-public-card
 validation:
   status: SOURCE_CHECK_REQUIRED
   openPoints:
-    - "Owner to confirm 'leave the game state as is': the partial fix needs an identity known to all players, and a backup would undo a random shuffle (IPG 1.4)."
-    - "Owner to decide whether this pattern (e.g. a card that would otherwise have been discarded) should be an integrity signal (OQ-14)."
+    - "Infraction and remedy set by the owner (2026-09-27): an opponent takes any card from the library and it goes to the zone the excess card came from. Under the MTRA, that's the opponent furthest in turn order from the active player, excluding the infracting player, and the library is revealed only to them. Open: is the library shuffled afterwards?"
 tagProposed: easy
 set: dev
 origin: owner-scenario
-sources: { cr: 2026-09-25, ipg: "blogs.magicjudges.org, read 2026-09-27" }
-context: { format: cEDH, rel: Competitive, framework: null, seats: 4, inGame: true }
+sources: { cr: 2026-09-25, ipg: "blogs.magicjudges.org, read 2026-09-27", addendum: MTRA@2025-06-24 }
+context: { format: cEDH, rel: Competitive, framework: MTRA@2025-06-24, seats: 4, inGame: true }
 input:
   raw:
     - { seat: P1, text: "shuffled a card into my deck on accident" }
     - { seat: P1, text: "a card from my hand fell in while i was shuffling for my tutor. and that is where we are now" }
   choices:
     cardAndOriginZone: { P1: "A card from my hand" }
-    identityKnownToAll: false
+    identityKnown: false
     isCommander: false
-    actionsSince: "none"
+    activeSeat: P1
+    turnOrder: [P1, P2, P3, P4]
 expect:
   kind: dispute
-  intent: game-rule-violation
-  answer: "Game Rule Violation, Warning. The card's identity isn't known to all players, so the partial fix doesn't apply, and a backup would have to undo a shuffle. The game state is left as is: the card stays in the library."
-  deciding: ["Origin is the hand, so the identity is not known to all players"]
-  infraction: "Game Play Error — Game Rule Violation"
+  intent: hidden-card-error
+  answer: "Hidden Card Error, Warning. The library holds an excess card whose identity is unknown. Under the MTRA the library is revealed only to P4, the opponent furthest in turn order from the active player (P1 is both the active and the infracting player). P4 chooses any card from it, which is put into P1's hand. P4 may not discuss the choice."
+  deciding: ["The excess card's identity is unknown", "Framework is MTRA", "Seating and active player decide who chooses"]
+  infraction: "Game Play Error — Hidden Card Error"
   penalty: "Warning"
-  fix: ["Leave the game state as is"]
+  fix: ["Reveal the library only to P4", "P4 chooses any card from it; it goes to P1's hand", "No discussion of the choice", "Shuffle the library (open point)"]
   deliveryPattern: explain-then-penalty
-  requiredCitations: ["IPG:2.5", "IPG:1.4"]
-  requiredQuestions: [cardAndOriginZone, identityKnownToAll, isCommander]
+  requiredCitations: ["IPG:2.3", "MTRA:Hidden Card Error"]
+  requiredQuestions: [cardAndOriginZone, identityKnown, activeSeat, turnOrder]
   intake: { narrator: P1, endedBy: wrap-up, prompt: what-is-your-question, noInterruption: true }
-  mustNot: [ask-full-board-state, reveal-integrity-suspicion]
+  mustNot: [ask-full-board-state, remedy-by-private-message, classify-as-game-rule-violation]
   escalate: false
+notes: "The remedy is carried out at the table by instruction (FR-INT-3): the judge tells P1 to show the library only to P4. It never uses a private message to carry out the remedy."

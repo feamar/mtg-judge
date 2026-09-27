@@ -1,6 +1,6 @@
 # A card accidentally shuffled into the library
 
-**Status:** SOURCE CHECK REQUIRED (branches proposed by the architect, 2026-09-27)
+**Status:** SOURCE CHECK REQUIRED. The infraction and remedy were set by the product owner on 2026-09-27; two details remain open.
 
 **Origin:** the product owner's scenario `SCN:` of 2026-09-27.
 
@@ -8,51 +8,44 @@
 
 > shuffled a card into my deck on accident
 
-This is a self-report by the player who made the call, and it's almost empty. **Before any ruling the judge needs the story** (ADR-0019): *"Could you tell me what happened, step by step?"* The ruling depends entirely on facts the opening doesn't give.
+This is a self-report by the player who made the call, and it's almost empty. **Before any ruling the judge needs the story** (ADR-0019): *"Could you tell me what happened, step by step?"*
+
+## Ruling (owner, 2026-09-27)
+
+**Hidden Card Error, Warning** (IPG 2.3). The library is a hidden set, and it now contains an **excess card**: one that shouldn't be there. The remedy returns the excess card to the zone it came from:
+
+- **The card's identity is known**, because it came from a public zone (graveyard, exile, battlefield) or it's the commander: that card is taken out of the library and returned to its original zone.
+- **The card's identity is unknown**, because it came from the player's hand: **an opponent chooses any card** from the library, and that card is put into the zone the excess card came from. This follows IPG 2.3's excess-card remedy: reveal the set, the opponent chooses which previously unknown cards are the excess, and those cards go back to their original location.
+- **At an MTRA event** (the owner's league framework, MTRA "Hidden Card Error — Warning"):
+    - the choosing opponent is the one furthest in turn order from the active player, excluding the infracting player;
+    - the set is revealed only to them;
+    - they may not discuss their choice with the other players.
+
+> **Correction on record:** the architect first classified this as a Game Rule Violation (IPG 2.5) and ruled out HCE, reading HCE's "set" as only the hand. The owner corrected this: the library is a set with an excess card. HCE cases, and the HCE procedure, must allow **any hidden set, including the library**.
 
 ## Deciding facts
 
 | Fact | Why it decides |
 | --- | --- |
-| **Which card, and which zone it came from** (hand, graveyard, exile, battlefield, command zone) | Decides whether its identity is known to all players |
-| **Is its exact identity known to all players?** | IPG 2.5's partial fix only applies to an object whose identity is known to all players |
-| **Is it the player's commander?** | CR 903.9b lets a commander go to the command zone instead of the library |
-| **Was the shuffle itself legal?** For example, resolving a tutor, where only the extra card was wrong | Separates "a card ended up in the wrong zone" from other errors |
-| **What happened since:** draws, searches, further shuffles | Decides whether moving the card is still only a minor disruption |
+| **Which card, and which zone it came from** | Known identity: return that card. Unknown: an opponent chooses. |
+| **Is its exact identity known?** | The branch above |
+| **Framework** (MTRA or plain IPG) | Who chooses, and whether the reveal is limited to one opponent |
+| **Is the card the commander?** | Known identity. Also CR 903.9b: a commander may go to the command zone instead of a library. |
 
-## Branches (proposed)
+## Open points for the owner
 
-**A. The card came from a public zone** (graveyard, exile, battlefield), so its identity is known to all players:
+1. After the library has been searched or revealed, is it **shuffled**? This is proposed, because the library's order has been seen.
+2. The **commander** case: a legal move into the library where the owner forgot the CR 903.9b choice is a different call, and may not be an infraction. Should it be a separate case?
 
-- Game Rule Violation, **Warning** (IPG 2.5).
-- Apply the partial fix: the object isn't in the correct zone, its identity is known to all, and it can be moved with only minor disruption. The player finds that card in the library in view of an opponent, returns it to its correct zone, and shuffles the library. The library had only just been randomised, so the shuffle adds little disruption.
-- *Open point:* whether searching and reshuffling the library counts as "minor disruption" in cEDH practice.
+## Normative sources
 
-**B. The card came from the player's hand**, so only that player knew its identity:
-
-- Game Rule Violation, **Warning** (IPG 2.5).
-- The partial fix doesn't apply, because the identity isn't known to all players.
-- A backup would have to undo a shuffle. That's a random element, which is outside a simple backup, and IPG 1.4 urges extreme caution.
-- So leave the game state as is. The card stays in the library, and the player is down a card in hand.
-- *Open point:* confirm "leave as is". Also: should a pattern of this (for example a card that would otherwise have to be discarded) raise an integrity signal (OQ-14)?
-
-**C. The card is the player's commander** (for example, it was knocked from the command zone into the library during a shuffle):
-
-- Its identity is known to all players, so the partial fix applies. Return it to the command zone and shuffle the library.
-- CR 903.9b supports the command zone as a legitimate destination whenever a commander would be put into a library.
-- *Open point:* whether this is an infraction at all, when the commander's move into the library was legal but the owner simply didn't use the 903.9b replacement. That would be a different call.
-
-## Normative sources (checked 2026-09-27)
-
-- **IPG 2.5 Game Rule Violation:** the Warning penalty; the "object not in the correct zone" partial fix (identity known to all players, minor disruption, the wrong zone is the GRV itself); otherwise a full backup may be considered, or the game state left as is.
-- **IPG 1.4 Backing Up:** a simple backup doesn't involve random elements; extreme caution with backups that involve shuffles or unknown cards.
-- **IPG 2.3 Hidden Card Error:** checked, and **not** this case. It covers excess or unrevealed cards in a hidden set, not a card leaving the player's hidden set for the library.
-- **CR 903.9b:** a commander that would be put into its owner's hand or library may go to the command zone instead.
-
-IPG text was read from blogs.magicjudges.org on 2026-09-27; CR citations are to the CR effective 2026-09-25.
+- **IPG 2.3 Hidden Card Error:** Warning; the excess-card remedy: reveal the set containing the excess cards; the opponent chooses which previously unknown cards are the excess; the excess cards return to their original location. Read from blogs.magicjudges.org on 2026-09-27.
+- **MTRA, Gameplay Error, "Hidden Card Error — Warning":** the opponent is the one furthest in turn order from the active player, excluding the infracting player; the set is revealed only to them; they make the choices and may not discuss them (sources/addenda/mtra-2025-06-24.md).
+- **CR 903.9b:** a commander that would be put into its owner's hand or library may go to the command zone instead (CR effective 2026-09-25).
 
 ## Test significance
 
-- **Intake:** an almost empty opening must lead to "tell me what happened, step by step", not to a guessed ruling.
-- **Investigation:** the judge must ask for exactly the deciding facts above (FR-INV-3), and nothing about the rest of the board.
-- **Branching on one fact:** where the card came from, and whether its identity is known, decides between fix and no fix.
+- **Intake:** an almost empty opening leads to "tell me what happened, step by step", not a guessed ruling.
+- **Classification:** HCE with the **library** as the set. This is a trap the architect fell into.
+- **Branching:** known vs unknown identity decides between "return that card" and "an opponent chooses".
+- **Multiplayer (MTRA):** the right opponent chooses, the reveal goes only to them, and no discussion is allowed (FR-INT-3 AC).
