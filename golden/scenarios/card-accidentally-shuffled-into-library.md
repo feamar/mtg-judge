@@ -1,6 +1,6 @@
 # A card accidentally shuffled into the library
 
-**Status:** SOURCE CHECK REQUIRED. The infraction and remedy were set by the product owner on 2026-09-27; two details remain open.
+**Status:** VALIDATED BY PROJECT OWNER — 2026-09-27 (cases `scn-001a..c`). Variants `scn-001d..f` are AI-drafted from the owner's answers, SOURCE CHECK REQUIRED.
 
 **Origin:** the product owner's scenario `SCN:` of 2026-09-27.
 
@@ -32,10 +32,12 @@ This is a self-report by the player who made the call, and it's almost empty. **
 | **Framework** (MTRA or plain IPG) | Who chooses, and whether the reveal is limited to one opponent |
 | **Is the card the commander?** | Known identity. Also CR 903.9b: a commander may go to the command zone instead of a library. |
 
-## Open points for the owner
+## Owner answers (2026-09-27)
 
-1. After the library has been searched or revealed, is it **shuffled**? This is proposed, because the library's order has been seen.
-2. The **commander** case: a legal move into the library where the owner forgot the CR 903.9b choice is a different call, and may not be an infraction. Should it be a separate case?
+1. **Shuffle afterwards: yes.** The randomised part of the library stays randomised when it's shuffled. Before shuffling, the judge asks whether any cards are **known on the top and/or bottom** of the library, and how many; those keep their positions. If the entire library was just shuffled, as here (the card slipped in during a full shuffle), that question is left out. Variant `scn-001d` covers known top cards.
+2. **A commander put into the library legally, where the owner forgot the CR 903.9b replacement, is not an infraction.** The player made a mistake they didn't intend, but they didn't apply the optional replacement. How it's resolved depends on the REL:
+    - **Competitive REL:** not forgiving. The event happened without the replacement, and the commander stays in the library (`scn-001e`);
+    - **Regular REL (JAR):** forgiving. The judge may let the owner put it into the command zone (`scn-001f`).
 
 ## Normative sources
 

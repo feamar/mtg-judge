@@ -4,9 +4,10 @@ narrative: golden/scenarios/card-accidentally-shuffled-into-library.md
 family: investigation
 variantOf: scn-001a-shuffled-public-card
 validation:
-  status: SOURCE_CHECK_REQUIRED
-  openPoints:
-    - "Infraction and remedy set by the owner (2026-09-27): an opponent takes any card from the library and it goes to the zone the excess card came from. Under the MTRA, that's the opponent furthest in turn order from the active player, excluding the infracting player, and the library is revealed only to them. Open: is the library shuffled afterwards?"
+  status: VALIDATED
+  by: Frank
+  on: 2026-09-27
+  note: "Owner ruling 2026-09-27: Hidden Card Error; the library is the set with the excess card. The library is shuffled afterwards (the random part stays random). Known cards on top/bottom are only asked about if the library wasn't just fully shuffled; here it was, so the question is left out."
 tagProposed: easy
 set: dev
 origin: owner-scenario
@@ -29,11 +30,12 @@ expect:
   deciding: ["The excess card's identity is unknown", "Framework is MTRA", "Seating and active player decide who chooses"]
   infraction: "Game Play Error — Hidden Card Error"
   penalty: "Warning"
-  fix: ["Reveal the library only to P4", "P4 chooses any card from it; it goes to P1's hand", "No discussion of the choice", "Shuffle the library (open point)"]
+  fix: ["Reveal the library only to P4", "P4 chooses any card from it; it goes to P1's hand", "No discussion of the choice", "Shuffle the library (the random part stays random; the library was just fully shuffled, so no known top/bottom cards)"]
   deliveryPattern: explain-then-penalty
   requiredCitations: ["IPG:2.3", "MTRA:Hidden Card Error"]
   requiredQuestions: [cardAndOriginZone, identityKnown, activeSeat, turnOrder]
   intake: { narrator: P1, endedBy: wrap-up, prompt: what-is-your-question, noInterruption: true }
+  forbiddenQuestions: [knownTopOrBottomCards]
   mustNot: [ask-full-board-state, remedy-by-private-message, classify-as-game-rule-violation]
   escalate: false
 notes: "The remedy is carried out at the table by instruction (FR-INT-3): the judge tells P1 to show the library only to P4. It never uses a private message to carry out the remedy."

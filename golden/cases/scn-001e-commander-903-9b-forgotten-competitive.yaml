@@ -1,0 +1,29 @@
+id: scn-001e-commander-903-9b-forgotten-competitive
+title: "Commander legally shuffled into the library, command-zone choice forgotten (Competitive REL)"
+narrative: golden/scenarios/card-accidentally-shuffled-into-library.md
+family: commander
+validation:
+  status: SOURCE_CHECK_REQUIRED
+  openPoints:
+    - "AI-drafted from the owner's answer (2026-09-27): not an infraction; at Competitive REL not forgiving, so the commander stays in the library. Owner to confirm the case."
+tagProposed: easy
+set: dev
+origin: ai-generated
+sources: { cr: 2026-09-25, oracle: scryfall@2026-09-27 }
+context: { format: cEDH, rel: Competitive, framework: MTRA@2025-06-24, seats: 4, inGame: true }
+input:
+  raw:
+    - { seat: P2, text: "P3 chaos warped my commander and i just shuffled it into my deck. i forgot i could put it in the command zone. can i still do that?" }
+  cards: ["Chaos Warp"]
+  choices:
+    moveWasLegal: true
+    replacementChosenAtTheTime: false
+expect:
+  kind: rules-question
+  intent: commander-replacement-forgotten
+  answer: "No. When Chaos Warp resolved, you could have put your commander into the command zone instead (CR 903.9b), but you didn't, so it went into your library. That was a legal game action, not an infraction, and at Competitive REL the decision stands: the commander stays in your library."
+  deciding: ["The move into the library was legal", "The replacement wasn't chosen when the event happened", "REL is Competitive"]
+  infraction: "none"
+  requiredCitations: ["CR:903.9b", "Oracle:Chaos Warp"]
+  mustNot: [invent-infraction-or-penalty, play-advice]
+  escalate: false

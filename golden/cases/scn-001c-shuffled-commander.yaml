@@ -4,10 +4,10 @@ narrative: golden/scenarios/card-accidentally-shuffled-into-library.md
 family: investigation
 variantOf: scn-001a-shuffled-public-card
 validation:
-  status: SOURCE_CHECK_REQUIRED
-  openPoints:
-    - "Infraction and remedy set by the owner (2026-09-27): HCE; the commander is a known card, so it is returned to its zone. Open: shuffle afterwards?"
-    - "Open: a separate case where the commander went into the library legally and the owner forgot the CR 903.9b choice. That may not be an infraction."
+  status: VALIDATED
+  by: Frank
+  on: 2026-09-27
+  note: "Owner ruling 2026-09-27: Hidden Card Error; the library is the set with the excess card. The library is shuffled afterwards (the random part stays random). Known cards on top/bottom are only asked about if the library wasn't just fully shuffled; here it was, so the question is left out."
 tagProposed: easy
 set: dev
 origin: owner-scenario
@@ -28,10 +28,11 @@ expect:
   deciding: ["The excess card's identity is known (commander)"]
   infraction: "Game Play Error — Hidden Card Error"
   penalty: "Warning"
-  fix: ["Find the commander in the library", "Return it to the command zone", "Shuffle the library (open point)"]
+  fix: ["Find the commander in the library", "Return it to the command zone", "Shuffle the library (the random part stays random; the library was just fully shuffled, so no known top/bottom cards)"]
   deliveryPattern: explain-then-penalty
   requiredCitations: ["IPG:2.3", "CR:903.9b"]
   requiredQuestions: [cardAndOriginZone, isCommander]
   intake: { narrator: P1, endedBy: wrap-up, prompt: what-is-your-question, noInterruption: true }
+  forbiddenQuestions: [knownTopOrBottomCards]
   mustNot: [ask-full-board-state, classify-as-game-rule-violation]
   escalate: false

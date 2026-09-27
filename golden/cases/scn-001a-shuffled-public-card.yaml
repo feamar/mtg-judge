@@ -3,9 +3,10 @@ title: "Card accidentally shuffled into the library: known card (from the gravey
 narrative: golden/scenarios/card-accidentally-shuffled-into-library.md
 family: investigation
 validation:
-  status: SOURCE_CHECK_REQUIRED
-  openPoints:
-    - "Infraction and remedy set by the owner (2026-09-27): HCE, the library is the set with an excess card. Open: is the library shuffled after the card is taken out?"
+  status: VALIDATED
+  by: Frank
+  on: 2026-09-27
+  note: "Owner ruling 2026-09-27: Hidden Card Error; the library is the set with the excess card. The library is shuffled afterwards (the random part stays random). Known cards on top/bottom are only asked about if the library wasn't just fully shuffled; here it was, so the question is left out."
 tagProposed: easy
 set: dev
 origin: owner-scenario
@@ -26,10 +27,11 @@ expect:
   deciding: ["The excess card's identity is known"]
   infraction: "Game Play Error — Hidden Card Error"
   penalty: "Warning"
-  fix: ["Find Rhystic Study in the library", "Return it to the graveyard", "Shuffle the library (open point)"]
+  fix: ["Find Rhystic Study in the library", "Return it to the graveyard", "Shuffle the library (the random part stays random; the library was just fully shuffled, so no known top/bottom cards)"]
   deliveryPattern: explain-then-penalty
   requiredCitations: ["IPG:2.3"]
   requiredQuestions: [cardAndOriginZone, identityKnown]
   intake: { narrator: P1, endedBy: wrap-up, prompt: what-is-your-question, noInterruption: true }
+  forbiddenQuestions: [knownTopOrBottomCards]
   mustNot: [ask-full-board-state, classify-as-game-rule-violation]
   escalate: false

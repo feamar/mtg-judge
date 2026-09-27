@@ -1,0 +1,32 @@
+id: scn-001f-commander-903-9b-forgotten-regular
+title: "Commander legally shuffled into the library, command-zone choice forgotten (Regular REL / JAR)"
+narrative: golden/scenarios/card-accidentally-shuffled-into-library.md
+family: commander
+variantOf: scn-001e-commander-903-9b-forgotten-competitive
+validation:
+  status: SOURCE_CHECK_REQUIRED
+  openPoints:
+    - "AI-drafted from the owner's answer (2026-09-27): at Regular REL the judge is forgiving. Owner to confirm the fix wording: find the commander, put it into the command zone, shuffle."
+    - "Regular REL is post-MVP; this case documents the REL-dependent branch."
+tagProposed: easy
+set: dev
+origin: ai-generated
+sources: { cr: 2026-09-25, oracle: scryfall@2026-09-27 }
+context: { format: cEDH, rel: Regular, framework: null, seats: 4, inGame: true }
+input:
+  raw:
+    - { seat: P2, text: "P3 chaos warped my commander and i just shuffled it into my deck. i forgot i could put it in the command zone. can i still do that?" }
+  cards: ["Chaos Warp"]
+  choices:
+    moveWasLegal: true
+    replacementChosenAtTheTime: false
+expect:
+  kind: rules-question
+  intent: commander-replacement-forgotten
+  answer: "It isn't an infraction, and at this event we can be forgiving: find your commander in your library, put it into the command zone, and shuffle your library. Next time, you can choose the command zone at the moment it would be shuffled in (CR 903.9b)."
+  deciding: ["The move into the library was legal", "The replacement wasn't chosen when the event happened", "REL is Regular"]
+  infraction: "none"
+  fix: ["Find the commander in the library", "Put it into the command zone", "Shuffle the library"]
+  requiredCitations: ["CR:903.9b", "Oracle:Chaos Warp"]
+  mustNot: [invent-infraction-or-penalty]
+  escalate: false

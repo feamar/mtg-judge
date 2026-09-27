@@ -1,0 +1,35 @@
+id: scn-001d-shuffled-known-top-cards
+title: "Known card slipped into the library while the top cards are known (Brainstorm)"
+narrative: golden/scenarios/card-accidentally-shuffled-into-library.md
+family: investigation
+variantOf: scn-001a-shuffled-public-card
+validation:
+  status: SOURCE_CHECK_REQUIRED
+  openPoints:
+    - "AI-drafted from the owner's answer (2026-09-27): ask about known top/bottom cards and how many; those keep their positions; shuffle the random part. Owner to confirm this application."
+tagProposed: easy
+set: dev
+origin: ai-generated
+sources: { cr: 2026-09-25, ipg: "blogs.magicjudges.org, read 2026-09-27", addendum: MTRA@2025-06-24, oracle: scryfall@2026-09-27 }
+context: { format: cEDH, rel: Competitive, framework: MTRA@2025-06-24, seats: 4, inGame: true }
+input:
+  raw:
+    - { seat: P1, text: "i brainstormed and put two back on top, then while squaring up my deck my Rhystic Study from the graveyard got mixed into it. thats where we are" }
+  cards: ["Brainstorm", "Rhystic Study"]
+  choices:
+    cardAndOriginZone: { P1: "Rhystic Study, from the graveyard" }
+    identityKnown: true
+    knownTopOrBottomCards: { P1: "Two known cards on top (from Brainstorm), none on the bottom" }
+expect:
+  kind: dispute
+  intent: hidden-card-error
+  answer: "Hidden Card Error, Warning. Take Rhystic Study out of the library and return it to the graveyard. The two known cards on top keep their positions, and the rest of the library (the random part) is shuffled."
+  deciding: ["The excess card's identity is known", "There are known cards on top of the library"]
+  infraction: "Game Play Error — Hidden Card Error"
+  penalty: "Warning"
+  fix: ["Find Rhystic Study in the library", "Return it to the graveyard", "Keep the two known top cards in place", "Shuffle the random part of the library"]
+  deliveryPattern: explain-then-penalty
+  requiredCitations: ["IPG:2.3", "Oracle:Brainstorm"]
+  requiredQuestions: [cardAndOriginZone, identityKnown, knownTopOrBottomCards]
+  mustNot: [ask-full-board-state, shuffle-known-cards-into-random-part]
+  escalate: false
