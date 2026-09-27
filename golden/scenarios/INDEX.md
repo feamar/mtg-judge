@@ -1,6 +1,6 @@
 # Scenario Index
 
-**Total scenarios: 20**
+**Total scenarios: 21**
 
 This index is maintained by AI. Descriptions are intentionally brief and non-exhaustive; open the scenario file for the full facts and requirements context.
 
@@ -26,3 +26,4 @@ This index is maintained by AI. Descriptions are intentionally brief and non-exh
 | Prowess — unannounced triggers before combat damage | `prowess-unannounced-before-combat-damage.md` | **VALIDATED** | Unannounced prowess triggers are not missed merely because blockers were declared; tests IPG 2.1 awareness timing for non-visible P/T modifications. |
 | Deflecting Swat / Necropotence — targeting an untargeted delayed trigger | `deflecting-swat-necropotence-delayed-trigger.md` | **VALIDATED** (owner, 2026-09-26) | A delayed trigger on the stack is a legal "target spell or ability", but has no targets, so choosing new targets does nothing; tests abilities created by effects and targeted vs untargeted abilities. |
 | Pact of Negation — targeting a spell that can't be countered | `pact-of-negation-uncounterable-spell.md` | **VALIDATED** (owner, 2026-09-26) | "Can't be countered" is not a targeting restriction: Pact resolves, the counter fails, and the upkeep trigger is still created; contrast: if Pact doesn't resolve, no trigger. Answered directly by an official card ruling. |
+| Card accidentally shuffled into the library | `card-accidentally-shuffled-into-library.md` | **SOURCE CHECK REQUIRED** | Owner's `SCN:` of 2026-09-27. An almost empty self-report that needs the narration intake; branches on where the card came from (public zone / hand / commander) and whether its identity is known to all players (IPG 2.5 partial fix vs leave as is). Cases `scn-001a..c`. |

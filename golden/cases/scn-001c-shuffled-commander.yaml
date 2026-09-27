@@ -1,0 +1,38 @@
+id: scn-001c-shuffled-commander
+title: "Card accidentally shuffled into the library: the commander"
+narrative: golden/scenarios/card-accidentally-shuffled-into-library.md
+family: investigation
+variantOf: scn-001a-shuffled-public-card
+validation:
+  status: SOURCE_CHECK_REQUIRED
+  openPoints:
+    - "Owner to confirm the fix (return it to the command zone, shuffle) and whether CR 903.9b belongs in the citation chain."
+    - "A separate case is needed where the commander's move into the library was legal but the owner forgot the 903.9b choice: that may not be an infraction at all."
+tagProposed: easy
+set: dev
+origin: owner-scenario
+sources: { cr: 2026-09-25, ipg: "blogs.magicjudges.org, read 2026-09-27" }
+context: { format: cEDH, rel: Competitive, framework: null, seats: 4, inGame: true }
+input:
+  raw:
+    - { seat: P1, text: "shuffled a card into my deck on accident" }
+    - { seat: P1, text: "my commander was lying next to my deck and got shuffled in with it. thats when we called you over" }
+  choices:
+    cardAndOriginZone: { P1: "My commander, from the command zone" }
+    identityKnownToAll: true
+    isCommander: true
+    actionsSince: "none"
+expect:
+  kind: dispute
+  intent: game-rule-violation
+  answer: "Game Rule Violation, Warning. The commander's identity is known to all players: find it in the library in view of an opponent, return it to the command zone, and shuffle the library."
+  deciding: ["The card is the commander, so its identity is known to all players"]
+  infraction: "Game Play Error — Game Rule Violation"
+  penalty: "Warning"
+  fix: ["Find the commander in the library in view of an opponent", "Return it to the command zone", "Shuffle the library"]
+  deliveryPattern: explain-then-penalty
+  requiredCitations: ["IPG:2.5", "CR:903.9b"]
+  requiredQuestions: [cardAndOriginZone, isCommander]
+  intake: { narrator: P1, endedBy: wrap-up, prompt: what-is-your-question, noInterruption: true }
+  mustNot: [ask-full-board-state]
+  escalate: false

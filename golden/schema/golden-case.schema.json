@@ -98,7 +98,8 @@
         "league-export",
         "ai-generated",
         "public-qa",
-        "judge-lab"
+        "judge-lab",
+        "owner-scenario"
       ]
     },
     "sources": {

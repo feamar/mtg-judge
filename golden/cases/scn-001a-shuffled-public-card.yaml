@@ -1,0 +1,36 @@
+id: scn-001a-shuffled-public-card
+title: "Card accidentally shuffled into the library: from a public zone"
+narrative: golden/scenarios/card-accidentally-shuffled-into-library.md
+family: investigation
+validation:
+  status: SOURCE_CHECK_REQUIRED
+  openPoints:
+    - "Owner to confirm that finding the card and reshuffling counts as 'minor disruption' (IPG 2.5 partial fix)."
+tagProposed: easy
+set: dev
+origin: owner-scenario
+sources: { cr: 2026-09-25, ipg: "blogs.magicjudges.org, read 2026-09-27" }
+context: { format: cEDH, rel: Competitive, framework: null, seats: 4, inGame: true }
+input:
+  raw:
+    - { seat: P1, text: "shuffled a card into my deck on accident" }
+    - { seat: P1, text: "i was shuffling after my tutor and my Rhystic Study from the graveyard got in there. thats when i called you" }
+  choices:
+    cardAndOriginZone: { P1: "Rhystic Study, from the graveyard" }
+    identityKnownToAll: true
+    isCommander: false
+    actionsSince: "none"
+expect:
+  kind: dispute
+  intent: game-rule-violation
+  answer: "Game Rule Violation, Warning. The card's identity is known to all players, so apply the partial fix: find it in the library in view of an opponent, put it back in the graveyard, and shuffle the library."
+  deciding: ["Origin zone is public, so the identity is known to all players"]
+  infraction: "Game Play Error — Game Rule Violation"
+  penalty: "Warning"
+  fix: ["Find the card in the library in view of an opponent", "Return it to the graveyard", "Shuffle the library"]
+  deliveryPattern: explain-then-penalty
+  requiredCitations: ["IPG:2.5"]
+  requiredQuestions: [cardAndOriginZone, identityKnownToAll, isCommander, actionsSince]
+  intake: { narrator: P1, endedBy: wrap-up, prompt: what-is-your-question, noInterruption: true }
+  mustNot: [ask-full-board-state]
+  escalate: false
