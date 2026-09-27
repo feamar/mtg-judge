@@ -1,0 +1,33 @@
+id: scn-002a-concessions-final-fortune
+title: "Two opponents concede at instant speed, the last loses to Final Fortune (MTRA)"
+narrative: golden/scenarios/concessions-and-final-fortune-who-wins.md
+family: commander
+validation:
+  status: SOURCE_CHECK_REQUIRED
+  openPoints:
+    - "Owner to validate the ruling: the asker wins (CR 104.3a, 104.2a); the two instant-speed conceders are dropped from the event (MTRA 2.5)."
+    - "Owner to decide whether the neutral 'anything agreed before the concessions?' question is asked always, or only with other signals (OQ-14)."
+tagProposed: easy
+set: dev
+origin: owner-scenario
+sources: { cr: 2026-09-25, addendum: MTRA@2025-06-24, oracle: scryfall@2026-09-27 }
+context: { format: cEDH, rel: Competitive, framework: MTRA@2025-06-24, seats: 4, inGame: false }
+input:
+  raw:
+    - { seat: P1, text: "What happens if two of my opponents scooped at instant speed and the last one died to final fortune. Who wins?" }
+  cards: ["Final Fortune"]
+  choices:
+    readBackConfirmed: true
+    concessionTiming: { P2: "During P4's turn, in response to a spell", P3: "During P4's turn, in response to a spell" }
+    anythingAgreedBeforeConcessions: false
+expect:
+  kind: dispute
+  intent: who-wins
+  answer: "You win the game: conceding players leave the game immediately (CR 104.3a), Final Fortune made P4 lose at the beginning of the extra turn's end step, and once all your opponents have left you win immediately (CR 104.2a). Under the MTRA, P2 and P3 conceded outside their own turn, so they are dropped from the event and need to talk to the TO to re-enter (MTRA 2.5)."
+  deciding: ["All opponents have left the game", "The concessions were not on the conceder's own turn with priority and an empty stack", "No incentive was involved"]
+  infraction: "none"
+  requiredCitations: ["CR:104.3a", "CR:104.2a", "Oracle:Final Fortune", "MTRA:2.5"]
+  requiredQuestions: [readBackConfirmed, concessionTiming]
+  intake: { endedBy: skip, prompt: none }
+  mustNot: [compute-points-or-standings, reveal-integrity-suspicion]
+  escalate: false

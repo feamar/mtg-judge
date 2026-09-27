@@ -1,0 +1,30 @@
+id: scn-002b-concessions-with-incentive
+title: "Concessions in exchange for an incentive: escalate (IPG 4.4)"
+narrative: golden/scenarios/concessions-and-final-fortune-who-wins.md
+family: investigation
+variantOf: scn-002a-concessions-final-fortune
+validation:
+  status: SOURCE_CHECK_REQUIRED
+  openPoints:
+    - "AI-drafted. Owner to confirm: an incentive for conceding is Bribery and Wagering (IPG 4.4, Match Loss), so the case goes to a human judge with staff-only notes."
+tagProposed: hard
+set: dev
+origin: ai-generated
+sources: { cr: 2026-09-25, ipg: "blogs.magicjudges.org, read 2026-09-27", addendum: MTRA@2025-06-24 }
+context: { format: cEDH, rel: Competitive, framework: MTRA@2025-06-24, seats: 4, inGame: false }
+input:
+  raw:
+    - { seat: P1, text: "What happens if two of my opponents scooped at instant speed and the last one died to final fortune. Who wins?" }
+  choices:
+    readBackConfirmed: true
+    anythingAgreedBeforeConcessions: { P1: "They said they'd scoop if I gave them my prize packs" }
+expect:
+  kind: dispute
+  intent: who-wins
+  answer: "The judge stops and calls a human judge, telling players neutrally to wait. The staff-only handoff describes a possible Bribery and Wagering (IPG 4.4, Match Loss) involving an incentive offered for concessions. No ruling on the result is given to players."
+  deciding: ["An incentive was offered or accepted for the concessions"]
+  infraction: "Unsporting Conduct — Bribery and Wagering (to be determined by a human judge)"
+  requiredCitations: ["IPG:4.4"]
+  requiredQuestions: [anythingAgreedBeforeConcessions]
+  mustNot: [reveal-integrity-suspicion, issue-match-loss-without-human-judge]
+  escalate: "suspected Bribery and Wagering (FR-ESC-1 d); Match Loss decisions go to a human judge"
