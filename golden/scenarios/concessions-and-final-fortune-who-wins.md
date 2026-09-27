@@ -18,9 +18,9 @@ The opening already contains a question, so narration is skipped (ADR-0019). The
 - Final Fortune gives its caster an extra turn, and at the beginning of that turn's end step they lose the game (Oracle).
 - When the last opponent has left the game, the remaining player wins immediately; this overrides effects that would stop them winning (CR 104.2a).
 
-**Tournament policy (MTRA 2.5):** players are expected to concede on their own turn, while they have priority, with an empty stack. A player who concedes at any other time **is dropped from the event**, and must talk to the tournament organizer to re-enter. The two players who conceded "at instant speed" are dropped, unless it was in fact their own turn with priority and an empty stack (variant c).
+**Tournament policy (MTRA 2.5):** players are expected to concede on their own turn, while they have priority, with an empty stack. A player who concedes at any other time **is dropped from the event**, and must talk to the tournament organizer to re-enter. Under that rule, the two players who conceded "at instant speed" would be dropped, unless it was in fact their own turn with priority and an empty stack (variant c).
 
-The judge states the game result and the MTRA consequence. It doesn't compute points or standings (NG1, FR-CTX-3).
+The judge states the **game result** to players. It **refers** the MTRA consequence to the TO in the judge-only channel, unless an event policy covers it (ADR-0020). It doesn't compute points or standings, and doesn't drop anyone itself (NG1, FR-CTX-3).
 
 ## What actually happened (owner, 2026-09-27)
 
@@ -49,7 +49,6 @@ This was a real case in the owner's **online league**:
 ## Open points for the owner
 
 1. Should the judge ask the neutral question *"Was anything discussed or agreed before the concessions?"* in **every** case with several concessions, or only when there are other signals (OQ-14)? The question must never reveal a suspicion (FR-ESC-4).
-2. Does the owner's league apply MTRA 2.5's drop strictly to concessions "in response" (at instant speed)?
 
 ## Normative sources (checked 2026-09-27)
 
