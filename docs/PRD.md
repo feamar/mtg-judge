@@ -425,3 +425,9 @@ The **golden test set** is the definition of correct. It is the benchmark for ev
     - **event-management consequences** such as dropping a player are **referred to the TO** in the judge-only channel, never announced by the judge.
 
   The PM should add `eventPolicies` to FR-CTX-1, and the referral rule next to NG1/FR-CTX-3.
+- [ ] **OQ-36.** *(Raised by the architect, 2026-09-27.)* The owner decided that the bot works like a floor judge (ADR-0021): major infractions go to a human judge, as floor judges hand them to the head judge. The bot detects and investigates them and hands off a recommendation, without announcing a penalty to players. It issues penalties itself only up to a Warning. The PM should:
+    - add a trigger to FR-ESC-1: "(f) the infraction's base penalty, after the event's framework, is more severe than a Warning";
+    - limit FR-POL-1/3 to penalties up to a Warning issued by the bot;
+    - record this as a partial answer to OQ-7.
+
+  Open for the owner: is "more severe than a Warning" the right threshold? Under the MTRA it includes Turn Skips, such as Unsporting Conduct — Minor and Slow Play.
