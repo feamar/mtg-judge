@@ -420,3 +420,8 @@ The **golden test set** is the definition of correct. It is the benchmark for ev
     - then it asks "So, what is your question?" or, if the tone suggests it, "So, how can I help you?"
 
   The PM should add this as a functional requirement (near FR-INT and FR-RUL-1/5) and extend P3's greeting. Clarified by the owner on 2026-09-27: "silence" means the story is wrapped up (e.g. "and that's when we called you over", "and that's where we are now"), not a timed pause. Open detail for the owner: a safety net for a stalled narration (proposed: after 3 minutes without a wrap-up, a gentle "Take your time. Is there more to the story, or shall we look at your question?").
+- [ ] **OQ-35.** *(Raised by the architect, 2026-09-27.)* The owner decided how the AI judge handles discretionary softening by the TO or judges (ADR-0020):
+    - the TO can set **event policies** in the event context, which amend tournament policy only (never game rules); the judge applies and cites them;
+    - **event-management consequences** such as dropping a player are **referred to the TO** in the judge-only channel, never announced by the judge.
+
+  The PM should add `eventPolicies` to FR-CTX-1, and the referral rule next to NG1/FR-CTX-3.
