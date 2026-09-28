@@ -7,7 +7,7 @@ validation:
   status: VALIDATED
   by: Frank
   on: 2026-09-27
-  note: "The owner's real league case. The TO and judges softened MTRA 2.5 by discretion to 'You win, and nobody is dropped' (no policy backing), because online players concede to a presented win line to get back to their lives. Modelled as a TO-configured event policy (ADR-0020); the policy text is the architect's wording."
+  note: "The owner's real league case. The TO and judges softened MTRA 2.5 by discretion to 'You win, and nobody is dropped' (no policy backing), because online players concede to a presented win line to get back to their lives. Modelled as a TO-configured event policy (ADR-0020); the policy text is the architect's wording. POST-MVP: there are no event policies in the MVP (owner, 2026-09-28). The MVP behaviour for this situation is scn-002a (game result, drop referred to the TO)."
 tagProposed: easy
 set: dev
 origin: owner-real-case

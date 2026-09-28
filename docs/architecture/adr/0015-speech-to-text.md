@@ -24,6 +24,8 @@ Voice is in the MVP only if spike S1 succeeds (D22). If it ships, it uses the sa
     - its cost counted in the ledger (ADR-0012);
     - OQ-23 extended to cover that provider.
 
+**Latency target:** under 1 second (owner, 2026-09-28, OQ-9). This is ambitious for local transcription plus a reply; spike S1 measures it.
+
 ## Consequences
 
 - If S1 fails, this ADR is marked *Superseded*, and nothing else in the architecture changes: voice is purely an extra adapter.

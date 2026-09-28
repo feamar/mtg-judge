@@ -43,6 +43,13 @@ The architect role may only add open questions to the PRD; it doesn't change req
 | Exit criterion, part 2 | The league export may not happen; what replaces it? | **The owner's `SCN:` scenarios plus the 207 Judge Lab expansion cases** (2026-09-28). A held-out set is no longer part of the architecture exit; it's still required before release (PRD §8, D49). | OWNER-ANSWERS process table |
 | Bundle rules | Adopt the Judge Lab bundle's integrity and remedy rules as requirements? | **Adopt** (2026-09-28). | ADR-0022; PRD D57–D59 |
 | Drafted cases | Validate the 19 drafted cases (5 open scenarios, 2 status conflicts, `tc-01..10`, `scn-001d..f`, `intake-01`)? | **Consider all validated** (2026-09-28). | golden/cases |
+| OQ-3 | Are the MTRA on TopDeck and on Notion the same? | **Assume they are not the same** (2026-09-28). | ADR-0007 |
+| OQ-4 | Precedence | **No specific event policies in the MVP; the addenda override the standard documents** (2026-09-28). | ADR-0007 §5; ADR-0020 (event policies Post-MVP) |
+| OQ-7 / OQ-14 | Confidence threshold; always-escalate categories | **Remove the confidence threshold; categorise things as "always escalate" as we encounter them** (2026-09-28). | ADR-0008, ADR-0021 |
+| OQ-9 | Voice latency target | **Under 1 second** (2026-09-28). | ADR-0015; SPIKES S1 |
+| OQ-11 | Easy/hard split | **Propose tags**: 206 easy / 51 hard proposed for the untagged cases (2026-09-28). | golden/cases `tagProposed` |
+| OQ-18 | Tone rubric | **Covered by the examples** (2026-09-28). | approved templates, FR-BUILD-4 |
+| OQ-33 | Robustness thresholds | **If a simple LLM can decipher it fast, that's OK; otherwise ask the players to rephrase** (2026-09-28). | ADR-0018 |
 | Speech-to-text | Use the owner's ChatGPT subscription? | The owner has a ChatGPT subscription only, with **no OpenAI API access**. Voice transcription is **local-only** in the MVP. | ADR-0015; SPIKES S1 |
 
 ## Process decisions (2026-09-26)

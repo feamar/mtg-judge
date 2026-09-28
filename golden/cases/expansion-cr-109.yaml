@@ -7,7 +7,8 @@ validation:
   by: "Frank"
   on: "2026-09-28"
   note: "Owner stated on 2026-09-28 that he verified all 207 scenarios and asked to include them as verified. Status in the bundle record: outcome DRAFT FOR OWNER REVIEW, sources SOURCE CHECK REQUIRED."
-set: "dev"
+tagProposed: hard
+"dev"
 origin: "judge-lab"
 sources:
   cr: "2026-09-25"

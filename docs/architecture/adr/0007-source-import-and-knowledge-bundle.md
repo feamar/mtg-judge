@@ -29,7 +29,7 @@ Section        { sectionId: "CR:603.3b", docId, number, title?, text, parentId?,
 - **The MTR and IPG importers keep the normative text only.** Annotation blocks are stripped and recorded as stripped, so a reviewer can see what was dropped.
 - **Manual transcripts are accepted** with `origin: manual-transcript` and a named transcriber, per `sources/README.md`.
 - **Addenda keep their own numbering.** They also declare what they amend, as `AddendumEdit { addendumSectionId, amends: sectionId|infractionId, kind: replace|add|modify-penalty|modify-procedure }`. The edits are AI-drafted at build time and reviewed.
-- The MTRA from TopDeck.gg and the MTRA from Notion are imported side by side and diffed. That answers OQ-3 mechanically.
+- **The MTRA on TopDeck.gg and the MTRA on Notion are treated as different documents** (owner, 2026-09-28, OQ-3). Each gets its own `docId` and version, and an event names exactly which one it uses. The current import is the Notion version (the manual transcript of 2025-06-24).
 
 **2. Derived artifacts** are built from sections. Each one keeps `sourceSectionIds[]` (FR-BUILD-2):
 
@@ -54,7 +54,12 @@ These are written by the knowledge author role in Claude Code sessions on the ow
 7. the product owner approves;
 8. the bundle is promoted and the bot switches to it at the next case boundary.
 
-**5. Precedence** between layers (§5, OQ-4) is data, not code: an ordered list in the bundle manifest. The engine reads it, so answering OQ-4 needs a rebuild, not an engine change.
+**5. Precedence** between layers is data, not code: an ordered list in the bundle manifest (owner, 2026-09-28, OQ-4). There are two separate layers that never override each other:
+
+- **game rules:** Oracle card text over the CR where they directly contradict (CR 101.1);
+- **tournament policy:** the event's addendum over the MTR and IPG.
+
+TO event policies are Post-MVP (ADR-0020).
 
 **6. Frameworks (OQ-20, answered 2026-09-25):** an event selects **zero or one** addendum. The addendum may amend the MTR, the IPG, or both. With zero addenda the framework is the plain MTR + IPG, and the multiplayer gaps in the IPG are handled as `UNRESOLVED` where the text doesn't settle them (FR-RUL-9).
 

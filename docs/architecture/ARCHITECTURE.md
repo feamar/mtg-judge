@@ -364,8 +364,8 @@ Two golden scenarios show how this plays out:
 ## 6. Escalation, handoff, and protected information
 
 - **FR-ESC-1:**
-    - (a) replaced by concrete signals, because a deterministic ruling has no "confidence": an unresolved dispute, a verifier failure, a fallback marked `UNRESOLVED`, or a dispute with no procedure (OQ-7);
-    - (b) `alwaysEscalate` categories;
+    - (a) **withdrawn**: there is no confidence threshold (owner, OQ-7). The judge escalates on concrete signals: an unresolved dispute, a verifier failure, a fallback marked `UNRESOLVED`, or a dispute with no procedure;
+    - (b) `alwaysEscalate` categories, a list the owner grows as cases are encountered;
     - (c) the **[Ask a human judge]** button under every ruling and answer, or typed text that `interpret` recognises as a contest, confirmed with a button;
     - (d) the integrity stop rule;
     - (e) an open decisive dispute.

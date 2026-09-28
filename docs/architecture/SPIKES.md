@@ -31,7 +31,7 @@ Running order: **S4 and S2 first** (S4 needs no prerequisites), **then S3, then 
 
 - Audio is received and correctly attributed for ≥ 95% of utterances.
 - ≥ 95% of card names are resolved correctly after the resolver. Rules terms are transcribed well enough that matching (with `interpret` where needed) finds the same entry or procedure as for the typed text in ≥ 90% of utterances.
-- The median time from end of utterance to transcript is ≤ 3 s on local STT.
+- **Voice latency target (owner, 2026-09-28, OQ-9): under 1 second.** The spike measures the time from the end of an utterance to the transcript, and to the judge's reply. It reports honestly how far local STT on the owner's GPU is from 1 second. A miss isn't automatically a fail: the owner decides with the numbers.
 - No audio is persisted, and there is a working consent gate.
 
 **Fail:** receiving voice is unsupported or broken under the current encryption, or any criterion misses by a wide margin. Then voice is dropped from the MVP (D22), and ADR-0015 is superseded.

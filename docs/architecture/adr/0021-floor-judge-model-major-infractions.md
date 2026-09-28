@@ -42,7 +42,7 @@ The human judge decides, issues the penalty, and closes the case. The bot record
 
 **4. REL.** This applies at Competitive REL, which is the only REL in the MVP. At Regular REL (JAR, post-MVP) the handling will differ, because JAR is about education rather than penalties (to be designed with the JAR framework).
 
-**5. Configuration.** `EventContext.escalation.humanThreshold`, default `above-warning`, confirmed by the owner on 2026-09-27, including MTRA Turn Skips. It's part of OQ-7's "categories that always escalate", and the owner has now set it. It's a threshold on penalty severity, not a list of infractions, so new frameworks work automatically.
+**5. Configuration.** `EventContext.escalation.humanThreshold`, default `above-warning`, confirmed by the owner on 2026-09-27, including MTRA Turn Skips. It's part of OQ-7's "categories that always escalate", and the owner has now set it. It's a threshold on penalty severity, not a list of infractions, so new frameworks work automatically. In addition, `alwaysEscalate` is a list of categories that the **owner grows as they are encountered** (OQ-7). There is **no confidence threshold** (owner, 2026-09-28).
 
 **6. The neutral integrity question** (for example *"Was anything discussed or agreed before the concessions?"*) is asked **only when something else already looks off**: an integrity signal in the facts (OQ-14), never routinely (owner, 2026-09-27).
 

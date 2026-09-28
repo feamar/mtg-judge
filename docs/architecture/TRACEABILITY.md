@@ -37,7 +37,7 @@ Status: Proposed · Date: 2026-09-25 · Covers every FR (PRD §6) and NFR (PRD �
 | FR-INV-1 | Build pipeline; Knowledge | `Procedure` per framework per infraction | 0007, 0008 | R, U (schema validation) |
 | FR-INV-2 | Decision-graph engine | Decisive-fact candidates, deterministic selection with approved wording (owner, 2026-09-25; OQ-30), guard, `QuestionAsked` record | 0008 | G (required facts AC) |
 | FR-INV-3 | Decision-graph engine | Game state asked only when it is a decisive fact | 0008 | G (forbidden questions) |
-| FR-ESC-1 | Escalation policy; Discord adapter ([Ask a human judge] button) | Checks (a)–(e) every turn, plus (f): base penalty more severe than a Warning, handed off as a recommendation (ADR-0021, OQ-36); (a) uses concrete signals instead of a confidence score (OQ-7) | 0008 | G, U |
+| FR-ESC-1 | Escalation policy; Discord adapter ([Ask a human judge] button) | Checks (a)–(e) every turn, plus (f): base penalty more severe than a Warning, handed off as a recommendation (ADR-0021, OQ-36); (a) withdrawn: no confidence threshold; always-escalate categories are added as encountered (OQ-7) | 0008 | G, U |
 | FR-ESC-2 | Escalation policy; Decision-graph engine | Collect `cheapToCollect` facts before handoff | 0008 | G |
 | FR-ESC-3 | Escalation policy; Outbox | `Handoff` to `Staff` | 0009 | G, U |
 | FR-ESC-4 | Audience guard; Escalation policy; integrity categories and modes (ADR-0022) | Staff-only notes, player-safe projection, stop rule, lint | 0009 | G (AC: no leak in any player message) |

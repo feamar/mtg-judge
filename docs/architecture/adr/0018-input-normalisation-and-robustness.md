@@ -34,7 +34,7 @@ CanonicalQuestion {
     - claims vs stated facts;
     - intent: lexicon patterns.
 3. **Score:** every slot has a confidence. Below the threshold it is never guessed; it becomes a **choice question** ("Did you mean [Smothering Tithe] [Tithe Taker]?").
-4. **Fill gaps:** `interpret` maps the leftovers onto the **closed lists** (ADR-0002). It fills slots and never writes prose.
+4. **Fill gaps:** `interpret`, a simple and fast model, maps the leftovers onto the **closed lists** (ADR-0002). It fills slots and never writes prose. **If it can't decipher the input quickly and confidently, the judge asks the player to rephrase** (template: *"Sorry, I didn't quite get that. Could you rephrase it?"*). There is no accuracy threshold (owner, 2026-09-28, OQ-33).
 5. **Read back:** the canonical question is shown as an approved template with [Yes] / [No, I meant…] buttons before anything that depends on it (FR-RUL-5). Voice has no buttons, so the read-back is answered by a typed or spoken yes/no.
 
 **3. Speech input** (if S1 passes, ADR-0015):
@@ -69,7 +69,7 @@ Library answers are approved templates, so this is a strict equality test, with 
 - **clarification rate:** the judge asked instead of guessing;
 - **confidently wrong:** a different canonical question accepted without clarification. **The target is 0.** Asking is acceptable; guessing wrong is not.
 
-**Release gate:** confidently wrong = 0 on the whole robustness suite (owner, OQ-33 point 1). Thresholds for canonical accuracy are to be explored together with the owner once there are baseline measurements (OQ-33 point 2). Clarification rate is **not** a gate: the owner chose a guided narration procedure instead (ADR-0019).
+**Release gate:** confidently wrong = 0 on the whole robustness suite (owner, OQ-33 point 1). No accuracy threshold: if a simple model can decipher the input fast, that's fine; otherwise the judge asks the player to rephrase (owner, OQ-33, 2026-09-28). Clarification rate is **not** a gate: the owner chose a guided narration procedure instead (ADR-0019).
 
 ## Consequences
 
