@@ -1,6 +1,9 @@
 # AI MTG Judge: Roadmap (milestones, test base, review load)
 
-Moved from PLAN.md v1 on 2026-09-28. **How** work is built now lives in [PLAN.md](PLAN.md) (the build pipeline). The task tables of the old §5 are in [backlog.json](backlog.json); the spikes of the old §8 are in PLAN.md §7. Section numbers are kept so cross-references still work.
+Moved from PLAN.md v1 on 2026-09-28. The task tables of the old §5 are in [backlog.json](backlog.json); the spikes of the old §8 are the `WP-S` entries there, placed by PLAN.md §2. Section numbers are kept so cross-references still work.
+
+> **Superseded as the plan (2026-09-28):** the plan is now [PLAN.md](PLAN.md) v3 + [DEVELOPMENT-CASE.md](../process/DEVELOPMENT-CASE.md). This file is kept as reference for milestone exits, the test base (§2), the test suites (§6) and risks (§10). **Its dates and weekly sizes are not part of the plan. The owner has about 40 h/week, not the 8 h/week in §1.1 and §7.**
+
 ## 0. Summary
 
 | Milestone | What you'll see | Weeks | Indicative end |

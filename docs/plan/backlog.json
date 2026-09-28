@@ -1,10 +1,81 @@
 {
- "version": 1,
- "source": "PLAN.md v1 §5 (2026-09-28)",
+ "version": 2,
+ "source": "PLAN.md v1 §5 (2026-09-28), extended for DEVELOPMENT-CASE (iteration, agent fields; WP-P pipeline; WP-S spikes)",
  "wps": {
   "WP-E": "Each family goes through the **scenario workshop** (ADR-0017 §3): the family's cases are already validated, so the S4 lesson holds (expected answers exist before the code).\n1. The knowledge author groups the family's gate cases.\n2. Features are tagged for their cards (parser first).\n3. Strategies or entries are drafted, with **bindings** for every case.\n4. The deterministic suite proves them.\n5. You review them in a batch (§7).\n6. They're merged.\n**Any disagreement between a case's prose answer and the drafted template goes to you,** never fixed silently (R-P3).\nThe remaining gate families (for example Combat, Counters, Damage & life, Card types & mechanics, Protection) are assigned to E3–E8 by the coverage matrix in M0; the matrix is the working checklist.\n"
  },
  "tasks": [
+  {
+   "id": "T-P1",
+   "wp": "WP-P",
+   "milestone": [],
+   "task": "Install gatechain and PDD as pinned git submodules in tools/, with configs; engineering-discipline plugin; licence and Windows 10 check (pipeline/TOOLS.md)",
+   "inputs": "ADR-0023, DEVELOPMENT-CASE",
+   "deps": [
+    "T-A1"
+   ],
+   "outputs": "pipeline/",
+   "acceptance": "A planted swallowed error fails G4/G5; a planted weak test fails pdd prove; licences recorded",
+   "reqs": [],
+   "size": "S",
+   "role": "Toolsmith",
+   "agent": "toolsmith",
+   "iteration": "E3",
+   "status": "queued"
+  },
+  {
+   "id": "T-P2",
+   "wp": "WP-P",
+   "milestone": [],
+   "task": "pipeline/slice.mjs: print one PRD/ADR/ARCH/golden/CR/IPG/MTR item by reference",
+   "inputs": "ADR-0023, DEVELOPMENT-CASE",
+   "deps": [
+    "T-A1"
+   ],
+   "outputs": "pipeline/",
+   "acceptance": "Fixture test per reference kind; unknown ref exits 1",
+   "reqs": [],
+   "size": "S",
+   "role": "Toolsmith",
+   "agent": "toolsmith",
+   "iteration": "E3",
+   "status": "queued"
+  },
+  {
+   "id": "T-P3",
+   "wp": "WP-P",
+   "milestone": [],
+   "task": "pipeline/gate.mjs: G0-G8, --lock, --integration, card-lint, digests capped at 40 lines (DEVELOPMENT-CASE §8)",
+   "inputs": "ADR-0023, DEVELOPMENT-CASE",
+   "deps": [
+    "T-P1",
+    "T-P2"
+   ],
+   "outputs": "pipeline/",
+   "acceptance": "One planted failure per gate gives the right digest in <=40 lines; an edited locked test fails G0",
+   "reqs": [],
+   "size": "M",
+   "role": "Toolsmith",
+   "agent": "toolsmith",
+   "iteration": "E3",
+   "status": "queued"
+  },
+  {
+   "id": "T-P4",
+   "wp": "WP-P",
+   "milestone": [],
+   "task": "Boot mechanism check: subagents vs headless claude -p on the Pro plan (ADR-0016), usage-limit behaviour (pipeline/BOOT.md)",
+   "inputs": "ADR-0023, DEVELOPMENT-CASE",
+   "deps": [],
+   "outputs": "pipeline/",
+   "acceptance": "Verdict written; project manager can boot a role and read back its STATUS line",
+   "reqs": [],
+   "size": "S",
+   "role": "Toolsmith",
+   "agent": "toolsmith",
+   "iteration": "E3",
+   "status": "queued"
+  },
   {
    "id": "T-A1",
    "wp": "WP-A",
@@ -22,7 +93,9 @@
    ],
    "size": "M",
    "role": "Engineer",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "E3",
+   "agent": "toolsmith"
   },
   {
    "id": "T-A2",
@@ -42,7 +115,9 @@
    ],
    "size": "S",
    "role": "Engineer",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "E3",
+   "agent": "toolsmith"
   },
   {
    "id": "T-A3",
@@ -60,7 +135,9 @@
    "reqs": [],
    "size": "M",
    "role": "Engineer",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "E4",
+   "agent": "implementer"
   },
   {
    "id": "T-A4",
@@ -78,7 +155,9 @@
    "reqs": [],
    "size": "S",
    "role": "Engineer",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "E4",
+   "agent": "implementer"
   },
   {
    "id": "T-B1",
@@ -98,7 +177,9 @@
    ],
    "size": "M",
    "role": "Engineer",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "E4",
+   "agent": "implementer"
   },
   {
    "id": "T-B2",
@@ -119,7 +200,9 @@
    ],
    "size": "M",
    "role": "Engineer",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "E4",
+   "agent": "implementer"
   },
   {
    "id": "T-B3",
@@ -137,7 +220,9 @@
    "reqs": [],
    "size": "M",
    "role": "Engineer",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "E4",
+   "agent": "implementer"
   },
   {
    "id": "T-B4",
@@ -155,7 +240,9 @@
    "reqs": [],
    "size": "S",
    "role": "Engineer",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "E4",
+   "agent": "implementer"
   },
   {
    "id": "T-B5",
@@ -178,7 +265,9 @@
    ],
    "size": "L",
    "role": "Engineer",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "E4",
+   "agent": "implementer"
   },
   {
    "id": "T-B6",
@@ -199,7 +288,9 @@
    ],
    "size": "M",
    "role": "Engineer",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "E4",
+   "agent": "implementer"
   },
   {
    "id": "T-C1",
@@ -220,7 +311,12 @@
    ],
    "size": "M",
    "role": "Engineer",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "E4",
+   "alsoIn": [
+    "C1"
+   ],
+   "agent": "implementer"
   },
   {
    "id": "T-C2",
@@ -239,7 +335,12 @@
    "reqs": [],
    "size": "M",
    "role": "Engineer",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "E4",
+   "alsoIn": [
+    "C1"
+   ],
+   "agent": "implementer"
   },
   {
    "id": "T-C3",
@@ -264,7 +365,12 @@
    ],
    "size": "L",
    "role": "Engineer",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "E4",
+   "alsoIn": [
+    "C1"
+   ],
+   "agent": "implementer"
   },
   {
    "id": "T-C4",
@@ -289,7 +395,12 @@
    ],
    "size": "M",
    "role": "Engineer",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "E4",
+   "alsoIn": [
+    "C2"
+   ],
+   "agent": "implementer"
   },
   {
    "id": "T-C5",
@@ -309,7 +420,9 @@
    ],
    "size": "M",
    "role": "Engineer",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "E4",
+   "agent": "implementer"
   },
   {
    "id": "T-C6",
@@ -336,7 +449,12 @@
    ],
    "size": "L",
    "role": "Engineer",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "E4",
+   "alsoIn": [
+    "C2"
+   ],
+   "agent": "implementer"
   },
   {
    "id": "T-C7",
@@ -354,7 +472,9 @@
    "reqs": [],
    "size": "M",
    "role": "Engineer",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "E4",
+   "agent": "implementer"
   },
   {
    "id": "T-C8",
@@ -375,7 +495,9 @@
    ],
    "size": "S",
    "role": "Engineer",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "E4",
+   "agent": "implementer"
   },
   {
    "id": "T-C9",
@@ -393,7 +515,9 @@
    "reqs": [],
    "size": "M each",
    "role": "Engineer",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "C1",
+   "agent": "implementer"
   },
   {
    "id": "T-C10",
@@ -416,7 +540,9 @@
    ],
    "size": "M",
    "role": "Engineer",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "C2",
+   "agent": "implementer"
   },
   {
    "id": "T-D1",
@@ -436,7 +562,12 @@
    "reqs": [],
    "size": "L",
    "role": "Engineer",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "E4",
+   "alsoIn": [
+    "C1"
+   ],
+   "agent": "implementer"
   },
   {
    "id": "T-D2",
@@ -454,7 +585,9 @@
    "reqs": [],
    "size": "S",
    "role": "Engineer",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "E4",
+   "agent": "implementer"
   },
   {
    "id": "T-D3",
@@ -475,7 +608,9 @@
    ],
    "size": "M",
    "role": "Engineer",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "C3",
+   "agent": "implementer"
   },
   {
    "id": "T-D4",
@@ -493,7 +628,9 @@
    "reqs": [],
    "size": "S",
    "role": "Engineer",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "C1",
+   "agent": "implementer"
   },
   {
    "id": "T-D5",
@@ -509,7 +646,9 @@
    "reqs": [],
    "size": "S",
    "role": "Engineer",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "C2",
+   "agent": "implementer"
   },
   {
    "id": "T-D6",
@@ -527,7 +666,9 @@
    "reqs": [],
    "size": "M",
    "role": "Engineer",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "C3",
+   "agent": "implementer"
   },
   {
    "id": "T-E0",
@@ -544,7 +685,9 @@
    "reqs": [],
    "size": "L",
    "role": "Engineer",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "C1",
+   "agent": "implementer"
   },
   {
    "id": "T-E1",
@@ -564,7 +707,12 @@
    ],
    "size": "M",
    "role": "Knowledge author",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "E4",
+   "alsoIn": [
+    "C1"
+   ],
+   "agent": "knowledge-author"
   },
   {
    "id": "T-E2",
@@ -581,7 +729,9 @@
    "reqs": [],
    "size": "M",
    "role": "Knowledge author",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "C1",
+   "agent": "knowledge-author"
   },
   {
    "id": "T-E3",
@@ -598,7 +748,9 @@
    "reqs": [],
    "size": "L",
    "role": "Knowledge author",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "C1",
+   "agent": "knowledge-author"
   },
   {
    "id": "T-E4",
@@ -615,7 +767,9 @@
    "reqs": [],
    "size": "M",
    "role": "Knowledge author",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "C1",
+   "agent": "knowledge-author"
   },
   {
    "id": "T-E5",
@@ -632,7 +786,9 @@
    "reqs": [],
    "size": "M",
    "role": "Knowledge author",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "C1",
+   "agent": "knowledge-author"
   },
   {
    "id": "T-E6",
@@ -649,7 +805,9 @@
    "reqs": [],
    "size": "L",
    "role": "Knowledge author",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "C1",
+   "agent": "knowledge-author"
   },
   {
    "id": "T-E7",
@@ -666,7 +824,9 @@
    "reqs": [],
    "size": "L",
    "role": "Knowledge author",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "C3",
+   "agent": "knowledge-author"
   },
   {
    "id": "T-E8",
@@ -683,7 +843,9 @@
    "reqs": [],
    "size": "L",
    "role": "Knowledge author",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "C3",
+   "agent": "knowledge-author"
   },
   {
    "id": "T-E9",
@@ -700,7 +862,9 @@
    "reqs": [],
    "size": "M",
    "role": "Knowledge author",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "C1",
+   "agent": "knowledge-author"
   },
   {
    "id": "T-E10",
@@ -719,7 +883,9 @@
    ],
    "size": "S",
    "role": "Knowledge author",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "C3",
+   "agent": "knowledge-author"
   },
   {
    "id": "T-E11",
@@ -734,7 +900,9 @@
    "reqs": [],
    "size": "M",
    "role": "Knowledge author, owner",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "C3",
+   "agent": "knowledge-author"
   },
   {
    "id": "T-F1",
@@ -755,7 +923,9 @@
    ],
    "size": "M",
    "role": "Knowledge author",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "C2",
+   "agent": "knowledge-author"
   },
   {
    "id": "T-F2",
@@ -773,7 +943,9 @@
    "reqs": [],
    "size": "M",
    "role": "Knowledge author",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "C2",
+   "agent": "knowledge-author"
   },
   {
    "id": "T-F3",
@@ -795,7 +967,9 @@
    ],
    "size": "L (×2)",
    "role": "Knowledge author",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "C2",
+   "agent": "knowledge-author"
   },
   {
    "id": "T-F4",
@@ -815,7 +989,9 @@
    ],
    "size": "M",
    "role": "Knowledge author",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "C2",
+   "agent": "knowledge-author"
   },
   {
    "id": "T-F5",
@@ -833,7 +1009,9 @@
    ],
    "size": "S",
    "role": "Owner",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "C2",
+   "agent": "owner"
   },
   {
    "id": "T-G1",
@@ -854,7 +1032,9 @@
    ],
    "size": "L",
    "role": "Engineer",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "C3",
+   "agent": "implementer"
   },
   {
    "id": "T-G2",
@@ -875,7 +1055,9 @@
    ],
    "size": "L",
    "role": "Engineer",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "C3",
+   "agent": "implementer"
   },
   {
    "id": "T-G3",
@@ -891,7 +1073,9 @@
    "reqs": [],
    "size": "M",
    "role": "Knowledge author",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "C3",
+   "agent": "knowledge-author"
   },
   {
    "id": "T-G4",
@@ -907,7 +1091,9 @@
    "reqs": [],
    "size": "M",
    "role": "Case author, owner",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "C3",
+   "agent": "case-author"
   },
   {
    "id": "T-H1",
@@ -928,7 +1114,9 @@
    ],
    "size": "M",
    "role": "Engineer",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "E4",
+   "agent": "implementer"
   },
   {
    "id": "T-H2",
@@ -944,7 +1132,9 @@
    "reqs": [],
    "size": "M",
    "role": "Engineer",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "E4",
+   "agent": "implementer"
   },
   {
    "id": "T-H3",
@@ -969,7 +1159,9 @@
    ],
    "size": "L",
    "role": "Engineer",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "C4",
+   "agent": "implementer"
   },
   {
    "id": "T-H4",
@@ -989,7 +1181,9 @@
    ],
    "size": "M",
    "role": "Engineer",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "C4",
+   "agent": "implementer"
   },
   {
    "id": "T-H5",
@@ -1010,7 +1204,9 @@
    ],
    "size": "S",
    "role": "Engineer",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "C4",
+   "agent": "implementer"
   },
   {
    "id": "T-H6",
@@ -1026,7 +1222,9 @@
    "reqs": [],
    "size": "M",
    "role": "Engineer, owner",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "C4",
+   "agent": "implementer"
   },
   {
    "id": "T-H7",
@@ -1044,7 +1242,9 @@
    ],
    "size": "S",
    "role": "Engineer, owner",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "C4",
+   "agent": "implementer"
   },
   {
    "id": "T-I1",
@@ -1062,7 +1262,9 @@
    ],
    "size": "M",
    "role": "Engineer",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "C3",
+   "agent": "implementer"
   },
   {
    "id": "T-I2",
@@ -1080,7 +1282,9 @@
    "reqs": [],
    "size": "M",
    "role": "Engineer, knowledge author",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "C3",
+   "agent": "implementer"
   },
   {
    "id": "T-I3",
@@ -1103,7 +1307,9 @@
    ],
    "size": "L",
    "role": "Engineer",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "C3",
+   "agent": "implementer"
   },
   {
    "id": "T-I4",
@@ -1123,7 +1329,9 @@
    ],
    "size": "M",
    "role": "Engineer",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "C4",
+   "agent": "implementer"
   },
   {
    "id": "T-I5",
@@ -1143,7 +1351,9 @@
    ],
    "size": "M",
    "role": "Case author, owner",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "C3",
+   "agent": "case-author"
   },
   {
    "id": "T-J1",
@@ -1164,7 +1374,9 @@
    ],
    "size": "M",
    "role": "Case author, owner",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "C2",
+   "agent": "case-author"
   },
   {
    "id": "T-J2",
@@ -1182,7 +1394,9 @@
    ],
    "size": "L, ongoing",
    "role": "Case author, owner",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "C1",
+   "agent": "case-author"
   },
   {
    "id": "T-J3",
@@ -1202,7 +1416,12 @@
    ],
    "size": "L",
    "role": "Case author, owner",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "C2",
+   "alsoIn": [
+    "T1"
+   ],
+   "agent": "case-author"
   },
   {
    "id": "T-J4",
@@ -1216,7 +1435,9 @@
    "reqs": [],
    "size": "M",
    "role": "Case author, owner",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "unassigned",
+   "agent": "case-author"
   },
   {
    "id": "T-J5",
@@ -1230,7 +1451,9 @@
    "reqs": [],
    "size": "S each",
    "role": "Case author",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "unassigned",
+   "agent": "case-author"
   },
   {
    "id": "T-K1",
@@ -1248,7 +1471,9 @@
    ],
    "size": "S",
    "role": "Engineer, owner",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "T1",
+   "agent": "implementer"
   },
   {
    "id": "T-K2",
@@ -1264,7 +1489,9 @@
    "reqs": [],
    "size": "S",
    "role": "Owner",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "T1",
+   "agent": "owner"
   },
   {
    "id": "T-K3",
@@ -1286,7 +1513,9 @@
    ],
    "size": "—",
    "role": "Owner, engineer",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "T1",
+   "agent": "owner"
   },
   {
    "id": "T-V1",
@@ -1302,7 +1531,9 @@
    "reqs": [],
    "size": "L",
    "role": "Engineer",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "C4",
+   "agent": "implementer"
   },
   {
    "id": "T-V2",
@@ -1318,7 +1549,9 @@
    "reqs": [],
    "size": "M",
    "role": "Engineer",
-   "status": "queued"
+   "status": "queued",
+   "iteration": "C4",
+   "agent": "implementer"
   },
   {
    "id": "T-V3",
@@ -1334,6 +1567,78 @@
    "reqs": [],
    "size": "M",
    "role": "Knowledge author",
+   "status": "queued",
+   "iteration": "C4",
+   "agent": "knowledge-author"
+  },
+  {
+   "id": "SP-S2",
+   "wp": "WP-S",
+   "milestone": [],
+   "task": "Spike S2: Tickets integration",
+   "inputs": "docs/architecture/SPIKES.md",
+   "deps": [],
+   "outputs": "docs/architecture/spikes/S2-report.md",
+   "acceptance": "Report gate: every SPIKES.md criterion with measured value and PASS/FAIL/OWNER-DECIDES",
+   "ownerNeeds": "Test Discord server with Tickets set up like live",
+   "reqs": [],
+   "size": "S",
+   "role": "Spike engineer",
+   "agent": "spike-engineer",
+   "iteration": "E4",
+   "status": "queued"
+  },
+  {
+   "id": "SP-S1",
+   "wp": "WP-S",
+   "milestone": [],
+   "task": "Spike S1: voice",
+   "inputs": "docs/architecture/SPIKES.md",
+   "deps": [],
+   "outputs": "docs/architecture/spikes/S1-report.md",
+   "acceptance": "Report gate: every SPIKES.md criterion with measured value and PASS/FAIL/OWNER-DECIDES",
+   "ownerNeeds": "Voice channel; one hour with two or more speakers",
+   "reqs": [],
+   "size": "S",
+   "role": "Spike engineer",
+   "agent": "spike-engineer",
+   "iteration": "C1",
+   "status": "queued"
+  },
+  {
+   "id": "SP-S3",
+   "wp": "WP-S",
+   "milestone": [],
+   "task": "Spike S3: coverage and cost on real messy text, run on the C1 build",
+   "inputs": "docs/architecture/SPIKES.md",
+   "deps": [],
+   "outputs": "docs/architecture/spikes/S3-report.md",
+   "acceptance": "Report gate: every SPIKES.md criterion with measured value and PASS/FAIL/OWNER-DECIDES",
+   "ownerNeeds": "About 30 real messy judge-call texts",
+   "reqs": [],
+   "size": "S",
+   "role": "Spike engineer",
+   "agent": "spike-engineer",
+   "iteration": "C1",
+   "status": "queued"
+  },
+  {
+   "id": "SP-S4F",
+   "wp": "WP-S",
+   "milestone": [],
+   "task": "Spike S4 follow-up: 10 targeting questions from S3 texts",
+   "inputs": "docs/architecture/SPIKES.md",
+   "deps": [
+    "SP-S3"
+   ],
+   "outputs": "docs/architecture/spikes/S4F-report.md",
+   "acceptance": "Report gate: every SPIKES.md criterion with measured value and PASS/FAIL/OWNER-DECIDES",
+   "ownerNeeds": "-",
+   "reqs": [],
+   "size": "S",
+   "role": "Spike engineer",
+   "agent": "spike-engineer",
+   "iteration": "C1",
    "status": "queued"
   }
  ]
