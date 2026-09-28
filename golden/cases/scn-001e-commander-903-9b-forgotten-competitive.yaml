@@ -3,7 +3,10 @@ title: "Commander legally shuffled into the library, command-zone choice forgott
 narrative: golden/scenarios/card-accidentally-shuffled-into-library.md
 family: commander
 validation:
-  status: SOURCE_CHECK_REQUIRED
+  status: VALIDATED
+  by: Frank
+  on: 2026-09-28
+  note: "Owner, 2026-09-28: consider all drafted cases validated. Earlier open points are kept below as notes."
   openPoints:
     - "AI-drafted from the owner's answer (2026-09-27): not an infraction; at Competitive REL not forgiving, so the commander stays in the library. Owner to confirm the case."
 tagProposed: easy

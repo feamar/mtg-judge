@@ -1,6 +1,6 @@
 # Kinnan and Selvala — current Oracle text
 
-**Source validation:** SOURCE CHECK REQUIRED
+**Source validation:** VALIDATED BY PROJECT OWNER — 2026-09-28
 
 ## Judge Call
 

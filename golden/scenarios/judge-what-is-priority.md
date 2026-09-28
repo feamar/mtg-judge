@@ -1,6 +1,6 @@
 # Judge, what is priority?
 
-**Source validation:** VALIDATED BY PROJECT OWNER — 2026-09-23
+**Source validation:** VALIDATED BY PROJECT OWNER — 2026-09-28
 
 ## Status
 **Source validation: VALIDATED BY PROJECT OWNER — 2026-09-23**

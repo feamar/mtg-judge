@@ -50,7 +50,7 @@ sequenceDiagram
     end
     OR->>EN: Fact{reported, bySeat}; check integrity signals
     alt integrity stop rule reached
-      OR->>OB: Table: fixed template "A human judge has been called, please pause the relevant actions"
+      OR->>OB: Table: neutral handoff message "Please pause the game and call a human Judge. Keep the current game state unchanged until they arrive."
       OR->>OB: Staff: handoff + investigation notes (from procedure signals)
       OB->>J: handoff
       Note over OR: Held → Escalated. The sequence ends here for this branch.

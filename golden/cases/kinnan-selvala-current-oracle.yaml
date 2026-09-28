@@ -4,7 +4,10 @@ narrative: golden/scenarios/kinnan-selvala-current-oracle.md
 family: mana
 variantOf: kinnan-deathrite-shaman
 validation:
-  status: SOURCE_CHECK_REQUIRED
+  status: VALIDATED
+  by: Frank
+  on: 2026-09-28
+  note: "Owner, 2026-09-28: consider all drafted cases validated. Earlier open points are kept below as notes."
   openPoints:
     - "The current CR 605.1a (2026-09-25) adds a criterion: a mana ability's cost and effect don't move any card to or from a library. Selvala's current Oracle text ends with 'Then each player draws a card', so it is not a mana ability. The narrative explains this via cards revealed from libraries; the deciding criterion is the draw. Owner to validate this reasoning."
 tagProposed: easy

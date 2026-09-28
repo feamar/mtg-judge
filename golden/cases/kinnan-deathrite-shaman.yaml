@@ -3,7 +3,10 @@ title: "Kinnan and Deathrite Shaman"
 narrative: golden/scenarios/kinnan-deathrite-shaman.md
 family: mana
 validation:
-  status: SOURCE_CHECK_REQUIRED
+  status: VALIDATED
+  by: Frank
+  on: 2026-09-28
+  note: "Owner, 2026-09-28: consider all drafted cases validated. Earlier open points are kept below as notes."
   openPoints:
     - "The proposed citations were checked to exist in the CR of 2026-09-25 and against current Oracle text. Owner to validate."
 tagProposed: easy

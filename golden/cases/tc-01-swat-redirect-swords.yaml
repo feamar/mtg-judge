@@ -2,7 +2,7 @@ id: tc-01-swat-redirect-swords
 title: "Deflecting Swat redirects Swords to Plowshares"
 family: targeting
 variantOf: deflecting-swat-necropotence-delayed-trigger
-validation: { status: SOURCE_CHECK_REQUIRED }
+validation: { status: VALIDATED, by: Frank, on: 2026-09-28, note: "Owner, 2026-09-28: consider all drafted cases validated." }
 tagProposed: easy
 set: dev
 origin: ai-generated

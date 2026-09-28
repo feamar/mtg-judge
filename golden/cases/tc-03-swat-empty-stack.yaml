@@ -2,7 +2,7 @@ id: tc-03-swat-empty-stack
 title: "Deflecting Swat with no spell or ability on the stack"
 family: targeting
 variantOf: deflecting-swat-necropotence-delayed-trigger
-validation: { status: SOURCE_CHECK_REQUIRED }
+validation: { status: VALIDATED, by: Frank, on: 2026-09-28, note: "Owner, 2026-09-28: consider all drafted cases validated." }
 tagProposed: easy
 set: dev
 origin: ai-generated

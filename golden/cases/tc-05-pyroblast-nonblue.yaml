@@ -2,7 +2,7 @@ id: tc-05-pyroblast-nonblue
 title: "Pyroblast targeting a non-blue spell"
 family: targeting
 variantOf: tc-04-swat-reb-mode
-validation: { status: SOURCE_CHECK_REQUIRED }
+validation: { status: VALIDATED, by: Frank, on: 2026-09-28, note: "Owner, 2026-09-28: consider all drafted cases validated." }
 tagProposed: easy
 set: dev
 origin: ai-generated

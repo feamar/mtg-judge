@@ -21,7 +21,7 @@ input:
 expect:
   kind: dispute
   intent: who-wins
-  answer: "A major infraction: the judge doesn't rule on the result and doesn't mention bribery to players. Players get the neutral handoff template ('This one needs a human judge to finish...'). The staff-only handoff describes a possible Bribery and Wagering (IPG 4.4, Match Loss) with the incentive the player stated, as a recommendation for the human judge."
+  answer: "A major infraction: the judge doesn't rule on the result and doesn't mention bribery to players. Players get the neutral handoff message ('Please pause the game and call a human Judge. Keep the current game state unchanged until they arrive.'). The staff-only handoff describes a possible Bribery and Wagering (IPG 4.4, Match Loss) with the incentive the player stated, as a recommendation for the human judge."
   deciding: ["An incentive was offered or accepted for the concessions"]
   infraction: "Unsporting Conduct — Bribery and Wagering (to be determined by a human judge)"
   requiredCitations: ["IPG:4.4"]

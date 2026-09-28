@@ -7,7 +7,7 @@ validation:
   by: Frank
   on: 2026-09-23
   openPoints:
-    - "The scenario file says VALIDATED (2026-09-23); INDEX.md said SOURCE CHECK REQUIRED. Owner to confirm."
+    - "The scenario file says VALIDATED (2026-09-23); INDEX.md said SOURCE CHECK REQUIRED. Resolved 2026-09-28: VALIDATED (owner)."
 tagProposed: easy
 set: regression
 origin: chatgpt-package

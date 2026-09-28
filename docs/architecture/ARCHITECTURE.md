@@ -178,6 +178,7 @@ EventContext { eventId, guildId, name, format: "cEDH", rel: "Competitive", frame
                joinCode,                                         // FR-CTX-4 (OQ-28)
                eventPolicies: EventPolicy[],                     // TO-set; amend tournament policy only (ADR-0020, OQ-35)
                escalation: { humanThreshold: "above-warning", alwaysEscalate: CategoryId[] },   // OQ-7; ADR-0021
+               integrityMode: "presume_good_faith" | "request_table_confirmation",            // ADR-0022
                createdBy, updatedAt }
 GuildRoleMapping { guildId, toRoleId, setByAdminUserId }        // FR-ADM-1
 ```
@@ -369,6 +370,7 @@ Two golden scenarios show how this plays out:
     - (d) the integrity stop rule;
     - (e) an open decisive dispute.
 - **Major infractions go to a human judge (ADR-0021, floor-judge model):** anything whose base penalty after the framework is more severe than a Warning, and any suspected cheating, is detected and investigated, then handed off with the candidate infraction and base penalty as a *recommendation*. Players get a helpful, neutral message; no penalty is announced. The bot issues Warning-level penalties and below itself.
+- **Integrity and remedies (ADR-0022):** ordinary errors are handled under a good-faith presumption (or with table confirmation, if the TO chose that mode); only strong indicators force a protected handoff, and never a finding of guilt. The bot applies simple backups and prescribed partial fixes itself; **every full backup**, every strong indicator, and every player request for a human judge is handed off, whatever the settings.
 - **Event-management consequences** (a drop from the event, re-entry, result changes) are **referred to the TO** in the judge-only channel, never announced by the judge, unless a TO-set event policy covers the case, which the judge applies and cites (ADR-0020).
 - **FR-ESC-2:** before handing off, the engine asks the remaining `cheapToCollect` questions (except under an integrity stop).
 - **FR-ESC-3 / FR-ESC-5:** the handoff package goes to `Staff`; players get a fixed template.

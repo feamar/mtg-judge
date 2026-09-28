@@ -3,7 +3,10 @@ title: "Forgotten untap discovered later in the same turn"
 narrative: golden/scenarios/forgotten-untap-same-turn.md
 family: investigation
 validation:
-  status: SOURCE_CHECK_REQUIRED
+  status: VALIDATED
+  by: Frank
+  on: 2026-09-28
+  note: "Owner, 2026-09-28: consider all drafted cases validated. Earlier open points are kept below as notes."
   openPoints:
     - "Checked on blogs.magicjudges.org (2026-09-26): IPG 2.5 has the partial fix 'forgot to untap permanents at the start of their turn and it is still the same turn: untap them'. Owner to validate."
     - "Penalty and delivery pattern are missing from the narrative. Owner to add them; Game Rule Violation is normally a Warning at Competitive REL, to be confirmed against the current IPG."

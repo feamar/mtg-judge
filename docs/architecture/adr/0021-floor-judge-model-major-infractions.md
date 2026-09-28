@@ -35,7 +35,7 @@ Neither document reserves Game Loss or higher penalties for the head judge. So "
 
 - **detects** it: severity is data on the `PenaltyRow` of the event's framework, and integrity signals come from procedures (ADR-0008);
 - **investigates** until the facts that are useful and cheap to collect are gathered (FR-ESC-2), except that integrity cases stop as soon as more questions could compromise a human investigation (FR-ESC-4, ADR-0009);
-- **doesn't announce a penalty to players.** Players get a helpful, neutral template, not a verdict: *"This one needs a human judge to finish. I've passed everything on. Please leave the game as it is for now."* (FR-ESC-5, P3);
+- **doesn't announce a penalty to players.** Players get the owner's neutral handoff message, not a verdict: *"Please pause the game and call a human Judge. Keep the current game state unchanged until they arrive."* (ADR-0022 §5) (FR-ESC-5, P3);
 - **hands off** to the judge-only channel (FR-ESC-3): a summary, established and disputed facts, citations, the **candidate infraction and its base penalty from the framework's table** as a *recommendation*, the proposed fix, and why it was handed off. Integrity cases add staff-only investigation notes.
 
 The human judge decides, issues the penalty, and closes the case. The bot records it.

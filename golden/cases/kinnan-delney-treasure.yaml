@@ -4,7 +4,10 @@ narrative: golden/scenarios/kinnan-delney-treasure.md
 family: mana
 variantOf: kinnan-deathrite-shaman
 validation:
-  status: SOURCE_CHECK_REQUIRED
+  status: VALIDATED
+  by: Frank
+  on: 2026-09-28
+  note: "Owner, 2026-09-28: consider all drafted cases validated. Earlier open points are kept below as notes."
   openPoints:
     - "Checked: Kinnan has power 2; Delney makes triggered abilities of creatures with power 2 or less trigger an additional time; CR 603.2d covers 'triggers an additional time'. Owner to validate."
 tagProposed: easy

@@ -2,7 +2,10 @@ id: intake-01-volunteer-then-confused-silence
 title: "Narration intake: a volunteer explains, then goes quiet, confused"
 family: intake
 validation:
-  status: SOURCE_CHECK_REQUIRED
+  status: VALIDATED
+  by: Frank
+  on: 2026-09-28
+  note: "Owner, 2026-09-28: consider all drafted cases validated. Earlier open points are kept below as notes."
   openPoints:
     - "AI-drafted from the owner's intake procedure (ADR-0019). Owner to confirm the expected behaviour and wording."
     - "Narration ends on the wrap-up phrase, not on the pause (owner, 2026-09-27). The mid-story 40-second pause must not trigger anything."

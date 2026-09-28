@@ -2,7 +2,7 @@ id: tc-09-mana-drain-uncounterable
 title: "Mana Drain on a spell that can't be countered"
 family: targeting
 variantOf: pact-of-negation-uncounterable-spell
-validation: { status: SOURCE_CHECK_REQUIRED }
+validation: { status: VALIDATED, by: Frank, on: 2026-09-28, note: "Owner, 2026-09-28: consider all drafted cases validated." }
 tagProposed: easy
 set: dev
 origin: ai-generated

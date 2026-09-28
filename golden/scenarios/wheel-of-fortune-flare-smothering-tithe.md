@@ -1,6 +1,6 @@
 # Wheel of Fortune / Flare of Duplication / Smothering Tithe
 
-**Source validation:** SOURCE CHECK REQUIRED
+**Source validation:** VALIDATED BY PROJECT OWNER — 2026-09-28
 
 ## Status
 **Source validation: SOURCE CHECK REQUIRED**
