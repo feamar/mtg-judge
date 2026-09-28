@@ -60,6 +60,18 @@ The 18 current scenarios are the owner's real cases, and the AI roles have read 
 - the AI sets are reported;
 - the owner approves.
 
+**6. Judge Lab evaluation contract** (bundle `judge-lab-testset-bundle/1.0`, imported 2026-09-28). Imported cases carry extra expectations beyond the ruling, stored under named fields keyed by the stable test id. They are an **evaluation contract, not an engine interface**:
+
+- **`expect.disposition`:** the next action. It is one of answer (`RESOLVED`), ask for clarification, or hand off to a human. Stage expectations can also require asking for table confirmation.
+- **`expect.integrityPolicy`:** permitted conduct, ordinary error (handled under a good-faith presumption), or strong indicators (a protected human review). A referral is never a finding of guilt.
+- **`expect.handoff` and `expect.playerFacingMessage`:** the neutral player-facing wording is checked separately from the protected reasoning for the human judge. The protected part must never appear in player output (ADR-0009).
+- **`input.applicationAuthority` and `expect.remedy`:** the bot may apply eligible simple backups and prescribed partial fixes, and must hand off every full backup.
+- **`input.availableIntegritySettings` and `expect.stageExpectations`:** **run each such case once per available integrity setting.** The top-level expectation holds for the default setting; stage and setting expectations apply for the others.
+
+A case fails if the ruling is right but the workflow is wrong: an unsupported cheating accusation, exposed protected reasoning, an unauthorised backup, or an unnecessary escalation of an ordinary mistake.
+
+These fields are **test expectations about app workflow**. They are kept apart from the normative CR, IPG and MTR citations, and don't by themselves change the PRD.
+
 ## Consequences
 
 - Almost all testing is free, fast, and repeatable.
