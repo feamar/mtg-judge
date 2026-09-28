@@ -19,6 +19,6 @@ This is a learning project. The goal is to build a good product entirely with AI
 
 ## Status
 
-- PRD v0.4 (2026-09-28): draft, with the owner's answers from the architecture phase (D42–D65). Open questions are listed in PRD §12.
+- PRD v0.5 (2026-09-28): draft, with the owner's answers from the architecture phase (D42–D66). Open questions are listed in PRD §12.
 - Architecture v1: on branch `arch/v1` ([`docs/architecture/`](docs/architecture/ARCHITECTURE.md)). The exit criterion is met (2026-09-28), but the phase stays open until the owner ends it.
 - No product code yet. Next: the owner ends the architecture phase and approves the spike plan; then the spikes run and the planner starts.

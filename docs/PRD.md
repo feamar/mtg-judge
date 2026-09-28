@@ -1,6 +1,6 @@
-# AI MTG Judge — PRD v0.4
+# AI MTG Judge — PRD v0.5
 
-Product owner: Frank · Status: Draft for review · Last updated: 2026-09-28 (v0.2: owner answers from the architecture phase, D42–D56; v0.3: integrity and remedy rules, D57–D59; v0.4: further owner answers, D60–D65)
+Product owner: Frank · Status: Draft for review · Last updated: 2026-09-28 (v0.2: owner answers from the architecture phase, D42–D56; v0.3: integrity and remedy rules, D57–D59; v0.4: further owner answers, D60–D65; v0.5: D66, easy/hard tags accepted)
 
 > **This file is the master copy of the PRD.** It was migrated from the Claude Docs draft on 2026-09-25. Change requirements here, through commits, and never in a copy.
 
@@ -307,7 +307,7 @@ The **golden test set** is the definition of correct. It is the benchmark for ev
     - scenarios the product owner gives directly (prefixed `SCN:`), and imported sets the owner has verified (for example the 100 Judge Lab CR regression cases);
     - public rules Q&A may be used as development material only, never held out.
 - **What each case records:** the input conversation, the event context, the *easy* or *hard* tag, the expected ruling, penalty, and fix, the required citations, the facts the judge must ask for, and whether it should escalate.
-- **Easy vs. hard:** the product owner tags each case. A case is *hard* if it involves a complex rules interaction (for example layers or replacement effects), a long investigation, or rebuilding a complex board state. Everything else is *easy*.
+- **Easy vs. hard:** the product owner tags each case. As of 2026-09-28, all 348 cases are tagged: 240 easy, 108 hard (D66). A case is *hard* if it involves a complex rules interaction (for example layers or replacement effects), a long investigation, or rebuilding a complex board state. Everything else is *easy*.
 - **Release gate:** 100% of easy cases pass, the escalation behaviour on hard cases matches what's expected, the robustness suite has zero confidently wrong results (NFR-ROB-1), and the product owner approves.
 - **Feedback loop:** real case records (FR-LOG-3) are reviewed and turned into new golden cases.
 - **Launch target size:** about 1,000 cases (D38). Most will have to be AI-generated and then validated by the product owner (see R12). The split between easy and hard cases is still open (OQ-11).
@@ -415,6 +415,7 @@ The **golden test set** is the definition of correct. It is the benchmark for ev
 | D63 | Voice latency target: under 1 second (OQ-9). | The owner's target. It's ambitious for local transcription; spike S1 measures it and the owner decides with the numbers. |
 | D64 | Messy input: if a simple, fast language model can decipher it, that's fine; otherwise the judge asks the player to rephrase. There's no accuracy threshold; zero "confidently wrong" stays the release gate (OQ-33). | Cheap, and honest with the player. |
 | D65 | The tone rubric is covered by examples: the P3 stance phrases, the owner's own wording, and the approved templates (OQ-18). | The owner considers the tone covered by the examples already given. |
+| D66 | The proposed easy/hard tags are accepted: 240 easy, 108 hard among the 348 golden cases, following the §8 definition (OQ-11). | The owner accepted the proposal; the 100% release target applies to the easy cases. |
 
 ## 11. Risks
 
@@ -444,8 +445,8 @@ The **golden test set** is the definition of correct. It is the benchmark for ev
 - [x] **OQ-8.** Resolved: 50–100 cases a week per TO (NFR-COST-1).
 - [x] **OQ-9.** Resolved: text within seconds (NFR-LAT-1); voice under 1 second (D63).
 - [x] **OQ-10.** Resolved: case records are kept for 7 days (D39).
-- [ ] **OQ-11.** Partly resolved: about 1,000 golden cases at launch (D38). Easy/hard tags are **proposed** for all untagged cases (240 easy, 58 hard, plus 50 tagged hard by the owner), following the §8 definition. The owner confirms or changes them.
-- [ ] **OQ-12.** Does WotC's Fan Content Policy allow using the rules text and card text this way? Research (2026-09-28) of the policy (last updated 2017-11-15): it's written for fan art, videos, websites, and similar. Its conditions are: free access (no payments, subscriptions, or required registration); no Wizards logos or trademarks; the required notice *"[Title] is unofficial Fan Content permitted under the Fan Content Policy. Not approved/endorsed by Wizards. Portions of the materials used are property of Wizards of the Coast. ©Wizards of the Coast LLC."*; and no implied endorsement. It **excludes verbatim copying**, and says **game mechanics** may not be incorporated without written permission. It doesn't address rules-reference tools specifically. **To settle before any public use**, not for the design: whether quoting CR and Oracle text counts as "verbatim copying", and whether to ask Wizards. Until then, the MVP keeps quotations short, cites rule numbers, links to the official sources, uses no logos or card images, stays free, and shows the notice. This is not legal advice.
+- [x] **OQ-11.** Resolved: about 1,000 golden cases at launch (D38); tags accepted, 240 easy and 108 hard of the current 348 (D66).
+- [ ] **OQ-12.** Does WotC's Fan Content Policy allow using the rules text and card text this way? Research (2026-09-28) of the policy (last updated 2017-11-15): it's written for fan art, videos, websites, and similar. Its conditions are: free access (no payments, subscriptions, or required registration); no Wizards logos or trademarks; the required notice *"[Title] is unofficial Fan Content permitted under the Fan Content Policy. Not approved/endorsed by Wizards. Portions of the materials used are property of Wizards of the Coast. ©Wizards of the Coast LLC."*; and no implied endorsement. It **excludes verbatim copying**, and says **game mechanics** may not be incorporated without written permission. It doesn't address rules-reference tools specifically. **To settle before any public use**, not for the design: whether quoting CR and Oracle text counts as "verbatim copying", and whether to ask Wizards. Until then, the MVP keeps quotations short, cites rule numbers, links to the official sources, uses no logos or card images, stays free, and shows the notice. This is not legal advice. **Status 2026-09-28:** the owner has sent a message to WotC; open until they reply.
 - [x] **OQ-13.** Resolved: hybrid investigation (D29).
 - [x] **OQ-14.** Resolved: integrity categories, including what is *not* strong on its own; strong indicators force a protected handoff (D59, FR-ESC-4). Concrete strong indicators are defined case by case in the integrity test cases.
 - [x] **OQ-15.** Resolved: delivery patterns in FR-POL-2 (D36).
