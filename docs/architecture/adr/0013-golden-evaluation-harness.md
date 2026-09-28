@@ -1,6 +1,6 @@
 # ADR-0013: Golden cases are deterministic tests; only two small AI test sets
 
-Status: Proposed · Date: 2026-09-25 · Requirements: §8, NFR-ACC-1..3, NFR-TONE-1, NFR-IMP-1, FR-POL-2, FR-INV-2, FR-ESC-4, FR-BUILD-3, D38, OQ-29
+Status: Accepted 2026-09-28 · Date: 2026-09-25 · Requirements: §8, NFR-ACC-1..3, NFR-TONE-1, NFR-IMP-1, FR-POL-2, FR-INV-2, FR-ESC-4, FR-BUILD-3, D38, OQ-29
 
 ## Context
 

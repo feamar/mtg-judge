@@ -1,6 +1,6 @@
 # ADR-0005: Deterministic matching and retrieval; no embeddings in v1
 
-Status: Proposed · Date: 2026-09-25 · Requirements: P2, FR-Q-1, FR-Q-2, FR-Q-4, NFR-ACC-3, FR-BUILD-1, FR-BUILD-2
+Status: Accepted 2026-09-28 · Date: 2026-09-25 · Requirements: P2, FR-Q-1, FR-Q-2, FR-Q-4, NFR-ACC-3, FR-BUILD-1, FR-BUILD-2
 
 ## Context
 

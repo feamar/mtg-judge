@@ -1,6 +1,6 @@
 # ADR-0009: Typed audiences and prompt segregation for protected information
 
-Status: Proposed · Date: 2026-09-25 · Requirements: FR-ESC-4, FR-ESC-3, FR-INT-3, FR-RUL-8, D6, D9, FR-LOG-2
+Status: Accepted 2026-09-28 · Date: 2026-09-25 · Requirements: FR-ESC-4, FR-ESC-3, FR-INT-3, FR-RUL-8, D6, D9, FR-LOG-2
 
 ## Context
 

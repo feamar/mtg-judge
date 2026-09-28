@@ -1,6 +1,6 @@
 # ADR-0014: Locale catalogs and a protected glossary
 
-Status: Proposed · Date: 2026-09-25 · Requirements: NFR-I18N-1, D16, §4 architecture constraints, FR-CTX-1, NFR-TONE-1, P3
+Status: Accepted 2026-09-28 · Date: 2026-09-25 · Requirements: NFR-I18N-1, D16, §4 architecture constraints, FR-CTX-1, NFR-TONE-1, P3
 
 ## Decision
 

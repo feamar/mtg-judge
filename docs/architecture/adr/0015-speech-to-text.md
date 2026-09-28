@@ -1,6 +1,6 @@
 # ADR-0015: Voice through an `SttPort`, local transcription first
 
-Status: Proposed, depends on spike S1 · Date: 2026-09-25 · Requirements: FR-VOICE-1, FR-VOICE-2, D22, R4, R5, NFR-PRIV-1, NFR-COST-1, OQ-9
+Status: Accepted 2026-09-28, conditional on spike S1 · Date: 2026-09-25 · Requirements: FR-VOICE-1, FR-VOICE-2, D22, R4, R5, NFR-PRIV-1, NFR-COST-1, OQ-9
 
 ## Context
 

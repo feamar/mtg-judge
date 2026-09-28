@@ -1,6 +1,6 @@
 # ADR-0007: Atomic, versioned source sections released as one knowledge bundle
 
-Status: Proposed · Date: 2026-09-25 · Requirements: FR-BUILD-1..3, D25, §5, R6, R7, OQ-3, OQ-4, OQ-20, NFR-ACC-3, NFR-VER-1
+Status: Accepted 2026-09-28 · Date: 2026-09-25 · Requirements: FR-BUILD-1..3, D25, §5, R6, R7, OQ-3, OQ-4, OQ-20, NFR-ACC-3, NFR-VER-1
 
 ## Context
 

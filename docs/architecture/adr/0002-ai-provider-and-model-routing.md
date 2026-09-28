@@ -1,6 +1,6 @@
 # ADR-0002: Anthropic Claude behind a provider-neutral `LlmPort`, used only at the edges
 
-Status: Proposed · Date: 2026-09-25 · Requirements: NFR-TECH-1, D41, NFR-COST-1, NFR-LAT-1, P2, NFR-PRIV-1
+Status: Accepted 2026-09-28 · Date: 2026-09-25 · Requirements: NFR-TECH-1, D41, NFR-COST-1, NFR-LAT-1, P2, NFR-PRIV-1
 
 ## Context
 

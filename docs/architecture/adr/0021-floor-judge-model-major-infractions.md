@@ -1,6 +1,6 @@
 # ADR-0021: Floor-judge model: major infractions go to a human judge
 
-Status: Proposed · Date: 2026-09-27 · Requirements: P1, P3, D3, D6, FR-POL-1..3, FR-ESC-1..5, OQ-7, OQ-14, OQ-36 · Extends: ADR-0008, ADR-0009, ADR-0020
+Status: Accepted 2026-09-28 · Date: 2026-09-27 · Requirements: P1, P3, D3, D6, FR-POL-1..3, FR-ESC-1..5, OQ-7, OQ-14, OQ-36 · Extends: ADR-0008, ADR-0009, ADR-0020
 
 ## Context
 

@@ -1,6 +1,6 @@
 # ADR-0011: Cases are append-only event logs; catch-up on startup
 
-Status: Proposed · Date: 2026-09-25 · Requirements: NFR-AVAIL-1, FR-LOG-1, NFR-VER-1, FR-RUL-6, FR-INV-2, FR-LOG-3
+Status: Accepted 2026-09-28 · Date: 2026-09-25 · Requirements: NFR-AVAIL-1, FR-LOG-1, NFR-VER-1, FR-RUL-6, FR-INV-2, FR-LOG-3
 
 ## Context
 

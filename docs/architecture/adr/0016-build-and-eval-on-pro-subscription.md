@@ -1,6 +1,6 @@
 # ADR-0016: Authoring and AI tests run on the owner's Claude Pro subscription
 
-Status: Proposed · Date: 2026-09-25 · Requirements: OQ-24, P2, FR-BUILD-1..3, FR-INV-1, FR-Q-4, §8
+Status: Accepted 2026-09-28 · Date: 2026-09-25 · Requirements: OQ-24, P2, FR-BUILD-1..3, FR-INV-1, FR-Q-4, §8
 
 ## Context
 

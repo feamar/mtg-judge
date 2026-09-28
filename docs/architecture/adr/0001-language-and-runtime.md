@@ -1,6 +1,6 @@
 # ADR-0001: TypeScript on Node.js LTS, in one monorepo
 
-Status: Proposed · Date: 2026-09-25 · Requirements: NFR-TECH-1, D41, D31, NFR-EXT-1, FR-VOICE-1
+Status: Accepted 2026-09-28 · Date: 2026-09-25 · Requirements: NFR-TECH-1, D41, D31, NFR-EXT-1, FR-VOICE-1
 
 ## Context
 

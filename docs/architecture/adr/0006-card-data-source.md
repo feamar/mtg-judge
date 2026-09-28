@@ -1,6 +1,6 @@
 # ADR-0006: Card data from Scryfall bulk files
 
-Status: Proposed · Date: 2026-09-25 · Requirements: OQ-5, FR-Q-1, FR-Q-2, FR-BUILD-1, NFR-VER-1, R10, OQ-12
+Status: Accepted 2026-09-28 · Date: 2026-09-25 · Requirements: OQ-5, FR-Q-1, FR-Q-2, FR-BUILD-1, NFR-VER-1, R10, OQ-12
 
 ## Context
 

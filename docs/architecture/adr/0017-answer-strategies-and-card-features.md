@@ -1,6 +1,6 @@
 # ADR-0017: Answering strategies over prefetched card features
 
-Status: Proposed · Date: 2026-09-25 · Requirements: P2, D38, FR-Q-1, FR-Q-4, FR-BUILD-1..3, §8, NFR-ACC-1, NFR-COST-1 · Extends: ADR-0006, ADR-0008, ADR-0013
+Status: Accepted 2026-09-28 · Date: 2026-09-25 · Requirements: P2, D38, FR-Q-1, FR-Q-4, FR-BUILD-1..3, §8, NFR-ACC-1, NFR-COST-1 · Extends: ADR-0006, ADR-0008, ADR-0013
 
 ## Context
 

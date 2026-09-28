@@ -1,6 +1,6 @@
 # ADR-0022: Integrity modes, integrity categories, and remedy authority
 
-Status: Proposed · Date: 2026-09-28 · Requirements: D57–D59 (PRD v0.3), FR-POL-4, FR-ESC-1, FR-ESC-4, FR-ESC-5, FR-CTX-1, OQ-14 · Extends: ADR-0009, ADR-0021 · Source: the Judge Lab test bundle's metadata (`golden/import/judge-lab-architecture-testset.json`: `integrity_settings`, `integrity_workflow_contract`, `remedy_authority`), adopted by the owner on 2026-09-28
+Status: Accepted 2026-09-28 · Date: 2026-09-28 · Requirements: D57–D59 (PRD v0.3), FR-POL-4, FR-ESC-1, FR-ESC-4, FR-ESC-5, FR-CTX-1, OQ-14 · Extends: ADR-0009, ADR-0021 · Source: the Judge Lab test bundle's metadata (`golden/import/judge-lab-architecture-testset.json`: `integrity_settings`, `integrity_workflow_contract`, `remedy_authority`), adopted by the owner on 2026-09-28
 
 ## Context
 

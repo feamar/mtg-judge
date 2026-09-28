@@ -1,6 +1,6 @@
 # ADR-0020: TO-configured event policies, and referring event-management actions to the TO
 
-Status: Proposed. **§1 (event policies) is Post-MVP** (owner, 2026-09-28: "there should not be specific event policies in the MVP"); §2 (referral to the TO) is MVP · Date: 2026-09-27 · Requirements: §5, D8, D21, NG1, FR-CTX-1, FR-CTX-3, FR-RUL-9, FR-POL-1, FR-POL-3, OQ-35
+Status: Accepted 2026-09-28. **§1 (event policies) is Post-MVP** (owner, 2026-09-28: "there should not be specific event policies in the MVP"); §2 (referral to the TO) is MVP · Date: 2026-09-27 · Requirements: §5, D8, D21, NG1, FR-CTX-1, FR-CTX-3, FR-RUL-9, FR-POL-1, FR-POL-3, OQ-35
 
 ## Context
 

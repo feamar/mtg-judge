@@ -1,6 +1,6 @@
 # ADR-0019: Guided narration intake: "Tell me what happened, step by step"
 
-Status: Proposed · Date: 2026-09-27 · Requirements: P3, FR-INT-1, FR-INT-2, FR-RUL-1, FR-RUL-2, FR-RUL-4, FR-RUL-5, FR-INV-3, OQ-33, OQ-34 · Related: ADR-0008, ADR-0018
+Status: Accepted 2026-09-28 · Date: 2026-09-27 · Requirements: P3, FR-INT-1, FR-INT-2, FR-RUL-1, FR-RUL-2, FR-RUL-4, FR-RUL-5, FR-INV-3, OQ-33, OQ-34 · Related: ADR-0008, ADR-0018
 
 ## Context
 

@@ -1,6 +1,6 @@
 # ADR-0012: A ledger of AI calls and a monthly cap
 
-Status: Proposed · Date: 2026-09-25 · Requirements: NFR-COST-1, NFR-COST-2, R2, OQ-26
+Status: Accepted 2026-09-28 · Date: 2026-09-25 · Requirements: NFR-COST-1, NFR-COST-2, R2, OQ-26
 
 ## Context
 

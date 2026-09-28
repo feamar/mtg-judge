@@ -1,6 +1,6 @@
 # ADR-0004: SQLite for runtime state; a separate read-only SQLite knowledge bundle
 
-Status: Proposed · Date: 2026-09-25 · Requirements: FR-LOG-1..3, D39, FR-BUILD-1..3, NFR-VER-1, D31, NFR-COST-1
+Status: Accepted 2026-09-28 · Date: 2026-09-25 · Requirements: FR-LOG-1..3, D39, FR-BUILD-1..3, NFR-VER-1, D31, NFR-COST-1
 
 ## Context
 

@@ -1,6 +1,6 @@
 # ADR-0010: Ticket detection as a pluggable `TicketSource`
 
-Status: Proposed · Date: 2026-09-25 · Requirements: FR-INT-1, D37, OQ-21, OQ-22, R13, NFR-EXT-1, NFR-AVAIL-1
+Status: Accepted 2026-09-28 · Date: 2026-09-25 · Requirements: FR-INT-1, D37, OQ-21, OQ-22, R13, NFR-EXT-1, NFR-AVAIL-1
 
 ## Context
 

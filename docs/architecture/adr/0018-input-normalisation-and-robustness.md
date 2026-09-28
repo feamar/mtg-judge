@@ -1,6 +1,6 @@
 # ADR-0018: Input normalisation into a canonical question, and robustness testing
 
-Status: Proposed · Date: 2026-09-26 · Requirements: P2, FR-Q-2, FR-RUL-4, FR-RUL-5, FR-VOICE-2, NFR-IMP-1, NFR-ACC-1, OQ-33
+Status: Accepted 2026-09-28 · Date: 2026-09-26 · Requirements: P2, FR-Q-2, FR-RUL-4, FR-RUL-5, FR-VOICE-2, NFR-IMP-1, NFR-ACC-1, OQ-33
 
 ## Context
 

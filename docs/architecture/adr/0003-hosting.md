@@ -1,6 +1,6 @@
 # ADR-0003: Host on the product owner's always-on machine, in Docker Compose
 
-Status: Proposed · Date: 2026-09-25 · Requirements: NFR-AVAIL-1, NFR-COST-1, NFR-PRIV-1, D31
+Status: Accepted 2026-09-28 · Date: 2026-09-25 · Requirements: NFR-AVAIL-1, NFR-COST-1, NFR-PRIV-1, D31
 
 ## Context
 

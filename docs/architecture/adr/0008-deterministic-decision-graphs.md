@@ -1,6 +1,6 @@
 # ADR-0008: Deterministic decision graphs for rulings and investigations
 
-Status: Proposed · Date: 2026-09-25 · Requirements: P2, D29 (see OQ-30), FR-INV-1..3, FR-Q-1..5, FR-RUL-1..9, FR-ESC-1..2, FR-POL-1..2, NFR-ACC-1, NFR-IMP-1, NFR-TONE-1
+Status: Accepted 2026-09-28 · Date: 2026-09-25 · Requirements: P2, D29 (see OQ-30), FR-INV-1..3, FR-Q-1..5, FR-RUL-1..9, FR-ESC-1..2, FR-POL-1..2, NFR-ACC-1, NFR-IMP-1, NFR-TONE-1
 
 ## Context
 
