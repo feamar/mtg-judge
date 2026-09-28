@@ -1,6 +1,6 @@
-# AI MTG Judge — PRD v0.3
+# AI MTG Judge — PRD v0.4
 
-Product owner: Frank · Status: Draft for review · Last updated: 2026-09-28 (v0.2: owner answers from the architecture phase, D42–D56; v0.3: integrity and remedy rules, D57–D59)
+Product owner: Frank · Status: Draft for review · Last updated: 2026-09-28 (v0.2: owner answers from the architecture phase, D42–D56; v0.3: integrity and remedy rules, D57–D59; v0.4: further owner answers, D60–D65)
 
 > **This file is the master copy of the PRD.** It was migrated from the Claude Docs draft on 2026-09-25. Change requirements here, through commits, and never in a copy.
 
@@ -127,7 +127,14 @@ Every ruling MUST trace back to the specific sections of these documents that su
 - **(a) Penalties:** which penalties exist, what they are replaced with, how they upgrade, and end-of-round limits.
 - **(b) Procedures:** which questions the judge asks, in what order, which player each one is addressed to, and which remedy steps follow.
 
-**Precedence, highest first:** the policy framework's explicit edits, then the IPG and MTR, then the CR (the CR decides game rules; policy documents do not change them). *See OQ-4.*
+**Precedence** (D61). There are two separate layers, which never override each other:
+
+- **Game rules:** Oracle card text over the CR where they directly contradict (CR 101.1).
+- **Tournament policy:** the event's addendum over the MTR and IPG.
+
+Policy documents never change game rules. In the MVP there are no event-specific policies (FR-CTX-5 is Post-MVP).
+
+**MTRA sources:** the MTRA on TopDeck.gg and the MTRA on Notion are treated as **different documents**. An event names the one it uses (D60).
 
 **Updates (D25).** A new version of any of these documents triggers a manual rebuild:
 
@@ -145,12 +152,12 @@ Each requirement has acceptance criteria (AC) written as Given / When / Then. A 
 
 ### 6.1 Event context
 
-- **FR-CTX-1.** A user with the TO role can create an event context with these fields: name, format (MVP: cEDH only), REL (MVP: Competitive only), policy framework (zero or one addendum, which may amend the MTR, the IPG, or both; D42), the judge role, the TO role, the judge-only channel, the player channels, the ticket source (for the Tickets bot in thread mode: the panel channel its ticket threads are opened under, and the bot's user ID; D43), the escalation threshold (default: more severe than a Warning; D56), the integrity mode (default: presume good faith; D58), the event policies (FR-CTX-5), and the language (MVP: English only).
+- **FR-CTX-1.** A user with the TO role can create an event context with these fields: name, format (MVP: cEDH only), REL (MVP: Competitive only), policy framework (zero or one addendum, which may amend the MTR, the IPG, or both; D42), the judge role, the TO role, the judge-only channel, the player channels, the ticket source (for the Tickets bot in thread mode: the panel channel its ticket threads are opened under, and the bot's user ID; D43), the escalation threshold (default: more severe than a Warning; D56), the integrity mode (default: presume good faith; D58), the event policies (FR-CTX-5, Post-MVP), and the language (MVP: English only).
     - AC: Given a user who does not have the TO role, when they try to create or edit a context, then the bot refuses.
 - **FR-CTX-2.** Every ruling made in a Discord server follows that server's event context. If a server has no context (during the MVP), the judge only answers rules questions and says that it can't rule on penalties. After the MVP it will assume a 1v1 game context.
 - **FR-CTX-3.** The bot MUST NOT store or compute pairings, standings, points, or timers (NG1).
 - **FR-CTX-4.** An event context can be shared. Players in the event's Discord server get the context automatically. Anywhere else, they join it with a **join code** used with a bot command (for example `/judge join <code>`); no web URL is needed in the MVP (D48). Only the TO can change a context; a join code gives read access only (D32).
-- **FR-CTX-5. Event policies.** The TO can add **event policies** to the event context: written local rulings that amend **tournament policy only** (MTR, IPG, or the event's addendum), never game rules (CR, Oracle). The judge applies an event policy when its conditions hold, and cites it as *"Event policy (set by the TO)"*. The judge never softens a ruling by its own discretion; discretion the TO wants applied must be written down as an event policy (D55).
+- **FR-CTX-5. Event policies.** `[Post-MVP]` (D61: no event-specific policies in the MVP). The TO can add **event policies** to the event context: written local rulings that amend **tournament policy only** (MTR, IPG, or the event's addendum), never game rules (CR, Oracle). The judge applies an event policy when its conditions hold, and cites it as *"Event policy (set by the TO)"*. The judge never softens a ruling by its own discretion; discretion the TO wants applied must be written down as an event policy (D55).
     - AC: Given the policy "online league: players who concede at instant speed while an opponent presents a win line are not dropped" and such a concession, when the judge answers, then it says nobody is dropped and cites the event policy.
     - AC: Given an event policy that points at a CR rule, when the TO saves it, then the bot refuses.
 - **FR-CTX-6. Event-management consequences go to the TO.** When policy points to an event-management action (dropping a player, re-entry, a changed result) and no event policy covers it, the judge MUST NOT carry it out or announce it. It gives players the game result and a neutral note that the TO has been informed, and sends the facts, the policy text, and the question to the TO in the judge-only channel (D55, NG1).
@@ -227,8 +234,8 @@ Each requirement has acceptance criteria (AC) written as Given / When / Then. A 
 ### 6.7 Escalation and handoff
 
 - **FR-ESC-1.** The judge escalates when any of these happens:
-    - (a) its confidence is below a threshold (OQ-7);
-    - (b) the case falls in a category marked as always escalate (OQ-7);
+    - (a) *withdrawn (D62): there is no confidence threshold. The judge escalates on the concrete triggers below.*
+    - (b) the case falls in a category marked as **always escalate**. The owner adds categories to that list as they are encountered (D62);
     - (c) a player contests the ruling, or asks for a human judge. That handoff happens regardless of any integrity assessment or setting (D59);
     - (d) it suspects cheating (Competitive REL only);
     - (e) it can't resolve contradictory accounts;
@@ -279,14 +286,14 @@ Each requirement has acceptance criteria (AC) written as Given / When / Then. A 
 | NFR-COST-1 | Running cost | Under $20 a month at pilot volume: one TO with 50–100 cases a week, or about 200–430 a month. That leaves roughly $0.05–0.10 per case for everything: hosting, AI model calls, and speech-to-text. The cap covers the **live bot** only. Building and testing run within the owner's Claude Pro subscription, with no paid API spend (D45). The owner estimates about 75% of calls are rules questions (OQ-25). |
 | NFR-COST-2 | Degrading under cost pressure | There must be a way to keep costs under the cap (the architect proposes it). When the monthly cap is reached, the judge answers **rules questions only**, on the cheapest model, and hands disputes to human judges (D46). |
 | NFR-AVAIL-1 | Availability | The bot runs around the clock. Events usually run for a month, so judge calls can come at any time. Brief restarts are acceptable, but a ticket opened during an outage MUST be picked up when the bot comes back. |
-| NFR-LAT-1 | Response time | Text: every reply within seconds (single digits). Voice: target to be set if voice ships (OQ-9). |
+| NFR-LAT-1 | Response time | Text: every reply within seconds (single digits). Voice: **under 1 second** if voice ships (D63); spike S1 measures how close local transcription gets. |
 | NFR-I18N-1 | Ready for other languages | No user-facing text or prompt is hard-coded in English. Language is a setting in the event context. Terms defined in the CR, MTR, or IPG are never translated. |
 | NFR-PRIV-1 | GDPR | The product owner is in the EU. Consent before any voice capture, case records deleted after 7 days (D39), and deletion on request. Pseudonymised player text (seat labels, no Discord names) may be processed by a third-party AI provider, which may keep it longer and outside the EU; a short privacy notice for players is recommended (D44). Historical league tickets used for scenarios are pseudonymised by script, stored outside the public repository, and the raw export is deleted once the scenarios exist (D51). |
 | NFR-VER-1 | Traceability | Every ruling records the system version and the version of each source document |
 | NFR-TECH-1 | Technology choice | The architect chooses the programming language and the AI model provider. The language must be modern, mainstream, and well supported by Discord libraries. The provider must be easy to use and cheap enough for NFR-COST-1. The provider MUST be replaceable without changing ruling logic (D41). |
 | NFR-EXT-1 | Room to grow | Format, REL, policy framework, front end, and input type are all pluggable. None of them is hard-coded. |
-| NFR-TONE-1 | Tone (P3) | Every reply is precise, friendly, and customer-centric. No sarcasm, no blaming wording, no judgement of a player's character. Checked in every golden case by a written tone rubric (OQ-18). The rubric starts from the stance phrases in P3. |
-| NFR-ROB-1 | Robustness to messy input | Poorly written and transcribed questions (typos, slang, nicknames, speech errors) lead to answers as good and clean as for tidy input: the same understood question, and the same answer. The judge may ask a clarifying question, but must never resolve messy input into a different question without asking. **Release gate: zero "confidently wrong" results.** Thresholds for how often messy input is understood correctly are still to be set (OQ-33, D53). |
+| NFR-TONE-1 | Tone (P3) | Every reply is precise, friendly, and customer-centric. No sarcasm, no blaming wording, no judgement of a player's character. The tone standard is set by **examples**: the P3 stance phrases, the owner's own wording (for example the neutral handoff message, D59), and the approved answer templates, each reviewed by the owner when approved (FR-BUILD-4, D65). |
+| NFR-ROB-1 | Robustness to messy input | Poorly written and transcribed questions (typos, slang, nicknames, speech errors) lead to answers as good and clean as for tidy input: the same understood question, and the same answer. The judge may ask a clarifying question, but must never resolve messy input into a different question without asking. **Release gate: zero "confidently wrong" results.** There is no accuracy threshold. If a simple, fast language model can decipher the input, that's fine; otherwise the judge **asks the player to rephrase** (D53, D64). |
 | NFR-IMP-1 | Impartiality and consistency (P3) | The same facts give the same ruling, whoever reports them, in whatever order, and however they are worded. Golden-set variants test this by swapping who reports, the order of events, and the wording. |
 
 ## 8. Quality measurement
@@ -342,7 +349,7 @@ The **golden test set** is the definition of correct. It is the benchmark for ev
 | Play advice | Tactical or strategic guidance that could influence a player's decisions in the game, whether given on purpose or not. The MTR and IPG definitions take precedence. |
 | SOURCE CHECK REQUIRED | The status of a golden case whose citations the product owner hasn't validated yet. |
 | Approved rulings library | Build-time answers approved by the owner: concept explanations, answering strategies based on card features, and official card rulings. Rules questions are answered from it first (FR-Q-1). |
-| Event policy | A written local ruling set by the TO in the event context. It amends tournament policy only, never game rules (FR-CTX-5). |
+| Event policy | `[Post-MVP]` A written local ruling set by the TO in the event context. It amends tournament policy only, never game rules (FR-CTX-5). |
 | Major infraction | An infraction whose base penalty, after the event's framework, is more severe than a Warning. It is handed to a human judge (FR-ESC-1 f). |
 | Integrity mode | The TO's setting for how ordinary errors are handled: presume good faith (default), or request table confirmation. It never changes the handoff of strong indicators (FR-ESC-4). |
 | Narration intake | The judge asks the players to tell what happened, step by step, and follows along until a question emerges or the story is wrapped up (FR-INT-4). |
@@ -397,11 +404,17 @@ The **golden test set** is the definition of correct. It is the benchmark for ev
 | D52 | The play-advice line depends on the REL: at Competitive REL, only what is legal and what happens; at Regular REL, the judge may say an action won't achieve what the player wants (OQ-32) | Competitive play must stay unassisted; casual play benefits from teaching |
 | D53 | Messy input must lead to answers as good and clean as tidy input. The release gate requires zero confidently wrong results; accuracy thresholds are to be explored together (OQ-33). | The owner's requirement: "pretty bad text should lead to as good and clean an answer as possible" |
 | D54 | Narration intake: "tell me what happened, step by step" to the caller (or an agreed volunteer); the judge follows along until a question is formulated or arises, or the story is wrapped up, then asks "So, what is your question?" or "So, how can I help you?"; a 3-minute safety net for stalled narrations (OQ-33, OQ-34) | Helping players explain beats interrogating them, and replaces a limit on clarifying questions |
-| D55 | TO-set event policies amend tournament policy only and are applied and cited; event-management consequences (drops, re-entry) not covered by one are referred to the TO, never announced by the judge (OQ-35) | The owner's league softens some rulings by discretion; the AI must not invent discretion (FR-RUL-9) and must not manage events (NG1) |
+| D55 | *Event-policy part moved to Post-MVP by D61.* TO-set event policies amend tournament policy only and are applied and cited; event-management consequences (drops, re-entry) not covered by one are referred to the TO, never announced by the judge (OQ-35) | The owner's league softens some rulings by discretion; the AI must not invent discretion (FR-RUL-9) and must not manage events (NG1) |
 | D56 | The bot works like a floor judge: it issues penalties only up to a Warning; major infractions (more severe than a Warning after the framework, including MTRA Turn Skips, and any suspected cheating) are detected, investigated, and handed to a human judge as a recommendation. The neutral integrity question is asked only when something looks off (OQ-36; OQ-7 and OQ-14 in part). | "We are mostly here to help, not dish out punishment", while still detecting punishable situations. Modelled on floor-judge practice; MTR 1.7 and IPG 1 support the head judge's role but don't reserve these penalties. |
 | D57 | Remedy authority: the bot applies only simple backups the policy permits and prescribed partial fixes; every full backup is handed off to a human judge (FR-POL-4). | Adopted by the owner on 2026-09-28 from the Judge Lab bundle's rules. A full backup is the most disruptive remedy and needs a human. |
 | D58 | Each event has an integrity mode set by the TO: presume good faith (default) or request table confirmation. Peer reports can support good faith, but can't prove intent, override strong indicators, or act as a vote; declining never implies guilt. | Adopted by the owner on 2026-09-28. Lets TOs choose how much the table is involved, without letting the table decide integrity. |
 | D59 | Integrity categories: permitted/not relevant, ordinary error (good-faith handling), strong indicators (mandatory protected handoff). Strong indicators, full backups and player requests for a human judge are always handed off, whatever the settings. A handoff is never a finding of guilt. The neutral player message is the owner's: "Please pause the game and call a human Judge. Keep the current game state unchanged until they arrive." | Adopted by the owner on 2026-09-28 from the Judge Lab bundle; answers the core of OQ-14. "We are mostly here to help": ordinary mistakes stay ordinary. |
+| D60 | The MTRA on TopDeck.gg and the MTRA on Notion are treated as different documents; an event names the one it uses (OQ-3). | The owner's instruction: assume they are not the same. |
+| D61 | Precedence has two separate layers: Oracle over the CR (CR 101.1) for game rules, and the addendum over the MTR/IPG for tournament policy. There are no event-specific policies in the MVP, so FR-CTX-5 becomes Post-MVP; referring drops to the TO (FR-CTX-6) stays (OQ-4). | The owner: "There should not be specific event policies in the MVP, the addenda overwrite the standard documents." |
+| D62 | No confidence threshold for escalation. "Always escalate" categories are added to a list as they are encountered (OQ-7, OQ-14). | A deterministic judge has no meaningful confidence score; concrete categories are testable. |
+| D63 | Voice latency target: under 1 second (OQ-9). | The owner's target. It's ambitious for local transcription; spike S1 measures it and the owner decides with the numbers. |
+| D64 | Messy input: if a simple, fast language model can decipher it, that's fine; otherwise the judge asks the player to rephrase. There's no accuracy threshold; zero "confidently wrong" stays the release gate (OQ-33). | Cheap, and honest with the player. |
+| D65 | The tone rubric is covered by examples: the P3 stance phrases, the owner's own wording, and the approved templates (OQ-18). | The owner considers the tone covered by the examples already given. |
 
 ## 11. Risks
 
@@ -423,22 +436,22 @@ The **golden test set** is the definition of correct. It is the benchmark for ev
 ## 12. Open questions
 
 - [x] **OQ-1.** Resolved: the judge gives its best ruling and marks it as uncertain (D35).
-- [ ] **OQ-3.** Is the MTRA on TopDeck.gg the same document as the one on Notion? The product owner isn't sure. The build pipeline should compare the two published versions.
-- [ ] **OQ-4.** Is the precedence order in §5 correct? The ChatGPT package orders it: event addendum, then MTR, then CR, then IPG, then Oracle. That differs from §5.
+- [x] **OQ-3.** Resolved: treated as different documents (D60).
+- [x] **OQ-4.** Resolved: two separate precedence layers; no event-specific policies in the MVP (D61).
 - [x] **OQ-5.** Resolved by the architect: Scryfall bulk data, with Gatherer authoritative (ADR-0006).
 - [x] **OQ-6.** Resolved: players call a judge in the judge channel through the existing ticket bot (FR-INT-1).
-- [ ] **OQ-7.** Partly resolved: cases that always escalate are major infractions, more severe than a Warning (D56). Still open: whether any other categories always escalate, and whether a "confidence threshold" is needed at all, since the deterministic judge (D50) escalates on concrete signals (ADR-0008).
+- [x] **OQ-7.** Resolved: no confidence threshold; always-escalate categories are added as they are encountered (D62). Major infractions already always escalate (D56).
 - [x] **OQ-8.** Resolved: 50–100 cases a week per TO (NFR-COST-1).
-- [ ] **OQ-9.** Partly resolved: text replies within seconds (NFR-LAT-1). Voice target still open.
+- [x] **OQ-9.** Resolved: text within seconds (NFR-LAT-1); voice under 1 second (D63).
 - [x] **OQ-10.** Resolved: case records are kept for 7 days (D39).
-- [ ] **OQ-11.** Partly resolved: about 1,000 golden cases at launch (D38). Easy/hard split still open.
-- [ ] **OQ-12.** Does WotC's Fan Content Policy allow using the rules text and card text this way?
+- [ ] **OQ-11.** Partly resolved: about 1,000 golden cases at launch (D38). Easy/hard tags are **proposed** for all untagged cases (240 easy, 58 hard, plus 50 tagged hard by the owner), following the §8 definition. The owner confirms or changes them.
+- [ ] **OQ-12.** Does WotC's Fan Content Policy allow using the rules text and card text this way? Research (2026-09-28) of the policy (last updated 2017-11-15): it's written for fan art, videos, websites, and similar. Its conditions are: free access (no payments, subscriptions, or required registration); no Wizards logos or trademarks; the required notice *"[Title] is unofficial Fan Content permitted under the Fan Content Policy. Not approved/endorsed by Wizards. Portions of the materials used are property of Wizards of the Coast. ©Wizards of the Coast LLC."*; and no implied endorsement. It **excludes verbatim copying**, and says **game mechanics** may not be incorporated without written permission. It doesn't address rules-reference tools specifically. **To settle before any public use**, not for the design: whether quoting CR and Oracle text counts as "verbatim copying", and whether to ask Wizards. Until then, the MVP keeps quotations short, cites rule numbers, links to the official sources, uses no logos or card images, stays free, and shows the notice. This is not legal advice.
 - [x] **OQ-13.** Resolved: hybrid investigation (D29).
 - [x] **OQ-14.** Resolved: integrity categories, including what is *not* strong on its own; strong indicators force a protected handoff (D59, FR-ESC-4). Concrete strong indicators are defined case by case in the integrity test cases.
 - [x] **OQ-15.** Resolved: delivery patterns in FR-POL-2 (D36).
 - [x] **OQ-16.** Resolved: one global Admin, who maps an existing Discord server role to the TO role on each server (D40).
 - [x] **OQ-17.** Resolved: private messages are allowed for investigations only (D9, FR-INT-3).
-- [ ] **OQ-18.** What goes in the tone rubric? For example sample phrasings to use and to avoid, and how to deliver a penalty. Includes the play-advice line by REL (D52).
+- [x] **OQ-18.** Resolved: covered by examples (D65, NFR-TONE-1).
 - [x] **OQ-19.** Resolved: use the server's existing ticket bot (D37).
 - [x] **OQ-20.** Resolved: zero or one addendum, which may amend the MTR, the IPG, or both (D42).
 - [x] **OQ-21.** Resolved: the Tickets bot (tickets.bot) in thread mode (D43).
@@ -453,7 +466,7 @@ The **golden test set** is the definition of correct. It is the benchmark for ev
 - [x] **OQ-30.** Resolved: a deterministic judge with an approved rulings library; D29 is superseded (D50, FR-INV-2, FR-Q-1, FR-Q-6).
 - [x] **OQ-31.** Resolved: the TO agreed; no player notice and no opt-out; the raw export is deleted once scenarios exist (D51).
 - [x] **OQ-32.** Resolved: the play-advice line by REL (D52, FR-RUL-8).
-- [ ] **OQ-33.** Partly resolved: zero confidently wrong results is a release gate, and a narration procedure replaces any limit on clarifying questions (D53, D54, NFR-ROB-1). Still open: thresholds for how often messy input is understood correctly, to be explored with the owner once there are measurements.
+- [x] **OQ-33.** Resolved: a simple, fast model where it can; otherwise ask the player to rephrase; zero confidently wrong stays the gate (D64, NFR-ROB-1).
 - [x] **OQ-34.** Resolved: narration intake with wrap-up detection and a 3-minute safety net (D54, FR-INT-4).
 - [x] **OQ-35.** Resolved: event policies and referral of event-management consequences to the TO (D55, FR-CTX-5, FR-CTX-6).
 - [x] **OQ-36.** Resolved: floor-judge model, handoff threshold more severe than a Warning (D56, FR-ESC-1 f, FR-POL-1).
