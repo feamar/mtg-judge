@@ -1,0 +1,94 @@
+# Imported from judge-lab-architecture-testset.json by golden/tools/import-judge-lab-bundle.mjs. Edit the source record, not this file.
+id: "expansion-hard-003"
+title: "Two graveyard replacements"
+family: "Replacement choice"
+tag: "hard"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-28"
+  note: "Owner stated on 2026-09-28 that he verified all 207 scenarios and asked to include them as verified. Status in the bundle record: outcome DRAFT FOR OWNER REVIEW, sources SOURCE CHECK REQUIRED."
+set: "dev"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "Legacy"
+  rel: "not-material"
+  framework: null
+  inGame: null
+input:
+  raw:
+    - seat: "P1"
+      text: "Alice controls Dauthi Voidwalker and Rest in Peace. Bob owns and controls a Brainstorm that is finishing resolution. Both replacement effects would exile it instead of putting it into Bob's graveyard. Who chooses which applies, and is a void counter inevitable?"
+  cards:
+    - "Dauthi Voidwalker"
+    - "Rest in Peace"
+    - "Brainstorm"
+  assumptions:
+    - "No unmentioned effects change the stated interaction."
+    - "The stated resolutions occur only after the required priority passes."
+expect:
+  kind: "rules-question"
+  disposition: "RESOLVED"
+  answer: "Bob chooses. Choosing Voidwalker gives it a void counter; choosing Rest in Peace exiles it without one."
+  propositions:
+    - "Brainstorm is the affected object for this zone-change event."
+    - "Its controller Bob selects the applicable replacement effect."
+    - "After that effect changes the destination to exile, the other graveyard replacement no longer applies."
+    - "Alice's control of both replacement sources does not give her this decision."
+  chain:
+    - sources:
+        - "CR:616.1"
+        - "CR:616.1f"
+        - "CR:614.5"
+        - "Oracle:Dauthi Voidwalker"
+        - "Oracle:Rest in Peace"
+        - "Oracle:Brainstorm"
+      propositions: []
+      consequence: "Bob chooses. Choosing Voidwalker gives it a void counter; choosing Rest in Peace exiles it without one."
+  requiredCitations:
+    - "CR:616.1"
+    - "CR:616.1f"
+    - "CR:614.5"
+    - "Oracle:Dauthi Voidwalker"
+    - "Oracle:Rest in Peace"
+    - "Oracle:Brainstorm"
+  requiredQuestions: []
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+    - "reveal-integrity-suspicion"
+  escalate: false
+provenance:
+  sourceQuestionId: "HARD-003"
+  scenarioFile: "expansion-hard-003-two-graveyard-replacements.md"
+  bucket: "Hard"
+  pilot: true
+  originalSetting: "Legacy"
+  bundle: "Judge Lab — architecture phase testset"
+  bundleSchema: "judge-lab-testset-bundle/1.0"
+  references:
+    - label: "CR 616.1"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 616.1f"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 614.5"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+  origin: "Original Judge Lab expansion"
+  created_at: "2026-09-27"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#HARD-003"
+  source_versions:
+    CR: "2026-09-25"
+    MTR: "2026-02-27"
+    IPG: "2024-09-23"
+    JAR: "2024-09-23"
+    MTRA: "Current page retrieved 2026-09-27; page lists latest update 2025-06-24"
+    Oracle: "Scryfall mirror retrieved 2026-09-27"
+  oracle_snapshots:
+    Dauthi Voidwalker: "Dauthi Voidwalker\n{B}{B} · Creature — Dauthi Rogue\nShadow (This creature can block or be blocked by only creatures with shadow.)\nIf a card would be put into an opponent's graveyard from anywhere, instead exile it with a void counter on it.\n{T}, Sacrifice this creature: Choose an exiled card an opponent owns with a void counter on it. You may play it this turn without paying its mana cost.\n3/2"
+    Rest in Peace: "Rest in Peace\n{1}{W} · Enchantment\nWhen this enchantment enters, exile all graveyards.\nIf a card or token would be put into a graveyard from anywhere, exile it instead."
+    Brainstorm: "Brainstorm\n{U} · Instant\nDraw three cards, then put two cards from your hand on top of your library in any order."
+  cr_reference_existence_checked: true
+  not_executable_engine_test: "This is a candidate evaluation record, not an implementation of CR execution."

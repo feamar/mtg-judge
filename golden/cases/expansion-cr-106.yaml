@@ -1,0 +1,88 @@
+# Imported from judge-lab-architecture-testset.json by golden/tools/import-judge-lab-bundle.mjs. Edit the source record, not this file.
+id: "expansion-cr-106"
+title: "Consign the storm trigger"
+family: "Stack & copies"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-28"
+  note: "Owner stated on 2026-09-28 that he verified all 207 scenarios and asked to include them as verified. Status in the bundle record: outcome DRAFT FOR OWNER REVIEW, sources SOURCE CHECK REQUIRED."
+set: "dev"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "Legacy"
+  rel: "not-material"
+  framework: null
+  inGame: null
+input:
+  raw:
+    - seat: "P1"
+      text: "Alice casts Brain Freeze after four other spells have been cast this turn. Bob casts Consign to Memory targeting the storm trigger, without replicate. Consign resolves. How many Brain Freeze spells remain, and how many cards will they mill if the target stays legal?"
+  cards:
+    - "Brain Freeze"
+    - "Consign to Memory"
+  assumptions:
+    - "No unmentioned effects change the stated interaction."
+    - "The stated resolutions occur only after the required priority passes."
+expect:
+  kind: "rules-question"
+  disposition: "RESOLVED"
+  answer: "Only the original Brain Freeze remains; it mills three cards."
+  propositions:
+    - "Storm is a triggered ability that would create copies when it resolves."
+    - "Countering the trigger stops those copies from being created, but does not counter the original spell."
+    - "Consign being cast later does not retrospectively change the storm count."
+  chain:
+    - sources:
+        - "CR:702.40a"
+        - "CR:701.6a"
+        - "CR:113.7a"
+        - "Oracle:Brain Freeze"
+        - "Oracle:Consign to Memory"
+      propositions: []
+      consequence: "Only the original Brain Freeze remains; it mills three cards."
+  requiredCitations:
+    - "CR:702.40a"
+    - "CR:701.6a"
+    - "CR:113.7a"
+    - "Oracle:Brain Freeze"
+    - "Oracle:Consign to Memory"
+  requiredQuestions: []
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+    - "reveal-integrity-suspicion"
+  escalate: false
+provenance:
+  sourceQuestionId: "CR-106"
+  scenarioFile: "expansion-cr-106-consign-the-storm-trigger.md"
+  bucket: "Base CR"
+  pilot: true
+  originalSetting: "Legacy"
+  bundle: "Judge Lab — architecture phase testset"
+  bundleSchema: "judge-lab-testset-bundle/1.0"
+  references:
+    - label: "CR 702.40a"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 701.6a"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 113.7a"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+  origin: "Original Judge Lab expansion"
+  created_at: "2026-09-27"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#CR-106"
+  source_versions:
+    CR: "2026-09-25"
+    MTR: "2026-02-27"
+    IPG: "2024-09-23"
+    JAR: "2024-09-23"
+    MTRA: "Current page retrieved 2026-09-27; page lists latest update 2025-06-24"
+    Oracle: "Scryfall mirror retrieved 2026-09-27"
+  oracle_snapshots:
+    Brain Freeze: "Brain Freeze\n{1}{U} · Instant\nTarget player mills three cards.\nStorm (When you cast this spell, copy it for each spell cast before it this turn. You may choose new targets for the copies.)"
+    Consign to Memory: "Consign to Memory\n{U} · Instant\nReplicate {1} (When you cast this spell, copy it for each time you paid its replicate cost. You may choose new targets for the copies.)\nCounter target triggered ability or colorless spell."
+  cr_reference_existence_checked: true
+  not_executable_engine_test: "This is a candidate evaluation record, not an implementation of CR execution."

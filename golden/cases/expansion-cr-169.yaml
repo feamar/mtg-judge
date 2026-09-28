@@ -1,0 +1,83 @@
+# Imported from judge-lab-architecture-testset.json by golden/tools/import-judge-lab-bundle.mjs. Edit the source record, not this file.
+id: "expansion-cr-169"
+title: "Ad Nauseam with an empty library"
+family: "Draw versus reveal"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-28"
+  note: "Owner stated on 2026-09-28 that he verified all 207 scenarios and asked to include them as verified. Status in the bundle record: outcome DRAFT FOR OWNER REVIEW, sources SOURCE CHECK REQUIRED."
+set: "dev"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "cEDH"
+  rel: "not-material"
+  framework: null
+  inGame: null
+input:
+  raw:
+    - seat: "P1"
+      text: "Alice's library is empty. Ad Nauseam instructs her to reveal the top card. Does failing to reveal a card make her lose for drawing from an empty library?"
+  cards:
+    - "Ad Nauseam"
+  assumptions:
+    - "No unmentioned effects change the stated interaction."
+    - "The stated resolutions occur only after the required priority passes."
+expect:
+  kind: "rules-question"
+  disposition: "RESOLVED"
+  answer: "No."
+  propositions:
+    - "Revealing is not drawing."
+    - "The empty-library loss condition requires attempting to draw from an empty library."
+  chain:
+    - sources:
+        - "CR:121.1"
+        - "CR:704.5b"
+        - "CR:609.3"
+        - "Oracle:Ad Nauseam"
+      propositions: []
+      consequence: "No."
+  requiredCitations:
+    - "CR:121.1"
+    - "CR:704.5b"
+    - "CR:609.3"
+    - "Oracle:Ad Nauseam"
+  requiredQuestions: []
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+    - "reveal-integrity-suspicion"
+  escalate: false
+provenance:
+  sourceQuestionId: "CR-169"
+  scenarioFile: "expansion-cr-169-ad-nauseam-with-an-empty-library.md"
+  bucket: "Base CR"
+  pilot: false
+  originalSetting: "cEDH"
+  bundle: "Judge Lab — architecture phase testset"
+  bundleSchema: "judge-lab-testset-bundle/1.0"
+  references:
+    - label: "CR 121.1"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 704.5b"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 609.3"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+  origin: "Original Judge Lab expansion"
+  created_at: "2026-09-27"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#CR-169"
+  source_versions:
+    CR: "2026-09-25"
+    MTR: "2026-02-27"
+    IPG: "2024-09-23"
+    JAR: "2024-09-23"
+    MTRA: "Current page retrieved 2026-09-27; page lists latest update 2025-06-24"
+    Oracle: "Scryfall mirror retrieved 2026-09-27"
+  oracle_snapshots:
+    Ad Nauseam: "Ad Nauseam\n{3}{B}{B} · Instant\nReveal the top card of your library and put that card into your hand. You lose life equal to its mana value. You may repeat this process any number of times."
+  cr_reference_existence_checked: true
+  not_executable_engine_test: "This is a candidate evaluation record, not an implementation of CR execution."

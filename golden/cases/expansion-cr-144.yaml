@@ -1,0 +1,83 @@
+# Imported from judge-lab-architecture-testset.json by golden/tools/import-judge-lab-bundle.mjs. Edit the source record, not this file.
+id: "expansion-cr-144"
+title: "Ballista's last counter"
+family: "Costs and state-based actions"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-28"
+  note: "Owner stated on 2026-09-28 that he verified all 207 scenarios and asked to include them as verified. Status in the bundle record: outcome DRAFT FOR OWNER REVIEW, sources SOURCE CHECK REQUIRED."
+set: "dev"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "cEDH"
+  rel: "not-material"
+  framework: null
+  inGame: null
+input:
+  raw:
+    - seat: "P1"
+      text: "Alice removes Walking Ballista's only +1/+1 counter to activate its damage ability. What happens to the Ballista and the ability?"
+  cards:
+    - "Walking Ballista"
+  assumptions:
+    - "No unmentioned effects change the stated interaction."
+    - "The stated resolutions occur only after the required priority passes."
+expect:
+  kind: "rules-question"
+  disposition: "RESOLVED"
+  answer: "Ballista goes to the graveyard as a 0/0; its damage ability remains on the stack."
+  propositions:
+    - "Removing the counter is a cost."
+    - "State-based actions occur before a player receives priority, and the activated ability is independent of its source."
+  chain:
+    - sources:
+        - "CR:602.2b"
+        - "CR:704.5f"
+        - "CR:113.7a"
+        - "Oracle:Walking Ballista"
+      propositions: []
+      consequence: "Ballista goes to the graveyard as a 0/0; its damage ability remains on the stack."
+  requiredCitations:
+    - "CR:602.2b"
+    - "CR:704.5f"
+    - "CR:113.7a"
+    - "Oracle:Walking Ballista"
+  requiredQuestions: []
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+    - "reveal-integrity-suspicion"
+  escalate: false
+provenance:
+  sourceQuestionId: "CR-144"
+  scenarioFile: "expansion-cr-144-ballista-s-last-counter.md"
+  bucket: "Base CR"
+  pilot: false
+  originalSetting: "cEDH"
+  bundle: "Judge Lab — architecture phase testset"
+  bundleSchema: "judge-lab-testset-bundle/1.0"
+  references:
+    - label: "CR 602.2b"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 704.5f"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 113.7a"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+  origin: "Original Judge Lab expansion"
+  created_at: "2026-09-27"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#CR-144"
+  source_versions:
+    CR: "2026-09-25"
+    MTR: "2026-02-27"
+    IPG: "2024-09-23"
+    JAR: "2024-09-23"
+    MTRA: "Current page retrieved 2026-09-27; page lists latest update 2025-06-24"
+    Oracle: "Scryfall mirror retrieved 2026-09-27"
+  oracle_snapshots:
+    Walking Ballista: "Walking Ballista\n{X}{X} · Artifact Creature — Construct\nThis creature enters with X +1/+1 counters on it.\n{4}: Put a +1/+1 counter on this creature.\nRemove a +1/+1 counter from this creature: It deals 1 damage to any target.\n0/0"
+  cr_reference_existence_checked: true
+  not_executable_engine_test: "This is a candidate evaluation record, not an implementation of CR execution."

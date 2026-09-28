@@ -1,0 +1,104 @@
+# Imported from judge-lab-architecture-testset.json by golden/tools/import-judge-lab-bundle.mjs. Edit the source record, not this file.
+id: "expansion-cr-201"
+title: "Esper Sentinel as an uncrewed Imposter Mech"
+family: "Vehicles & undefined power"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-28"
+  note: "Owner stated on 2026-09-28 that he verified all 207 scenarios and asked to include them as verified. Status in the bundle record: outcome DRAFT FOR OWNER REVIEW, sources SOURCE CHECK REQUIRED."
+set: "dev"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "cEDH"
+  rel: "not-material"
+  framework: null
+  inGame: null
+input:
+  raw:
+    - seat: "P1"
+      text: "In a cEDH game, Alice's Imposter Mech entered as a copy of Bob's Esper Sentinel. It is currently an uncrewed noncreature artifact Vehicle. Bob casts his first noncreature spell this turn, triggering the copied Sentinel ability. The Mech remains uncrewed and on the battlefield as the trigger resolves. How much may Bob pay to stop Alice drawing? What changes if Alice instead activates crew 3 in response and the crew ability resolves before the Sentinel trigger? No other effects modify its power or toughness."
+  cards:
+    - "Imposter Mech"
+    - "Esper Sentinel"
+  assumptions:
+    - "No unmentioned effects change the stated interaction."
+    - "The stated resolutions occur only after the required priority passes."
+expect:
+  kind: "rules-question"
+  disposition: "RESOLVED"
+  answer: "Uncrewed: Bob may pay {0} to prevent the draw. Crewed before the trigger resolves: he may pay {1}. Declining to pay, even {0}, lets Alice draw."
+  propositions:
+    - "Imposter Mech copies Esper Sentinel's ability and copiable characteristics, with its stated exceptions: it is an artifact Vehicle, not a creature, and has crew 3."
+    - "The copied ability functions while it is a noncreature."
+    - "A noncreature permanent has no power or toughness, so the ability's request for its power uses 0."
+    - "The ability checks that value on resolution."
+    - "If crew resolves first, the Mech becomes a creature with Sentinel's copied 1/1, making X equal to 1."
+    - "Crew 3 is the total power required to activate crew; it neither sets the Vehicle's power to 3 nor makes this payment {3}."
+    - "A zero payment is still a choice; Bob can decline it and allow the draw."
+  chain:
+    - sources:
+        - "CR:208.3"
+        - "CR:107.2"
+        - "CR:608.2h"
+        - "CR:707.2"
+        - "CR:702.122a"
+        - "CR:118.5"
+        - "Oracle:Imposter Mech"
+        - "Oracle:Esper Sentinel"
+      propositions: []
+      consequence: "Uncrewed: Bob may pay {0} to prevent the draw. Crewed before the trigger resolves: he may pay {1}. Declining to pay, even {0}, lets Alice draw."
+  requiredCitations:
+    - "CR:208.3"
+    - "CR:107.2"
+    - "CR:608.2h"
+    - "CR:707.2"
+    - "CR:702.122a"
+    - "CR:118.5"
+    - "Oracle:Imposter Mech"
+    - "Oracle:Esper Sentinel"
+  requiredQuestions: []
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+    - "reveal-integrity-suspicion"
+  escalate: false
+provenance:
+  sourceQuestionId: "CR-201"
+  scenarioFile: "expansion-cr-201-esper-sentinel-as-an-uncrewed-imposter-mech.md"
+  bucket: "Base CR"
+  pilot: false
+  originalSetting: "cEDH"
+  bundle: "Judge Lab — architecture phase testset"
+  bundleSchema: "judge-lab-testset-bundle/1.0"
+  references:
+    - label: "CR 208.3"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 107.2"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 608.2h"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 707.2"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 702.122a"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 118.5"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+  origin: "Original Judge Lab expansion"
+  created_at: "2026-09-27"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#CR-201"
+  source_versions:
+    CR: "2026-09-25"
+    MTR: "2026-02-27"
+    IPG: "2024-09-23"
+    JAR: "2024-09-23"
+    MTRA: "Current page retrieved 2026-09-27; page lists latest update 2025-06-24"
+    Oracle: "Scryfall mirror retrieved 2026-09-27"
+  oracle_snapshots:
+    Imposter Mech: "Imposter Mech\nArtifact — Vehicle\nYou may have this Vehicle enter as a copy of a creature an opponent controls, except it's a Vehicle artifact with crew 3 and it loses all other card types.\nCrew 3\n3/1"
+    Esper Sentinel: "Esper Sentinel\n{W} · Artifact Creature — Human Soldier\nWhenever an opponent casts their first noncreature spell each turn, draw a card unless that player pays {X}, where X is this creature's power.\n1/1"
+  cr_reference_existence_checked: true
+  not_executable_engine_test: "This is a candidate evaluation record, not an implementation of CR execution."

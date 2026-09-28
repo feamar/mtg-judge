@@ -1,0 +1,88 @@
+# Imported from judge-lab-architecture-testset.json by golden/tools/import-judge-lab-bundle.mjs. Edit the source record, not this file.
+id: "expansion-hard-020"
+title: "Library with Abundance"
+family: "Replacement and event history"
+tag: "hard"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-28"
+  note: "Owner stated on 2026-09-28 that he verified all 207 scenarios and asked to include them as verified. Status in the bundle record: outcome DRAFT FOR OWNER REVIEW, sources SOURCE CHECK REQUIRED."
+set: "dev"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "Legacy"
+  rel: "not-material"
+  framework: null
+  inGame: null
+input:
+  raw:
+    - seat: "P1"
+      text: "Alice controls Sylvan Library and Abundance. During her draw step she replaces the normal draw and both optional Library draws with Abundance. She has drawn no cards by another means this turn. Must she pay life or return cards for Library?"
+  cards:
+    - "Sylvan Library"
+    - "Abundance"
+  assumptions:
+    - "No unmentioned effects change the stated interaction."
+    - "The stated resolutions occur only after the required priority passes."
+expect:
+  kind: "rules-question"
+  disposition: "RESOLVED"
+  answer: "No."
+  propositions:
+    - "The cards were put into her hand by Abundance rather than drawn."
+    - "There are no cards in her hand drawn this turn to choose for Library's final instruction."
+  chain:
+    - sources:
+        - "CR:614.6"
+        - "CR:121.1"
+        - "CR:609.3"
+        - "Oracle:Sylvan Library"
+        - "Oracle:Abundance"
+      propositions: []
+      consequence: "No."
+  requiredCitations:
+    - "CR:614.6"
+    - "CR:121.1"
+    - "CR:609.3"
+    - "Oracle:Sylvan Library"
+    - "Oracle:Abundance"
+  requiredQuestions: []
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+    - "reveal-integrity-suspicion"
+  escalate: false
+provenance:
+  sourceQuestionId: "HARD-020"
+  scenarioFile: "expansion-hard-020-library-with-abundance.md"
+  bucket: "Hard"
+  pilot: false
+  originalSetting: "Legacy"
+  bundle: "Judge Lab — architecture phase testset"
+  bundleSchema: "judge-lab-testset-bundle/1.0"
+  references:
+    - label: "CR 614.6"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 121.1"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 609.3"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+  origin: "Original Judge Lab expansion"
+  created_at: "2026-09-27"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#HARD-020"
+  source_versions:
+    CR: "2026-09-25"
+    MTR: "2026-02-27"
+    IPG: "2024-09-23"
+    JAR: "2024-09-23"
+    MTRA: "Current page retrieved 2026-09-27; page lists latest update 2025-06-24"
+    Oracle: "Scryfall mirror retrieved 2026-09-27"
+  oracle_snapshots:
+    Sylvan Library: "Sylvan Library\n{1}{G} · Enchantment\nAt the beginning of your draw step, you may draw two additional cards. If you do, choose two cards in your hand drawn this turn. For each of those cards, pay 4 life or put the card on top of your library."
+    Abundance: "Abundance\n{2}{G}{G} · Enchantment\nIf you would draw a card, you may instead choose land or nonland and reveal cards from the top of your library until you reveal a card of the chosen kind. Put that card into your hand and put all other cards revealed this way on the bottom of your library in any order."
+  cr_reference_existence_checked: true
+  not_executable_engine_test: "This is a candidate evaluation record, not an implementation of CR execution."

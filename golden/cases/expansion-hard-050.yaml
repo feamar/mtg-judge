@@ -1,0 +1,93 @@
+# Imported from judge-lab-architecture-testset.json by golden/tools/import-judge-lab-bundle.mjs. Edit the source record, not this file.
+id: "expansion-hard-050"
+title: "Citadel's last two life"
+family: "Life payment and timing"
+tag: "hard"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-28"
+  note: "Owner stated on 2026-09-28 that he verified all 207 scenarios and asked to include them as verified. Status in the bundle record: outcome DRAFT FOR OWNER REVIEW, sources SOURCE CHECK REQUIRED."
+set: "dev"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "cEDH"
+  rel: "not-material"
+  framework: null
+  inGame: null
+input:
+  raw:
+    - seat: "P1"
+      text: "Alice has 2 life and exactly one card left in her library: Thassa's Oracle. She controls Bolas's Citadel and casts Oracle from the top, paying 2 life instead of its mana cost. No effect prevents her from losing. Does she win when Oracle sees an empty library?"
+  cards:
+    - "Bolas's Citadel"
+    - "Thassa's Oracle"
+  assumptions:
+    - "No unmentioned effects change the stated interaction."
+    - "The stated resolutions occur only after the required priority passes."
+expect:
+  kind: "rules-question"
+  disposition: "RESOLVED"
+  answer: "No. She loses at the state-based-action check after casting, before Oracle resolves."
+  propositions:
+    - "Paying exactly her life total is permitted, but it leaves her at zero."
+    - "Casting completes, then state-based actions occur before priority."
+    - "Oracle never enters to create its win trigger."
+  chain:
+    - sources:
+        - "CR:119.4"
+        - "CR:601.2i"
+        - "CR:117.5"
+        - "CR:704.5a"
+        - "Oracle:Bolas's Citadel"
+        - "Oracle:Thassa's Oracle"
+      propositions: []
+      consequence: "No. She loses at the state-based-action check after casting, before Oracle resolves."
+  requiredCitations:
+    - "CR:119.4"
+    - "CR:601.2i"
+    - "CR:117.5"
+    - "CR:704.5a"
+    - "Oracle:Bolas's Citadel"
+    - "Oracle:Thassa's Oracle"
+  requiredQuestions: []
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+    - "reveal-integrity-suspicion"
+  escalate: false
+provenance:
+  sourceQuestionId: "HARD-050"
+  scenarioFile: "expansion-hard-050-citadel-s-last-two-life.md"
+  bucket: "Hard"
+  pilot: false
+  originalSetting: "cEDH"
+  bundle: "Judge Lab — architecture phase testset"
+  bundleSchema: "judge-lab-testset-bundle/1.0"
+  references:
+    - label: "CR 119.4"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 601.2i"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 117.5"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 704.5a"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+  origin: "Original Judge Lab expansion"
+  created_at: "2026-09-27"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#HARD-050"
+  source_versions:
+    CR: "2026-09-25"
+    MTR: "2026-02-27"
+    IPG: "2024-09-23"
+    JAR: "2024-09-23"
+    MTRA: "Current page retrieved 2026-09-27; page lists latest update 2025-06-24"
+    Oracle: "Scryfall mirror retrieved 2026-09-27"
+  oracle_snapshots:
+    Bolas's Citadel: "Bolas's Citadel\n{3}{B}{B}{B} · Legendary Artifact\nYou may look at the top card of your library any time.\nYou may play lands and cast spells from the top of your library. If you cast a spell this way, pay life equal to its mana value rather than pay its mana cost.\n{T}, Sacrifice ten nonland permanents: Each opponent loses 10 life."
+    Thassa's Oracle: "Thassa's Oracle\n{U}{U} · Creature — Merfolk Wizard\nWhen this creature enters, look at the top X cards of your library, where X is your devotion to blue. Put up to one of them on top of your library and the rest on the bottom of your library in a random order. If X is greater than or equal to the number of cards in your library, you win the game. (Each {U} in the mana costs of permanents you control counts toward your devotion to blue.)\n1/3"
+  cr_reference_existence_checked: true
+  not_executable_engine_test: "This is a candidate evaluation record, not an implementation of CR execution."

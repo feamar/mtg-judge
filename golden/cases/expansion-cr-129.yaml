@@ -1,0 +1,87 @@
+# Imported from judge-lab-architecture-testset.json by golden/tools/import-judge-lab-bundle.mjs. Edit the source record, not this file.
+id: "expansion-cr-129"
+title: "Bowmasters waits through Brainstorm"
+family: "Trigger timing"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-28"
+  note: "Owner stated on 2026-09-28 that he verified all 207 scenarios and asked to include them as verified. Status in the bundle record: outcome DRAFT FOR OWNER REVIEW, sources SOURCE CHECK REQUIRED."
+set: "dev"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "Legacy"
+  rel: "not-material"
+  framework: null
+  inGame: null
+input:
+  raw:
+    - seat: "P1"
+      text: "Bob controls Bowmasters. Alice resolves Brainstorm outside her draw step. Can a Bowmasters trigger resolve between the first and second cards drawn?"
+  cards:
+    - "Orcish Bowmasters"
+    - "Brainstorm"
+  assumptions:
+    - "No unmentioned effects change the stated interaction."
+    - "The stated resolutions occur only after the required priority passes."
+expect:
+  kind: "rules-question"
+  disposition: "RESOLVED"
+  answer: "No."
+  propositions:
+    - "The draws are separate events and trigger Bowmasters, but no player receives priority during Brainstorm's resolution."
+    - "The triggers go on the stack afterwards."
+  chain:
+    - sources:
+        - "CR:121.2"
+        - "CR:603.3"
+        - "CR:117.2e"
+        - "Oracle:Orcish Bowmasters"
+        - "Oracle:Brainstorm"
+      propositions: []
+      consequence: "No."
+  requiredCitations:
+    - "CR:121.2"
+    - "CR:603.3"
+    - "CR:117.2e"
+    - "Oracle:Orcish Bowmasters"
+    - "Oracle:Brainstorm"
+  requiredQuestions: []
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+    - "reveal-integrity-suspicion"
+  escalate: false
+provenance:
+  sourceQuestionId: "CR-129"
+  scenarioFile: "expansion-cr-129-bowmasters-waits-through-brainstorm.md"
+  bucket: "Base CR"
+  pilot: false
+  originalSetting: "Legacy"
+  bundle: "Judge Lab — architecture phase testset"
+  bundleSchema: "judge-lab-testset-bundle/1.0"
+  references:
+    - label: "CR 121.2"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 603.3"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 117.2e"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+  origin: "Original Judge Lab expansion"
+  created_at: "2026-09-27"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#CR-129"
+  source_versions:
+    CR: "2026-09-25"
+    MTR: "2026-02-27"
+    IPG: "2024-09-23"
+    JAR: "2024-09-23"
+    MTRA: "Current page retrieved 2026-09-27; page lists latest update 2025-06-24"
+    Oracle: "Scryfall mirror retrieved 2026-09-27"
+  oracle_snapshots:
+    Orcish Bowmasters: "Orcish Bowmasters\n{1}{B} · Creature — Orc Archer\nFlash\nWhen this creature enters and whenever an opponent draws a card except the first one they draw in each of their draw steps, this creature deals 1 damage to any target. Then amass Orcs 1.\n1/1"
+    Brainstorm: "Brainstorm\n{U} · Instant\nDraw three cards, then put two cards from your hand on top of your library in any order."
+  cr_reference_existence_checked: true
+  not_executable_engine_test: "This is a candidate evaluation record, not an implementation of CR execution."

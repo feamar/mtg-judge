@@ -1,0 +1,91 @@
+# Imported from judge-lab-architecture-testset.json by golden/tools/import-judge-lab-bundle.mjs. Edit the source record, not this file.
+id: "expansion-pol-054"
+title: "Cavern of Souls: implicit mana ability"
+family: "Implicit mana choices"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-28"
+  note: "Owner stated on 2026-09-28 that he verified all 207 scenarios and asked to include them as verified. Status in the bundle record: outcome DRAFT FOR OWNER REVIEW, sources SOURCE CHECK REQUIRED."
+set: "dev"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "Legacy"
+  rel: "Competitive"
+  framework: null
+  inGame: null
+input:
+  raw:
+    - seat: "P1"
+      text: "Competitive REL Legacy. Alice chose Human for Cavern of Souls. She casts Snapcaster Mage, tapping an Island and Cavern to pay its {1}{U} cost. She does not announce which Cavern mana ability she used or say that the spell cannot be countered. Bob casts Force of Will targeting Snapcaster Mage and argues that Alice never explicitly chose Cavern's colored-mana ability. Neither player previously specified the colorless ability or a different shortcut. What is the ruling?"
+  cards:
+    - "Cavern of Souls"
+    - "Snapcaster Mage"
+    - "Force of Will"
+  assumptions:
+    - "Apply only the expressly stated REL and event policy."
+    - "Do not infer intent from an error."
+expect:
+  kind: "dispute"
+  disposition: "RESOLVED"
+  answer: "Apply the MTR 4.2 shortcut: Alice is assumed to have activated Cavern's colored-mana ability. Snapcaster Mage cannot be countered by Force of Will."
+  propositions:
+    - "When an object has multiple mana abilities, the tournament shortcut assumes the one most specifically applicable to the spell or ability being paid for, unless the player announces otherwise."
+    - "Cavern's restricted colored-mana ability specifically applies to this Human creature spell."
+    - "Its mana may pay the generic part of {1}{U}; it need not pay a colored symbol to grant the protection."
+    - "Alice need not recite the ability or announce 'uncounterable'."
+    - "Force of Will has a legal target but does not counter it."
+    - "This is application of an established shortcut, not permission to reverse an explicitly announced colorless activation or ignore the chosen creature type."
+  chain:
+    - sources:
+        - "MTR:4.2 — Tournament Shortcuts, multiple mana abilities"
+        - "CR:609.3"
+        - "Oracle:Cavern of Souls"
+        - "Oracle:Snapcaster Mage"
+        - "Oracle:Force of Will"
+      propositions: []
+      consequence: "Apply the MTR 4.2 shortcut: Alice is assumed to have activated Cavern's colored-mana ability. Snapcaster Mage cannot be countered by Force of Will."
+  requiredCitations:
+    - "MTR:4.2 — Tournament Shortcuts, multiple mana abilities"
+    - "CR:609.3"
+    - "Oracle:Cavern of Souls"
+    - "Oracle:Snapcaster Mage"
+    - "Oracle:Force of Will"
+  requiredQuestions: []
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+    - "reveal-integrity-suspicion"
+  escalate: false
+provenance:
+  sourceQuestionId: "POL-054"
+  scenarioFile: "expansion-pol-054-cavern-of-souls-implicit-mana-ability.md"
+  bucket: "Policy"
+  pilot: false
+  originalSetting: "Legacy"
+  bundle: "Judge Lab — architecture phase testset"
+  bundleSchema: "judge-lab-testset-bundle/1.0"
+  references:
+    - label: "MTR 4.2 — Tournament Shortcuts, multiple mana abilities"
+      url: "https://media.wizards.com/ContentResources/WPN/MTG_MTR_2026_Feb27_EN.pdf"
+    - label: "CR 609.3"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+  origin: "Original Judge Lab expansion"
+  created_at: "2026-09-27"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#POL-054"
+  source_versions:
+    CR: "2026-09-25"
+    MTR: "2026-02-27"
+    IPG: "2024-09-23"
+    JAR: "2024-09-23"
+    MTRA: "Current page retrieved 2026-09-27; page lists latest update 2025-06-24"
+    Oracle: "Scryfall mirror retrieved 2026-09-27"
+  oracle_snapshots:
+    Cavern of Souls: "Cavern of Souls\nLand\nAs this land enters, choose a creature type.\n{T}: Add {C}.\n{T}: Add one mana of any color. Spend this mana only to cast a creature spell of the chosen type, and that spell can't be countered."
+    Snapcaster Mage: "Snapcaster Mage\nCreature — Human Wizard\nFlash\nWhen this creature enters, target instant or sorcery card in your graveyard gains flashback until end of turn. The flashback cost is equal to its mana cost. (You may cast that card from your graveyard for its flashback cost. Then exile it.)\n2/1"
+    Force of Will: "Force of Will\n{3}{U}{U} · Instant\nYou may pay 1 life and exile a blue card from your hand rather than pay this spell's mana cost.\nCounter target spell."
+  cr_reference_existence_checked: true
+  not_executable_engine_test: "This is a candidate evaluation record, not an implementation of CR execution."

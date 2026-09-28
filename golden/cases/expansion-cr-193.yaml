@@ -1,0 +1,79 @@
+# Imported from judge-lab-architecture-testset.json by golden/tools/import-judge-lab-bundle.mjs. Edit the source record, not this file.
+id: "expansion-cr-193"
+title: "Talion matches twice"
+family: "Trigger counts"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-28"
+  note: "Owner stated on 2026-09-28 that he verified all 207 scenarios and asked to include them as verified. Status in the bundle record: outcome DRAFT FOR OWNER REVIEW, sources SOURCE CHECK REQUIRED."
+set: "dev"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "cEDH"
+  rel: "not-material"
+  framework: null
+  inGame: null
+input:
+  raw:
+    - seat: "P1"
+      text: "Alice chose 2 for Talion, the Kindly Lord. Bob casts Snapcaster Mage, which has mana value 2 and power 2. Does that one cast trigger Talion twice?"
+  cards:
+    - "Talion, the Kindly Lord"
+    - "Snapcaster Mage"
+  assumptions:
+    - "No unmentioned effects change the stated interaction."
+    - "The stated resolutions occur only after the required priority passes."
+expect:
+  kind: "rules-question"
+  disposition: "RESOLVED"
+  answer: "No, once."
+  propositions:
+    - "The single trigger condition uses alternatives for matching the chosen number."
+    - "Matching multiple listed characteristics does not create extra instances of the same event."
+  chain:
+    - sources:
+        - "CR:603.2c"
+        - "Oracle:Talion, the Kindly Lord"
+        - "Oracle:Snapcaster Mage"
+      propositions: []
+      consequence: "No, once."
+  requiredCitations:
+    - "CR:603.2c"
+    - "Oracle:Talion, the Kindly Lord"
+    - "Oracle:Snapcaster Mage"
+  requiredQuestions: []
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+    - "reveal-integrity-suspicion"
+  escalate: false
+provenance:
+  sourceQuestionId: "CR-193"
+  scenarioFile: "expansion-cr-193-talion-matches-twice.md"
+  bucket: "Base CR"
+  pilot: false
+  originalSetting: "cEDH"
+  bundle: "Judge Lab — architecture phase testset"
+  bundleSchema: "judge-lab-testset-bundle/1.0"
+  references:
+    - label: "CR 603.2c"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+  origin: "Original Judge Lab expansion"
+  created_at: "2026-09-27"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#CR-193"
+  source_versions:
+    CR: "2026-09-25"
+    MTR: "2026-02-27"
+    IPG: "2024-09-23"
+    JAR: "2024-09-23"
+    MTRA: "Current page retrieved 2026-09-27; page lists latest update 2025-06-24"
+    Oracle: "Scryfall mirror retrieved 2026-09-27"
+  oracle_snapshots:
+    Talion, the Kindly Lord: "Talion, the Kindly Lord\n{2}{U}{B} · Legendary Creature — Faerie Noble\nFlying\nAs Talion enters, choose a number between 1 and 10.\nWhenever an opponent casts a spell with mana value, power, or toughness equal to the chosen number, that player loses 2 life and you draw a card.\n3/4"
+    Snapcaster Mage: "Snapcaster Mage\nCreature — Human Wizard\nFlash\nWhen this creature enters, target instant or sorcery card in your graveyard gains flashback until end of turn. The flashback cost is equal to its mana cost. (You may cast that card from your graveyard for its flashback cost. Then exile it.)\n2/1"
+  cr_reference_existence_checked: true
+  not_executable_engine_test: "This is a candidate evaluation record, not an implementation of CR execution."

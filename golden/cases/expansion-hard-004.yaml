@@ -1,0 +1,88 @@
+# Imported from judge-lab-architecture-testset.json by golden/tools/import-judge-lab-bundle.mjs. Edit the source record, not this file.
+id: "expansion-hard-004"
+title: "Dress Down after Dreadnought enters"
+family: "Ability removal and timing"
+tag: "hard"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-28"
+  note: "Owner stated on 2026-09-28 that he verified all 207 scenarios and asked to include them as verified. Status in the bundle record: outcome DRAFT FOR OWNER REVIEW, sources SOURCE CHECK REQUIRED."
+set: "dev"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "Legacy"
+  rel: "not-material"
+  framework: null
+  inGame: null
+input:
+  raw:
+    - seat: "P1"
+      text: "Alice resolves Phyrexian Dreadnought, and its enters trigger is put on the stack. She then resolves Dress Down. She has no other creatures and declines to sacrifice creatures with total power 12 or greater. Does removing Dreadnought's abilities stop its existing trigger?"
+  cards:
+    - "Dress Down"
+    - "Phyrexian Dreadnought"
+  assumptions:
+    - "No unmentioned effects change the stated interaction."
+    - "The stated resolutions occur only after the required priority passes."
+expect:
+  kind: "rules-question"
+  disposition: "RESOLVED"
+  answer: "No. The existing trigger resolves and she sacrifices Dreadnought."
+  propositions:
+    - "Dress Down removes abilities from the creature, not the already-triggered stack object."
+    - "Compare this with Dress Down already being present when Dreadnought enters, which prevents that trigger from existing."
+  chain:
+    - sources:
+        - "CR:113.7a"
+        - "CR:603.6a"
+        - "CR:608.2c"
+        - "Oracle:Dress Down"
+        - "Oracle:Phyrexian Dreadnought"
+      propositions: []
+      consequence: "No. The existing trigger resolves and she sacrifices Dreadnought."
+  requiredCitations:
+    - "CR:113.7a"
+    - "CR:603.6a"
+    - "CR:608.2c"
+    - "Oracle:Dress Down"
+    - "Oracle:Phyrexian Dreadnought"
+  requiredQuestions: []
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+    - "reveal-integrity-suspicion"
+  escalate: false
+provenance:
+  sourceQuestionId: "HARD-004"
+  scenarioFile: "expansion-hard-004-dress-down-after-dreadnought-enters.md"
+  bucket: "Hard"
+  pilot: false
+  originalSetting: "Legacy"
+  bundle: "Judge Lab — architecture phase testset"
+  bundleSchema: "judge-lab-testset-bundle/1.0"
+  references:
+    - label: "CR 113.7a"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 603.6a"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 608.2c"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+  origin: "Original Judge Lab expansion"
+  created_at: "2026-09-27"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#HARD-004"
+  source_versions:
+    CR: "2026-09-25"
+    MTR: "2026-02-27"
+    IPG: "2024-09-23"
+    JAR: "2024-09-23"
+    MTRA: "Current page retrieved 2026-09-27; page lists latest update 2025-06-24"
+    Oracle: "Scryfall mirror retrieved 2026-09-27"
+  oracle_snapshots:
+    Dress Down: "Dress Down\n{1}{U} · Enchantment\nFlash\nWhen this enchantment enters, draw a card.\nCreatures lose all abilities.\nAt the beginning of the end step, sacrifice this enchantment."
+    Phyrexian Dreadnought: "Phyrexian Dreadnought\n{1} · Artifact Creature — Phyrexian Dreadnought\nTrample\nWhen this creature enters, sacrifice it unless you sacrifice any number of creatures with total power 12 or greater.\n12/12"
+  cr_reference_existence_checked: true
+  not_executable_engine_test: "This is a candidate evaluation record, not an implementation of CR execution."

@@ -1,0 +1,97 @@
+# Imported from judge-lab-architecture-testset.json by golden/tools/import-judge-lab-bundle.mjs. Edit the source record, not this file.
+id: "expansion-cr-102"
+title: "Clone enters under Dress Down"
+family: "Entry replacement effects"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-28"
+  note: "Owner stated on 2026-09-28 that he verified all 207 scenarios and asked to include them as verified. Status in the bundle record: outcome DRAFT FOR OWNER REVIEW, sources SOURCE CHECK REQUIRED."
+set: "dev"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "Legacy"
+  rel: "not-material"
+  framework: null
+  inGame: null
+input:
+  raw:
+    - seat: "P1"
+      text: "Dress Down is already on the battlefield. Alice resolves Clone and wants it to enter as a copy of Bob's Murktide Regent. There are no toughness bonuses. What enters, and what happens before anyone receives priority?"
+  cards:
+    - "Dress Down"
+    - "Clone"
+    - "Murktide Regent"
+  assumptions:
+    - "No unmentioned effects change the stated interaction."
+    - "The stated resolutions occur only after the required priority passes."
+expect:
+  kind: "rules-question"
+  disposition: "RESOLVED"
+  answer: "Clone enters without copying anything, then is put into the graveyard as a 0/0."
+  propositions:
+    - "When determining which replacement effects modify Clone's entry, take existing continuous effects into account."
+    - "Dress Down removes Clone's own entry-copy ability in that prospective battlefield state."
+    - "No copy choice is available."
+    - "Its printed toughness is 0, so the next state-based-action check puts it into the graveyard."
+  chain:
+    - sources:
+        - "CR:614.1c"
+        - "CR:614.12"
+        - "CR:704.5f"
+        - "CR:117.5"
+        - "Oracle:Dress Down"
+        - "Oracle:Clone"
+        - "Oracle:Murktide Regent"
+      propositions: []
+      consequence: "Clone enters without copying anything, then is put into the graveyard as a 0/0."
+  requiredCitations:
+    - "CR:614.1c"
+    - "CR:614.12"
+    - "CR:704.5f"
+    - "CR:117.5"
+    - "Oracle:Dress Down"
+    - "Oracle:Clone"
+    - "Oracle:Murktide Regent"
+  requiredQuestions: []
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+    - "reveal-integrity-suspicion"
+  escalate: false
+provenance:
+  sourceQuestionId: "CR-102"
+  scenarioFile: "expansion-cr-102-clone-enters-under-dress-down.md"
+  bucket: "Base CR"
+  pilot: true
+  originalSetting: "Legacy"
+  bundle: "Judge Lab — architecture phase testset"
+  bundleSchema: "judge-lab-testset-bundle/1.0"
+  references:
+    - label: "CR 614.1c"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 614.12"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 704.5f"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 117.5"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+  origin: "Original Judge Lab expansion"
+  created_at: "2026-09-27"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#CR-102"
+  source_versions:
+    CR: "2026-09-25"
+    MTR: "2026-02-27"
+    IPG: "2024-09-23"
+    JAR: "2024-09-23"
+    MTRA: "Current page retrieved 2026-09-27; page lists latest update 2025-06-24"
+    Oracle: "Scryfall mirror retrieved 2026-09-27"
+  oracle_snapshots:
+    Dress Down: "Dress Down\n{1}{U} · Enchantment\nFlash\nWhen this enchantment enters, draw a card.\nCreatures lose all abilities.\nAt the beginning of the end step, sacrifice this enchantment."
+    Clone: "Clone\n{3}{U} · Creature — Shapeshifter\nYou may have this creature enter as a copy of any creature on the battlefield.\n0/0"
+    Murktide Regent: "Murktide Regent\n{5}{U}{U} · Creature — Dragon\nDelve (Each card you exile from your graveyard while casting this spell pays for {1}.)\nFlying\nThis creature enters with a +1/+1 counter on it for each instant and sorcery card exiled with it.\nWhenever an instant or sorcery card leaves your graveyard, put a +1/+1 counter on this creature.\n3/3"
+  cr_reference_existence_checked: true
+  not_executable_engine_test: "This is a candidate evaluation record, not an implementation of CR execution."

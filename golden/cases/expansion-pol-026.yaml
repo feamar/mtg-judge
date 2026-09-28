@@ -1,0 +1,162 @@
+# Imported from judge-lab-architecture-testset.json by golden/tools/import-judge-lab-bundle.mjs. Edit the source record, not this file.
+id: "expansion-pol-026"
+title: "Delaying to run out the match clock"
+family: "Integrity investigation"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-28"
+  note: "Owner stated on 2026-09-28 that he verified all 207 scenarios and asked to include them as verified. Status in the bundle record: outcome DRAFT FOR OWNER REVIEW, sources SOURCE CHECK REQUIRED."
+set: "dev"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "Legacy"
+  rel: "Competitive"
+  framework: null
+  inGame: null
+input:
+  raw:
+    - seat: "P1"
+      text: "Competitive REL Legacy. A player tells the app, 'I was deliberately taking longer so the match would time out in my favor.' No human Judge has investigated this account. What should the app say to the players and preserve for handoff?"
+  cards:
+    - "The One Ring"
+  assumptions:
+    - "The app is first contact; no human investigation or innocence finding is supplied."
+    - "Default TO mode presumes good faith for ordinary errors; optional table confirmation records information, not a verdict."
+    - "Permitted non-reminding of an opponent’s trigger needs no integrity assessment."
+    - "Strong indicators require protected human review regardless of the setting or table support."
+    - "Factual gaps, full backups and requests for human review remain distinct from integrity escalation."
+  entryContext:
+    first_contact: "app"
+    human_investigation_completed: false
+    human_ruling_on_current_call: false
+    intent_status: "not adjudicated; configurable working presumption"
+    prior_event_records: "May be inspected as evidence; not a prior adjudication of the current incident."
+  eventIntegritySetting: "presume_good_faith"
+  availableIntegritySettings:
+    - "presume_good_faith"
+    - "request_table_confirmation"
+  applicationAuthority:
+    version: "2026-09-27-owner-authority-v1"
+    authority_source: "Owner instruction, 2026-09-27; REQUIREMENTS.md section 15.17"
+    assumed_authority:
+      - "POLICY_PERMITTED_SIMPLE_BACKUP"
+      - "PRESCRIBED_PARTIAL_FIX"
+    forbidden_automated_remedies:
+      - "FULL_BACKUP"
+    full_backup_action: "HANDOFF_TO_HUMAN"
+    integrity_action: "PROTECTED_HANDOFF_TO_HUMAN"
+    no_repeat_authorization_for_in_scope_remedies: true
+    not_a_change_to_normative_policy: true
+expect:
+  kind: "dispute"
+  disposition: "HANDOFF_TO_HUMAN"
+  answer: "Pause and hand off neutrally. The reported express admission of delaying to exploit the clock is a strong indicator requiring human investigation under either setting."
+  propositions:
+    - "Stalling, if established by the human Judge, is distinct from ordinary Slow Play; the app never decides guilt or issues an automated Disqualification."
+    - "This is a strong-indicator referral threshold in the app workflow, not a finding of guilt."
+    - "A human Judge assesses the evidence and applicable IPG branches."
+    - "Both TO settings use the same protected handoff; unanimous assurances cannot override it."
+    - "Do not disclose the integrity hypothesis to players or conduct compromising intent questions."
+  chain:
+    - sources:
+        - "IPG:4.7 — Definition and Penalty"
+        - "IPG:3.3 — Definition"
+        - "IPG:4.8 — Definition, awareness and attempted advantage"
+      propositions: []
+      consequence: "Apply the referenced ordinary rule/penalty where the factual conditions hold; preserve any actual human-only determination."
+    - sources:
+        - "Project REQUIREMENTS.md 15.20; owner instruction 2026-09-27"
+      propositions: []
+      consequence:
+        category: "STRONG_INDICATORS"
+        ordinary_ruling: "Pause and hand off neutrally. The reported express admission of delaying to exploit the clock is a strong indicator requiring human investigation under either setting."
+        invariant: "Stalling, if established by the human Judge, is distinct from ordinary Slow Play; the app never decides guilt or issues an automated Disqualification."
+        facts_missing: false
+        human_review_requested: false
+        integrity_effect: "Strong evidence requires human review under either setting; no guilt finding."
+        table_confirmation_subject: "The reported error and good-faith account; other players provide information, not a verdict."
+        strong_indicator: "Pause and hand off neutrally. The reported express admission of delaying to exploit the clock is a strong indicator requiring human investigation under either setting."
+        default_mode: "presume_good_faith"
+  requiredCitations:
+    - "IPG:4.7 — Definition and Penalty"
+    - "IPG:3.3 — Definition"
+    - "IPG:4.8 — Definition, awareness and attempted advantage"
+  requiredQuestions: []
+  playerFacingMessage: "Please pause the game and call a human Judge. Keep the current game state unchanged until they arrive."
+  handoff:
+    required: true
+    reason: "STRONG_INDICATORS"
+    player_message: "Please pause the game and call a human Judge. Keep the current game state unchanged until they arrive."
+    guilt_finding: false
+    strong_indicators_override_table: true
+    conditional_triggers:
+      - "Concrete strong indicators of intentional wrongdoing"
+      - "Required full backup"
+      - "Requested human review or necessary out-of-scope factual assessment"
+    do_not_trigger_on:
+      - "Ordinary error alone"
+      - "Detrimental trigger alone"
+      - "Repetition alone"
+      - "Opponent-trigger non-reminder"
+      - "Missing/refused peer confirmation"
+    protected_reason: "Pause and hand off neutrally. The reported express admission of delaying to exploit the clock is a strong indicator requiring human investigation under either setting."
+    objective_facts_for_human:
+      - "Preserve the exact statement, its speaker and provenance, timing, current game state and relevant corroborating evidence."
+  integrityPolicy:
+    category: "STRONG_INDICATORS"
+    ordinary_ruling: "Pause and hand off neutrally. The reported express admission of delaying to exploit the clock is a strong indicator requiring human investigation under either setting."
+    invariant: "Stalling, if established by the human Judge, is distinct from ordinary Slow Play; the app never decides guilt or issues an automated Disqualification."
+    facts_missing: false
+    human_review_requested: false
+    integrity_effect: "Strong evidence requires human review under either setting; no guilt finding."
+    table_confirmation_subject: "The reported error and good-faith account; other players provide information, not a verdict."
+    strong_indicator: "Pause and hand off neutrally. The reported express admission of delaying to exploit the clock is a strong indicator requiring human investigation under either setting."
+    default_mode: "presume_good_faith"
+  stageExpectations:
+    - mode: "presume_good_faith"
+      integrity_category: "STRONG_INDICATORS"
+      default_disposition: "HANDOFF_TO_HUMAN"
+      rule_response: "Pause and hand off neutrally. The reported express admission of delaying to exploit the clock is a strong indicator requiring human investigation under either setting."
+    - mode: "request_table_confirmation"
+      integrity_category: "STRONG_INDICATORS"
+      table_input: "optional information for ordinary errors only"
+      strong_override: false
+      same_ordinary_rule_response: true
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+    - "reveal-integrity-suspicion"
+  escalate: "STRONG_INDICATORS"
+provenance:
+  sourceQuestionId: "POL-026"
+  scenarioFile: "expansion-pol-026-deliberately-exploiting-the-clock.md"
+  bucket: "Policy"
+  pilot: false
+  originalSetting: "Legacy"
+  bundle: "Judge Lab — architecture phase testset"
+  bundleSchema: "judge-lab-testset-bundle/1.0"
+  references:
+    - label: "IPG 4.7 — Definition and Penalty"
+      url: "https://media.wizards.com/ContentResources/WPN/MTG_IPG_2024Sep23_EN.pdf"
+    - label: "IPG 3.3 — Definition"
+      url: "https://media.wizards.com/ContentResources/WPN/MTG_IPG_2024Sep23_EN.pdf"
+    - label: "IPG 4.8 — Definition, awareness and attempted advantage"
+      url: "https://media.wizards.com/ContentResources/WPN/MTG_IPG_2024Sep23_EN.pdf"
+  origin: "Original Judge Lab expansion"
+  created_at: "2026-09-27"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#POL-026"
+  source_versions:
+    CR: "2026-09-25"
+    MTR: "2026-02-27"
+    IPG: "2024-09-23"
+    JAR: "2024-09-23"
+    MTRA: "Current page retrieved 2026-09-27; page lists latest update 2025-06-24"
+    Oracle: "Scryfall mirror retrieved 2026-09-27"
+  oracle_snapshots:
+    The One Ring: "The One Ring\n{4} · Legendary Artifact\nIndestructible\nWhen The One Ring enters, if you cast it, you gain protection from everything until your next turn.\nAt the beginning of your upkeep, you lose 1 life for each burden counter on The One Ring.\n{T}: Put a burden counter on The One Ring, then draw a card for each burden counter on The One Ring."
+  cr_reference_existence_checked: true
+  not_executable_engine_test: "This is a candidate evaluation record, not an implementation of CR execution."

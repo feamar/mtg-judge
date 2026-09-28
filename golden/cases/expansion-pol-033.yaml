@@ -1,0 +1,79 @@
+# Imported from judge-lab-architecture-testset.json by golden/tools/import-judge-lab-bundle.mjs. Edit the source record, not this file.
+id: "expansion-pol-033"
+title: "Changing a decision after seeing a response"
+family: "Decision reversals"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-28"
+  note: "Owner stated on 2026-09-28 that he verified all 207 scenarios and asked to include them as verified. Status in the bundle record: outcome DRAFT FOR OWNER REVIEW, sources SOURCE CHECK REQUIRED."
+set: "dev"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "Legacy"
+  rel: "Competitive"
+  framework: null
+  inGame: null
+input:
+  raw:
+    - seat: "P1"
+      text: "Competitive REL Legacy. Alice casts Force of Will. Bob reveals a counterspell in response. Alice asks to take back Force because of this new information. Does MTR 4.8 normally permit that reversal?"
+  cards:
+    - "Force of Will"
+    - "Brainstorm"
+  assumptions:
+    - "Apply only the expressly stated REL and event policy."
+    - "Do not infer intent from an error."
+expect:
+  kind: "dispute"
+  disposition: "RESOLVED"
+  answer: "No."
+  propositions:
+    - "Decision reversals are considered only when the judge is satisfied no new information was gained."
+    - "A revealed response supplies new information."
+  chain:
+    - sources:
+        - "MTR:4.8 — Reversing Decisions"
+        - "Oracle:Force of Will"
+        - "Oracle:Brainstorm"
+      propositions: []
+      consequence: "No."
+  requiredCitations:
+    - "MTR:4.8 — Reversing Decisions"
+    - "Oracle:Force of Will"
+    - "Oracle:Brainstorm"
+  requiredQuestions: []
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+    - "reveal-integrity-suspicion"
+  escalate: false
+provenance:
+  sourceQuestionId: "POL-033"
+  scenarioFile: "expansion-pol-033-changing-a-decision-after-seeing-a-response.md"
+  bucket: "Policy"
+  pilot: false
+  originalSetting: "Legacy"
+  bundle: "Judge Lab — architecture phase testset"
+  bundleSchema: "judge-lab-testset-bundle/1.0"
+  references:
+    - label: "MTR 4.8 — Reversing Decisions"
+      url: "https://media.wizards.com/ContentResources/WPN/MTG_MTR_2026_Feb27_EN.pdf"
+  origin: "Original Judge Lab expansion"
+  created_at: "2026-09-27"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#POL-033"
+  source_versions:
+    CR: "2026-09-25"
+    MTR: "2026-02-27"
+    IPG: "2024-09-23"
+    JAR: "2024-09-23"
+    MTRA: "Current page retrieved 2026-09-27; page lists latest update 2025-06-24"
+    Oracle: "Scryfall mirror retrieved 2026-09-27"
+  oracle_snapshots:
+    Force of Will: "Force of Will\n{3}{U}{U} · Instant\nYou may pay 1 life and exile a blue card from your hand rather than pay this spell's mana cost.\nCounter target spell."
+    Brainstorm: "Brainstorm\n{U} · Instant\nDraw three cards, then put two cards from your hand on top of your library in any order."
+  cr_reference_existence_checked: true
+  not_executable_engine_test: "This is a candidate evaluation record, not an implementation of CR execution."

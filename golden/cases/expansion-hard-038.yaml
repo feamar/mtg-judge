@@ -1,0 +1,84 @@
+# Imported from judge-lab-architecture-testset.json by golden/tools/import-judge-lab-bundle.mjs. Edit the source record, not this file.
+id: "expansion-hard-038"
+title: "Murktide's trigger already exists"
+family: "Existing versus future triggers"
+tag: "hard"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-28"
+  note: "Owner stated on 2026-09-28 that he verified all 207 scenarios and asked to include them as verified. Status in the bundle record: outcome DRAFT FOR OWNER REVIEW, sources SOURCE CHECK REQUIRED."
+set: "dev"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "Legacy"
+  rel: "not-material"
+  framework: null
+  inGame: null
+input:
+  raw:
+    - seat: "P1"
+      text: "Alice's Murktide has four counters. An instant leaves her graveyard, triggering it. Bob resolves Dress Down before that trigger resolves. Does the counter trigger still add a fifth counter?"
+  cards:
+    - "Dress Down"
+    - "Murktide Regent"
+  assumptions:
+    - "No unmentioned effects change the stated interaction."
+    - "The stated resolutions occur only after the required priority passes."
+expect:
+  kind: "rules-question"
+  disposition: "RESOLVED"
+  answer: "Yes. Murktide becomes 8/8 without flying while Dress Down remains."
+  propositions:
+    - "The trigger exists independently of its source's current abilities."
+    - "It can put a counter on the same battlefield object even after that object loses the ability."
+  chain:
+    - sources:
+        - "CR:113.7a"
+        - "CR:613.4c"
+        - "Oracle:Dress Down"
+        - "Oracle:Murktide Regent"
+      propositions: []
+      consequence: "Yes. Murktide becomes 8/8 without flying while Dress Down remains."
+  requiredCitations:
+    - "CR:113.7a"
+    - "CR:613.4c"
+    - "Oracle:Dress Down"
+    - "Oracle:Murktide Regent"
+  requiredQuestions: []
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+    - "reveal-integrity-suspicion"
+  escalate: false
+provenance:
+  sourceQuestionId: "HARD-038"
+  scenarioFile: "expansion-hard-038-murktide-s-trigger-already-exists.md"
+  bucket: "Hard"
+  pilot: false
+  originalSetting: "Legacy"
+  bundle: "Judge Lab — architecture phase testset"
+  bundleSchema: "judge-lab-testset-bundle/1.0"
+  references:
+    - label: "CR 113.7a"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 613.4c"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+  origin: "Original Judge Lab expansion"
+  created_at: "2026-09-27"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#HARD-038"
+  source_versions:
+    CR: "2026-09-25"
+    MTR: "2026-02-27"
+    IPG: "2024-09-23"
+    JAR: "2024-09-23"
+    MTRA: "Current page retrieved 2026-09-27; page lists latest update 2025-06-24"
+    Oracle: "Scryfall mirror retrieved 2026-09-27"
+  oracle_snapshots:
+    Dress Down: "Dress Down\n{1}{U} · Enchantment\nFlash\nWhen this enchantment enters, draw a card.\nCreatures lose all abilities.\nAt the beginning of the end step, sacrifice this enchantment."
+    Murktide Regent: "Murktide Regent\n{5}{U}{U} · Creature — Dragon\nDelve (Each card you exile from your graveyard while casting this spell pays for {1}.)\nFlying\nThis creature enters with a +1/+1 counter on it for each instant and sorcery card exiled with it.\nWhenever an instant or sorcery card leaves your graveyard, put a +1/+1 counter on this creature.\n3/3"
+  cr_reference_existence_checked: true
+  not_executable_engine_test: "This is a candidate evaluation record, not an implementation of CR execution."

@@ -1,0 +1,92 @@
+# Imported from judge-lab-architecture-testset.json by golden/tools/import-judge-lab-bundle.mjs. Edit the source record, not this file.
+id: "expansion-hard-040"
+title: "Cage and Zenith's shuffle"
+family: "Prohibited entry and remaining instructions"
+tag: "hard"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-28"
+  note: "Owner stated on 2026-09-28 that he verified all 207 scenarios and asked to include them as verified. Status in the bundle record: outcome DRAFT FOR OWNER REVIEW, sources SOURCE CHECK REQUIRED."
+set: "dev"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "Legacy"
+  rel: "not-material"
+  framework: null
+  inGame: null
+input:
+  raw:
+    - seat: "P1"
+      text: "Grafdigger's Cage is on the battlefield. Alice resolves Green Sun's Zenith for X equal to zero and finds Dryad Arbor. What happens to Arbor and to Zenith?"
+  cards:
+    - "Grafdigger's Cage"
+    - "Green Sun's Zenith"
+    - "Dryad Arbor"
+  assumptions:
+    - "No unmentioned effects change the stated interaction."
+    - "The stated resolutions occur only after the required priority passes."
+expect:
+  kind: "rules-question"
+  disposition: "RESOLVED"
+  answer: "Arbor remains in the library; the library is shuffled, and Zenith is then shuffled into its owner's library as instructed."
+  propositions:
+    - "Cage prohibits the creature card entering from the library."
+    - "Impossible entry does not cancel the remaining instructions or the spell's own shuffle instruction."
+  chain:
+    - sources:
+        - "CR:101.2"
+        - "CR:609.3"
+        - "CR:608.2c"
+        - "Oracle:Grafdigger's Cage"
+        - "Oracle:Green Sun's Zenith"
+        - "Oracle:Dryad Arbor"
+      propositions: []
+      consequence: "Arbor remains in the library; the library is shuffled, and Zenith is then shuffled into its owner's library as instructed."
+  requiredCitations:
+    - "CR:101.2"
+    - "CR:609.3"
+    - "CR:608.2c"
+    - "Oracle:Grafdigger's Cage"
+    - "Oracle:Green Sun's Zenith"
+    - "Oracle:Dryad Arbor"
+  requiredQuestions: []
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+    - "reveal-integrity-suspicion"
+  escalate: false
+provenance:
+  sourceQuestionId: "HARD-040"
+  scenarioFile: "expansion-hard-040-cage-and-zenith-s-shuffle.md"
+  bucket: "Hard"
+  pilot: false
+  originalSetting: "Legacy"
+  bundle: "Judge Lab — architecture phase testset"
+  bundleSchema: "judge-lab-testset-bundle/1.0"
+  references:
+    - label: "CR 101.2"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 609.3"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 608.2c"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+  origin: "Original Judge Lab expansion"
+  created_at: "2026-09-27"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#HARD-040"
+  source_versions:
+    CR: "2026-09-25"
+    MTR: "2026-02-27"
+    IPG: "2024-09-23"
+    JAR: "2024-09-23"
+    MTRA: "Current page retrieved 2026-09-27; page lists latest update 2025-06-24"
+    Oracle: "Scryfall mirror retrieved 2026-09-27"
+  oracle_snapshots:
+    Grafdigger's Cage: "Grafdigger's Cage\n{1} · Artifact\nCreature cards in graveyards and libraries can't enter the battlefield.\nPlayers can't cast spells from graveyards or libraries."
+    Green Sun's Zenith: "Green Sun's Zenith\n{X}{G} · Sorcery\nSearch your library for a green creature card with mana value X or less, put it onto the battlefield, then shuffle. Shuffle Green Sun's Zenith into its owner's library."
+    Dryad Arbor: "Dryad Arbor\nLand Creature — Forest Dryad\n(This land isn't a spell, it's affected by summoning sickness, and it has \"{T}: Add {G}.\")\n1/1"
+  cr_reference_existence_checked: true
+  not_executable_engine_test: "This is a candidate evaluation record, not an implementation of CR execution."

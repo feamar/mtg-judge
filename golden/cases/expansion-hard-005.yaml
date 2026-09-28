@@ -1,0 +1,93 @@
+# Imported from judge-lab-architecture-testset.json by golden/tools/import-judge-lab-bundle.mjs. Edit the source record, not this file.
+id: "expansion-hard-005"
+title: "Dress Down on an existing Clone"
+family: "Copy effects and layers"
+tag: "hard"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-28"
+  note: "Owner stated on 2026-09-28 that he verified all 207 scenarios and asked to include them as verified. Status in the bundle record: outcome DRAFT FOR OWNER REVIEW, sources SOURCE CHECK REQUIRED."
+set: "dev"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "Legacy"
+  rel: "not-material"
+  framework: null
+  inGame: null
+input:
+  raw:
+    - seat: "P1"
+      text: "Clone already entered as a copy of a Murktide Regent that had four counters. Clone itself has no counters. Dress Down now resolves. Does it turn Clone into a 0/0 or remove the copy effect?"
+  cards:
+    - "Dress Down"
+    - "Clone"
+    - "Murktide Regent"
+  assumptions:
+    - "No unmentioned effects change the stated interaction."
+    - "The stated resolutions occur only after the required priority passes."
+expect:
+  kind: "rules-question"
+  disposition: "RESOLVED"
+  answer: "No. It remains a 3/3 Murktide copy without abilities while Dress Down applies."
+  propositions:
+    - "Copy effects apply before ability removal."
+    - "Clone never copied the original's counters, but its copy effect did copy the printed 3/3."
+    - "Removing abilities does not erase that effect."
+  chain:
+    - sources:
+        - "CR:707.2"
+        - "CR:613.1a"
+        - "CR:613.1f"
+        - "Oracle:Dress Down"
+        - "Oracle:Clone"
+        - "Oracle:Murktide Regent"
+      propositions: []
+      consequence: "No. It remains a 3/3 Murktide copy without abilities while Dress Down applies."
+  requiredCitations:
+    - "CR:707.2"
+    - "CR:613.1a"
+    - "CR:613.1f"
+    - "Oracle:Dress Down"
+    - "Oracle:Clone"
+    - "Oracle:Murktide Regent"
+  requiredQuestions: []
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+    - "reveal-integrity-suspicion"
+  escalate: false
+provenance:
+  sourceQuestionId: "HARD-005"
+  scenarioFile: "expansion-hard-005-dress-down-on-an-existing-clone.md"
+  bucket: "Hard"
+  pilot: false
+  originalSetting: "Legacy"
+  bundle: "Judge Lab — architecture phase testset"
+  bundleSchema: "judge-lab-testset-bundle/1.0"
+  references:
+    - label: "CR 707.2"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 613.1a"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 613.1f"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+  origin: "Original Judge Lab expansion"
+  created_at: "2026-09-27"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#HARD-005"
+  source_versions:
+    CR: "2026-09-25"
+    MTR: "2026-02-27"
+    IPG: "2024-09-23"
+    JAR: "2024-09-23"
+    MTRA: "Current page retrieved 2026-09-27; page lists latest update 2025-06-24"
+    Oracle: "Scryfall mirror retrieved 2026-09-27"
+  oracle_snapshots:
+    Dress Down: "Dress Down\n{1}{U} · Enchantment\nFlash\nWhen this enchantment enters, draw a card.\nCreatures lose all abilities.\nAt the beginning of the end step, sacrifice this enchantment."
+    Clone: "Clone\n{3}{U} · Creature — Shapeshifter\nYou may have this creature enter as a copy of any creature on the battlefield.\n0/0"
+    Murktide Regent: "Murktide Regent\n{5}{U}{U} · Creature — Dragon\nDelve (Each card you exile from your graveyard while casting this spell pays for {1}.)\nFlying\nThis creature enters with a +1/+1 counter on it for each instant and sorcery card exiled with it.\nWhenever an instant or sorcery card leaves your graveyard, put a +1/+1 counter on this creature.\n3/3"
+  cr_reference_existence_checked: true
+  not_executable_engine_test: "This is a candidate evaluation record, not an implementation of CR execution."

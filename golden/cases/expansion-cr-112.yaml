@@ -1,0 +1,87 @@
+# Imported from judge-lab-architecture-testset.json by golden/tools/import-judge-lab-bundle.mjs. Edit the source record, not this file.
+id: "expansion-cr-112"
+title: "Mindbreak Trap and an uncounterable spell"
+family: "Countering versus exile"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-28"
+  note: "Owner stated on 2026-09-28 that he verified all 207 scenarios and asked to include them as verified. Status in the bundle record: outcome DRAFT FOR OWNER REVIEW, sources SOURCE CHECK REQUIRED."
+set: "dev"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "Legacy"
+  rel: "not-material"
+  framework: null
+  inGame: null
+input:
+  raw:
+    - seat: "P1"
+      text: "Alice uses Cavern's restricted mana to cast Oracle with the chosen creature type. Bob casts Mindbreak Trap targeting Oracle. Can Trap exile it?"
+  cards:
+    - "Mindbreak Trap"
+    - "Cavern of Souls"
+    - "Thassa's Oracle"
+  assumptions:
+    - "No unmentioned effects change the stated interaction."
+    - "The stated resolutions occur only after the required priority passes."
+expect:
+  kind: "rules-question"
+  disposition: "RESOLVED"
+  answer: "Yes."
+  propositions:
+    - "Exiling a spell is not countering it."
+    - "The prohibition on countering Oracle does not prevent its exile from the stack."
+  chain:
+    - sources:
+        - "CR:701.6a"
+        - "CR:406.1"
+        - "Oracle:Mindbreak Trap"
+        - "Oracle:Cavern of Souls"
+        - "Oracle:Thassa's Oracle"
+      propositions: []
+      consequence: "Yes."
+  requiredCitations:
+    - "CR:701.6a"
+    - "CR:406.1"
+    - "Oracle:Mindbreak Trap"
+    - "Oracle:Cavern of Souls"
+    - "Oracle:Thassa's Oracle"
+  requiredQuestions: []
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+    - "reveal-integrity-suspicion"
+  escalate: false
+provenance:
+  sourceQuestionId: "CR-112"
+  scenarioFile: "expansion-cr-112-mindbreak-trap-and-an-uncounterable-spell.md"
+  bucket: "Base CR"
+  pilot: false
+  originalSetting: "Legacy"
+  bundle: "Judge Lab — architecture phase testset"
+  bundleSchema: "judge-lab-testset-bundle/1.0"
+  references:
+    - label: "CR 701.6a"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 406.1"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+  origin: "Original Judge Lab expansion"
+  created_at: "2026-09-27"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#CR-112"
+  source_versions:
+    CR: "2026-09-25"
+    MTR: "2026-02-27"
+    IPG: "2024-09-23"
+    JAR: "2024-09-23"
+    MTRA: "Current page retrieved 2026-09-27; page lists latest update 2025-06-24"
+    Oracle: "Scryfall mirror retrieved 2026-09-27"
+  oracle_snapshots:
+    Mindbreak Trap: "Mindbreak Trap\n{2}{U}{U} · Instant — Trap\nIf an opponent cast three or more spells this turn, you may pay {0} rather than pay this spell's mana cost.\nExile any number of target spells."
+    Cavern of Souls: "Cavern of Souls\nLand\nAs this land enters, choose a creature type.\n{T}: Add {C}.\n{T}: Add one mana of any color. Spend this mana only to cast a creature spell of the chosen type, and that spell can't be countered."
+    Thassa's Oracle: "Thassa's Oracle\n{U}{U} · Creature — Merfolk Wizard\nWhen this creature enters, look at the top X cards of your library, where X is your devotion to blue. Put up to one of them on top of your library and the rest on the bottom of your library in a random order. If X is greater than or equal to the number of cards in your library, you win the game. (Each {U} in the mana costs of permanents you control counts toward your devotion to blue.)\n1/3"
+  cr_reference_existence_checked: true
+  not_executable_engine_test: "This is a candidate evaluation record, not an implementation of CR execution."

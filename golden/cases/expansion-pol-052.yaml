@@ -1,0 +1,185 @@
+# Imported from judge-lab-architecture-testset.json by golden/tools/import-judge-lab-bundle.mjs. Edit the source record, not this file.
+id: "expansion-pol-052"
+title: "Polluted Delta finds Taiga"
+family: "Illegal search result"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-28"
+  note: "Owner stated on 2026-09-28 that he verified all 207 scenarios and asked to include them as verified. Status in the bundle record: outcome DRAFT FOR OWNER REVIEW, sources SOURCE CHECK REQUIRED."
+set: "dev"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "Legacy"
+  rel: "Competitive"
+  framework: null
+  inGame: null
+input:
+  raw:
+    - seat: "P1"
+      text: "Competitive REL Legacy. Alice activates Polluted Delta, paying 1 life and sacrificing it. While resolving the ability she finds Taiga and puts it onto the battlefield. Before she shuffles or anyone takes another action, Bob immediately points out the error and calls for the app. No other effects change land types and no library positions were known. The players report this sequence; Alice's intent has not been adjudicated. What should the app verify and do? Does the app need a human merely to authorize the simple correction, and where is its backup-authority boundary?"
+  cards:
+    - "Polluted Delta"
+    - "Taiga"
+  assumptions:
+    - "The app is first contact; no human investigation or innocence finding is supplied."
+    - "Default TO mode presumes good faith for ordinary errors; optional table confirmation records information, not a verdict."
+    - "Permitted non-reminding of an opponent’s trigger needs no integrity assessment."
+    - "Strong indicators require protected human review regardless of the setting or table support."
+    - "Factual gaps, full backups and requests for human review remain distinct from integrity escalation."
+  entryContext:
+    first_contact: "app"
+    human_investigation_completed: false
+    intent_status: "not adjudicated; configurable working presumption"
+  eventIntegritySetting: "presume_good_faith"
+  availableIntegritySettings:
+    - "presume_good_faith"
+    - "request_table_confirmation"
+  applicationAuthority:
+    version: "2026-09-27-owner-authority-v1"
+    authority_source: "Owner instruction, 2026-09-27; REQUIREMENTS.md section 15.17"
+    assumed_authority:
+      - "POLICY_PERMITTED_SIMPLE_BACKUP"
+      - "PRESCRIBED_PARTIAL_FIX"
+    forbidden_automated_remedies:
+      - "FULL_BACKUP"
+    full_backup_action: "HANDOFF_TO_HUMAN"
+    integrity_action: "PROTECTED_HANDOFF_TO_HUMAN"
+    no_repeat_authorization_for_in_scope_remedies: true
+    not_a_change_to_normative_policy: true
+expect:
+  kind: "dispute"
+  disposition: "RESOLVED"
+  answer: "Under good faith and the confirmed immediate sequence: GRV — normally Warning. Apply the eligible simple backup directly, return Taiga, and finish Delta’s search. Do not refund the activation costs."
+  propositions:
+    - "The app may enforce eligible simple backups and prescribed partial fixes."
+    - "Every full backup remains human-only under both integrity settings."
+    - "Apply the ordinary ruling under the TO’s good-faith presumption; lack of a prior innocence finding does not by itself require escalation."
+    - "In table-confirmation mode, invite factual confirmation and record any offered support for the good-faith account."
+    - "A player’s refusal, silence, disagreement or reputation is not proof of intent and does not by itself trigger integrity handoff."
+    - "Obtain specific facts if accounts differ."
+    - "Only concrete strong indicators invoke mandatory protected integrity review."
+  chain:
+    - sources:
+        - "IPG:2.5 — Definition and Additional Remedy"
+        - "IPG:1.4 — Backing Up"
+        - "IPG:2.6 — Definition"
+        - "CR:701.23b"
+      propositions: []
+      consequence: "Apply the referenced ordinary rule/penalty where the factual conditions hold; preserve any actual human-only determination."
+    - sources:
+        - "Project REQUIREMENTS.md 15.20; owner instruction 2026-09-27"
+      propositions: []
+      consequence:
+        category: "ORDINARY_ERROR"
+        ordinary_ruling: "Under good faith and the confirmed immediate sequence: GRV — normally Warning. Apply the eligible simple backup directly, return Taiga, and finish Delta’s search. Do not refund the activation costs."
+        invariant: "The app may enforce eligible simple backups and prescribed partial fixes. Every full backup remains human-only under both integrity settings."
+        facts_missing: false
+        human_review_requested: false
+        integrity_effect: "Good faith supports the ordinary infraction path; concrete strong evidence can require human investigation. It never changes remedy-authority limits."
+        strong_indicator: null
+        table_confirmation_subject: "The reported selection error and good-faith explanation."
+        default_mode: "presume_good_faith"
+  requiredCitations:
+    - "IPG:2.5 — Definition and Additional Remedy"
+    - "IPG:1.4 — Backing Up"
+    - "IPG:2.6 — Definition"
+    - "CR:701.23b"
+  requiredQuestions:
+    - "Confirm that Taiga was selected and moved to the battlefield and that no shuffle or intervening action occurred."
+    - "Confirm there are no relevant land-type-changing effects or previously known library positions."
+  handoff:
+    required: false
+    reason: null
+    player_message: "Please pause the game and call a human Judge. Keep the current game state unchanged until they arrive."
+    guilt_finding: false
+    strong_indicators_override_table: true
+    conditional_triggers:
+      - "Concrete strong indicators of intentional wrongdoing"
+      - "Required full backup"
+      - "Requested human review or necessary out-of-scope factual assessment"
+    do_not_trigger_on:
+      - "Ordinary error alone"
+      - "Detrimental trigger alone"
+      - "Repetition alone"
+      - "Opponent-trigger non-reminder"
+      - "Missing/refused peer confirmation"
+    protected_reason: null
+    objective_facts_for_human: []
+  integrityPolicy:
+    category: "ORDINARY_ERROR"
+    ordinary_ruling: "Under good faith and the confirmed immediate sequence: GRV — normally Warning. Apply the eligible simple backup directly, return Taiga, and finish Delta’s search. Do not refund the activation costs."
+    invariant: "The app may enforce eligible simple backups and prescribed partial fixes. Every full backup remains human-only under both integrity settings."
+    facts_missing: false
+    human_review_requested: false
+    integrity_effect: "Good faith supports the ordinary infraction path; concrete strong evidence can require human investigation. It never changes remedy-authority limits."
+    strong_indicator: null
+    table_confirmation_subject: "The reported selection error and good-faith explanation."
+    default_mode: "presume_good_faith"
+  stageExpectations:
+    - mode: "presume_good_faith"
+      integrity_category: "ORDINARY_ERROR"
+      default_disposition: "RESOLVED"
+      rule_response: "Under good faith and the confirmed immediate sequence: GRV — normally Warning. Apply the eligible simple backup directly, return Taiga, and finish Delta’s search. Do not refund the activation costs."
+    - mode: "request_table_confirmation"
+      integrity_category: "ORDINARY_ERROR"
+      table_input: "optional information for ordinary errors only"
+      strong_override: false
+      same_ordinary_rule_response: true
+  remedy:
+    classification: "SIMPLE_BACKUP"
+    app_may_enforce: true
+    preconditions:
+      - "Immediate last action only"
+      - "No shuffle or intervening action"
+      - "No random elements in the reversal"
+      - "No integrity concern requiring protected handoff"
+    steps:
+      - "Return Taiga to the library"
+      - "Resume the same search: legal Island/Swamp card or fail to find"
+      - "Complete the required shuffle"
+    preserved:
+      - "Polluted Delta remains sacrificed"
+      - "The 1 life remains paid"
+    partial_fixes: "Authorized only when their exact policy conditions hold"
+    full_backup: "NEVER_EXECUTE; HANDOFF_TO_HUMAN"
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+    - "reveal-integrity-suspicion"
+  escalate: false
+provenance:
+  sourceQuestionId: "POL-052"
+  scenarioFile: "expansion-pol-052-polluted-delta-finds-taiga.md"
+  bucket: "Policy"
+  pilot: false
+  originalSetting: "Legacy"
+  bundle: "Judge Lab — architecture phase testset"
+  bundleSchema: "judge-lab-testset-bundle/1.0"
+  references:
+    - label: "IPG 2.5 — Definition and Additional Remedy"
+      url: "https://media.wizards.com/ContentResources/WPN/MTG_IPG_2024Sep23_EN.pdf"
+    - label: "IPG 1.4 — Backing Up"
+      url: "https://media.wizards.com/ContentResources/WPN/MTG_IPG_2024Sep23_EN.pdf"
+    - label: "IPG 2.6 — Definition"
+      url: "https://media.wizards.com/ContentResources/WPN/MTG_IPG_2024Sep23_EN.pdf"
+    - label: "CR 701.23b"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+  origin: "Original Judge Lab expansion"
+  created_at: "2026-09-27"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#POL-052"
+  source_versions:
+    CR: "2026-09-25"
+    MTR: "2026-02-27"
+    IPG: "2024-09-23"
+    JAR: "2024-09-23"
+    MTRA: "Current page retrieved 2026-09-27; page lists latest update 2025-06-24"
+    Oracle: "Scryfall mirror retrieved 2026-09-27"
+  oracle_snapshots:
+    Polluted Delta: "Polluted Delta\nLand\n{T}, Pay 1 life, Sacrifice this land: Search your library for an Island or Swamp card, put it onto the battlefield, then shuffle."
+    Taiga: "Taiga\nLand — Mountain Forest\n({T}: Add {R} or {G}.)"
+  cr_reference_existence_checked: true
+  not_executable_engine_test: "This is a candidate evaluation record, not an implementation of CR execution."

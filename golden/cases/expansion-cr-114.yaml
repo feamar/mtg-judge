@@ -1,0 +1,87 @@
+# Imported from judge-lab-architecture-testset.json by golden/tools/import-judge-lab-bundle.mjs. Edit the source record, not this file.
+id: "expansion-cr-114"
+title: "Wasteland after a fetch activation"
+family: "Costs and targets"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-28"
+  note: "Owner stated on 2026-09-28 that he verified all 207 scenarios and asked to include them as verified. Status in the bundle record: outcome DRAFT FOR OWNER REVIEW, sources SOURCE CHECK REQUIRED."
+set: "dev"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "Legacy"
+  rel: "not-material"
+  framework: null
+  inGame: null
+input:
+  raw:
+    - seat: "P1"
+      text: "Alice activates Polluted Delta and pays its costs. Bob now wants to target that Delta with Wasteland. Is it a legal target?"
+  cards:
+    - "Polluted Delta"
+    - "Wasteland"
+  assumptions:
+    - "No unmentioned effects change the stated interaction."
+    - "The stated resolutions occur only after the required priority passes."
+expect:
+  kind: "rules-question"
+  disposition: "RESOLVED"
+  answer: "No. Delta is already in the graveyard."
+  propositions:
+    - "The sacrifice was an activation cost."
+    - "Wasteland targets a nonbasic land permanent, not a land card in a graveyard."
+  chain:
+    - sources:
+        - "CR:602.2b"
+        - "CR:109.2"
+        - "CR:115.1c"
+        - "Oracle:Polluted Delta"
+        - "Oracle:Wasteland"
+      propositions: []
+      consequence: "No. Delta is already in the graveyard."
+  requiredCitations:
+    - "CR:602.2b"
+    - "CR:109.2"
+    - "CR:115.1c"
+    - "Oracle:Polluted Delta"
+    - "Oracle:Wasteland"
+  requiredQuestions: []
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+    - "reveal-integrity-suspicion"
+  escalate: false
+provenance:
+  sourceQuestionId: "CR-114"
+  scenarioFile: "expansion-cr-114-wasteland-after-a-fetch-activation.md"
+  bucket: "Base CR"
+  pilot: false
+  originalSetting: "Legacy"
+  bundle: "Judge Lab — architecture phase testset"
+  bundleSchema: "judge-lab-testset-bundle/1.0"
+  references:
+    - label: "CR 602.2b"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 109.2"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 115.1c"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+  origin: "Original Judge Lab expansion"
+  created_at: "2026-09-27"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#CR-114"
+  source_versions:
+    CR: "2026-09-25"
+    MTR: "2026-02-27"
+    IPG: "2024-09-23"
+    JAR: "2024-09-23"
+    MTRA: "Current page retrieved 2026-09-27; page lists latest update 2025-06-24"
+    Oracle: "Scryfall mirror retrieved 2026-09-27"
+  oracle_snapshots:
+    Polluted Delta: "Polluted Delta\nLand\n{T}, Pay 1 life, Sacrifice this land: Search your library for an Island or Swamp card, put it onto the battlefield, then shuffle."
+    Wasteland: "Wasteland\nLand\n{T}: Add {C}.\n{T}, Sacrifice this land: Destroy target nonbasic land."
+  cr_reference_existence_checked: true
+  not_executable_engine_test: "This is a candidate evaluation record, not an implementation of CR execution."

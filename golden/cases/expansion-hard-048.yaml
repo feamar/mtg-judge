@@ -1,0 +1,84 @@
+# Imported from judge-lab-architecture-testset.json by golden/tools/import-judge-lab-bundle.mjs. Edit the source record, not this file.
+id: "expansion-hard-048"
+title: "Destroying Remora after its upkeep trigger"
+family: "Cumulative upkeep and absent sources"
+tag: "hard"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-28"
+  note: "Owner stated on 2026-09-28 that he verified all 207 scenarios and asked to include them as verified. Status in the bundle record: outcome DRAFT FOR OWNER REVIEW, sources SOURCE CHECK REQUIRED."
+set: "dev"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "cEDH"
+  rel: "not-material"
+  framework: null
+  inGame: null
+input:
+  raw:
+    - seat: "P1"
+      text: "Alice's cumulative-upkeep trigger is on the stack. Remora is destroyed before the trigger resolves. Must she pay mana anyway, and does the upkeep trigger disappear automatically?"
+  cards:
+    - "Mystic Remora"
+  assumptions:
+    - "No unmentioned effects change the stated interaction."
+    - "The stated resolutions occur only after the required priority passes."
+expect:
+  kind: "rules-question"
+  disposition: "RESOLVED"
+  answer: "The trigger remains on the stack until resolution, but then does nothing because its intervening-if condition is false."
+  propositions:
+    - "Cumulative upkeep requires the permanent still to be on the battlefield both when it triggers and when it resolves."
+    - "Removing Remora does not erase the stack object, but the false intervening-if condition stops all its instructions."
+  chain:
+    - sources:
+        - "CR:113.7a"
+        - "CR:702.24a"
+        - "CR:603.4"
+        - "Oracle:Mystic Remora"
+      propositions: []
+      consequence: "The trigger remains on the stack until resolution, but then does nothing because its intervening-if condition is false."
+  requiredCitations:
+    - "CR:113.7a"
+    - "CR:702.24a"
+    - "CR:603.4"
+    - "Oracle:Mystic Remora"
+  requiredQuestions: []
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+    - "reveal-integrity-suspicion"
+  escalate: false
+provenance:
+  sourceQuestionId: "HARD-048"
+  scenarioFile: "expansion-hard-048-destroying-remora-after-its-upkeep-trigger.md"
+  bucket: "Hard"
+  pilot: false
+  originalSetting: "cEDH"
+  bundle: "Judge Lab — architecture phase testset"
+  bundleSchema: "judge-lab-testset-bundle/1.0"
+  references:
+    - label: "CR 113.7a"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 702.24a"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 603.4"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+  origin: "Original Judge Lab expansion"
+  created_at: "2026-09-27"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#HARD-048"
+  source_versions:
+    CR: "2026-09-25"
+    MTR: "2026-02-27"
+    IPG: "2024-09-23"
+    JAR: "2024-09-23"
+    MTRA: "Current page retrieved 2026-09-27; page lists latest update 2025-06-24"
+    Oracle: "Scryfall mirror retrieved 2026-09-27"
+  oracle_snapshots:
+    Mystic Remora: "Mystic Remora\n{U} · Enchantment\nCumulative upkeep {1} (At the beginning of your upkeep, put an age counter on this permanent, then sacrifice it unless you pay its upkeep cost for each age counter on it.)\nWhenever an opponent casts a noncreature spell, you may draw a card unless that player pays {4}."
+  cr_reference_existence_checked: true
+  not_executable_engine_test: "This is a candidate evaluation record, not an implementation of CR execution."

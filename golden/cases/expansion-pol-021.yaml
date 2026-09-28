@@ -1,0 +1,75 @@
+# Imported from judge-lab-architecture-testset.json by golden/tools/import-judge-lab-bundle.mjs. Edit the source record, not this file.
+id: "expansion-pol-021"
+title: "One card remains in the deck box"
+family: "Deck-problem upgrades"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-28"
+  note: "Owner stated on 2026-09-28 that he verified all 207 scenarios and asked to include them as verified. Status in the bundle record: outcome DRAFT FOR OWNER REVIEW, sources SOURCE CHECK REQUIRED."
+set: "dev"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "Legacy"
+  rel: "Competitive"
+  framework: null
+  inGame: null
+input:
+  raw:
+    - seat: "P1"
+      text: "Competitive REL Legacy, game one. Alice presents 59 cards although her correct list has 60; the missing card is in her deck box, not an opponent's deck. Bob notices during pregame shuffling. What upgrade applies?"
+  cards:
+    - "Brainstorm"
+  assumptions:
+    - "Apply only the expressly stated REL and event policy."
+    - "Do not infer intent from an error."
+expect:
+  kind: "dispute"
+  disposition: "RESOLVED"
+  answer: "Deck Problem is upgraded to a Game Loss."
+  propositions:
+    - "Before sideboarding, a presented deck with fewer cards than registered satisfies the specific upgrade condition."
+    - "Correct the deck as directed by the remedy."
+  chain:
+    - sources:
+        - "IPG:3.5 — Upgrade, pregame presentation"
+        - "Oracle:Brainstorm"
+      propositions: []
+      consequence: "Deck Problem is upgraded to a Game Loss."
+  requiredCitations:
+    - "IPG:3.5 — Upgrade, pregame presentation"
+    - "Oracle:Brainstorm"
+  requiredQuestions: []
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+    - "reveal-integrity-suspicion"
+  escalate: false
+provenance:
+  sourceQuestionId: "POL-021"
+  scenarioFile: "expansion-pol-021-short-deck-caught-at-presentation.md"
+  bucket: "Policy"
+  pilot: false
+  originalSetting: "Legacy"
+  bundle: "Judge Lab — architecture phase testset"
+  bundleSchema: "judge-lab-testset-bundle/1.0"
+  references:
+    - label: "IPG 3.5 — Upgrade, pregame presentation"
+      url: "https://media.wizards.com/ContentResources/WPN/MTG_IPG_2024Sep23_EN.pdf"
+  origin: "Original Judge Lab expansion"
+  created_at: "2026-09-27"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#POL-021"
+  source_versions:
+    CR: "2026-09-25"
+    MTR: "2026-02-27"
+    IPG: "2024-09-23"
+    JAR: "2024-09-23"
+    MTRA: "Current page retrieved 2026-09-27; page lists latest update 2025-06-24"
+    Oracle: "Scryfall mirror retrieved 2026-09-27"
+  oracle_snapshots:
+    Brainstorm: "Brainstorm\n{U} · Instant\nDraw three cards, then put two cards from your hand on top of your library in any order."
+  cr_reference_existence_checked: true
+  not_executable_engine_test: "This is a candidate evaluation record, not an implementation of CR execution."

@@ -39,6 +39,7 @@ The architect role may only add open questions to the PRD; it doesn't change req
 | Major infractions (OQ-7 partly) | How does the bot hand off, e.g. for cheating? | **Like a floor judge to the head judge:** "we are mostly here to help, not dish out punishment, but we do want to detect punishable situations and in comp REL inform a human judge." All major infractions go to a human judge (2026-09-27). Threshold **more severe than a Warning**, confirmed by the owner (2026-09-27), including MTRA Turn Skips such as Slow Play and Unsporting Conduct — Minor. | ADR-0021; PRD OQ-36 |
 | Neutral integrity question | When to ask "was anything discussed or agreed?" | **Only when something else looks off** (2026-09-27). | ADR-0021 §6; scn-002a..d |
 | SCN-002 b, c | Incentive → escalate; own-turn concession → no drop | **Both right** (2026-09-27). | scn-002b, scn-002c |
+| Judge Lab bundle | Add `judge-lab-architecture-testset.json` (207 expansion scenarios) as verified? | **Yes, include as verified** (2026-09-28). The bundle's own records said draft/SOURCE CHECK REQUIRED; the owner's statement overrides, and the file status is kept in each case note. | golden/cases/expansion-*.yaml; golden/tools/import-judge-lab-bundle.mjs |
 | Speech-to-text | Use the owner's ChatGPT subscription? | The owner has a ChatGPT subscription only, with **no OpenAI API access**. Voice transcription is **local-only** in the MVP. | ADR-0015; SPIKES S1 |
 
 ## Process decisions (2026-09-26)

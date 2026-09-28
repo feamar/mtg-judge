@@ -1,0 +1,79 @@
+# Imported from judge-lab-architecture-testset.json by golden/tools/import-judge-lab-bundle.mjs. Edit the source record, not this file.
+id: "expansion-pol-008"
+title: "Swords went to the wrong zone"
+family: "Shared responsibility"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-28"
+  note: "Owner stated on 2026-09-28 that he verified all 207 scenarios and asked to include them as verified. Status in the bundle record: outcome DRAFT FOR OWNER REVIEW, sources SOURCE CHECK REQUIRED."
+set: "dev"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "Legacy"
+  rel: "Competitive"
+  framework: null
+  inGame: null
+input:
+  raw:
+    - seat: "P1"
+      text: "Competitive REL Legacy. Bob resolves Swords on Alice's Murktide, but Alice puts it into her graveyard. Both players continue. The exact card is still publicly identifiable and moving it to exile causes only minor disruption. What remedy and responsibility apply?"
+  cards:
+    - "Swords to Plowshares"
+    - "Murktide Regent"
+  assumptions:
+    - "Apply only the expressly stated REL and event policy."
+    - "Do not infer intent from an error."
+expect:
+  kind: "dispute"
+  disposition: "RESOLVED"
+  answer: "Move Murktide to exile. Both players receive GRV Warnings on these facts."
+  propositions:
+    - "The wrong-zone partial fix applies to the identifiable object."
+    - "Bob controlled the effect and Alice followed its instruction incorrectly; the IPG's shared-responsibility provision applies after play continued."
+  chain:
+    - sources:
+        - "IPG:2.5 — Additional Remedy, wrong zone and shared responsibility"
+        - "Oracle:Swords to Plowshares"
+        - "Oracle:Murktide Regent"
+      propositions: []
+      consequence: "Move Murktide to exile. Both players receive GRV Warnings on these facts."
+  requiredCitations:
+    - "IPG:2.5 — Additional Remedy, wrong zone and shared responsibility"
+    - "Oracle:Swords to Plowshares"
+    - "Oracle:Murktide Regent"
+  requiredQuestions: []
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+    - "reveal-integrity-suspicion"
+  escalate: false
+provenance:
+  sourceQuestionId: "POL-008"
+  scenarioFile: "expansion-pol-008-swords-went-to-the-wrong-zone.md"
+  bucket: "Policy"
+  pilot: false
+  originalSetting: "Legacy"
+  bundle: "Judge Lab — architecture phase testset"
+  bundleSchema: "judge-lab-testset-bundle/1.0"
+  references:
+    - label: "IPG 2.5 — Additional Remedy, wrong zone and shared responsibility"
+      url: "https://media.wizards.com/ContentResources/WPN/MTG_IPG_2024Sep23_EN.pdf"
+  origin: "Original Judge Lab expansion"
+  created_at: "2026-09-27"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#POL-008"
+  source_versions:
+    CR: "2026-09-25"
+    MTR: "2026-02-27"
+    IPG: "2024-09-23"
+    JAR: "2024-09-23"
+    MTRA: "Current page retrieved 2026-09-27; page lists latest update 2025-06-24"
+    Oracle: "Scryfall mirror retrieved 2026-09-27"
+  oracle_snapshots:
+    Swords to Plowshares: "Swords to Plowshares\n{W} · Instant\nExile target creature. Its controller gains life equal to its power."
+    Murktide Regent: "Murktide Regent\n{5}{U}{U} · Creature — Dragon\nDelve (Each card you exile from your graveyard while casting this spell pays for {1}.)\nFlying\nThis creature enters with a +1/+1 counter on it for each instant and sorcery card exiled with it.\nWhenever an instant or sorcery card leaves your graveyard, put a +1/+1 counter on this creature.\n3/3"
+  cr_reference_existence_checked: true
+  not_executable_engine_test: "This is a candidate evaluation record, not an implementation of CR execution."

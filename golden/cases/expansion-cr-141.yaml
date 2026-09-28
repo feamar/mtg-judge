@@ -1,0 +1,83 @@
+# Imported from judge-lab-architecture-testset.json by golden/tools/import-judge-lab-bundle.mjs. Edit the source record, not this file.
+id: "expansion-cr-141"
+title: "Uro without escape"
+family: "Trigger ordering"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-28"
+  note: "Owner stated on 2026-09-28 that he verified all 207 scenarios and asked to include them as verified. Status in the bundle record: outcome DRAFT FOR OWNER REVIEW, sources SOURCE CHECK REQUIRED."
+set: "dev"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "Legacy"
+  rel: "not-material"
+  framework: null
+  inGame: null
+input:
+  raw:
+    - seat: "P1"
+      text: "Alice puts Uro onto the battlefield using Aether Vial. Its two enters abilities trigger. May she order the life/draw/land trigger above the sacrifice trigger?"
+  cards:
+    - "Uro, Titan of Nature's Wrath"
+    - "Aether Vial"
+  assumptions:
+    - "No unmentioned effects change the stated interaction."
+    - "The stated resolutions occur only after the required priority passes."
+expect:
+  kind: "rules-question"
+  disposition: "RESOLVED"
+  answer: "Yes."
+  propositions:
+    - "Both triggers are controlled by Alice and are put onto the stack together."
+    - "She chooses their relative order; putting Uro in with Vial did not make it escape."
+  chain:
+    - sources:
+        - "CR:603.3b"
+        - "CR:702.138a"
+        - "Oracle:Uro, Titan of Nature's Wrath"
+        - "Oracle:Aether Vial"
+      propositions: []
+      consequence: "Yes."
+  requiredCitations:
+    - "CR:603.3b"
+    - "CR:702.138a"
+    - "Oracle:Uro, Titan of Nature's Wrath"
+    - "Oracle:Aether Vial"
+  requiredQuestions: []
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+    - "reveal-integrity-suspicion"
+  escalate: false
+provenance:
+  sourceQuestionId: "CR-141"
+  scenarioFile: "expansion-cr-141-uro-without-escape.md"
+  bucket: "Base CR"
+  pilot: false
+  originalSetting: "Legacy"
+  bundle: "Judge Lab — architecture phase testset"
+  bundleSchema: "judge-lab-testset-bundle/1.0"
+  references:
+    - label: "CR 603.3b"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 702.138a"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+  origin: "Original Judge Lab expansion"
+  created_at: "2026-09-27"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#CR-141"
+  source_versions:
+    CR: "2026-09-25"
+    MTR: "2026-02-27"
+    IPG: "2024-09-23"
+    JAR: "2024-09-23"
+    MTRA: "Current page retrieved 2026-09-27; page lists latest update 2025-06-24"
+    Oracle: "Scryfall mirror retrieved 2026-09-27"
+  oracle_snapshots:
+    Uro, Titan of Nature's Wrath: "Uro, Titan of Nature's Wrath\n{1}{G}{U} · Legendary Creature — Elder Giant\nWhen Uro enters, sacrifice it unless it escaped.\nWhenever Uro enters or attacks, you gain 3 life and draw a card, then you may put a land card from your hand onto the battlefield.\nEscape—{G}{G}{U}{U}, Exile five other cards from your graveyard. (You may cast this card from your graveyard for its escape cost.)\n6/6"
+    Aether Vial: "Aether Vial\n{1} · Artifact\nAt the beginning of your upkeep, you may put a charge counter on this artifact.\n{T}: You may put a creature card with mana value equal to the number of charge counters on this artifact from your hand onto the battlefield."
+  cr_reference_existence_checked: true
+  not_executable_engine_test: "This is a candidate evaluation record, not an implementation of CR execution."

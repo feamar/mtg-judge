@@ -1,0 +1,87 @@
+# Imported from judge-lab-architecture-testset.json by golden/tools/import-judge-lab-bundle.mjs. Edit the source record, not this file.
+id: "expansion-cr-138"
+title: "Sneak Attack and Karakas"
+family: "Delayed triggers"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-28"
+  note: "Owner stated on 2026-09-28 that he verified all 207 scenarios and asked to include them as verified. Status in the bundle record: outcome DRAFT FOR OWNER REVIEW, sources SOURCE CHECK REQUIRED."
+set: "dev"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "Legacy"
+  rel: "not-material"
+  framework: null
+  inGame: null
+input:
+  raw:
+    - seat: "P1"
+      text: "Alice puts Emrakul in with Sneak Attack. Before the end step Bob returns it to Alice's hand with Karakas. Does the delayed trigger make Alice sacrifice a different creature?"
+  cards:
+    - "Sneak Attack"
+    - "Karakas"
+    - "Emrakul, the Aeons Torn"
+  assumptions:
+    - "No unmentioned effects change the stated interaction."
+    - "The stated resolutions occur only after the required priority passes."
+expect:
+  kind: "rules-question"
+  disposition: "RESOLVED"
+  answer: "No."
+  propositions:
+    - "The delayed trigger refers only to that particular object."
+    - "It cannot sacrifice a replacement creature or reach the card in hand."
+  chain:
+    - sources:
+        - "CR:603.7c"
+        - "CR:400.7"
+        - "Oracle:Sneak Attack"
+        - "Oracle:Karakas"
+        - "Oracle:Emrakul, the Aeons Torn"
+      propositions: []
+      consequence: "No."
+  requiredCitations:
+    - "CR:603.7c"
+    - "CR:400.7"
+    - "Oracle:Sneak Attack"
+    - "Oracle:Karakas"
+    - "Oracle:Emrakul, the Aeons Torn"
+  requiredQuestions: []
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+    - "reveal-integrity-suspicion"
+  escalate: false
+provenance:
+  sourceQuestionId: "CR-138"
+  scenarioFile: "expansion-cr-138-sneak-attack-and-karakas.md"
+  bucket: "Base CR"
+  pilot: false
+  originalSetting: "Legacy"
+  bundle: "Judge Lab — architecture phase testset"
+  bundleSchema: "judge-lab-testset-bundle/1.0"
+  references:
+    - label: "CR 603.7c"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 400.7"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+  origin: "Original Judge Lab expansion"
+  created_at: "2026-09-27"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#CR-138"
+  source_versions:
+    CR: "2026-09-25"
+    MTR: "2026-02-27"
+    IPG: "2024-09-23"
+    JAR: "2024-09-23"
+    MTRA: "Current page retrieved 2026-09-27; page lists latest update 2025-06-24"
+    Oracle: "Scryfall mirror retrieved 2026-09-27"
+  oracle_snapshots:
+    Sneak Attack: "Sneak Attack\n{3}{R} · Enchantment\n{R}: You may put a creature card from your hand onto the battlefield. That creature gains haste. Sacrifice the creature at the beginning of the next end step."
+    Karakas: "Karakas\nLegendary Land\n{T}: Add {W}.\n{T}: Return target legendary creature to its owner's hand."
+    Emrakul, the Aeons Torn: "Emrakul, the Aeons Torn\n{15} · Legendary Creature — Eldrazi\nThis spell can't be countered.\nWhen you cast this spell, take an extra turn after this one.\nFlying, protection from spells that are one or more colors, annihilator 6\nWhen Emrakul is put into a graveyard from anywhere, its owner shuffles their graveyard into their library.\n15/15"
+  cr_reference_existence_checked: true
+  not_executable_engine_test: "This is a candidate evaluation record, not an implementation of CR execution."

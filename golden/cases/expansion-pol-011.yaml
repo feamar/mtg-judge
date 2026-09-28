@@ -1,0 +1,140 @@
+# Imported from judge-lab-architecture-testset.json by golden/tools/import-judge-lab-bundle.mjs. Edit the source record, not this file.
+id: "expansion-pol-011"
+title: "Ignoring an opponent's beneficial trigger"
+family: "Opponent obligations"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-28"
+  note: "Owner stated on 2026-09-28 that he verified all 207 scenarios and asked to include them as verified. Status in the bundle record: outcome DRAFT FOR OWNER REVIEW, sources SOURCE CHECK REQUIRED."
+set: "dev"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "any"
+  rel: "Competitive"
+  framework: null
+  inGame: null
+input:
+  raw:
+    - seat: "P1"
+      text: "Competitive REL in a two-player game. Alice notices Bob forgot a Rhystic Study trigger but does not remind him. Alice did not rush or mislead him. Has she committed Failure to Maintain Game State merely by remaining silent?"
+  cards:
+    - "Rhystic Study"
+  assumptions:
+    - "The app is first contact; no human investigation or innocence finding is supplied."
+    - "Default TO mode presumes good faith for ordinary errors; optional table confirmation records information, not a verdict."
+    - "Permitted non-reminding of an opponent’s trigger needs no integrity assessment."
+    - "Strong indicators require protected human review regardless of the setting or table support."
+    - "Factual gaps, full backups and requests for human review remain distinct from integrity escalation."
+  entryContext:
+    first_contact: "app"
+    human_investigation_completed: false
+    intent_status: "not adjudicated; configurable working presumption"
+  eventIntegritySetting: "presume_good_faith"
+  availableIntegritySettings:
+    - "presume_good_faith"
+    - "request_table_confirmation"
+expect:
+  kind: "dispute"
+  disposition: "RESOLVED"
+  answer: "No infraction: not reminding an opponent about their triggered ability is neither Failure to Maintain Game State nor Cheating. No integrity confirmation is required."
+  propositions:
+    - "This permitted omission remains permitted under both TO settings."
+    - "Different misconduct must be assessed as different conduct."
+    - "No presumption of innocence or table confirmation is needed to answer this question."
+  chain:
+    - sources:
+        - "IPG:2.1 — Philosophy"
+        - "IPG:2.6 — Definition, opponent triggers"
+      propositions: []
+      consequence: "Apply the referenced ordinary rule/penalty where the factual conditions hold; preserve any actual human-only determination."
+    - sources:
+        - "Project REQUIREMENTS.md 15.20; owner instruction 2026-09-27"
+      propositions: []
+      consequence:
+        category: "PERMITTED_OR_NOT_RELEVANT"
+        ordinary_ruling: "No infraction: not reminding an opponent about their triggered ability is neither Failure to Maintain Game State nor Cheating. No integrity confirmation is required."
+        invariant: "This permitted omission remains permitted under both TO settings. Different misconduct must be assessed as different conduct."
+        facts_missing: false
+        human_review_requested: false
+        integrity_effect: "None for the conduct in this question."
+        strong_indicator: null
+        table_confirmation_subject: "Not applicable."
+        default_mode: "presume_good_faith"
+  requiredCitations:
+    - "IPG:2.1 — Philosophy"
+    - "IPG:2.6 — Definition, opponent triggers"
+  requiredQuestions: []
+  handoff:
+    required: false
+    reason: null
+    player_message: "Please pause the game and call a human Judge. Keep the current game state unchanged until they arrive."
+    guilt_finding: false
+    strong_indicators_override_table: true
+    conditional_triggers:
+      - "Concrete strong indicators of intentional wrongdoing"
+      - "Required full backup"
+      - "Requested human review or necessary out-of-scope factual assessment"
+    do_not_trigger_on:
+      - "Ordinary error alone"
+      - "Detrimental trigger alone"
+      - "Repetition alone"
+      - "Opponent-trigger non-reminder"
+      - "Missing/refused peer confirmation"
+    protected_reason: null
+    objective_facts_for_human: []
+  integrityPolicy:
+    category: "PERMITTED_OR_NOT_RELEVANT"
+    ordinary_ruling: "No infraction: not reminding an opponent about their triggered ability is neither Failure to Maintain Game State nor Cheating. No integrity confirmation is required."
+    invariant: "This permitted omission remains permitted under both TO settings. Different misconduct must be assessed as different conduct."
+    facts_missing: false
+    human_review_requested: false
+    integrity_effect: "None for the conduct in this question."
+    strong_indicator: null
+    table_confirmation_subject: "Not applicable."
+    default_mode: "presume_good_faith"
+  stageExpectations:
+    - mode: "presume_good_faith"
+      integrity_category: "PERMITTED_OR_NOT_RELEVANT"
+      default_disposition: "RESOLVED"
+      rule_response: "No infraction: not reminding an opponent about their triggered ability is neither Failure to Maintain Game State nor Cheating. No integrity confirmation is required."
+    - mode: "request_table_confirmation"
+      integrity_category: "PERMITTED_OR_NOT_RELEVANT"
+      table_input: "optional information for ordinary errors only"
+      strong_override: false
+      same_ordinary_rule_response: true
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+    - "reveal-integrity-suspicion"
+  escalate: false
+provenance:
+  sourceQuestionId: "POL-011"
+  scenarioFile: "expansion-pol-011-ignoring-an-opponent-s-beneficial-trigger.md"
+  bucket: "Policy"
+  pilot: false
+  originalSetting: "General"
+  bundle: "Judge Lab — architecture phase testset"
+  bundleSchema: "judge-lab-testset-bundle/1.0"
+  references:
+    - label: "IPG 2.1 — Philosophy"
+      url: "https://media.wizards.com/ContentResources/WPN/MTG_IPG_2024Sep23_EN.pdf"
+    - label: "IPG 2.6 — Definition, opponent triggers"
+      url: "https://media.wizards.com/ContentResources/WPN/MTG_IPG_2024Sep23_EN.pdf"
+  origin: "Original Judge Lab expansion"
+  created_at: "2026-09-27"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#POL-011"
+  source_versions:
+    CR: "2026-09-25"
+    MTR: "2026-02-27"
+    IPG: "2024-09-23"
+    JAR: "2024-09-23"
+    MTRA: "Current page retrieved 2026-09-27; page lists latest update 2025-06-24"
+    Oracle: "Scryfall mirror retrieved 2026-09-27"
+  oracle_snapshots:
+    Rhystic Study: "Rhystic Study\n{2}{U} · Enchantment\nWhenever an opponent casts a spell, you may draw a card unless that player pays {1}."
+  cr_reference_existence_checked: true
+  not_executable_engine_test: "This is a candidate evaluation record, not an implementation of CR execution."

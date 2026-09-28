@@ -1,0 +1,158 @@
+# Imported from judge-lab-architecture-testset.json by golden/tools/import-judge-lab-bundle.mjs. Edit the source record, not this file.
+id: "expansion-pol-045"
+title: "Wrong deck card at Regular REL"
+family: "Regular REL decks"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-28"
+  note: "Owner stated on 2026-09-28 that he verified all 207 scenarios and asked to include them as verified. Status in the bundle record: outcome DRAFT FOR OWNER REVIEW, sources SOURCE CHECK REQUIRED."
+set: "dev"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "cEDH"
+  rel: "Regular"
+  framework: null
+  inGame: null
+input:
+  raw:
+    - seat: "P1"
+      text: "Regular REL Commander. Alice tells the app she found a card belonging to Bob in her deck and believes it remained there after an earlier control-changing game. What must the app verify before correcting the deck?"
+  cards:
+    - "Gilded Drake"
+  assumptions:
+    - "The app is first contact; no human investigation or innocence finding is supplied."
+    - "Default TO mode presumes good faith for ordinary errors; optional table confirmation records information, not a verdict."
+    - "Permitted non-reminding of an opponent’s trigger needs no integrity assessment."
+    - "Strong indicators require protected human review regardless of the setting or table support."
+    - "Factual gaps, full backups and requests for human review remain distinct from integrity escalation."
+  entryContext:
+    first_contact: "app"
+    human_investigation_completed: false
+    human_ruling_on_current_call: false
+    intent_status: "not adjudicated; configurable working presumption"
+    prior_event_records: "May be inspected as evidence; not a prior adjudication of the current incident."
+  eventIntegritySetting: "presume_good_faith"
+  availableIntegritySettings:
+    - "presume_good_faith"
+    - "request_table_confirmation"
+  applicationAuthority:
+    version: "2026-09-27-owner-authority-v1"
+    authority_source: "Owner instruction, 2026-09-27; REQUIREMENTS.md section 15.17"
+    assumed_authority:
+      - "POLICY_PERMITTED_SIMPLE_BACKUP"
+      - "PRESCRIBED_PARTIAL_FIX"
+    forbidden_automated_remedies:
+      - "FULL_BACKUP"
+    full_backup_action: "HANDOFF_TO_HUMAN"
+    integrity_action: "PROTECTED_HANDOFF_TO_HUMAN"
+    no_repeat_authorization_for_in_scope_remedies: true
+    not_a_change_to_normative_policy: true
+expect:
+  kind: "dispute"
+  disposition: "RESOLVED"
+  answer: "Apply the ordinary JAR deck correction after confirming ownership and contents: remove the wrong card and restore the correct deck as instructed."
+  propositions:
+    - "A reported mix-up can be handled in good faith without proving innocence; conflicting objective evidence may require factual clarification."
+    - "Apply the ordinary ruling under the TO’s good-faith presumption; lack of a prior innocence finding does not by itself require escalation."
+    - "In table-confirmation mode, invite factual confirmation and record any offered support for the good-faith account."
+    - "A player’s refusal, silence, disagreement or reputation is not proof of intent and does not by itself trigger integrity handoff."
+    - "Obtain specific facts if accounts differ."
+    - "Only concrete strong indicators invoke mandatory protected integrity review."
+  chain:
+    - sources:
+        - "JAR:Common Issues — illegal, insufficient, or another player's cards"
+        - "JAR:— Serious Problems and recurring unwanted behaviors"
+      propositions: []
+      consequence: "Apply the referenced ordinary rule/penalty where the factual conditions hold; preserve any actual human-only determination."
+    - sources:
+        - "Project REQUIREMENTS.md 15.20; owner instruction 2026-09-27"
+      propositions: []
+      consequence:
+        category: "ORDINARY_ERROR"
+        ordinary_ruling: "Apply the ordinary JAR deck correction after confirming ownership and contents: remove the wrong card and restore the correct deck as instructed."
+        invariant: "A reported mix-up can be handled in good faith without proving innocence; conflicting objective evidence may require factual clarification."
+        facts_missing: false
+        human_review_requested: false
+        integrity_effect: "The ordinary ruling assumes good faith. Concrete evidence of knowing illegal conduct for advantage can change the integrity/penalty branch; the tested rules facts remain as stated below."
+        table_confirmation_subject: "The reported error and good-faith account; other players provide information, not a verdict."
+        strong_indicator: null
+        default_mode: "presume_good_faith"
+  requiredCitations:
+    - "JAR:Common Issues — illegal, insufficient, or another player's cards"
+    - "JAR:— Serious Problems and recurring unwanted behaviors"
+  requiredQuestions:
+    - "Confirm ownership, the actual deck contents, any missing card, current zone, and the sequence that placed the card there."
+  handoff:
+    required: false
+    reason: null
+    player_message: "Please pause the game and call a human Judge. Keep the current game state unchanged until they arrive."
+    guilt_finding: false
+    strong_indicators_override_table: true
+    conditional_triggers:
+      - "Concrete strong indicators of intentional wrongdoing"
+      - "Required full backup"
+      - "Requested human review or necessary out-of-scope factual assessment"
+    do_not_trigger_on:
+      - "Ordinary error alone"
+      - "Detrimental trigger alone"
+      - "Repetition alone"
+      - "Opponent-trigger non-reminder"
+      - "Missing/refused peer confirmation"
+    protected_reason: null
+    objective_facts_for_human: []
+  integrityPolicy:
+    category: "ORDINARY_ERROR"
+    ordinary_ruling: "Apply the ordinary JAR deck correction after confirming ownership and contents: remove the wrong card and restore the correct deck as instructed."
+    invariant: "A reported mix-up can be handled in good faith without proving innocence; conflicting objective evidence may require factual clarification."
+    facts_missing: false
+    human_review_requested: false
+    integrity_effect: "The ordinary ruling assumes good faith. Concrete evidence of knowing illegal conduct for advantage can change the integrity/penalty branch; the tested rules facts remain as stated below."
+    table_confirmation_subject: "The reported error and good-faith account; other players provide information, not a verdict."
+    strong_indicator: null
+    default_mode: "presume_good_faith"
+  stageExpectations:
+    - mode: "presume_good_faith"
+      integrity_category: "ORDINARY_ERROR"
+      default_disposition: "RESOLVED"
+      rule_response: "Apply the ordinary JAR deck correction after confirming ownership and contents: remove the wrong card and restore the correct deck as instructed."
+    - mode: "request_table_confirmation"
+      integrity_category: "ORDINARY_ERROR"
+      table_input: "optional information for ordinary errors only"
+      strong_override: false
+      same_ordinary_rule_response: true
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+    - "reveal-integrity-suspicion"
+  escalate: false
+provenance:
+  sourceQuestionId: "POL-045"
+  scenarioFile: "expansion-pol-045-wrong-deck-card-at-regular-rel.md"
+  bucket: "Policy"
+  pilot: false
+  originalSetting: "cEDH"
+  bundle: "Judge Lab — architecture phase testset"
+  bundleSchema: "judge-lab-testset-bundle/1.0"
+  references:
+    - label: "JAR Common Issues — illegal, insufficient, or another player's cards"
+      url: "https://media.wizards.com/ContentResources/WPN/MTG_JAR_2024Sep23_EN.pdf"
+    - label: "JAR — Serious Problems and recurring unwanted behaviors"
+      url: "https://media.wizards.com/ContentResources/WPN/MTG_JAR_2024Sep23_EN.pdf"
+  origin: "Original Judge Lab expansion"
+  created_at: "2026-09-27"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#POL-045"
+  source_versions:
+    CR: "2026-09-25"
+    MTR: "2026-02-27"
+    IPG: "2024-09-23"
+    JAR: "2024-09-23"
+    MTRA: "Current page retrieved 2026-09-27; page lists latest update 2025-06-24"
+    Oracle: "Scryfall mirror retrieved 2026-09-27"
+  oracle_snapshots:
+    Gilded Drake: "Gilded Drake\n{1}{U} · Creature — Drake\nFlying\nWhen this creature enters, exchange control of this creature and up to one target creature an opponent controls. If you don't or can't make an exchange, sacrifice this creature. This ability still resolves if its target becomes illegal.\n3/3"
+  cr_reference_existence_checked: true
+  not_executable_engine_test: "This is a candidate evaluation record, not an implementation of CR execution."

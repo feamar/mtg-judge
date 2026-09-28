@@ -1,0 +1,79 @@
+# Imported from judge-lab-architecture-testset.json by golden/tools/import-judge-lab-bundle.mjs. Edit the source record, not this file.
+id: "expansion-pol-039"
+title: "Shortcut interrupted at an iteration"
+family: "Loop shortcuts"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-28"
+  note: "Owner stated on 2026-09-28 that he verified all 207 scenarios and asked to include them as verified. Status in the bundle record: outcome DRAFT FOR OWNER REVIEW, sources SOURCE CHECK REQUIRED."
+set: "dev"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "cEDH"
+  rel: "Competitive"
+  framework: null
+  inGame: null
+input:
+  raw:
+    - seat: "P1"
+      text: "A Competitive REL Commander event uses MTR 4.4 for loops. Alice demonstrates a deterministic loop and proposes 100 iterations. Bob specifies an interruption after iteration 4 at a point where he receives priority. Must he allow all 100?"
+  cards:
+    - "Basalt Monolith"
+    - "Kinnan, Bonder Prodigy"
+  assumptions:
+    - "Apply only the expressly stated REL and event policy."
+    - "Do not infer intent from an error."
+expect:
+  kind: "dispute"
+  disposition: "RESOLVED"
+  answer: "No. The shortcut advances only to the earliest specified legal interruption."
+  propositions:
+    - "A loop proposal does not remove opponents' right to act at a defined priority point."
+    - "The exact repeatable sequence and stopping point must be clear."
+  chain:
+    - sources:
+        - "MTR:4.4 — Loops, iteration counts and intervention"
+        - "Oracle:Basalt Monolith"
+        - "Oracle:Kinnan, Bonder Prodigy"
+      propositions: []
+      consequence: "No. The shortcut advances only to the earliest specified legal interruption."
+  requiredCitations:
+    - "MTR:4.4 — Loops, iteration counts and intervention"
+    - "Oracle:Basalt Monolith"
+    - "Oracle:Kinnan, Bonder Prodigy"
+  requiredQuestions: []
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+    - "reveal-integrity-suspicion"
+  escalate: false
+provenance:
+  sourceQuestionId: "POL-039"
+  scenarioFile: "expansion-pol-039-shortcut-interrupted-at-an-iteration.md"
+  bucket: "Policy"
+  pilot: false
+  originalSetting: "cEDH"
+  bundle: "Judge Lab — architecture phase testset"
+  bundleSchema: "judge-lab-testset-bundle/1.0"
+  references:
+    - label: "MTR 4.4 — Loops, iteration counts and intervention"
+      url: "https://media.wizards.com/ContentResources/WPN/MTG_MTR_2026_Feb27_EN.pdf"
+  origin: "Original Judge Lab expansion"
+  created_at: "2026-09-27"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#POL-039"
+  source_versions:
+    CR: "2026-09-25"
+    MTR: "2026-02-27"
+    IPG: "2024-09-23"
+    JAR: "2024-09-23"
+    MTRA: "Current page retrieved 2026-09-27; page lists latest update 2025-06-24"
+    Oracle: "Scryfall mirror retrieved 2026-09-27"
+  oracle_snapshots:
+    Basalt Monolith: "Basalt Monolith\n{3} · Artifact\nThis artifact doesn't untap during your untap step.\n{T}: Add {C}{C}{C}.\n{3}: Untap this artifact."
+    Kinnan, Bonder Prodigy: "Kinnan, Bonder Prodigy\n{G}{U} · Legendary Creature — Human Druid\nWhenever you tap a nonland permanent for mana, add one mana of any type that permanent produced.\n{5}{G}{U}: Look at the top five cards of your library. You may put a non-Human creature card from among them onto the battlefield. Put the rest on the bottom of your library in a random order.\n2/2"
+  cr_reference_existence_checked: true
+  not_executable_engine_test: "This is a candidate evaluation record, not an implementation of CR execution."

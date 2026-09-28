@@ -1,0 +1,96 @@
+# Imported from judge-lab-architecture-testset.json by golden/tools/import-judge-lab-bundle.mjs. Edit the source record, not this file.
+id: "expansion-hard-012"
+title: "Karn with Mycosynth Lattice"
+family: "Type changes and restrictions"
+tag: "hard"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-28"
+  note: "Owner stated on 2026-09-28 that he verified all 207 scenarios and asked to include them as verified. Status in the bundle record: outcome DRAFT FOR OWNER REVIEW, sources SOURCE CHECK REQUIRED."
+set: "dev"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "Legacy"
+  rel: "not-material"
+  framework: null
+  inGame: null
+input:
+  raw:
+    - seat: "P1"
+      text: "Alice controls Karn and Mycosynth Lattice. Bob's Ancient Tomb is untapped. May Bob activate it for mana?"
+  cards:
+    - "Karn, the Great Creator"
+    - "Mycosynth Lattice"
+    - "Ancient Tomb"
+  assumptions:
+    - "No unmentioned effects change the stated interaction."
+    - "The stated resolutions occur only after the required priority passes."
+expect:
+  kind: "rules-question"
+  disposition: "RESOLVED"
+  answer: "No."
+  propositions:
+    - "Lattice makes the land an artifact in addition to its other types."
+    - "Karn prohibits activated abilities of artifacts Alice's opponents control, including mana abilities of artifact lands."
+  chain:
+    - sources:
+        - "CR:205.2b"
+        - "CR:613.1d"
+        - "CR:101.2"
+        - "CR:605.1a"
+        - "Oracle:Karn, the Great Creator"
+        - "Oracle:Mycosynth Lattice"
+        - "Oracle:Ancient Tomb"
+      propositions: []
+      consequence: "No."
+  requiredCitations:
+    - "CR:205.2b"
+    - "CR:613.1d"
+    - "CR:101.2"
+    - "CR:605.1a"
+    - "Oracle:Karn, the Great Creator"
+    - "Oracle:Mycosynth Lattice"
+    - "Oracle:Ancient Tomb"
+  requiredQuestions: []
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+    - "reveal-integrity-suspicion"
+  escalate: false
+provenance:
+  sourceQuestionId: "HARD-012"
+  scenarioFile: "expansion-hard-012-karn-with-mycosynth-lattice.md"
+  bucket: "Hard"
+  pilot: false
+  originalSetting: "Legacy"
+  bundle: "Judge Lab — architecture phase testset"
+  bundleSchema: "judge-lab-testset-bundle/1.0"
+  references:
+    - label: "CR 205.2b"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 613.1d"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 101.2"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 605.1a"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+  origin: "Original Judge Lab expansion"
+  created_at: "2026-09-27"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#HARD-012"
+  source_versions:
+    CR: "2026-09-25"
+    MTR: "2026-02-27"
+    IPG: "2024-09-23"
+    JAR: "2024-09-23"
+    MTRA: "Current page retrieved 2026-09-27; page lists latest update 2025-06-24"
+    Oracle: "Scryfall mirror retrieved 2026-09-27"
+  oracle_snapshots:
+    Karn, the Great Creator: "Karn, the Great Creator\n{4} · Legendary Planeswalker — Karn\nActivated abilities of artifacts your opponents control can't be activated.\n+1: Until your next turn, up to one target noncreature artifact becomes an artifact creature with power and toughness each equal to its mana value.\n−2: You may reveal an artifact card you own from outside the game or choose a face-up artifact card you own in exile. Put that card into your hand.\nLoyalty: 5"
+    Mycosynth Lattice: "Mycosynth Lattice\n{6} · Artifact\nAll permanents are artifacts in addition to their other types.\nAll cards that aren't on the battlefield, spells, and permanents are colorless.\nPlayers may spend mana as though it were mana of any color."
+    Ancient Tomb: "Ancient Tomb\nLand\n{T}: Add {C}{C}. This land deals 2 damage to you."
+  cr_reference_existence_checked: true
+  not_executable_engine_test: "This is a candidate evaluation record, not an implementation of CR execution."

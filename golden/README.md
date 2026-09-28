@@ -6,8 +6,8 @@ This set defines what a correct ruling is (PRD §8). Only the product owner can 
 - `scenarios/`: the narrative view of each case (Markdown), with the full source → proposition → consequence chain. `scenarios/INDEX.md` lists them.
 - `concepts/`: concept models, such as priority, that scenarios refer to.
 - `schema/`: the case schema.
-- `import/`: source files imported as-is (lossless), such as `judge-lab-regression-100.jsonl`.
-- `tools/`: deterministic import scripts. `tools/import-judge-lab.mjs` converts Judge Lab JSONL into `cases/` and checks every CR citation against a given CR edition. Re-run it rather than hand-editing imported cases.
+- `import/`: source files imported as-is (lossless), such as `judge-lab-regression-100.jsonl` and `judge-lab-architecture-testset.json` (the latter also holds the bundle's integrity-settings and remedy-authority metadata).
+- `tools/`: deterministic import scripts. `tools/import-judge-lab.mjs` converts Judge Lab JSONL into `cases/` and checks every CR citation against a given CR edition. `tools/import-judge-lab-bundle.mjs` does the same for Judge Lab test bundles (upsert by id). Re-run them rather than hand-editing imported cases.
 
 ## Case format in short
 
@@ -29,7 +29,8 @@ Each case holds:
 
 ## Current state (2026-09-26)
 
-- **141 cases.**
+- **348 cases.**
+    - **207 Judge Lab expansion cases** (`expansion-cr-101..202`, `expansion-pol-001..055`, `expansion-hard-*`), imported on 2026-09-28 from `judge-lab-architecture-testset.json` (bundle schema 1.0). The owner stated he verified all 207, so they are marked **VALIDATED**; the bundle's own records said "draft for owner review, sources SOURCE CHECK REQUIRED", which is kept in each case's note. All their CR citations exist in the CR of 2026-09-25 (checked by the importer). Formats: 106 Legacy (1v1, post-MVP), 93 cEDH, 7 general, 1 multiplayer. Dispositions: 189 resolved, 13 need clarification, 5 hand off to a human. 38 carry integrity-mode expectations. The owner's "Hard" bucket is kept as `tag: hard` (50 cases).
     - **100 Judge Lab regression cases** (`judge-lab-cr-001` … `judge-lab-cr-100`): general Comprehensive Rules questions, imported on 2026-09-26 from the owner's `judge-lab-regression-100.jsonl`. The owner marked all 100 **fully VALIDATED**, including their source mappings (2026-09-26). The file itself recorded 98 as "ruling accepted, sources SOURCE CHECK REQUIRED". Every one of their 231 CR citations exists in the CR of 2026-09-25 (checked by the importer). Format `any`, REL not material; no easy/hard tag yet.
     - The 20 converted scenarios.
     - 10 AI-drafted targeting variants (`tc-01` … `tc-10`, SOURCE CHECK REQUIRED).

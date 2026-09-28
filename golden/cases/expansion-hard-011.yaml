@@ -1,0 +1,88 @@
+# Imported from judge-lab-architecture-testset.json by golden/tools/import-judge-lab-bundle.mjs. Edit the source record, not this file.
+id: "expansion-hard-011"
+title: "An ice counter after the trigger"
+family: "State trigger versus intervening if"
+tag: "hard"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-28"
+  note: "Owner stated on 2026-09-28 that he verified all 207 scenarios and asked to include them as verified. Status in the bundle record: outcome DRAFT FOR OWNER REVIEW, sources SOURCE CHECK REQUIRED."
+set: "dev"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "Legacy"
+  rel: "not-material"
+  framework: null
+  inGame: null
+input:
+  raw:
+    - seat: "P1"
+      text: "Dark Depths has no ice counters and its trigger is on the stack. Rimefeather Owl's activated ability resolves and adds an ice counter to Depths before that trigger resolves. Does the existing trigger now do nothing?"
+  cards:
+    - "Dark Depths"
+    - "Rimefeather Owl"
+  assumptions:
+    - "No unmentioned effects change the stated interaction."
+    - "The stated resolutions occur only after the required priority passes."
+expect:
+  kind: "rules-question"
+  disposition: "RESOLVED"
+  answer: "No. It still instructs its controller to sacrifice Depths and, if sacrificed, create Marit Lage."
+  propositions:
+    - "This trigger has no intervening-if clause."
+    - "Its original trigger condition is not rechecked on resolution; adding an ice counter does not remove the existing ability."
+  chain:
+    - sources:
+        - "CR:603.8"
+        - "CR:603.4"
+        - "CR:608.2c"
+        - "Oracle:Dark Depths"
+        - "Oracle:Rimefeather Owl"
+      propositions: []
+      consequence: "No. It still instructs its controller to sacrifice Depths and, if sacrificed, create Marit Lage."
+  requiredCitations:
+    - "CR:603.8"
+    - "CR:603.4"
+    - "CR:608.2c"
+    - "Oracle:Dark Depths"
+    - "Oracle:Rimefeather Owl"
+  requiredQuestions: []
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+    - "reveal-integrity-suspicion"
+  escalate: false
+provenance:
+  sourceQuestionId: "HARD-011"
+  scenarioFile: "expansion-hard-011-an-ice-counter-after-the-trigger.md"
+  bucket: "Hard"
+  pilot: false
+  originalSetting: "Legacy"
+  bundle: "Judge Lab — architecture phase testset"
+  bundleSchema: "judge-lab-testset-bundle/1.0"
+  references:
+    - label: "CR 603.8"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 603.4"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 608.2c"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+  origin: "Original Judge Lab expansion"
+  created_at: "2026-09-27"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#HARD-011"
+  source_versions:
+    CR: "2026-09-25"
+    MTR: "2026-02-27"
+    IPG: "2024-09-23"
+    JAR: "2024-09-23"
+    MTRA: "Current page retrieved 2026-09-27; page lists latest update 2025-06-24"
+    Oracle: "Scryfall mirror retrieved 2026-09-27"
+  oracle_snapshots:
+    Dark Depths: "Dark Depths\nLegendary Snow Land\nDark Depths enters with ten ice counters on it.\n{3}: Remove an ice counter from Dark Depths.\nWhen Dark Depths has no ice counters on it, sacrifice it. If you do, create Marit Lage, a legendary 20/20 black Avatar creature token with flying and indestructible."
+    Rimefeather Owl: "Rimefeather Owl\n{5}{U}{U} · Snow Creature — Bird\nFlying\nRimefeather Owl's power and toughness are each equal to the number of snow permanents on the battlefield.\n{1}{S}: Put an ice counter on target permanent.\nPermanents with ice counters on them are snow.\n*/*"
+  cr_reference_existence_checked: true
+  not_executable_engine_test: "This is a candidate evaluation record, not an implementation of CR execution."

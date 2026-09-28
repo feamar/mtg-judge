@@ -1,0 +1,110 @@
+# Imported from judge-lab-architecture-testset.json by golden/tools/import-judge-lab-bundle.mjs. Edit the source record, not this file.
+id: "expansion-cr-202"
+title: "Deflecting Swat with no alternative legal target"
+family: "Retargeting restrictions"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-28"
+  note: "Owner stated on 2026-09-28 that he verified all 207 scenarios and asked to include them as verified. Status in the bundle record: outcome DRAFT FOR OWNER REVIEW, sources SOURCE CHECK REQUIRED."
+set: "dev"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "cEDH"
+  rel: "not-material"
+  framework: null
+  inGame: null
+input:
+  raw:
+    - seat: "P1"
+      text: "In a four-player cEDH game, the stack from bottom to top is: Alice's Vampiric Tutor; Bob's Mental Misstep targeting that Tutor; Carol's Impulse; Dave's Dig Through Time; and Alice's Deflecting Swat targeting Mental Misstep. All spells were legally cast. Bob paid 2 life for Misstep, and Dave used delve for Dig Through Time. There are no other spells or effects changing targets or mana costs. As Swat resolves, can Alice redirect Misstep to itself, Swat, Impulse, or Dig Through Time? What does Misstep target afterward?"
+  cards:
+    - "Deflecting Swat"
+    - "Mental Misstep"
+    - "Vampiric Tutor"
+    - "Impulse"
+    - "Dig Through Time"
+  assumptions:
+    - "No unmentioned effects change the stated interaction."
+    - "The stated resolutions occur only after the required priority passes."
+expect:
+  kind: "rules-question"
+  disposition: "RESOLVED"
+  answer: "Mental Misstep remains targeted at Vampiric Tutor. Deflecting Swat resolves legally, but there is no other legal target to choose for Misstep."
+  propositions:
+    - "Deflecting Swat can target Mental Misstep: Swat's own targeting restriction is simply a spell or ability."
+    - "Changing Misstep's target must still satisfy Misstep's restriction of a spell with mana value 1."
+    - "Impulse has mana value 2, Dig Through Time 8, and Swat 3, so none qualifies."
+    - "Paying life for a Phyrexian symbol or using delve does not change mana value."
+    - "Misstep itself has mana value 1, but a spell on the stack cannot target itself."
+    - "Vampiric Tutor remains the only legal target."
+    - "Swat allows Alice to leave the original target unchanged; she is not required to invent a different target."
+    - "Swat then goes to the graveyard."
+    - "The other spells remain on the stack; Misstep does not resolve as part of Swat's resolution."
+  chain:
+    - sources:
+        - "CR:115.5"
+        - "CR:115.7d"
+        - "CR:202.3"
+        - "CR:202.3g"
+        - "Oracle:Deflecting Swat"
+        - "Oracle:Mental Misstep"
+        - "Oracle:Vampiric Tutor"
+        - "Oracle:Impulse"
+        - "Oracle:Dig Through Time"
+      propositions: []
+      consequence: "Mental Misstep remains targeted at Vampiric Tutor. Deflecting Swat resolves legally, but there is no other legal target to choose for Misstep."
+  requiredCitations:
+    - "CR:115.5"
+    - "CR:115.7d"
+    - "CR:202.3"
+    - "CR:202.3g"
+    - "Oracle:Deflecting Swat"
+    - "Oracle:Mental Misstep"
+    - "Oracle:Vampiric Tutor"
+    - "Oracle:Impulse"
+    - "Oracle:Dig Through Time"
+  requiredQuestions: []
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+    - "reveal-integrity-suspicion"
+  escalate: false
+provenance:
+  sourceQuestionId: "CR-202"
+  scenarioFile: "expansion-cr-202-deflecting-swat-with-no-alternative-legal-target.md"
+  bucket: "Base CR"
+  pilot: false
+  originalSetting: "cEDH"
+  bundle: "Judge Lab — architecture phase testset"
+  bundleSchema: "judge-lab-testset-bundle/1.0"
+  references:
+    - label: "CR 115.5"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 115.7d"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 202.3"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 202.3g"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+  origin: "Original Judge Lab expansion"
+  created_at: "2026-09-27"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#CR-202"
+  source_versions:
+    CR: "2026-09-25"
+    MTR: "2026-02-27"
+    IPG: "2024-09-23"
+    JAR: "2024-09-23"
+    MTRA: "Current page retrieved 2026-09-27; page lists latest update 2025-06-24"
+    Oracle: "Scryfall mirror retrieved 2026-09-27"
+  oracle_snapshots:
+    Deflecting Swat: "Deflecting Swat\n{2}{R} · Instant\nIf you control a commander, you may cast this spell without paying its mana cost.\nYou may choose new targets for target spell or ability."
+    Mental Misstep: "Mental Misstep\nInstant\n({U/P} can be paid with either {U} or 2 life.)\nCounter target spell with mana value 1."
+    Vampiric Tutor: "Vampiric Tutor\nInstant\nSearch your library for a card, then shuffle and put that card on top. You lose 2 life."
+    Impulse: "Impulse\nInstant\nLook at the top four cards of your library. Put one of them into your hand and the rest on the bottom of your library in any order."
+    Dig Through Time: "Dig Through Time\nInstant\nDelve (Each card you exile from your graveyard while casting this spell pays for {1}.)\nLook at the top seven cards of your library. Put two of them into your hand and the rest on the bottom of your library in any order."
+  cr_reference_existence_checked: true
+  not_executable_engine_test: "This is a candidate evaluation record, not an implementation of CR execution."

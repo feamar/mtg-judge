@@ -139,9 +139,11 @@
         "format": {
           "enum": [
             "cEDH",
+            "Legacy",
+            "multiplayer",
             "any"
           ],
-          "description": "'any' = a general rules question not tied to a format."
+          "description": "'any' = a general rules question not tied to a format. Legacy (1v1) is post-MVP; the MVP release gate uses cEDH, multiplayer and any."
         },
         "rel": {
           "enum": [
@@ -163,8 +165,11 @@
           "minimum": 2
         },
         "inGame": {
-          "type": "boolean",
-          "description": "true = minimum in-game explanation depth applies (FR-Q-5)."
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "description": "true = minimum in-game explanation depth applies (FR-Q-5); null = not stated."
         },
         "eventPolicies": {
           "type": "array",
@@ -290,6 +295,18 @@
               }
             }
           }
+        },
+        "entryContext": {
+          "description": "How the case reached the judge (Judge Lab bundle)."
+        },
+        "eventIntegritySetting": {
+          "description": "The TO integrity mode for this case (Judge Lab bundle; see golden/import bundle metadata)."
+        },
+        "availableIntegritySettings": {
+          "description": "Integrity modes the case must be run under (Judge Lab bundle)."
+        },
+        "applicationAuthority": {
+          "description": "Remedies the app may perform itself in this case (Judge Lab bundle)."
         }
       }
     },
@@ -487,6 +504,29 @@
         "staffMessage": {
           "type": "string",
           "description": "Expected judge-only-channel message, e.g. an event-management referral to the TO (ADR-0020)."
+        },
+        "disposition": {
+          "enum": [
+            "RESOLVED",
+            "NEEDS_CLARIFICATION",
+            "HANDOFF_TO_HUMAN"
+          ],
+          "description": "Outcome kind (Judge Lab bundle)."
+        },
+        "playerFacingMessage": {
+          "description": "Exact player-facing message expected, e.g. the neutral handoff message."
+        },
+        "handoff": {
+          "description": "Expected handoff content (Judge Lab bundle; protected, staff-only)."
+        },
+        "integrityPolicy": {
+          "description": "Expected integrity classification (Judge Lab bundle)."
+        },
+        "stageExpectations": {
+          "description": "Expected behaviour per integrity mode and workflow stage (Judge Lab bundle)."
+        },
+        "remedy": {
+          "description": "Expected remedy details (Judge Lab bundle)."
         }
       }
     },

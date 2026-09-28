@@ -1,0 +1,83 @@
+# Imported from judge-lab-architecture-testset.json by golden/tools/import-judge-lab-bundle.mjs. Edit the source record, not this file.
+id: "expansion-cr-150"
+title: "Breach cannot waive escape"
+family: "Alternative costs"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-28"
+  note: "Owner stated on 2026-09-28 that he verified all 207 scenarios and asked to include them as verified. Status in the bundle record: outcome DRAFT FOR OWNER REVIEW, sources SOURCE CHECK REQUIRED."
+set: "dev"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "cEDH"
+  rel: "not-material"
+  framework: null
+  inGame: null
+input:
+  raw:
+    - seat: "P1"
+      text: "Alice wants to escape Force of Will from her graveyard using Breach but pay Force's pitch alternative cost instead of its mana cost. Can she combine them?"
+  cards:
+    - "Underworld Breach"
+    - "Force of Will"
+  assumptions:
+    - "No unmentioned effects change the stated interaction."
+    - "The stated resolutions occur only after the required priority passes."
+expect:
+  kind: "rules-question"
+  disposition: "RESOLVED"
+  answer: "No."
+  propositions:
+    - "Escape is an alternative cost."
+    - "Only one alternative cost may be applied to a spell; the permission from escape requires using its escape cost."
+  chain:
+    - sources:
+        - "CR:118.9a"
+        - "CR:702.138a"
+        - "Oracle:Underworld Breach"
+        - "Oracle:Force of Will"
+      propositions: []
+      consequence: "No."
+  requiredCitations:
+    - "CR:118.9a"
+    - "CR:702.138a"
+    - "Oracle:Underworld Breach"
+    - "Oracle:Force of Will"
+  requiredQuestions: []
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+    - "reveal-integrity-suspicion"
+  escalate: false
+provenance:
+  sourceQuestionId: "CR-150"
+  scenarioFile: "expansion-cr-150-breach-cannot-waive-escape.md"
+  bucket: "Base CR"
+  pilot: false
+  originalSetting: "cEDH"
+  bundle: "Judge Lab — architecture phase testset"
+  bundleSchema: "judge-lab-testset-bundle/1.0"
+  references:
+    - label: "CR 118.9a"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 702.138a"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+  origin: "Original Judge Lab expansion"
+  created_at: "2026-09-27"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#CR-150"
+  source_versions:
+    CR: "2026-09-25"
+    MTR: "2026-02-27"
+    IPG: "2024-09-23"
+    JAR: "2024-09-23"
+    MTRA: "Current page retrieved 2026-09-27; page lists latest update 2025-06-24"
+    Oracle: "Scryfall mirror retrieved 2026-09-27"
+  oracle_snapshots:
+    Underworld Breach: "Underworld Breach\n{1}{R} · Enchantment\nEach nonland card in your graveyard has escape. The escape cost is equal to the card's mana cost plus exile three other cards from your graveyard. (You may cast cards from your graveyard for their escape cost.)\nAt the beginning of the end step, sacrifice this enchantment."
+    Force of Will: "Force of Will\n{3}{U}{U} · Instant\nYou may pay 1 life and exile a blue card from your hand rather than pay this spell's mana cost.\nCounter target spell."
+  cr_reference_existence_checked: true
+  not_executable_engine_test: "This is a candidate evaluation record, not an implementation of CR execution."
