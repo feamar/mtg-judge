@@ -1,6 +1,6 @@
-# AI MTG Judge — PRD v0.2
+# AI MTG Judge — PRD v0.3
 
-Product owner: Frank · Status: Draft for review · Last updated: 2026-09-27 (v0.2: owner answers from the architecture phase, D42–D56)
+Product owner: Frank · Status: Draft for review · Last updated: 2026-09-28 (v0.2: owner answers from the architecture phase, D42–D56; v0.3: integrity and remedy rules, D57–D59)
 
 > **This file is the master copy of the PRD.** It was migrated from the Claude Docs draft on 2026-09-25. Change requirements here, through commits, and never in a copy.
 
@@ -145,7 +145,7 @@ Each requirement has acceptance criteria (AC) written as Given / When / Then. A 
 
 ### 6.1 Event context
 
-- **FR-CTX-1.** A user with the TO role can create an event context with these fields: name, format (MVP: cEDH only), REL (MVP: Competitive only), policy framework (zero or one addendum, which may amend the MTR, the IPG, or both; D42), the judge role, the TO role, the judge-only channel, the player channels, the ticket source (for the Tickets bot in thread mode: the panel channel its ticket threads are opened under, and the bot's user ID; D43), the escalation threshold (default: more severe than a Warning; D56), the event policies (FR-CTX-5), and the language (MVP: English only).
+- **FR-CTX-1.** A user with the TO role can create an event context with these fields: name, format (MVP: cEDH only), REL (MVP: Competitive only), policy framework (zero or one addendum, which may amend the MTR, the IPG, or both; D42), the judge role, the TO role, the judge-only channel, the player channels, the ticket source (for the Tickets bot in thread mode: the panel channel its ticket threads are opened under, and the bot's user ID; D43), the escalation threshold (default: more severe than a Warning; D56), the integrity mode (default: presume good faith; D58), the event policies (FR-CTX-5), and the language (MVP: English only).
     - AC: Given a user who does not have the TO role, when they try to create or edit a context, then the bot refuses.
 - **FR-CTX-2.** Every ruling made in a Discord server follows that server's event context. If a server has no context (during the MVP), the judge only answers rules questions and says that it can't rule on penalties. After the MVP it will assume a 1v1 game context.
 - **FR-CTX-3.** The bot MUST NOT store or compute pairings, standings, points, or timers (NG1).
@@ -213,6 +213,8 @@ Each requirement has acceptance criteria (AC) written as Given / When / Then. A 
     - **Penalty only, no explanation.** When the penalty is harsh and explaining it is likely to escalate the player's reaction. This is rare at Competitive REL.
     - AC: Each golden case that involves a penalty records the expected pattern, and the judge's choice is tested against it.
 - **FR-POL-3.** In the MVP, the judge has no penalty history across the event. Every penalty it issues (Warning or less) is labelled as the **base penalty, assuming no earlier infractions**, and a copy goes to the judge-only channel so human judges can apply any upgrades.
+- **FR-POL-4. Remedy authority.** The judge may itself apply only **simple backups that the policy permits** and **prescribed partial fixes**, without asking for authorisation each time. It MUST NOT execute a **full backup**: every full backup is handed off to a human judge (FR-ESC-1 g, D57).
+    - AC: Given a situation whose remedy is a full backup, when the judge rules, then it hands off without performing any part of the backup.
 
 ### 6.6 Investigation procedures
 
@@ -227,15 +229,27 @@ Each requirement has acceptance criteria (AC) written as Given / When / Then. A 
 - **FR-ESC-1.** The judge escalates when any of these happens:
     - (a) its confidence is below a threshold (OQ-7);
     - (b) the case falls in a category marked as always escalate (OQ-7);
-    - (c) a player contests the ruling;
+    - (c) a player contests the ruling, or asks for a human judge. That handoff happens regardless of any integrity assessment or setting (D59);
     - (d) it suspects cheating (Competitive REL only);
     - (e) it can't resolve contradictory accounts;
-    - (f) the infraction's base penalty, after the event's framework, is **more severe than a Warning** (a major infraction). The bot works like a floor judge handing off to the head judge. It detects and investigates, announces no penalty to players, and hands off the candidate infraction and base penalty as a **recommendation**. At MTRA events this includes Turn Skips (D56).
+    - (f) the infraction's base penalty, after the event's framework, is **more severe than a Warning** (a major infraction). The bot works like a floor judge handing off to the head judge. It detects and investigates, announces no penalty to players, and hands off the candidate infraction and base penalty as a **recommendation**. At MTRA events this includes Turn Skips (D56);
+    - (g) the remedy would be a **full backup** (FR-POL-4, D57).
 - **FR-ESC-2.** Before it escalates, the judge MUST gather every fact that is useful and cheap to collect (D12).
 - **FR-ESC-3.** The handoff goes to the judge-only channel and contains: a case summary, the facts established, the facts in dispute, the relevant citations, the judge's provisional reading, and why it escalated.
 - **FR-ESC-4.** When the judge suspects cheating, it writes **investigation notes** that are visible only to judges and the TO: the signals it saw, the inconsistencies, and suggested lines of questioning. Players MUST NOT see these notes, and the judge MUST NOT say anything to players that reveals the suspicion. The judge stops asking questions once more questions could compromise a human judge's investigation. It then tells the players neutrally to wait for a human judge and not to continue the relevant game actions. A neutral integrity question (for example *"Was anything discussed or agreed before the concessions?"*) is asked **only when something else already looks off**, never routinely (D56).
+    - **Integrity categories** (D59):
+        - *permitted or not relevant*, for example not reminding an opponent of their trigger: no integrity step at all;
+        - *ordinary error*: good-faith handling, with the necessary factual checks. Missing facts are asked for, because a good-faith presumption can't supply them;
+        - *strong indicators*: a **mandatory protected handoff** to a human judge, whatever the integrity mode or table support.
+      Not strong on its own: an ordinary error, a detrimental missed trigger, a repeated error count, another player's refusal or disagreement, not reminding an opponent of their trigger. A handoff is **never a finding of guilt**.
+    - **Integrity mode** (D58), set by the TO:
+        - *presume good faith* (the default);
+        - *request table confirmation*: the judge asks *"Can the other players confirm the described sequence, or add any specific facts we have missed?"* and records the reports.
+      Peer reports may support good faith, but can't prove intent or override strong indicators. They aren't a vote, and declining never implies guilt.
+    - AC: Given the same strong-indicator case under both integrity modes, with unanimous table support, when the judge responds, then it hands off in both modes.
+    - AC: Given an ordinary error and a player who declines to confirm in table-confirmation mode, when the judge rules, then it applies the ordinary ruling and doesn't treat the refusal as guilt.
     - AC: Given a suspected Cheating case, when the handoff is sent, then no message in any player channel or DM contains the suspicion or the reasoning behind it.
-- **FR-ESC-5.** While a case is escalated, the judge tells the players that a human judge has been called and asks them to leave the game state as it is.
+- **FR-ESC-5.** While a case is escalated, the judge tells the players, with the owner's neutral handoff message: *"Please pause the game and call a human Judge. Keep the current game state unchanged until they arrive."* The message never contains the reason for the handoff (D59).
 
 ### 6.8 Ruling record
 
@@ -299,7 +313,7 @@ The **golden test set** is the definition of correct. It is the benchmark for ev
 - **Separate sets.** Development, regression, and held-out evaluation sets are kept apart. Held-out cases are never shown to the AI roles while they build. Cases the AI roles have already read can't be held out; the held-out set comes from **new** cases, written in separate case-author sessions and stored **outside this repository** (D49).
 - **Structured data.** Cases are stored as machine-readable data (concepts, REL and policy framework, source versions, required questions, expected intermediate steps, expected outcome, validation status, where the case came from). A readable Markdown view is also produced.
 - **Staleness.** When a source document changes, every case that cites a changed section is flagged for revalidation.
-- **Current state (2026-09-27):** 141 structured cases in `golden/cases/` (see `golden/README.md`): the 18 original scenarios converted, 100 owner-verified Judge Lab regression cases, owner scenarios, and drafted variants.
+- **Current state (2026-09-28):** 348 structured cases in `golden/cases/`, all validated by the owner (see `golden/README.md`): the 18 original scenarios converted, 100 Judge Lab regression cases, 207 Judge Lab expansion cases (106 of them Legacy, which is post-MVP), owner `SCN:` scenarios, and variants. All have been read by AI roles, so a held-out set (D49) is still needed before release.
 - **Starting set (historical):** the 18 scenarios from the ChatGPT package. 11 are validated. 7 are SOURCE CHECK REQUIRED: Wheel of Fortune/Flare, Judge what is priority, Etali, the three Kinnan cases, and the forgotten untap. (The priority case is marked validated in its own file but not in the index. That needs to be reconciled.) They need to be converted to the multiplayer cEDH context where that applies, and tagged easy or hard.
 
 ## 9. Glossary
@@ -330,6 +344,7 @@ The **golden test set** is the definition of correct. It is the benchmark for ev
 | Approved rulings library | Build-time answers approved by the owner: concept explanations, answering strategies based on card features, and official card rulings. Rules questions are answered from it first (FR-Q-1). |
 | Event policy | A written local ruling set by the TO in the event context. It amends tournament policy only, never game rules (FR-CTX-5). |
 | Major infraction | An infraction whose base penalty, after the event's framework, is more severe than a Warning. It is handed to a human judge (FR-ESC-1 f). |
+| Integrity mode | The TO's setting for how ordinary errors are handled: presume good faith (default), or request table confirmation. It never changes the handoff of strong indicators (FR-ESC-4). |
 | Narration intake | The judge asks the players to tell what happened, step by step, and follows along until a question emerges or the story is wrapped up (FR-INT-4). |
 
 ## 10. Decision log
@@ -384,6 +399,9 @@ The **golden test set** is the definition of correct. It is the benchmark for ev
 | D54 | Narration intake: "tell me what happened, step by step" to the caller (or an agreed volunteer); the judge follows along until a question is formulated or arises, or the story is wrapped up, then asks "So, what is your question?" or "So, how can I help you?"; a 3-minute safety net for stalled narrations (OQ-33, OQ-34) | Helping players explain beats interrogating them, and replaces a limit on clarifying questions |
 | D55 | TO-set event policies amend tournament policy only and are applied and cited; event-management consequences (drops, re-entry) not covered by one are referred to the TO, never announced by the judge (OQ-35) | The owner's league softens some rulings by discretion; the AI must not invent discretion (FR-RUL-9) and must not manage events (NG1) |
 | D56 | The bot works like a floor judge: it issues penalties only up to a Warning; major infractions (more severe than a Warning after the framework, including MTRA Turn Skips, and any suspected cheating) are detected, investigated, and handed to a human judge as a recommendation. The neutral integrity question is asked only when something looks off (OQ-36; OQ-7 and OQ-14 in part). | "We are mostly here to help, not dish out punishment", while still detecting punishable situations. Modelled on floor-judge practice; MTR 1.7 and IPG 1 support the head judge's role but don't reserve these penalties. |
+| D57 | Remedy authority: the bot applies only simple backups the policy permits and prescribed partial fixes; every full backup is handed off to a human judge (FR-POL-4). | Adopted by the owner on 2026-09-28 from the Judge Lab bundle's rules. A full backup is the most disruptive remedy and needs a human. |
+| D58 | Each event has an integrity mode set by the TO: presume good faith (default) or request table confirmation. Peer reports can support good faith, but can't prove intent, override strong indicators, or act as a vote; declining never implies guilt. | Adopted by the owner on 2026-09-28. Lets TOs choose how much the table is involved, without letting the table decide integrity. |
+| D59 | Integrity categories: permitted/not relevant, ordinary error (good-faith handling), strong indicators (mandatory protected handoff). Strong indicators, full backups and player requests for a human judge are always handed off, whatever the settings. A handoff is never a finding of guilt. The neutral player message is the owner's: "Please pause the game and call a human Judge. Keep the current game state unchanged until they arrive." | Adopted by the owner on 2026-09-28 from the Judge Lab bundle; answers the core of OQ-14. "We are mostly here to help": ordinary mistakes stay ordinary. |
 
 ## 11. Risks
 
@@ -416,7 +434,7 @@ The **golden test set** is the definition of correct. It is the benchmark for ev
 - [ ] **OQ-11.** Partly resolved: about 1,000 golden cases at launch (D38). Easy/hard split still open.
 - [ ] **OQ-12.** Does WotC's Fan Content Policy allow using the rules text and card text this way?
 - [x] **OQ-13.** Resolved: hybrid investigation (D29).
-- [ ] **OQ-14.** Partly resolved: a neutral integrity question is asked only when something already looks off (D56). Still open: the list of signals that count as "something looks off" / suspected cheating. The product owner to list them.
+- [x] **OQ-14.** Resolved: integrity categories, including what is *not* strong on its own; strong indicators force a protected handoff (D59, FR-ESC-4). Concrete strong indicators are defined case by case in the integrity test cases.
 - [x] **OQ-15.** Resolved: delivery patterns in FR-POL-2 (D36).
 - [x] **OQ-16.** Resolved: one global Admin, who maps an existing Discord server role to the TO role on each server (D40).
 - [x] **OQ-17.** Resolved: private messages are allowed for investigations only (D9, FR-INT-3).
