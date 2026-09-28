@@ -7,7 +7,7 @@ validation:
   by: "Frank"
   on: "2026-09-26"
   note: "Owner marked all 100 records fully VALIDATED, including source mappings, on 2026-09-26. Original record: Project owner confirmed the ruling after reporting agreement from community judges on 2026-09-26. Earlier source-versus-affected-player objection was withdrawn. Source status in record: VALIDATED BY PROJECT OWNER."
-tagProposed: hard
+tag: hard
 set: "regression"
 origin: "judge-lab"
 sources:

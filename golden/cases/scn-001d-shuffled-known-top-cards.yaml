@@ -10,7 +10,7 @@ validation:
   note: "Owner, 2026-09-28: consider all drafted cases validated. Earlier open points are kept below as notes."
   openPoints:
     - "AI-drafted from the owner's answer (2026-09-27): ask about known top/bottom cards and how many; those keep their positions; shuffle the random part. Owner to confirm this application."
-tagProposed: easy
+tag: easy
 set: dev
 origin: ai-generated
 sources: { cr: 2026-09-25, ipg: "blogs.magicjudges.org, read 2026-09-27", addendum: MTRA@2025-06-24, oracle: scryfall@2026-09-27 }

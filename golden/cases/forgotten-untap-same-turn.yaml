@@ -10,7 +10,7 @@ validation:
   openPoints:
     - "Checked on blogs.magicjudges.org (2026-09-26): IPG 2.5 has the partial fix 'forgot to untap permanents at the start of their turn and it is still the same turn: untap them'. Owner to validate."
     - "Penalty and delivery pattern are missing from the narrative. Owner to add them; Game Rule Violation is normally a Warning at Competitive REL, to be confirmed against the current IPG."
-tagProposed: easy
+tag: easy
 set: dev
 origin: chatgpt-package
 sources: { cr: 2026-09-25, ipg: "blogs.magicjudges.org, read 2026-09-26" }

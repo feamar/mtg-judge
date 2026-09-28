@@ -8,7 +8,7 @@ validation:
   on: 2026-09-23
   openPoints:
     - "The scenario file says VALIDATED (2026-09-23); INDEX.md said SOURCE CHECK REQUIRED. Resolved 2026-09-28: VALIDATED (owner)."
-tagProposed: easy
+tag: easy
 set: regression
 origin: chatgpt-package
 sources: { cr: 2026-09-25, oracle: scryfall@2026-09-26 }

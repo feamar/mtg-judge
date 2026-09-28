@@ -11,7 +11,7 @@ validation:
     - "Which policy framework applied at the real call (MTRA, the Portuguese addendum, or plain IPG)? The remedy differs."
     - "The current IPG 2.1 text (read 2026-09-26) has no explicit 'stack became empty' clause. Its remedy puts a missed trigger 'at the appropriate place on the stack if possible or on the bottom', and triggers missed before the current phase of the previous turn are dropped. Under the MTRA, the trigger isn't added if significant decisions were made based on it being missed. Owner to state which clause made 'did the stack become empty?' decisive."
     - "Trigger count check: 2 opponents x 7 cards x 2 Wheels = 28, so the player's count may be right. It stays a claim to verify, not a fact."
-tagProposed: hard
+tag: hard
 set: dev
 origin: owner-real-case
 sources: { cr: 2026-09-25, ipg: "blogs.magicjudges.org, read 2026-09-26" }

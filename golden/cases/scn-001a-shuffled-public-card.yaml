@@ -7,7 +7,7 @@ validation:
   by: Frank
   on: 2026-09-27
   note: "Owner ruling 2026-09-27: Hidden Card Error; the library is the set with the excess card. The library is shuffled afterwards (the random part stays random). Known cards on top/bottom are only asked about if the library wasn't just fully shuffled; here it was, so the question is left out."
-tagProposed: easy
+tag: easy
 set: dev
 origin: owner-scenario
 sources: { cr: 2026-09-25, ipg: "blogs.magicjudges.org, read 2026-09-27", addendum: MTRA@2025-06-24 }

@@ -9,7 +9,7 @@ validation:
   openPoints:
     - "AI-drafted from the owner's intake procedure (ADR-0019). Owner to confirm the expected behaviour and wording."
     - "Narration ends on the wrap-up phrase, not on the pause (owner, 2026-09-27). The mid-story 40-second pause must not trigger anything."
-tagProposed: easy
+tag: easy
 set: dev
 origin: ai-generated
 sources: { cr: 2026-09-25 }

@@ -9,7 +9,7 @@ validation:
   note: "Owner, 2026-09-28: consider all drafted cases validated. Earlier open points are kept below as notes."
   openPoints:
     - "AI-drafted from the owner's answer (2026-09-27): not an infraction; at Competitive REL not forgiving, so the commander stays in the library. Owner to confirm the case."
-tagProposed: easy
+tag: easy
 set: dev
 origin: ai-generated
 sources: { cr: 2026-09-25, oracle: scryfall@2026-09-27 }

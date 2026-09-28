@@ -50,6 +50,8 @@ The architect role may only add open questions to the PRD; it doesn't change req
 | OQ-11 | Easy/hard split | **Propose tags**: 206 easy / 51 hard proposed for the untagged cases (2026-09-28). | golden/cases `tagProposed` |
 | OQ-18 | Tone rubric | **Covered by the examples** (2026-09-28). | approved templates, FR-BUILD-4 |
 | OQ-33 | Robustness thresholds | **If a simple LLM can decipher it fast, that's OK; otherwise ask the players to rephrase** (2026-09-28). | ADR-0018 |
+| OQ-11 (tags) | Accept the proposed easy/hard tags? | **Accept** (2026-09-28): 240 easy, 108 hard. | golden/cases `tag` |
+| OQ-12 | Wizards' Fan Content Policy | **The owner has sent a message to WotC** (2026-09-28); open until they reply. | PRD OQ-12 |
 | Speech-to-text | Use the owner's ChatGPT subscription? | The owner has a ChatGPT subscription only, with **no OpenAI API access**. Voice transcription is **local-only** in the MVP. | ADR-0015; SPIKES S1 |
 
 ## Process decisions (2026-09-26)

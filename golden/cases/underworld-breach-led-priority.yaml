@@ -3,7 +3,7 @@ title: "Underworld Breach / Lion's Eye Diamond: priority after a mana ability"
 narrative: golden/scenarios/underworld-breach-led-priority.md
 family: timing
 validation: { status: VALIDATED }
-tagProposed: easy
+tag: easy
 set: regression
 origin: chatgpt-package
 sources: { cr: 2026-09-25, oracle: scryfall@2026-09-26 }

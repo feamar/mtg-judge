@@ -8,7 +8,7 @@ validation:
   by: Frank
   on: 2026-09-27
   note: "Owner confirmed (2026-09-27): conceding on your own turn with priority and an empty stack means no drop under MTRA 2.5."
-tagProposed: easy
+tag: easy
 set: dev
 origin: ai-generated
 sources: { cr: 2026-09-25, addendum: MTRA@2025-06-24, oracle: scryfall@2026-09-27 }

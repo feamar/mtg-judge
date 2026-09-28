@@ -3,7 +3,7 @@ title: "Mana Drain on a spell that can't be countered"
 family: targeting
 variantOf: pact-of-negation-uncounterable-spell
 validation: { status: VALIDATED, by: Frank, on: 2026-09-28, note: "Owner, 2026-09-28: consider all drafted cases validated." }
-tagProposed: easy
+tag: easy
 set: dev
 origin: ai-generated
 sources: { cr: 2026-09-25, oracle: scryfall@2026-09-26 }

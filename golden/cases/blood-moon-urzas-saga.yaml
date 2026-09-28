@@ -3,7 +3,7 @@ title: "Blood Moon / Urza's Saga: type change and current Saga rules"
 narrative: golden/scenarios/blood-moon-urzas-saga.md
 family: layers
 validation: { status: VALIDATED }
-tagProposed: hard
+tag: hard
 set: regression
 origin: chatgpt-package
 sources: { cr: 2026-09-25, oracle: scryfall@2026-09-26 }

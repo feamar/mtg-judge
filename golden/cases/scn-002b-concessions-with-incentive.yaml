@@ -8,7 +8,7 @@ validation:
   by: Frank
   on: 2026-09-27
   note: "Owner confirmed (2026-09-27): an incentive for conceding is possible Bribery and Wagering (IPG 4.4, Match Loss), a major infraction handed to a human judge (ADR-0021). The player's own statement is the signal that something looks off."
-tagProposed: hard
+tag: hard
 set: dev
 origin: ai-generated
 sources: { cr: 2026-09-25, ipg: "blogs.magicjudges.org, read 2026-09-27", addendum: MTRA@2025-06-24 }

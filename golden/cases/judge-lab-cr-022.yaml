@@ -7,7 +7,7 @@ validation:
   by: "Frank"
   on: "2026-09-26"
   note: "Owner marked all 100 records fully VALIDATED, including source mappings, on 2026-09-26. Original record: Accepted for addition by project owner on 2026-09-26, excluding CR-049 and CR-060. Source status in record: SOURCE CHECK REQUIRED."
-tagProposed: easy
+tag: easy
 set: "regression"
 origin: "judge-lab"
 sources:

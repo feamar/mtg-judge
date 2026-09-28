@@ -3,7 +3,7 @@ title: "Flash / Gaea's Cradle: mana ability during resolution"
 narrative: golden/scenarios/flash-gaeas-cradle-mana-during-resolution.md
 family: mana
 validation: { status: VALIDATED }
-tagProposed: easy
+tag: easy
 set: regression
 origin: chatgpt-package
 sources: { cr: 2026-09-25, oracle: scryfall@2026-09-26 }

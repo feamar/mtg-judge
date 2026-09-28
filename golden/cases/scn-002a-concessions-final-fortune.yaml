@@ -7,7 +7,7 @@ validation:
   by: Frank
   on: 2026-09-27
   note: "Owner confirmed the ruling (you win; MTRA 2.5 applies to the instant-speed conceders). Per the owner's decision on discretion (ADR-0020), the judge refers the drop to the TO instead of announcing it. The neutral 'anything agreed?' question is not asked: nothing looks off (owner, 2026-09-27)."
-tagProposed: easy
+tag: easy
 set: dev
 origin: owner-scenario
 sources: { cr: 2026-09-25, addendum: MTRA@2025-06-24, oracle: scryfall@2026-09-27 }

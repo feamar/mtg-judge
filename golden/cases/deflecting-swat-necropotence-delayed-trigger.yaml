@@ -3,7 +3,7 @@ title: "Deflecting Swat / Necropotence: targeting an untargeted delayed trigger"
 narrative: golden/scenarios/deflecting-swat-necropotence-delayed-trigger.md
 family: targeting
 validation: { status: VALIDATED, by: Frank, on: 2026-09-26 }
-tagProposed: easy
+tag: easy
 set: dev
 origin: owner-question
 sources: { cr: 2026-09-25, oracle: scryfall@2026-09-26 }

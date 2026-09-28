@@ -40,6 +40,6 @@ Each case holds:
 - **Validation:** all 348 cases VALIDATED. On 2026-09-28 the owner said to consider every drafted case validated (the 5 open scenarios, the `tc` family, `scn-001d..f`, `intake-01`). Earlier open points are kept in the case files as notes.
 - **Status conflicts resolved:** `judge-what-is-priority` and `etali-casting-during-resolution` are VALIDATED (owner, 2026-09-28).
 - **Citations:** the owner considers the existing scenarios' CR citations checked against the CR effective 2026-09-25 (2026-09-26). All CR rule numbers cited by the 20 cases exist in that version.
-- **Easy/hard:** proposed only (14 easy, 6 hard). The owner confirms by setting `tag`.
+- **Easy/hard:** all 348 cases are tagged. The owner accepted the proposed tags on 2026-09-28 (OQ-11): **240 easy, 108 hard**, where 50 of the hard ones are the owner's own "Hard" bucket.
 - **Sets:** every case here has been read by AI roles (the Judge Lab file included), so they are `dev` or `regression`, never `heldout`. The held-out set comes from the league export (ADR-0017 §4).
 - **Gaps found during conversion** (in the open points): the Wheel/Tithe framework and "stack became empty" clause; missing penalties and delivery patterns for the forgotten-untap and One Ring disputes.

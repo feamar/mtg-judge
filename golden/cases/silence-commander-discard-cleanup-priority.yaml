@@ -4,7 +4,7 @@ narrative: golden/scenarios/silence-commander-discard-cleanup-priority.md
 family: timing
 variantOf: silence-gitrog-cleanup-priority
 validation: { status: VALIDATED }
-tagProposed: easy
+tag: easy
 set: regression
 origin: chatgpt-package
 sources: { cr: 2026-09-25, oracle: scryfall@2026-09-26 }

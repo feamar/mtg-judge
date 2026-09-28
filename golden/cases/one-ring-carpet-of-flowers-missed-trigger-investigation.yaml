@@ -6,7 +6,7 @@ validation:
   status: VALIDATED
   openPoints:
     - "Penalty, remedy (whether the trigger may still be added) and delivery pattern aren't specified in the narrative, and depend on the framework. Owner to add."
-tagProposed: hard
+tag: hard
 set: regression
 origin: chatgpt-package
 sources: { cr: 2026-09-25, ipg: "blogs.magicjudges.org, read 2026-09-26" }

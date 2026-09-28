@@ -3,7 +3,7 @@ title: "Prowess: unannounced triggers before combat damage"
 narrative: golden/scenarios/prowess-unannounced-before-combat-damage.md
 family: investigation
 validation: { status: VALIDATED }
-tagProposed: easy
+tag: easy
 set: regression
 origin: chatgpt-package
 sources: { cr: 2026-09-25, ipg: "blogs.magicjudges.org, read 2026-09-26" }

@@ -7,7 +7,7 @@ validation:
   by: "Frank"
   on: "2026-09-26"
   note: "Owner marked all 100 records fully VALIDATED, including source mappings, on 2026-09-26. Original record: Project owner corrected the obsolete first-blocker wording, confirmed the ruling, and approved the clarified scenario for inclusion on 2026-09-26. Source status in record: VALIDATED BY PROJECT OWNER."
-tagProposed: easy
+tag: easy
 set: "regression"
 origin: "judge-lab"
 sources:

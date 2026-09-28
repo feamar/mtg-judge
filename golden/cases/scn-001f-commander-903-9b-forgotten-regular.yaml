@@ -11,7 +11,7 @@ validation:
   openPoints:
     - "AI-drafted from the owner's answer (2026-09-27): at Regular REL the judge is forgiving. Owner to confirm the fix wording: find the commander, put it into the command zone, shuffle."
     - "Regular REL is post-MVP; this case documents the REL-dependent branch."
-tagProposed: easy
+tag: easy
 set: dev
 origin: ai-generated
 sources: { cr: 2026-09-25, oracle: scryfall@2026-09-27 }
