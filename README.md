@@ -16,5 +16,5 @@ This is a learning project. The goal is to build a good product entirely with AI
 
 ## Status
 
-- PRD v0.4 (2026-09-28): draft, with the owner's answers from the architecture phase (D42–D65). Open questions are listed in PRD §12.
+- PRD v0.5 (2026-09-28): draft, with the owner's answers from the architecture phase (D42–D66). Open questions are listed in PRD §12.
 - No code yet. The next step is to define the AI-role process, then hand over to the architect.
