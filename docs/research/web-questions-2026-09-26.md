@@ -1,6 +1,6 @@
 # What players ask: rules questions from public judge Q&A
 
-Status: **for product-owner verification** · Collected 2026-09-26 by the architect role, while the owner was away.
+Status: **A set reviewed by the owner (2026-09-28); B set archived unreviewed** · Collected 2026-09-26 by the architect role, while the owner was away.
 
 **Purpose:** get an early picture of the *kinds* of questions players ask, before the league's ~2K Discord questions arrive. The pattern tells us which answering strategies and rule modules (ADR-0017) to build first. These questions are public, so they are **development material**. They are never held-out.
 
@@ -15,6 +15,8 @@ Status: **for product-owner verification** · Collected 2026-09-26 by the archit
 
 ## A. cEDH-specific: TopDeck, "cEDH Important Rules Interactions" (Shaun "Spielrahoo", 2023-04-04)
 
+**Reviewed by the owner on 2026-09-28:** A10 and A22 corrected (see rows); all other A answers confirmed. Public material, so development only (PRD §8).
+
 Source: https://topdeck.gg/articles/cedh-important-rules-interactions
 
 | # | Question | Cards | Source's answer | Family | ✅/❌ |
@@ -28,7 +30,7 @@ Source: https://topdeck.gg/articles/cedh-important-rules-interactions
 | A7 | Can Deflecting Swat redirect an REB (countering mode) onto a non-blue spell? | REB, Deflecting Swat | No, the new target must be legal for that mode | T | |
 | A8 | What colour is Phantasmal Image on the stack and on the battlefield? | Phantasmal Image | Blue on the stack; on the battlefield, whatever it copies | CP | |
 | A9 | What does a clone copy from a clone, or from a "becomes a copy" permanent? | Vesuva, Song of the Dryads, Jace, the Mind Sculptor | ⚠ Simplified: clones copy copiable values, including copy effects on the original but not other effects | CP | |
-| A10 | Dress Down / Humility vs clones already on the battlefield vs clones entering now | Dress Down, Humility, Phyrexian Metamorph, Dockside Extortionist | Existing clones keep copying; new ones enter as copies but lose ETB abilities | CP / L | |
+| A10 | Dress Down / Humility vs clones already on the battlefield vs clones entering now | Dress Down, Humility, Phyrexian Metamorph, Dockside Extortionist | **Corrected (owner review, 2026-09-28):** clones already on the battlefield stay copies but lose their abilities. A creature clone that **enters** under Dress Down (Clone, Phyrexian Metamorph) **copies nothing**: CR 614.12 checks it as it would exist on the battlefield, where it has lost its "enter as a copy" ability, so Clone enters as a 0/0 and dies. Non-creature copiers (Sculpting Steel) and Imposter Mech still copy. Source: [SEA region, "Delving deeper: Dress Down" (2024-04-15)](https://blogs.magicjudges.org/searegion/2024/04/15/delving-deeper-dress-down/). *The architect's first summary here ("new ones enter as copies but lose ETB abilities") misrepresented the TopDeck source, which said new clones can't copy.* | CP / L | ✅ corrected |
 | A11 | Why is Imposter Mech different under Dress Down? | Imposter Mech, Dockside Extortionist | It's not a creature when it enters, so it keeps the copied ETB | CP / L | |
 | A12 | Aven Mindcensor vs Opposition Agent: what does each affect? | Aven Mindcensor, Opposition Agent | Mindcensor: any search of a library; Agent: opponents' searches only, and Agent's controller gets control of the searcher | R | |
 | A13 | Can you dodge Opposition Agent by choosing which zone to search at resolution? | Finale of Devastation, Opposition Agent | ⚠ Yes, where the spell lets you choose (graveyard only); check current Oracle | R | |
@@ -40,48 +42,15 @@ Source: https://topdeck.gg/articles/cedh-important-rules-interactions
 | A19 | Can Cavern of Souls name a creature type under Blood Moon? | Cavern of Souls, Blood Moon | No, it has lost its abilities | L | |
 | A20 | Does Dress Down turn off Magus of the Moon? | Dress Down, Magus of the Moon | ⚠ Source says no, citing layers; this looks like a dependency question and needs a close check against CR 613.8 | L | |
 | A21 | Can tap/untap restrictions stop Lion's Eye Diamond or Auriok Salvagers loops? | LED, Manglehorn, Root Maze, Blind Obedience, Auriok Salvagers | LED's cost doesn't tap, so entering tapped doesn't stop it | M | |
-| A22 | What does Grand Abolisher stop? | Grand Abolisher, Faerie Macabre | Only activated abilities of permanents (on your turn), not abilities from hand | TM / C | |
+| A22 | What does Grand Abolisher stop? | Grand Abolisher, Faerie Macabre | **Corrected (owner review, 2026-09-28):** Oracle: *"During your turn, your opponents can't cast spells or activate abilities of artifacts, creatures, or enchantments."* So it does **not** stop channel or other abilities of cards in hand, and it does **not** stop abilities of **lands**, but it **does** stop Treasures (artifacts). | TM / C | ✅ corrected |
 | A23 | Gemstone Caverns and "any colour an opponent's land could produce" | Gemstone Caverns, Fellwar Stone, Exotic Orchard | ⚠ Without a luck counter, Caverns only produces colourless, so these find no colour; check the exact current Oracle | M | |
 | A24 | Can Frantic Search / Snap untap lands you don't control? | Frantic Search, Snap | ⚠ Source says yes; check against current Oracle ("lands" vs "lands you control") | T | |
 
-## B. General rules Q&A: Cranial Insertion (a selection with Commander relevance)
+## B. General rules Q&A: archived
 
-Sources: https://www.cranial-insertion.com/article/4413 (2025-06-23) · /article/4416 (2025-06-30) · /article/4419 (2025-07-07). The column ended with /article/4422 on 2025-07-14.
+The 30 Cranial Insertion questions were **archived unreviewed** on 2026-09-28, at the owner's request. They are in [`archive/cranial-insertion-b-set-2026-09-26.md`](archive/cranial-insertion-b-set-2026-09-26.md), are not test material, and don't count as validated.
 
-| # | Question | Cards | Source's answer | Family | ✅/❌ |
-| --- | --- | --- | --- | --- | --- |
-| B1 | Several damage instances in one resolution vs a creature that must be dealt lethal damage: do they add up? | Fiery Confluence, Ghyrson Starn, Ancient Brontodon | Yes, SBAs are checked after the whole resolution | TM | |
-| B2 | Can a companion condition check only an MDFC's front face? | Umori, Blex | Yes, only front-face characteristics count outside the stack | Z | |
-| B3 | Jodah's free cast: may you cast the other face or the Adventure? | Jodah the Unifier, MDFC deans, Beluna Grandsquall | Yes to both | Z | |
-| B4 | When do Saga chapter counters get added? | Sagas | After the draw step, as your precombat main phase begins | TM | |
-| B5 | Do copies of a spell require paying its additional costs (discard)? | Laughing Mad, Alania | No, copies aren't cast, so no costs | C | |
-| B6 | Chaos Warp on a commander that goes to the command zone: does the reveal still happen? | Chaos Warp | Yes, the rest of the effect still happens | Z / CMD | |
-| B7 | Doorkeeper Thrull vs "enters tapped" replacement effects | Doorkeeper Thrull, Horned Loch-Whale | Replacement effects still apply; Thrull only stops triggers | R | |
-| B8 | Can Remove Soul counter a creature put onto the battlefield (not cast)? | Remove Soul, Kona | No, it was never a spell | T | |
-| B9 | Magma Opus / divided damage: can a target get 0? | Magma Opus | No, each target gets at least 1 (CR 601.2d) | T | |
-| B10 | Crack Open vs Banishing Light / Oblivion Ring with Parallel Lives: how many Treasures? | Parallel Lives, Banishing Light, Oblivion Ring, Crack Open | Banishing Light: 2 (returns during resolution); O-Ring: 1 (return is a trigger) | R / TR | |
-| B11 | A creature sacrificed in response: does its trigger use last known power and lifelink? | Wurmcoil Engine, Mage Slayer | Yes, last known information | LKI | |
-| B12 | Copy effect vs type-changing effect: which wins? | Cackling Counterpart, Polymorphist's Jest | The copy applies in layer 1, then the later effect in its own layer | CP / L | |
-| B13 | "Whenever you draw your first card each turn" with simultaneous draws: how many triggers? | Tataru Taru, Howling Golem | Once per turn | TR | |
-| B14 | Do commander-only buffs apply to non-commander copies? | Cid, Bastion Protector | No, only the commander | CMD | |
-| B15 | Ability removal vs copying abilities: which layer wins? | Sudden Spoiling, Marvin | Removal (layer 6) applies after copying (layer 1), so nothing is copied | CP / L | |
-| B16 | Can Negate counter a sorcery that makes tokens? | Negate, Circle of Power | Yes, it's a noncreature spell | T | |
-| B17 | One lifelink damage event to several players: how many "whenever you gain life" triggers? | Nazar, Black Waltz No. 3 | One, a single life-gain event | TR | |
-| B18 | A search effect when its related creature is removed in response | Prishe's Wanderings | The search still happens; it doesn't target | T | |
-| B19 | Double strike vs "whenever equipped creature deals combat damage" | Buster Sword | Triggers once per combat damage step, so twice | TR | |
-| B20 | Is a creature ability's damage from a planeswalker's trigger "a spell"? | Terror of the Peaks, Ugin | No, abilities aren't spells | T | |
-| B21 | Sacrifice-a-creature requirement when your only creature can't be sacrificed | Flare of Malice, Jon Irenicus | Nothing is sacrificed | R | |
-| B22 | +1/+1 and -1/-1 counters put on during one resolution | Cori-Steel Cutter, Illness in the Ranks | They cancel as an SBA | TM | |
-| B23 | Reanimation target becomes illegal (control or zone change) | Goryo's Vengeance, Commandeer | The spell does nothing (CR 608.2b) | T | |
-| B24 | "Up to" targets: can you choose zero and still count as casting? | Dual Shot, Guttersnipe | Yes | T | |
-| B25 | Ordering two of your own triggers to save a creature | Gift of Immortality | You choose the order; the return can resolve first | TR | |
-| B26 | Saga's final chapter countered by Trickbind: what happens? | Fable of the Mirror-Breaker, Trickbind | It's sacrificed (SBA); it doesn't transform | TM | |
-| B27 | Partner commanders: does each get its own trigger? | Haldan, Pako | Yes, separately | CMD | |
-| B28 | "If you would scry" replaced: do "whenever you scry" triggers fire? | Eligeth, Opt | No, the scry didn't happen | R | |
-| B29 | Single-target trigger whose target leaves: does anything happen? | General Leo Cristophe, Scavenging Ooze | No, the ability doesn't resolve | T | |
-| B30 | Attack trigger vs combat damage: both? | The Lord Master of Hell | Yes, the ability's damage is separate from combat damage | TR | |
-
-## C. What the pattern says (54 questions)
+## C. What the pattern says (54 questions, collected 2026-09-26; the B set has since been archived unreviewed)
 
 | Family | Code | Count | Examples | Likely rule module (ADR-0017 §6) |
 | --- | --- | --- | --- | --- |
