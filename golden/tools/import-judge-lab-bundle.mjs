@@ -3,7 +3,7 @@
 // Usage:
 //   node golden/tools/import-judge-lab-bundle.mjs <bundle.json> [--cr <CR .txt>]
 //        [--validated-by <name> --validated-on <date> --validated-note <text>]
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -110,6 +110,14 @@ function toCase(r, bundle) {
   };
 }
 
+// Keep owner-maintained tag / tagProposed lines on re-import (they don't exist in the source records).
+function keepTags(file, yaml) {
+  if (!existsSync(file)) return yaml;
+  const kept = readFileSync(file, 'utf8').split(/\r?\n/)
+    .filter((l) => /^(tag|tagProposed):/.test(l) && !new RegExp(`^${l.split(':')[0]}:`, 'm').test(yaml));
+  return kept.length ? yaml.replace(/^(set: )/m, `${kept.join('\n')}\n$1`) : yaml;
+}
+
 const bundle = JSON.parse(readFileSync(input, 'utf8'));
 if (bundle.schema_version !== 'judge-lab-testset-bundle/1.0') throw new Error(`unsupported bundle schema ${bundle.schema_version}`);
 const ids = new Set();
@@ -118,7 +126,8 @@ for (const r of bundle.tests) {
   ids.add(r.id);
   const c = toCase(r, bundle);
   const header = `# Imported from ${input.replace(/\\/g, '/').split('/').pop()} by golden/tools/import-judge-lab-bundle.mjs. Edit the source record, not this file.\n`;
-  writeFileSync(join(outDir, `${r.id}.yaml`), header + emit(c).replace(/^\n/, '') + '\n', 'utf8');
+  const out = join(outDir, `${r.id}.yaml`);
+  writeFileSync(out, keepTags(out, header + emit(c).replace(/^\n/, '') + '\n'), 'utf8');
 }
 console.log(`imported ${bundle.tests.length} cases into ${outDir}`);
 if (crRules) console.log(unknownCites.length ? `CR citations not found in the given CR edition (${unknownCites.length}):\n  ${unknownCites.join('\n  ')}` : `all CR citations exist in the given CR edition (${crRules.size} rules indexed)`);

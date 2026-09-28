@@ -2,7 +2,7 @@
 // Deterministic, no dependencies. Usage:
 //   node golden/tools/import-judge-lab.mjs <input.jsonl> [--cr <CR .txt>] [--validated-by <name> --validated-on <date> --validated-note <text>]
 // With --cr, every "CR x" citation is checked against the rule numbers in that CR edition.
-import { readFileSync, writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -86,6 +86,14 @@ function toCase(r) {
   };
 }
 
+// Keep owner-maintained tag / tagProposed lines on re-import (they don't exist in the source records).
+function keepTags(file, yaml) {
+  if (!existsSync(file)) return yaml;
+  const kept = readFileSync(file, 'utf8').split(/\r?\n/)
+    .filter((l) => /^(tag|tagProposed):/.test(l) && !new RegExp(`^${l.split(':')[0]}:`, 'm').test(yaml));
+  return kept.length ? yaml.replace(/^(set: )/m, `${kept.join('\n')}\n$1`) : yaml;
+}
+
 const rows = readFileSync(input, 'utf8').split(/\r?\n/).filter((l) => l.trim()).map((l) => JSON.parse(l));
 const ids = new Set();
 for (const r of rows) {
@@ -94,7 +102,8 @@ for (const r of rows) {
   if (r.interaction_type !== 'rules_question' || r.expected.disposition !== 'resolved_rules_question') throw new Error(`${r.id}: unsupported interaction/disposition`);
   const c = toCase(r);
   const header = `# Imported from ${input.replace(/\\/g, '/').split('/').pop()} by golden/tools/import-judge-lab.mjs. Edit the source record, not this file.\n`;
-  writeFileSync(join(outDir, `${r.id}.yaml`), header + emit(c).replace(/^\n/, '') + '\n', 'utf8');
+  const out = join(outDir, `${r.id}.yaml`);
+  writeFileSync(out, keepTags(out, header + emit(c).replace(/^\n/, '') + '\n'), 'utf8');
 }
 console.log(`imported ${rows.length} cases into ${outDir}`);
 if (crRules) console.log(unknownCites.length ? `CR citations not found in the given CR edition:\n  ${unknownCites.join('\n  ')}` : `all CR citations exist in the given CR edition (${crRules.size} rules indexed)`);
