@@ -30,6 +30,7 @@ Don't read the PRD or the architecture: the roles you boot slice what they need.
     - whether a planted weak test was caught by H1/H2.
 
    This report may lead to a process change (process engineer) before E4.
+7. **Cost (owner's note on E2, 2026-09-29).** The dry-run report must also carry a **cost baseline**: tokens and wall time per stage and per gate. It must include a **tuning proposal** that trades review and testing depth against speed and tokens, using the knobs listed in the E2 package's Part B. The owner decides each knob before E4 starts.
 
 ## Then E4: PDD cycle 0
 

@@ -16,3 +16,4 @@ The planner may only add open questions to the PRD; it doesn't change requiremen
 | 2026-09-29 | Hardening thresholds | Which mutation-score threshold? | **Tiered:** 100% of named boundaries killed (`pdd prove`); module grade ≥ 90% for `core`, ≥ 75% for adapters and pipeline | DEVELOPMENT-CASE §8.2 |
 | 2026-09-29 | Hardener | Who hardens the tests? | **A separate test-hardener agent** that writes tests only | `.claude/agents/test-hardener.md` |
 | 2026-09-29 | Elaboration and PDD | Should Elaboration use PDD too? | **E4 yes (PDD cycle 0), E3 no** (it builds the PDD tooling) | PLAN.md §2 |
+| 2026-09-29 | E2 revision 2 | Approve the process design? | **Approved with notes:** "my worry here is that it would be too expensive, need to tune auto-reviewing & testing vs speed and tokens." Becomes an E3 exit criterion: a cost baseline plus a tuning proposal for the owner to decide. | E2 package Part B, handover 03, PLAN.md E3 |

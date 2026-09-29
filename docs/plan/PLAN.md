@@ -38,7 +38,7 @@ There are no dates: an iteration starts when the previous one's last report is a
     - every gate catches its planted failure, including a weak test caught by H1/H2 and an edited locked test caught by G0;
     - the project manager boots each role and reads back its status line;
     - the dry run shows no handoff needed more than its Part B;
-    - tokens per stage are recorded.
+    - tokens per stage are recorded, with a cost baseline and a tuning proposal (owner note, 2026-09-29) that the owner decides before E4.
 - **The owner inspects:** the dry-run report, `pipeline/BOOT.md` and `pipeline/TOOLS.md`.
 
 ### E4: PDD cycle 0, the walking skeleton (ends at LCA)

@@ -2,7 +2,7 @@
 
 Role: process engineer (planner) · Branch: `plan/v1` · Replaces: [revision 1](approval-package-rejected-1.md), rejected on 2026-09-29: "Construction and Transition should be replaced with more PDD type processes. Where is my test hardening?"
 
-**Decision:** PENDING
+**Decision:** APPROVED WITH NOTES (2026-09-29): "My worry here is that it would be too expensive, need to tune auto-reviewing & testing vs speed and tokens."
 <!-- Write one of: APPROVED · APPROVED WITH NOTES: … · REJECTED: … -->
 
 ---
@@ -75,6 +75,7 @@ You start `claude --agent project-manager` and say "continue". It opens E3 and w
 - **Job:** open E3, per `docs/handover/03-planner-to-project-manager.md`.
 - **Read:** handover 03; PLAN.md §2 (E3); the `backlog.json` entries with `iteration: E3`.
 - **Allowed paths:** `docs/iterations/E3/`
-- **Constraints:** the owner's notes on this package, if any; boot only after `plan/v1` is merged into `main`.
+- **Constraints:** boot only after `plan/v1` is merged into `main`.
+- **Owner note (cost):** the owner worries the pipeline is too expensive. The E3 dry run must produce a **cost baseline** (tokens and wall time per stage and per gate) and a **tuning proposal** for the owner, trading review and testing depth against speed and tokens. Candidate knobs: which hardening gates run every cycle vs only at PROVE ALL; mutation scope (changed lines only vs whole module); noise seeds and property-run counts; turn budgets; model per role; whether TRIAGE/CARVE/PIN approvals can be batched into one; skipping PIN characterisation for code with no dependants. No knob changes without the owner's decision.
 - **Open issues:** OQ-37..41, none blocking E3.
 - **Done when:** `docs/iterations/E3/01-brief.md` awaits the owner.
