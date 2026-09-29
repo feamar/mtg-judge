@@ -2,7 +2,7 @@
 
 Role: project-manager · Branch: `cycle/E3` · Inputs: `docs/handover/03-planner-to-project-manager.md`, `docs/iterations/E2/approval-package.md` Part B
 
-**Decision:** PENDING
+**Decision:** APPROVED (owner, 2026-09-29, in chat)
 <!-- Owner writes one of: APPROVED · APPROVED WITH NOTES: … · REJECTED: … -->
 
 ---

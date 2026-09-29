@@ -3,20 +3,20 @@
 Maintained by the project manager only. It is read first in every project-manager session.
 
 - **Cycle:** E3 · **Branch:** `cycle/E3` · **Plan row:** PLAN.md §2 (E3)
-- **Current stage:** 1 BRIEF · **Status:** awaiting-owner
-- **Next action:** owner approves `01-brief.md`; then boot the toolsmith for T-P4 and T-A1.
+- **Current stage:** 2 TOOLING · **Status:** running
+- **Next action:** toolsmith builds T-P4, then T-A1.
 
 ## Stages
 
 | # | Stage | Report | Decision | Tokens |
 | --- | --- | --- | --- | --- |
-| 1 | BRIEF | `01-brief.md` | PENDING | |
+| 1 | BRIEF | `01-brief.md` | APPROVED 2026-09-29 | |
 
 ## Tasks (E3, toolsmith)
 
 | Task | Deps | State | Sessions | Report |
 | --- | --- | --- | --- | --- |
-| T-P4 | none | queued | 0 | |
+| T-P4 | none | running | 1 | |
 | T-A1 | none | queued | 0 | |
 | T-A2 | T-A1 | queued | 0 | |
 | T-P1 | T-A1 | queued | 0 | |
