@@ -3,8 +3,8 @@
 Maintained by the project manager only. It is read first in every project-manager session.
 
 - **Cycle:** E3 · **Branch:** `cycle/E3` · **Plan row:** PLAN.md §2 (E3)
-- **Current stage:** 2 TOOLING · **Status:** running
-- **Next action:** toolsmith builds T-P4, then T-A1.
+- **Current stage:** 2 TOOLING · **Status:** awaiting-owner
+- **Next action:** owner accepts the T-P4 verdict (subagents) and runs the three BOOT.md checks; then boot the toolsmith for T-A1.
 
 ## Stages
 
@@ -16,7 +16,7 @@ Maintained by the project manager only. It is read first in every project-manage
 
 | Task | Deps | State | Sessions | Report |
 | --- | --- | --- | --- | --- |
-| T-P4 | none | running | 1 | |
+| T-P4 | none | done (partial: headless unchecked) | 1 | `pipeline/BOOT.md` · 18.6k tokens, 38 s |
 | T-A1 | none | queued | 0 | |
 | T-A2 | T-A1 | queued | 0 | |
 | T-P1 | T-A1 | queued | 0 | |
