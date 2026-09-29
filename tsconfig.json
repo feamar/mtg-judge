@@ -1,0 +1,2 @@
+{ "files": [], "references": [
+ {"path":"core"},{"path":"adapters/discord"},{"path":"adapters/anthropic"},{"path":"adapters/sqlite"},{"path":"adapters/stt"},{"path":"eval"},{"path":"app"} ] }

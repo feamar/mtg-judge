@@ -1,0 +1,10 @@
+{ "name": "mtg-judge", "private": true, "type": "module",
+  "engines": { "node": ">=24" },
+  "workspaces": ["core", "adapters/*", "pipeline", "eval", "app"],
+  "scripts": {
+    "build": "tsc -b",
+    "test": "vitest run",
+    "check:deps": "node pipeline/check-deps.mjs",
+    "check": "npm run build && npm run check:deps && npm test"
+  },
+  "devDependencies": { "typescript": "^5.9.0", "vitest": "^3.2.0", "zod": "^4.0.0", "@types/node": "^24.0.0" } }

@@ -12,3 +12,7 @@ heldout/
 *.raw.json
 *.raw.html
 *.transcript.html
+
+dist/
+*.tsbuildinfo
+pipeline/logs/
