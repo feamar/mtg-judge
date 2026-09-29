@@ -28,6 +28,7 @@ Status values: **Proposed** (in review in a PR), **Accepted** (merged by the pro
 | [0020](0020-event-local-policies-and-referrals.md) | TO-configured event policies (amending tournament policy only) are applied and cited; drops and other event-management actions are referred to the TO, never announced | Accepted |
 | [0021](0021-floor-judge-model-major-infractions.md) | Floor-judge model: the bot handles Warning-level and below; major infractions (above a Warning, and any suspected cheating) are detected, investigated and handed to a human judge with a recommendation, without announcing a penalty | Accepted |
 | [0022](0022-integrity-modes-and-remedy-authority.md) | Remedy authority (simple backups and prescribed partial fixes only; full backups to a human), TO integrity modes (good faith / table confirmation), integrity categories, non-overridable handoffs, the owner's neutral handoff message | Accepted |
+| [0023](0023-delivery-pipeline-and-gates.md) | Delivery pipeline: RUP phases, PDD cycles (MAP→TRIAGE→CARVE→PIN→SHIP→PROVE/HARDEN→RE-MAP), one agent per role, owner approval per stage, hardening gates H1–H6 | Proposed |
 
 ## Template
 

@@ -1,0 +1,1645 @@
+{
+ "version": 2,
+ "source": "PLAN.md v1 §5 (2026-09-28), extended for DEVELOPMENT-CASE (iteration, agent fields; WP-P pipeline; WP-S spikes)",
+ "wps": {
+  "WP-E": "Each family goes through the **scenario workshop** (ADR-0017 §3): the family's cases are already validated, so the S4 lesson holds (expected answers exist before the code).\n1. The knowledge author groups the family's gate cases.\n2. Features are tagged for their cards (parser first).\n3. Strategies or entries are drafted, with **bindings** for every case.\n4. The deterministic suite proves them.\n5. You review them in a batch (§7).\n6. They're merged.\n**Any disagreement between a case's prose answer and the drafted template goes to you,** never fixed silently (R-P3).\nThe remaining gate families (for example Combat, Counters, Damage & life, Card types & mechanics, Protection) are assigned to E3–E8 by the coverage matrix in M0; the matrix is the working checklist.\n"
+ },
+ "tasks": [
+  {
+   "id": "T-P1",
+   "wp": "WP-P",
+   "milestone": [],
+   "task": "Install gatechain and PDD as pinned git submodules in tools/, with configs; engineering-discipline plugin; licence and Windows 10 check (pipeline/TOOLS.md)",
+   "inputs": "ADR-0023, DEVELOPMENT-CASE",
+   "deps": [
+    "T-A1"
+   ],
+   "outputs": "pipeline/",
+   "acceptance": "A planted swallowed error fails G4/G5; a planted weak test fails pdd prove; licences recorded",
+   "reqs": [],
+   "size": "S",
+   "role": "Toolsmith",
+   "agent": "toolsmith",
+   "iteration": "E3",
+   "status": "queued"
+  },
+  {
+   "id": "T-P2",
+   "wp": "WP-P",
+   "milestone": [],
+   "task": "pipeline/slice.mjs: print one PRD/ADR/ARCH/golden/CR/IPG/MTR item by reference",
+   "inputs": "ADR-0023, DEVELOPMENT-CASE",
+   "deps": [
+    "T-A1"
+   ],
+   "outputs": "pipeline/",
+   "acceptance": "Fixture test per reference kind; unknown ref exits 1",
+   "reqs": [],
+   "size": "S",
+   "role": "Toolsmith",
+   "agent": "toolsmith",
+   "iteration": "E3",
+   "status": "queued"
+  },
+  {
+   "id": "T-P3",
+   "wp": "WP-P",
+   "milestone": [],
+   "task": "pipeline/gate.mjs: G0-G8, --lock, --integration, card-lint, digests capped at 40 lines (DEVELOPMENT-CASE §8)",
+   "inputs": "ADR-0023, DEVELOPMENT-CASE",
+   "deps": [
+    "T-P1",
+    "T-P2"
+   ],
+   "outputs": "pipeline/",
+   "acceptance": "One planted failure per gate gives the right digest in <=40 lines; an edited locked test fails G0",
+   "reqs": [],
+   "size": "M",
+   "role": "Toolsmith",
+   "agent": "toolsmith",
+   "iteration": "E3",
+   "status": "queued"
+  },
+  {
+   "id": "T-P4",
+   "wp": "WP-P",
+   "milestone": [],
+   "task": "Boot mechanism check: subagents vs headless claude -p on the Pro plan (ADR-0016), usage-limit behaviour (pipeline/BOOT.md)",
+   "inputs": "ADR-0023, DEVELOPMENT-CASE",
+   "deps": [],
+   "outputs": "pipeline/",
+   "acceptance": "Verdict written; project manager can boot a role and read back its STATUS line",
+   "reqs": [],
+   "size": "S",
+   "role": "Toolsmith",
+   "agent": "toolsmith",
+   "iteration": "E3",
+   "status": "queued"
+  },
+  {
+   "id": "T-A1",
+   "wp": "WP-A",
+   "milestone": [
+    "M0"
+   ],
+   "task": "Monorepo scaffold: npm workspaces `core`, `adapters/{discord,anthropic,sqlite,stt}`, `pipeline`, `eval`, `app`; TypeScript strict; Node 24; test runner and schema library (engineer's choice within ADR-0001)",
+   "inputs": "ADR-0001",
+   "deps": [],
+   "outputs": "Buildable repo",
+   "acceptance": "A planted `core` → `node:fs` import fails the dependency check (NFR-EXT-1, NFR-TECH-1)",
+   "reqs": [
+    "NFR-EXT-1",
+    "NFR-TECH-1"
+   ],
+   "size": "M",
+   "role": "Engineer",
+   "status": "queued",
+   "iteration": "E3",
+   "agent": "toolsmith"
+  },
+  {
+   "id": "T-A2",
+   "wp": "WP-A",
+   "milestone": [
+    "M0"
+   ],
+   "task": "CI on GitHub Actions: build, lint, unit tests, schema validation, golden suite, a string-literal lint for user-facing text",
+   "inputs": "T-A1",
+   "deps": [
+    "T-A1"
+   ],
+   "outputs": "Workflow file",
+   "acceptance": "CI goes red on a schema-invalid case, and on a hard-coded English string in `core` (NFR-I18N-1)",
+   "reqs": [
+    "NFR-I18N-1"
+   ],
+   "size": "S",
+   "role": "Engineer",
+   "status": "queued",
+   "iteration": "E3",
+   "agent": "toolsmith"
+  },
+  {
+   "id": "T-A3",
+   "wp": "WP-A",
+   "milestone": [
+    "M0"
+   ],
+   "task": "Shared schemas in `core`: all ARCHITECTURE §3 types, plus `GoldenCase` matching `golden/schema/golden-case.schema.json`",
+   "inputs": "T-A1",
+   "deps": [
+    "T-A1"
+   ],
+   "outputs": "`core/schema`",
+   "acceptance": "All 348 cases parse; round-trip tests",
+   "reqs": [],
+   "size": "M",
+   "role": "Engineer",
+   "status": "queued",
+   "iteration": "E4",
+   "agent": "implementer"
+  },
+  {
+   "id": "T-A4",
+   "wp": "WP-A",
+   "milestone": [
+    "M0"
+   ],
+   "task": "Case binding format: `golden/bindings/<caseId>.yaml` with `match`, `branchId`, `choices` (by `factId`, per seat), optional `canonical`, and `approvedBy`. The validator checks that every referenced ID exists in the bundle. The importers stay unchanged.",
+   "inputs": "T-A3",
+   "deps": [
+    "T-A3"
+   ],
+   "outputs": "Binding schema and validator",
+   "acceptance": "A binding pointing at a missing branch fails CI",
+   "reqs": [],
+   "size": "S",
+   "role": "Engineer",
+   "status": "queued",
+   "iteration": "E4",
+   "agent": "implementer"
+  },
+  {
+   "id": "T-B1",
+   "wp": "WP-B",
+   "milestone": [
+    "M0"
+   ],
+   "task": "CR importer: the dated TXT from media.wizards.com; CRLF and typographic punctuation into `searchText`; stable `CR:x` IDs; `refs`; glossary extraction (ADR-0014)",
+   "inputs": "T-A3",
+   "deps": [
+    "T-A3"
+   ],
+   "outputs": "CR sections in the bundle",
+   "acceptance": "Every `CR:` citation in the gate resolves (NFR-ACC-3); a search for \"can't be countered\" finds CR 113.6g-type text (ADR-0007)",
+   "reqs": [
+    "NFR-ACC-3"
+   ],
+   "size": "M",
+   "role": "Engineer",
+   "status": "queued",
+   "iteration": "E4",
+   "agent": "implementer"
+  },
+  {
+   "id": "T-B2",
+   "wp": "WP-B",
+   "milestone": [
+    "M0"
+   ],
+   "task": "Scryfall importer: `oracle_cards` and `rulings`, with User-Agent and Accept headers, WotC rulings only, manifest `updated_at` and hash. Plus a **pinned card subset for CI**: only the cards the bundle and the golden set use.",
+   "inputs": "T-A3",
+   "deps": [
+    "T-A3"
+   ],
+   "outputs": "Cards and rulings in the bundle",
+   "acceptance": "Every `input.cards` and `Oracle:` citation in the gate resolves (FR-Q-1, NFR-VER-1)",
+   "reqs": [
+    "FR-Q-1",
+    "NFR-VER-1"
+   ],
+   "size": "M",
+   "role": "Engineer",
+   "status": "queued",
+   "iteration": "E4",
+   "agent": "implementer"
+  },
+  {
+   "id": "T-B3",
+   "wp": "WP-B",
+   "milestone": [
+    "M0"
+   ],
+   "task": "IPG and MTR importers: normative text only; stripped annotations recorded. Must also parse citations written as `IPG:2.1 — Definition, …` (the Judge Lab style).",
+   "inputs": "T-A3",
+   "deps": [
+    "T-A3"
+   ],
+   "outputs": "IPG and MTR sections",
+   "acceptance": "Every `IPG:` and `MTR:` citation in the gate resolves",
+   "reqs": [],
+   "size": "M",
+   "role": "Engineer",
+   "status": "queued",
+   "iteration": "E4",
+   "agent": "implementer"
+  },
+  {
+   "id": "T-B4",
+   "wp": "WP-B",
+   "milestone": [
+    "M0"
+   ],
+   "task": "MTRA importer from `sources/addenda/mtra-2025-06-24.md` (`origin: manual-transcript`)",
+   "inputs": "T-A3",
+   "deps": [
+    "T-A3"
+   ],
+   "outputs": "MTRA sections",
+   "acceptance": "Every `MTRA:` citation in the gate resolves",
+   "reqs": [],
+   "size": "S",
+   "role": "Engineer",
+   "status": "queued",
+   "iteration": "E4",
+   "agent": "implementer"
+  },
+  {
+   "id": "T-B5",
+   "wp": "WP-B",
+   "milestone": [
+    "M0"
+   ],
+   "task": "Bundle builder: validation (ADR-0007 §4, ARCHITECTURE §4 step 5), manifest, precedence list, readable diff per document, stale flags, release-report skeleton",
+   "inputs": "T-B1–B4",
+   "deps": [
+    "T-B1",
+    "T-B2",
+    "T-B3",
+    "T-B4"
+   ],
+   "outputs": "`pipeline` CLI; `knowledge-<v>.sqlite`",
+   "acceptance": "FR-BUILD-1/2/3: a diff between two CR editions is readable; a bundle holding an `ai-draft` procedure or penalty row is refused",
+   "reqs": [
+    "FR-BUILD-1"
+   ],
+   "size": "L",
+   "role": "Engineer",
+   "status": "queued",
+   "iteration": "E4",
+   "agent": "implementer"
+  },
+  {
+   "id": "T-B6",
+   "wp": "WP-B",
+   "milestone": [
+    "M1"
+   ],
+   "task": "**Review queue tool:** lists every `ai-draft` item next to the exact source sections it cites, and records your approval (`approvedBy`, `approvedOn`, `derivation: reviewed`). Batches can be approved item by item.",
+   "inputs": "T-B5",
+   "deps": [
+    "T-B5"
+   ],
+   "outputs": "`pipeline review` command with a Markdown or local HTML view",
+   "acceptance": "An item becomes `reviewed` only through the approval command (FR-BUILD-4, D47)",
+   "reqs": [
+    "FR-BUILD-4",
+    "D47"
+   ],
+   "size": "M",
+   "role": "Engineer",
+   "status": "queued",
+   "iteration": "E4",
+   "agent": "implementer"
+  },
+  {
+   "id": "T-C1",
+   "wp": "WP-C",
+   "milestone": [
+    "M1",
+    "M2"
+   ],
+   "task": "Card resolver: exact, normalised, fuzzy, and nicknames from the lexicon (phonetic matching in T-G1)",
+   "inputs": "T-B2",
+   "deps": [
+    "T-B2"
+   ],
+   "outputs": "Resolver",
+   "acceptance": "Clean text of every gate case resolves its `input.cards`; an ambiguous name gives a choice question (FR-Q-2)",
+   "reqs": [
+    "FR-Q-2"
+   ],
+   "size": "M",
+   "role": "Engineer",
+   "status": "queued",
+   "iteration": "E4",
+   "alsoIn": [
+    "C1"
+   ],
+   "agent": "implementer"
+  },
+  {
+   "id": "T-C2",
+   "wp": "WP-C",
+   "milestone": [
+    "M1",
+    "M2"
+   ],
+   "task": "Matcher: lexicon to concepts, intents and infractions; candidates in ADR-0017 order (entry, official ruling, strategy; procedures for disputes); several candidates give a choice",
+   "inputs": "T-C1",
+   "deps": [
+    "T-C1"
+   ],
+   "outputs": "Matcher",
+   "acceptance": "Unit tests per candidate kind; routing tests for rules question vs dispute",
+   "reqs": [],
+   "size": "M",
+   "role": "Engineer",
+   "status": "queued",
+   "iteration": "E4",
+   "alsoIn": [
+    "C1"
+   ],
+   "agent": "implementer"
+  },
+  {
+   "id": "T-C3",
+   "wp": "WP-C",
+   "milestone": [
+    "M1",
+    "M2"
+   ],
+   "task": "Decision-graph engine: claims vs facts with origin; derived facts; three-valued branch evaluation; decisive facts; next question by priority, then best split; the guard; disputes",
+   "inputs": "T-A3",
+   "deps": [
+    "T-A3"
+   ],
+   "outputs": "Engine",
+   "acceptance": "FR-INV-2 AC (required facts asked), FR-INV-3 (forbidden questions), FR-RUL-4, FR-RUL-6; property test: the same facts in any order give the same branch (NFR-IMP-1)",
+   "reqs": [
+    "FR-INV-2",
+    "FR-INV-3",
+    "FR-RUL-4",
+    "FR-RUL-6",
+    "NFR-IMP-1"
+   ],
+   "size": "L",
+   "role": "Engineer",
+   "status": "queued",
+   "iteration": "E4",
+   "alsoIn": [
+    "C1"
+   ],
+   "agent": "implementer"
+  },
+  {
+   "id": "T-C4",
+   "wp": "WP-C",
+   "milestone": [
+    "M1",
+    "M3"
+   ],
+   "task": "Ruling composer: locale templates; short and full answers (FR-Q-5); citation chain for [Why?]; penalty lookup with the base-penalty label (FR-POL-3); fix steps; delivery pattern (FR-POL-2); remedy tags (FR-POL-4)",
+   "inputs": "T-C3",
+   "deps": [
+    "T-C3"
+   ],
+   "outputs": "Composer",
+   "acceptance": "The FR-POL-1 and FR-POL-2 ACs on bound cases; the base label on every issued penalty",
+   "reqs": [
+    "FR-Q-5",
+    "FR-POL-3",
+    "FR-POL-2",
+    "FR-POL-4",
+    "FR-POL-1"
+   ],
+   "size": "M",
+   "role": "Engineer",
+   "status": "queued",
+   "iteration": "E4",
+   "alsoIn": [
+    "C2"
+   ],
+   "agent": "implementer"
+  },
+  {
+   "id": "T-C5",
+   "wp": "WP-C",
+   "milestone": [
+    "M1"
+   ],
+   "task": "Verifier and output lint (ARCHITECTURE §5.6, ADR-0009 §5)",
+   "inputs": "T-B5",
+   "deps": [
+    "T-B5"
+   ],
+   "outputs": "Verifier",
+   "acceptance": "NFR-ACC-3; a planted protected term blocks the message and escalates",
+   "reqs": [
+    "NFR-ACC-3"
+   ],
+   "size": "M",
+   "role": "Engineer",
+   "status": "queued",
+   "iteration": "E4",
+   "agent": "implementer"
+  },
+  {
+   "id": "T-C6",
+   "wp": "WP-C",
+   "milestone": [
+    "M1",
+    "M3"
+   ],
+   "task": "Escalation policy: FR-ESC-1 (b)–(g); `humanThreshold: above-warning`; `alwaysEscalate`; integrity categories and both modes (ADR-0022); stop rule; `cheapToCollect` first (FR-ESC-2); handoff package (FR-ESC-3); neutral message (FR-ESC-5)",
+   "inputs": "T-C3, T-C8",
+   "deps": [
+    "T-C3",
+    "T-C8"
+   ],
+   "outputs": "Escalation module",
+   "acceptance": "The FR-ESC-4 ACs (all three); FR-POL-4 AC; the 68 integrity runs",
+   "reqs": [
+    "FR-ESC-1",
+    "FR-ESC-2",
+    "FR-ESC-3",
+    "FR-ESC-5",
+    "FR-ESC-4",
+    "FR-POL-4"
+   ],
+   "size": "L",
+   "role": "Engineer",
+   "status": "queued",
+   "iteration": "E4",
+   "alsoIn": [
+    "C2"
+   ],
+   "agent": "implementer"
+  },
+  {
+   "id": "T-C7",
+   "wp": "WP-C",
+   "milestone": [
+    "M1"
+   ],
+   "task": "Case orchestrator: event-sourced case; fold; per-case queue; lifecycle (ARCHITECTURE §5.1); idempotency keys",
+   "inputs": "T-A3",
+   "deps": [
+    "T-A3"
+   ],
+   "outputs": "Orchestrator",
+   "acceptance": "Replaying a log gives the same state; duplicate inbound messages are ignored (ADR-0011)",
+   "reqs": [],
+   "size": "M",
+   "role": "Engineer",
+   "status": "queued",
+   "iteration": "E4",
+   "agent": "implementer"
+  },
+  {
+   "id": "T-C8",
+   "wp": "WP-C",
+   "milestone": [
+    "M1"
+   ],
+   "task": "Typed-audience outbox and content types (ADR-0009)",
+   "inputs": "T-A3",
+   "deps": [
+    "T-A3"
+   ],
+   "outputs": "Outbox",
+   "acceptance": "A `Remedy` can't be sent to `PlayerPrivate`; a `InvestigationNote` can't be sent to `Table` (FR-INT-3, D9)",
+   "reqs": [
+    "FR-INT-3",
+    "D9"
+   ],
+   "size": "S",
+   "role": "Engineer",
+   "status": "queued",
+   "iteration": "E4",
+   "agent": "implementer"
+  },
+  {
+   "id": "T-C9",
+   "wp": "WP-C",
+   "milestone": [
+    "M2"
+   ],
+   "task": "Rule modules, each tested by its validated scenario family, in this order: **targeting and countering** (port S4 to TypeScript), **triggers** (count per event, APNAP 603.3b, optional or mandatory, delayed 603.7), **mana abilities** (605.1a/b including the 2026-09-25 library criterion), **turn structure and SBAs** (514, 704)",
+   "inputs": "T-C3, validated families",
+   "deps": [
+    "T-C3"
+   ],
+   "outputs": "`core/rules/*`",
+   "acceptance": "Each module's family passes; each rule is isolated by at least 2 cases (S4 lesson 3)",
+   "reqs": [],
+   "size": "M each",
+   "role": "Engineer",
+   "status": "queued",
+   "iteration": "C1",
+   "agent": "implementer"
+  },
+  {
+   "id": "T-C10",
+   "wp": "WP-C",
+   "milestone": [
+    "M3"
+   ],
+   "task": "Event context and roles: store, Admin → TO role mapping, join codes, permission checks, the no-context path (FR-CTX-2)",
+   "inputs": "T-A3",
+   "deps": [
+    "T-A3"
+   ],
+   "outputs": "`core/context`",
+   "acceptance": "ACs of FR-CTX-1 and FR-ADM-1; FR-CTX-2 golden-style test; no pairing, standing or timer entity exists (FR-CTX-3)",
+   "reqs": [
+    "FR-CTX-2",
+    "FR-CTX-1",
+    "FR-ADM-1",
+    "FR-CTX-3"
+   ],
+   "size": "M",
+   "role": "Engineer",
+   "status": "queued",
+   "iteration": "C2",
+   "agent": "implementer"
+  },
+  {
+   "id": "T-D1",
+   "wp": "WP-D",
+   "milestone": [
+    "M1",
+    "M2"
+   ],
+   "task": "Deterministic golden runner: case + binding → matcher (from raw text, or from the bound canonical question per OQ-39) → scripted choices by `factId` → checks match, questions asked, branch, penalty, fix, delivery pattern, citations, disposition, no-leak, per integrity setting",
+   "inputs": "T-A4, T-C*",
+   "deps": [
+    "T-A4",
+    "T-C*"
+   ],
+   "outputs": "`eval` runner",
+   "acceptance": "ADR-0013 §2 and §6 checks, each with a failing fixture",
+   "reqs": [],
+   "size": "L",
+   "role": "Engineer",
+   "status": "queued",
+   "iteration": "E4",
+   "alsoIn": [
+    "C1"
+   ],
+   "agent": "implementer"
+  },
+  {
+   "id": "T-D2",
+   "wp": "WP-D",
+   "milestone": [
+    "M0"
+   ],
+   "task": "Suites, filters and reports: `gate` (265), `report-only` (83), by family, by tag; a **coverage matrix** (case → family → bound item or \"unbound\"); JSON and Markdown output",
+   "inputs": "T-A3",
+   "deps": [
+    "T-A3"
+   ],
+   "outputs": "Reports",
+   "acceptance": "The gate count is 265 = 188 easy + 77 hard",
+   "reqs": [],
+   "size": "S",
+   "role": "Engineer",
+   "status": "queued",
+   "iteration": "E4",
+   "agent": "implementer"
+  },
+  {
+   "id": "T-D3",
+   "wp": "WP-D",
+   "milestone": [
+    "M4"
+   ],
+   "task": "Robustness runner with `golden/tools/noisify.mjs`: severities 1–3, fixed seeds; stored human variants; metrics (canonical accuracy, answer identity, clarification rate, **confidently wrong**)",
+   "inputs": "T-G1",
+   "deps": [
+    "T-G1"
+   ],
+   "outputs": "Robustness report",
+   "acceptance": "NFR-ROB-1, NFR-IMP-1; one planted wrong resolution counts as confidently wrong",
+   "reqs": [
+    "NFR-ROB-1",
+    "NFR-IMP-1"
+   ],
+   "size": "M",
+   "role": "Engineer",
+   "status": "queued",
+   "iteration": "C3",
+   "agent": "implementer"
+  },
+  {
+   "id": "T-D4",
+   "wp": "WP-D",
+   "milestone": [
+    "M2"
+   ],
+   "task": "Strategy self-check: each `AnswerStrategy` reproduces every case in `derivedFrom`",
+   "inputs": "T-D1",
+   "deps": [
+    "T-D1"
+   ],
+   "outputs": "Check in CI",
+   "acceptance": "ADR-0013 consequences",
+   "reqs": [],
+   "size": "S",
+   "role": "Engineer",
+   "status": "queued",
+   "iteration": "C1",
+   "agent": "implementer"
+  },
+  {
+   "id": "T-D5",
+   "wp": "WP-D",
+   "milestone": [],
+   "task": "Held-out runner: reads cases from an external path, prints **aggregates only**, never case text",
+   "inputs": "T-D1",
+   "deps": [
+    "T-D1"
+   ],
+   "outputs": "Runner mode",
+   "acceptance": "A run over a fixture directory prints no input text",
+   "reqs": [],
+   "size": "S",
+   "role": "Engineer",
+   "status": "queued",
+   "iteration": "C2",
+   "agent": "implementer"
+  },
+  {
+   "id": "T-D6",
+   "wp": "WP-D",
+   "milestone": [
+    "M4"
+   ],
+   "task": "AI test-set runner: first **check which ADR-0016 option applies** (Claude Code headless via an eval-only `LlmPort` adapter, or an interactive session). The bot can never load the eval adapter.",
+   "inputs": "T-I1",
+   "deps": [
+    "T-I1"
+   ],
+   "outputs": "Runner, or a documented session procedure",
+   "acceptance": "The runner or procedure is documented; the bot build refuses the eval adapter",
+   "reqs": [],
+   "size": "M",
+   "role": "Engineer",
+   "status": "queued",
+   "iteration": "C3",
+   "agent": "implementer"
+  },
+  {
+   "id": "T-E0",
+   "wp": "WP-E",
+   "milestone": [
+    "M2"
+   ],
+   "task": "Deterministic Oracle parser for `CardFeatures` (templated abilities: `{T}: Add …`, \"Whenever …\", \"can't be countered\", targets)",
+   "inputs": "",
+   "deps": [],
+   "outputs": "",
+   "acceptance": "",
+   "families": "—",
+   "reqs": [],
+   "size": "L",
+   "role": "Engineer",
+   "status": "queued",
+   "iteration": "C1",
+   "agent": "implementer"
+  },
+  {
+   "id": "T-E1",
+   "wp": "WP-E",
+   "milestone": [
+    "M1",
+    "M2"
+   ],
+   "task": "Concept entries and mnemonics (FR-Q-4): priority, the stack, APNAP, SBAs, cleanup, layers overview, the commander zone",
+   "inputs": "",
+   "deps": [],
+   "outputs": "",
+   "acceptance": "",
+   "families": "concept, timing",
+   "reqs": [
+    "FR-Q-4"
+   ],
+   "size": "M",
+   "role": "Knowledge author",
+   "status": "queued",
+   "iteration": "E4",
+   "alsoIn": [
+    "C1"
+   ],
+   "agent": "knowledge-author"
+  },
+  {
+   "id": "T-E2",
+   "wp": "WP-E",
+   "milestone": [
+    "M2"
+   ],
+   "task": "Targeting and countering: port S4's features and strategies; tag official rulings",
+   "inputs": "",
+   "deps": [],
+   "outputs": "",
+   "acceptance": "",
+   "families": "targeting; Illegal targets; Target restrictions; Retargeting (…); Modes and targets; Countering (…); Spell versus ability; Optional targets",
+   "reqs": [],
+   "size": "M",
+   "role": "Knowledge author",
+   "status": "queued",
+   "iteration": "C1",
+   "agent": "knowledge-author"
+  },
+  {
+   "id": "T-E3",
+   "wp": "WP-E",
+   "milestone": [
+    "M2"
+   ],
+   "task": "Triggers",
+   "inputs": "",
+   "deps": [],
+   "outputs": "",
+   "acceptance": "",
+   "families": "triggers; Trigger timing, kinds, ordering, conditions, counts; Delayed triggers; Cast triggers; Multiplayer trigger counts; Independent triggers; Last known information",
+   "reqs": [],
+   "size": "L",
+   "role": "Knowledge author",
+   "status": "queued",
+   "iteration": "C1",
+   "agent": "knowledge-author"
+  },
+  {
+   "id": "T-E4",
+   "wp": "WP-E",
+   "milestone": [
+    "M2"
+   ],
+   "task": "Mana",
+   "inputs": "",
+   "deps": [],
+   "outputs": "",
+   "acceptance": "",
+   "families": "mana; Mana abilities; Mana triggers; Mana versus nonmana abilities; Restricted mana",
+   "reqs": [],
+   "size": "M",
+   "role": "Knowledge author",
+   "status": "queued",
+   "iteration": "C1",
+   "agent": "knowledge-author"
+  },
+  {
+   "id": "T-E5",
+   "wp": "WP-E",
+   "milestone": [
+    "M2"
+   ],
+   "task": "Timing, turn structure and SBAs",
+   "inputs": "",
+   "deps": [],
+   "outputs": "",
+   "acceptance": "",
+   "families": "timing; Timing & turns; Skipped steps; State-based actions; Costs and SBAs",
+   "reqs": [],
+   "size": "M",
+   "role": "Knowledge author",
+   "status": "queued",
+   "iteration": "C1",
+   "agent": "knowledge-author"
+  },
+  {
+   "id": "T-E6",
+   "wp": "WP-E",
+   "milestone": [
+    "M2"
+   ],
+   "task": "Casting and costs",
+   "inputs": "",
+   "deps": [],
+   "outputs": "",
+   "acceptance": "",
+   "families": "Casting & costs; Alternative costs (and X); Additional costs; Locked-in costs; X and mana value; Mana value; Storm; Activation restrictions",
+   "reqs": [],
+   "size": "L",
+   "role": "Knowledge author",
+   "status": "queued",
+   "iteration": "C1",
+   "agent": "knowledge-author"
+  },
+  {
+   "id": "T-E7",
+   "wp": "WP-E",
+   "milestone": [
+    "M4"
+   ],
+   "task": "Replacement, zones, search, commander",
+   "inputs": "",
+   "deps": [],
+   "outputs": "",
+   "acceptance": "",
+   "families": "Replacement & prevention; Entry replacement effects; Token replacement; Zones; Search (…); Commander (…); Cast versus put; Play permissions; Draw restrictions",
+   "reqs": [],
+   "size": "L",
+   "role": "Knowledge author",
+   "status": "queued",
+   "iteration": "C3",
+   "agent": "knowledge-author"
+  },
+  {
+   "id": "T-E8",
+   "wp": "WP-E",
+   "milestone": [
+    "M4"
+   ],
+   "task": "Layers and copy (hard): strategies for the common cEDH cases (Blood Moon, Dress Down, clones, Blatant Thievery); the rest as one-off entries or expected escalation",
+   "inputs": "",
+   "deps": [],
+   "outputs": "",
+   "acceptance": "",
+   "families": "layers; Layers; Copies & characteristics; Copy effects and layers; Type changes (…)",
+   "reqs": [],
+   "size": "L",
+   "role": "Knowledge author",
+   "status": "queued",
+   "iteration": "C3",
+   "agent": "knowledge-author"
+  },
+  {
+   "id": "T-E9",
+   "wp": "WP-E",
+   "milestone": [
+    "M2"
+   ],
+   "task": "Official-ruling tags (intents, concepts) for every card in the gate set",
+   "inputs": "",
+   "deps": [],
+   "outputs": "",
+   "acceptance": "",
+   "families": "—",
+   "reqs": [],
+   "size": "M",
+   "role": "Knowledge author",
+   "status": "queued",
+   "iteration": "C1",
+   "agent": "knowledge-author"
+  },
+  {
+   "id": "T-E10",
+   "wp": "WP-E",
+   "milestone": [
+    "M4"
+   ],
+   "task": "MTR and MTRA procedure answers (FR-Q-3), never applied to event data (NG1)",
+   "inputs": "",
+   "deps": [],
+   "outputs": "",
+   "acceptance": "",
+   "families": "Commander tournament timing; Commander end of round",
+   "reqs": [
+    "FR-Q-3"
+   ],
+   "size": "S",
+   "role": "Knowledge author",
+   "status": "queued",
+   "iteration": "C3",
+   "agent": "knowledge-author"
+  },
+  {
+   "id": "T-E11",
+   "wp": "WP-E",
+   "milestone": [],
+   "task": "Feature tagging for a **cEDH staples list** you approve (reach beyond the golden set, ADR-0017 priority order)",
+   "inputs": "",
+   "deps": [],
+   "outputs": "",
+   "acceptance": "",
+   "families": "—",
+   "reqs": [],
+   "size": "M",
+   "role": "Knowledge author, owner",
+   "status": "queued",
+   "iteration": "C3",
+   "agent": "knowledge-author"
+  },
+  {
+   "id": "T-F1",
+   "wp": "WP-F",
+   "milestone": [
+    "M3"
+   ],
+   "task": "Infraction catalog and `PenaltyRow`s for **plain MTR/IPG** and **MTRA**, with severity data",
+   "inputs": "T-B3, T-B4",
+   "deps": [
+    "T-B3",
+    "T-B4"
+   ],
+   "outputs": "Rows",
+   "acceptance": "Every infraction has a row per framework (bundle validation); FR-POL-1 AC (Turn Skip)",
+   "reqs": [
+    "FR-POL-1"
+   ],
+   "size": "M",
+   "role": "Knowledge author",
+   "status": "queued",
+   "iteration": "C2",
+   "agent": "knowledge-author"
+  },
+  {
+   "id": "T-F2",
+   "wp": "WP-F",
+   "milestone": [
+    "M3"
+   ],
+   "task": "MTRA `AddendumEdit`s: what each MTRA section replaces, adds or modifies",
+   "inputs": "T-B4",
+   "deps": [
+    "T-B4"
+   ],
+   "outputs": "Edits",
+   "acceptance": "Every MTRA penalty or procedure change is represented, reviewed side by side with its sections",
+   "reqs": [],
+   "size": "M",
+   "role": "Knowledge author",
+   "status": "queued",
+   "iteration": "C2",
+   "agent": "knowledge-author"
+  },
+  {
+   "id": "T-F3",
+   "wp": "WP-F",
+   "milestone": [
+    "M3"
+   ],
+   "task": "Procedures, per framework, in this order: Missed Trigger; Hidden Card Error (the set can be the library, SCN-001); GRV and partial fixes; Looking at Extra Cards; Failure to Maintain Game State; Communication Policy Violation; Mulligan procedure; Deck and decklist problems; Insufficient Shuffling; Marked Cards; Outside Assistance; Slow Play; Tardiness; Unsporting Conduct (Minor, Cheating, Improperly Determining a Winner, Bribery and Wagering); appeals; MTRA 2.5 concessions with the TO referral (FR-CTX-6)",
+   "inputs": "T-F1, T-C3",
+   "deps": [
+    "T-F1",
+    "T-C3"
+   ],
+   "outputs": "`Procedure`s with approved question wording, `askWho`, stop rules",
+   "acceptance": "Every gate dispute passes; FR-INV-1 AC (no procedure released unreviewed)",
+   "reqs": [
+    "FR-CTX-6",
+    "FR-INV-1"
+   ],
+   "size": "L (×2)",
+   "role": "Knowledge author",
+   "status": "queued",
+   "iteration": "C2",
+   "agent": "knowledge-author"
+  },
+  {
+   "id": "T-F4",
+   "wp": "WP-F",
+   "milestone": [
+    "M3"
+   ],
+   "task": "Integrity predicates and remedy tags: categories, strong indicators per procedure, `simple-backup`, `partial-fix` or `full-backup` per remedy step (ADR-0022)",
+   "inputs": "T-F3",
+   "deps": [
+    "T-F3"
+   ],
+   "outputs": "Predicates",
+   "acceptance": "The 68 integrity runs; FR-POL-4 AC",
+   "reqs": [
+    "FR-POL-4"
+   ],
+   "size": "M",
+   "role": "Knowledge author",
+   "status": "queued",
+   "iteration": "C2",
+   "agent": "knowledge-author"
+  },
+  {
+   "id": "T-F5",
+   "wp": "WP-F",
+   "milestone": [
+    "M3"
+   ],
+   "task": "`alwaysEscalate` list v0 (empty, plus what you add as cases come up, D62)",
+   "inputs": "—",
+   "deps": [],
+   "outputs": "Config",
+   "acceptance": "—",
+   "reqs": [
+    "D62"
+   ],
+   "size": "S",
+   "role": "Owner",
+   "status": "queued",
+   "iteration": "C2",
+   "agent": "owner"
+  },
+  {
+   "id": "T-G1",
+   "wp": "WP-G",
+   "milestone": [
+    "M4"
+   ],
+   "task": "Normaliser (ADR-0018 steps 1–3 and 5): text normalisation, slots (cards including phonetic matching, seats, claims, intent), confidence, read-back",
+   "inputs": "T-C1, T-C2",
+   "deps": [
+    "T-C1",
+    "T-C2"
+   ],
+   "outputs": "`CanonicalQuestion`",
+   "acceptance": "`expect.canonical` where present; FR-RUL-5 read-back",
+   "reqs": [
+    "FR-RUL-5"
+   ],
+   "size": "L",
+   "role": "Engineer",
+   "status": "queued",
+   "iteration": "C3",
+   "agent": "implementer"
+  },
+  {
+   "id": "T-G2",
+   "wp": "WP-G",
+   "milestone": [
+    "M4"
+   ],
+   "task": "Narration intake (ADR-0019): skip rule, narrator and volunteer check, silent follow-along, end triggers, wrap-up and tone markers, the 3-minute safety net",
+   "inputs": "T-G1, T-C7",
+   "deps": [
+    "T-G1",
+    "T-C7"
+   ],
+   "outputs": "`Narrating` state",
+   "acceptance": "`intake-01`; both FR-INT-4 ACs as cases",
+   "reqs": [
+    "FR-INT-4"
+   ],
+   "size": "L",
+   "role": "Engineer",
+   "status": "queued",
+   "iteration": "C3",
+   "agent": "implementer"
+  },
+  {
+   "id": "T-G3",
+   "wp": "WP-G",
+   "milestone": [
+    "M4"
+   ],
+   "task": "Lexicon growth: nicknames, shorthand, speech confusions, wrap-up and volunteer phrases, tone markers",
+   "inputs": "S3 texts",
+   "deps": [],
+   "outputs": "Lexicon data",
+   "acceptance": "Robustness confidently wrong = 0",
+   "reqs": [],
+   "size": "M",
+   "role": "Knowledge author",
+   "status": "queued",
+   "iteration": "C3",
+   "agent": "knowledge-author"
+  },
+  {
+   "id": "T-G4",
+   "wp": "WP-G",
+   "milestone": [
+    "M4"
+   ],
+   "task": "Human variants (`input.variants`, `kind: human`) for the gate cases most asked about, from the S3 texts and your phrasings",
+   "inputs": "S3",
+   "deps": [],
+   "outputs": "Variants",
+   "acceptance": "Each variant passes, or asks the listed clarification",
+   "reqs": [],
+   "size": "M",
+   "role": "Case author, owner",
+   "status": "queued",
+   "iteration": "C3",
+   "agent": "case-author"
+  },
+  {
+   "id": "T-H1",
+   "wp": "WP-H",
+   "milestone": [
+    "M1"
+   ],
+   "task": "Discord adapter: gateway and intents, author → seat, `Question` rendered as buttons or selects, slash-command skeleton, outbox sending",
+   "inputs": "T-C7, T-C8",
+   "deps": [
+    "T-C7",
+    "T-C8"
+   ],
+   "outputs": "Adapter",
+   "acceptance": "Live test in the test server; FR-INT-2",
+   "reqs": [
+    "FR-INT-2"
+   ],
+   "size": "M",
+   "role": "Engineer",
+   "status": "queued",
+   "iteration": "E4",
+   "agent": "implementer"
+  },
+  {
+   "id": "T-H2",
+   "wp": "WP-H",
+   "milestone": [
+    "M1"
+   ],
+   "task": "`discord-private-thread` TicketSource from the S2 recordings (fixtures replayed in CI); join method (A) or (B); reopen within 7 days resumes the case",
+   "inputs": "S2",
+   "deps": [],
+   "outputs": "Plugin",
+   "acceptance": "S2 pass criteria re-run on product code; R13 fixtures in CI",
+   "reqs": [],
+   "size": "M",
+   "role": "Engineer",
+   "status": "queued",
+   "iteration": "E4",
+   "agent": "implementer"
+  },
+  {
+   "id": "T-H3",
+   "wp": "WP-H",
+   "milestone": [
+    "M5"
+   ],
+   "task": "Commands: context create and edit, TO role mapping (Admin only), join code, `/judge case`, `/judge export` (pseudonymised golden candidate), `/judge doctor`, Admin delete-user",
+   "inputs": "T-C10",
+   "deps": [
+    "T-C10"
+   ],
+   "outputs": "Commands",
+   "acceptance": "FR-CTX-1, FR-CTX-4, FR-ADM-1, FR-LOG-2, FR-LOG-3, NFR-PRIV-1",
+   "reqs": [
+    "FR-CTX-1",
+    "FR-CTX-4",
+    "FR-ADM-1",
+    "FR-LOG-2",
+    "FR-LOG-3",
+    "NFR-PRIV-1"
+   ],
+   "size": "L",
+   "role": "Engineer",
+   "status": "queued",
+   "iteration": "C4",
+   "agent": "implementer"
+  },
+  {
+   "id": "T-H4",
+   "wp": "WP-H",
+   "milestone": [
+    "M5"
+   ],
+   "task": "Catch-up on start and reconnect; idempotent resend; one idle nudge",
+   "inputs": "T-H2",
+   "deps": [
+    "T-H2"
+   ],
+   "outputs": "Catch-up",
+   "acceptance": "The S2 outage test on product code (NFR-AVAIL-1)",
+   "reqs": [
+    "NFR-AVAIL-1"
+   ],
+   "size": "M",
+   "role": "Engineer",
+   "status": "queued",
+   "iteration": "C4",
+   "agent": "implementer"
+  },
+  {
+   "id": "T-H5",
+   "wp": "WP-H",
+   "milestone": [
+    "M5"
+   ],
+   "task": "Retention job (7 days) and nightly backups that also expire",
+   "inputs": "T-C7",
+   "deps": [
+    "T-C7"
+   ],
+   "outputs": "Job",
+   "acceptance": "D39, FR-LOG-1",
+   "reqs": [
+    "D39",
+    "FR-LOG-1"
+   ],
+   "size": "S",
+   "role": "Engineer",
+   "status": "queued",
+   "iteration": "C4",
+   "agent": "implementer"
+  },
+  {
+   "id": "T-H6",
+   "wp": "WP-H",
+   "milestone": [
+    "M5"
+   ],
+   "task": "Deployment: Docker Compose, or the Windows-service fallback; env file; startup message; heartbeat; **daily owner summary** (cases, hit rate, misses, escalations, spend)",
+   "inputs": "Host ready (§9)",
+   "deps": [],
+   "outputs": "Running bot",
+   "acceptance": "Restart on boot; summary posted",
+   "reqs": [],
+   "size": "M",
+   "role": "Engineer, owner",
+   "status": "queued",
+   "iteration": "C4",
+   "agent": "implementer"
+  },
+  {
+   "id": "T-H7",
+   "wp": "WP-H",
+   "milestone": [
+    "M5"
+   ],
+   "task": "TO setup checklist (at most 10 items, including the auto-close warning) and the player privacy notice (D44)",
+   "inputs": "S2",
+   "deps": [],
+   "outputs": "Docs and template",
+   "acceptance": "You approve both",
+   "reqs": [
+    "D44"
+   ],
+   "size": "S",
+   "role": "Engineer, owner",
+   "status": "queued",
+   "iteration": "C4",
+   "agent": "implementer"
+  },
+  {
+   "id": "T-I1",
+   "wp": "WP-I",
+   "milestone": [
+    "M4"
+   ],
+   "task": "`LlmPort` and the Anthropic adapter: structured output, token usage, seat labels only, player-safe projection",
+   "inputs": "ADR-0002, ADR-0009",
+   "deps": [],
+   "outputs": "Port and adapter",
+   "acceptance": "No Discord identity in any prompt (test); the provider is invisible to `core` (NFR-TECH-1)",
+   "reqs": [
+    "NFR-TECH-1"
+   ],
+   "size": "M",
+   "role": "Engineer",
+   "status": "queued",
+   "iteration": "C3",
+   "agent": "implementer"
+  },
+  {
+   "id": "T-I2",
+   "wp": "WP-I",
+   "milestone": [
+    "M4"
+   ],
+   "task": "`interpret` prompts (locale catalog) for: unmatched text → closed lists, a fact's options, wrap-up label, tone label, contest detection",
+   "inputs": "T-I1",
+   "deps": [
+    "T-I1"
+   ],
+   "outputs": "Prompts",
+   "acceptance": "AI set (a)",
+   "reqs": [],
+   "size": "M",
+   "role": "Engineer, knowledge author",
+   "status": "queued",
+   "iteration": "C3",
+   "agent": "implementer"
+  },
+  {
+   "id": "T-I3",
+   "wp": "WP-I",
+   "milestone": [
+    "M4"
+   ],
+   "task": "`reason` fallback: retrieval (ADR-0005 steps 1–5, FTS5), citations restricted to the retrieval set, verifier, the \"not reviewed\" marker, `LibraryMiss` log; a failed check gives `UNRESOLVED` and a handoff",
+   "inputs": "T-I1, T-C5",
+   "deps": [
+    "T-I1",
+    "T-C5"
+   ],
+   "outputs": "Fallback",
+   "acceptance": "FR-Q-6, FR-RUL-9, NFR-ACC-3; AI set (b)",
+   "reqs": [
+    "FR-Q-6",
+    "FR-RUL-9",
+    "NFR-ACC-3"
+   ],
+   "size": "L",
+   "role": "Engineer",
+   "status": "queued",
+   "iteration": "C3",
+   "agent": "implementer"
+  },
+  {
+   "id": "T-I4",
+   "wp": "WP-I",
+   "milestone": [
+    "M5"
+   ],
+   "task": "Spend ledger, monthly cap, questions-only mode, 80% and 100% alerts, per-player rate limit",
+   "inputs": "T-I1",
+   "deps": [
+    "T-I1"
+   ],
+   "outputs": "Cost governor",
+   "acceptance": "NFR-COST-2 at a test cap",
+   "reqs": [
+    "NFR-COST-2"
+   ],
+   "size": "M",
+   "role": "Engineer",
+   "status": "queued",
+   "iteration": "C4",
+   "agent": "implementer"
+  },
+  {
+   "id": "T-I5",
+   "wp": "WP-I",
+   "milestone": [
+    "M4"
+   ],
+   "task": "AI sets: (a) about 40 `interpret` cases, (b) about 30 `reason` cases with **no** library entry; run on the Pro plan through T-D6",
+   "inputs": "T-D6",
+   "deps": [
+    "T-D6"
+   ],
+   "outputs": "Sets and reports",
+   "acceptance": "Reported before M4 exit and before release; you read set (b)'s answers",
+   "reqs": [
+    "D6"
+   ],
+   "size": "M",
+   "role": "Case author, owner",
+   "status": "queued",
+   "iteration": "C3",
+   "agent": "case-author"
+  },
+  {
+   "id": "T-J1",
+   "wp": "WP-J",
+   "milestone": [
+    "M3"
+   ],
+   "task": "**MTRA variants** of the gate's policy cases (about 35), including the FR-POL-1 AC (Deck Problem → Turn Skip) and the FR-INT-3 AC (Hidden Card Error remedy)",
+   "inputs": "T-B4",
+   "deps": [
+    "T-B4"
+   ],
+   "outputs": "Cases, SOURCE CHECK REQUIRED until you sign off",
+   "acceptance": "Signed off before M3 exit",
+   "reqs": [
+    "FR-POL-1",
+    "FR-INT-3"
+   ],
+   "size": "M",
+   "role": "Case author, owner",
+   "status": "queued",
+   "iteration": "C2",
+   "agent": "case-author"
+  },
+  {
+   "id": "T-J2",
+   "wp": "WP-J",
+   "milestone": [],
+   "task": "Family growth toward about 1,000 cases (D38): one variant per strategy branch with **other cards**, priority from S3 and the coverage matrix",
+   "inputs": "T-E*",
+   "deps": [
+    "T-E*"
+   ],
+   "outputs": "About 450 cases",
+   "acceptance": "Signed off in weekly batches",
+   "reqs": [
+    "D38"
+   ],
+   "size": "L, ongoing",
+   "role": "Case author, owner",
+   "status": "queued",
+   "iteration": "C1",
+   "agent": "case-author"
+  },
+  {
+   "id": "T-J3",
+   "wp": "WP-J",
+   "milestone": [
+    "M3",
+    "M6"
+   ],
+   "task": "**Held-out set:** about 150–200 new cases (about a quarter disputes, OQ-25), written in **separate case-author sessions outside this repository**, stored in a private repository, never read by building roles (D49). Run only by T-D5 at M4 exit and for the release.",
+   "inputs": "Private repo (§9)",
+   "deps": [],
+   "outputs": "Held-out set",
+   "acceptance": "Signed off by you; aggregates only in reports",
+   "reqs": [
+    "D49",
+    "D5"
+   ],
+   "size": "L",
+   "role": "Case author, owner",
+   "status": "queued",
+   "iteration": "C2",
+   "alsoIn": [
+    "T1"
+   ],
+   "agent": "case-author"
+  },
+  {
+   "id": "T-J4",
+   "wp": "WP-J",
+   "milestone": [],
+   "task": "Player-style variants for the third-person cases, if OQ-39 is answered that way",
+   "inputs": "OQ-39",
+   "deps": [],
+   "outputs": "Variants",
+   "acceptance": "Signed off",
+   "reqs": [],
+   "size": "M",
+   "role": "Case author, owner",
+   "status": "queued",
+   "iteration": "unassigned",
+   "agent": "case-author"
+  },
+  {
+   "id": "T-J5",
+   "wp": "WP-J",
+   "milestone": [],
+   "task": "`SCN:` prompts → golden cases, as they come (AGENTS.md)",
+   "inputs": "Your prompts",
+   "deps": [],
+   "outputs": "Cases",
+   "acceptance": "SOURCE CHECK REQUIRED until you validate",
+   "reqs": [],
+   "size": "S each",
+   "role": "Case author",
+   "status": "queued",
+   "iteration": "unassigned",
+   "agent": "case-author"
+  },
+  {
+   "id": "T-K1",
+   "wp": "WP-K",
+   "milestone": [
+    "M6"
+   ],
+   "task": "Release report: gate, report-only suite, robustness, AI sets, held-out aggregates, stale items, source and artifact diffs",
+   "inputs": "All suites",
+   "deps": [],
+   "outputs": "Report",
+   "acceptance": "FR-BUILD-3; you approve",
+   "reqs": [
+    "FR-BUILD-3"
+   ],
+   "size": "S",
+   "role": "Engineer, owner",
+   "status": "queued",
+   "iteration": "T1",
+   "agent": "implementer"
+  },
+  {
+   "id": "T-K2",
+   "wp": "WP-K",
+   "milestone": [
+    "M6"
+   ],
+   "task": "**OQ-12 gate:** Wizards' reply; the notice text, short quotations, links to official sources, no logos",
+   "inputs": "WotC reply",
+   "deps": [],
+   "outputs": "Go or no-go for public use",
+   "acceptance": "You decide",
+   "reqs": [],
+   "size": "S",
+   "role": "Owner",
+   "status": "queued",
+   "iteration": "T1",
+   "agent": "owner"
+  },
+  {
+   "id": "T-K3",
+   "wp": "WP-K",
+   "milestone": [
+    "M6"
+   ],
+   "task": "Pilot on your live server: API account and key, Tickets configuration, checklist, privacy notice, 2 weeks of monitoring through the daily summary",
+   "inputs": "T-H6, T-K1, T-K2",
+   "deps": [
+    "T-H6",
+    "T-K1",
+    "T-K2"
+   ],
+   "outputs": "Pilot",
+   "acceptance": "Exported real cases feed the golden set (FR-LOG-3)",
+   "reqs": [
+    "FR-LOG-3"
+   ],
+   "size": "—",
+   "role": "Owner, engineer",
+   "status": "queued",
+   "iteration": "T1",
+   "agent": "owner"
+  },
+  {
+   "id": "T-V1",
+   "wp": "WP-V",
+   "milestone": [
+    "M5"
+   ],
+   "task": "`SttPort` and the local Whisper-class sidecar (GPU), listening window, consent gate, no stored audio",
+   "inputs": "",
+   "deps": [],
+   "outputs": "",
+   "acceptance": "",
+   "reqs": [],
+   "size": "L",
+   "role": "Engineer",
+   "status": "queued",
+   "iteration": "C4",
+   "agent": "implementer"
+  },
+  {
+   "id": "T-V2",
+   "wp": "WP-V",
+   "milestone": [
+    "M5"
+   ],
+   "task": "Voice adapter: per-user streams → `MessageReceived{modality: voice}`",
+   "inputs": "",
+   "deps": [],
+   "outputs": "",
+   "acceptance": "",
+   "reqs": [],
+   "size": "M",
+   "role": "Engineer",
+   "status": "queued",
+   "iteration": "C4",
+   "agent": "implementer"
+  },
+  {
+   "id": "T-V3",
+   "wp": "WP-V",
+   "milestone": [
+    "M5"
+   ],
+   "task": "Speech-confusion table and `stt` variants from the S1 recordings; voice read-back",
+   "inputs": "",
+   "deps": [],
+   "outputs": "",
+   "acceptance": "",
+   "reqs": [],
+   "size": "M",
+   "role": "Knowledge author",
+   "status": "queued",
+   "iteration": "C4",
+   "agent": "knowledge-author"
+  },
+  {
+   "id": "SP-S2",
+   "wp": "WP-S",
+   "milestone": [],
+   "task": "Spike S2: Tickets integration",
+   "inputs": "docs/architecture/SPIKES.md",
+   "deps": [],
+   "outputs": "docs/architecture/spikes/S2-report.md",
+   "acceptance": "Report gate: every SPIKES.md criterion with measured value and PASS/FAIL/OWNER-DECIDES",
+   "ownerNeeds": "Test Discord server with Tickets set up like live",
+   "reqs": [],
+   "size": "S",
+   "role": "Spike engineer",
+   "agent": "spike-engineer",
+   "iteration": "E4",
+   "status": "queued"
+  },
+  {
+   "id": "SP-S1",
+   "wp": "WP-S",
+   "milestone": [],
+   "task": "Spike S1: voice",
+   "inputs": "docs/architecture/SPIKES.md",
+   "deps": [],
+   "outputs": "docs/architecture/spikes/S1-report.md",
+   "acceptance": "Report gate: every SPIKES.md criterion with measured value and PASS/FAIL/OWNER-DECIDES",
+   "ownerNeeds": "Voice channel; one hour with two or more speakers",
+   "reqs": [],
+   "size": "S",
+   "role": "Spike engineer",
+   "agent": "spike-engineer",
+   "iteration": "C1",
+   "status": "queued"
+  },
+  {
+   "id": "SP-S3",
+   "wp": "WP-S",
+   "milestone": [],
+   "task": "Spike S3: coverage and cost on real messy text, run on the C1 build",
+   "inputs": "docs/architecture/SPIKES.md",
+   "deps": [],
+   "outputs": "docs/architecture/spikes/S3-report.md",
+   "acceptance": "Report gate: every SPIKES.md criterion with measured value and PASS/FAIL/OWNER-DECIDES",
+   "ownerNeeds": "About 30 real messy judge-call texts",
+   "reqs": [],
+   "size": "S",
+   "role": "Spike engineer",
+   "agent": "spike-engineer",
+   "iteration": "C1",
+   "status": "queued"
+  },
+  {
+   "id": "SP-S4F",
+   "wp": "WP-S",
+   "milestone": [],
+   "task": "Spike S4 follow-up: 10 targeting questions from S3 texts",
+   "inputs": "docs/architecture/SPIKES.md",
+   "deps": [
+    "SP-S3"
+   ],
+   "outputs": "docs/architecture/spikes/S4F-report.md",
+   "acceptance": "Report gate: every SPIKES.md criterion with measured value and PASS/FAIL/OWNER-DECIDES",
+   "ownerNeeds": "-",
+   "reqs": [],
+   "size": "S",
+   "role": "Spike engineer",
+   "agent": "spike-engineer",
+   "iteration": "C1",
+   "status": "queued"
+  }
+ ]
+}
