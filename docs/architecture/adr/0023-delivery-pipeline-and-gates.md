@@ -1,6 +1,6 @@
 # ADR-0023: Delivery pipeline: RUP phases, PDD cycles, agent roles, owner approvals and hardening gates
 
-Status: **Proposed** 2026-09-29 (revision 2, after the owner rejected revision 1's Construction and Transition) · Requirements: P2, FR-BUILD-1..4, NFR-ACC-1..3, NFR-ROB-1, NFR-IMP-1, NFR-EXT-1, NFR-TECH-1, §8 · Extends: ADR-0013, ADR-0016, ADR-0018 · Detail: `docs/process/DEVELOPMENT-CASE.md`
+Status: **Accepted** 2026-09-29 (revision 2, approved by the owner in E2) · Requirements: P2, FR-BUILD-1..4, NFR-ACC-1..3, NFR-ROB-1, NFR-IMP-1, NFR-EXT-1, NFR-TECH-1, §8 · Extends: ADR-0013, ADR-0016, ADR-0018 · Detail: `docs/process/DEVELOPMENT-CASE.md`
 
 ## Context
 
