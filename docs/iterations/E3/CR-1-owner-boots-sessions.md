@@ -21,8 +21,8 @@ Raised by: project-manager in E3 stage 2 (after tasks T-P4, T-A1) · Blocks: T-A
 
 ## Recommendation
 
-<Architect.>
+Amend, don't supersede: only ADR-0023 decision 3 changes, so a narrow amending ADR (ADR-0024) keeps decisions 1, 2 and 4–8 intact and leaves ADR-0023 unedited. Put the report and STATUS obligations into every boot prompt, so they no longer depend on a brief's Part B. Treat a session without report or STATUS line as `blocked`, not done. ADR-0016 is not touched (it covers payment and the eval adapter, not booting).
 
 ## Proposed text
 
-<Architect: amendment to ADR-0023 decision 3, and whether ADR-0016 is touched.>
+Drafted as `docs/architecture/adr/0024-owner-boots-every-session.md` (Status: Proposed). Replacement for ADR-0023 decision 3 is quoted in its Decision section. ADR-0016: not touched. On acceptance: ADR-0023's status line gains "decision 3 amended by ADR-0024", and `adr/README.md` gets a row for 0024.
