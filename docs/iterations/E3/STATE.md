@@ -4,7 +4,7 @@ Maintained by the project manager only. It is read first in every project-manage
 
 - **Cycle:** E3 · **Branch:** `cycle/E3` · **Plan row:** PLAN.md §2 (E3)
 - **Current stage:** 2 TOOLING · **Status:** running
-- **Next action:** toolsmith builds T-A1.
+- **Next action:** toolsmith builds T-A2, T-P1, T-P2 (after T-A1), then T-P3.
 
 ## Stages
 
@@ -17,7 +17,7 @@ Maintained by the project manager only. It is read first in every project-manage
 | Task | Deps | State | Sessions | Report |
 | --- | --- | --- | --- | --- |
 | T-P4 | none | done; verdict accepted 2026-09-29 (owner checks open) | 1 | `pipeline/BOOT.md` · 18.6k tokens, 38 s |
-| T-A1 | none | running | 1 | |
+| T-A1 | none | done | 1 | commit caf1141 · 18.5k tokens, 67 s |
 | T-A2 | T-A1 | queued | 0 | |
 | T-P1 | T-A1 | queued | 0 | |
 | T-P2 | T-A1 | queued | 0 | |
