@@ -1,250 +1,247 @@
 # Development case: how the AI MTG Judge is delivered
 
-Status: **proposed** (Elaboration 2) · Owner: Frank · Author: process engineer (planner role) · Decision record: [ADR-0023](../architecture/adr/0023-delivery-pipeline-and-gates.md)
+Status: **proposed** (Elaboration 2, revision 2) · Owner: Frank · Author: process engineer (planner role) · Decision record: [ADR-0023](../architecture/adr/0023-delivery-pipeline-and-gates.md)
 
-This is the project's tailoring of the **Rational Unified Process (RUP)**. It defines:
+This document tailors two methods to this project.
 
-- the phases and iterations;
+- **RUP** gives the phase frame: Inception, Elaboration, Construction, Transition, with the milestones LCO, LCA, IOC and PR.
+- **Proof-driven development** ([PDD](https://github.com/AlexTavor/proof-driven-development)) gives the way work is done from the walking skeleton onwards. Every increment is one **PDD cycle**: MAP → TRIAGE → CARVE → PIN → SHIP → PROVE/HARDEN → RE-MAP.
+
+It defines:
+
 - the roles, each played by one Claude Code agent;
-- the stages every iteration runs;
-- the artifacts each stage hands off;
-- the gates that decide whether work is good enough;
-- the approvals the owner gives.
+- the stages and what each hands off;
+- the gates, including the **test-hardening** gates;
+- the owner's approvals.
 
-**What** gets built in each iteration is in [PLAN.md](../plan/PLAN.md) and [backlog.json](../plan/backlog.json). **Why** is in the PRD and the architecture.
+**What** each cycle covers is in [PLAN.md](../plan/PLAN.md) and [backlog.json](../plan/backlog.json).
 
 ## 1. Principles
 
-1. **Every stage ends in something the owner can inspect and approve.** The stage's agent writes a **stage report**. Part A is the approval package (§7): plain words, something to open, run or watch, the gate results, and the decisions needed.
-2. **The project manager boots the next agent, and only after the owner's approval.** No agent starts another agent except the project manager. No stage starts on unapproved input.
-3. **Handoffs are documents, not conversations.** Every agent starts in a fresh session. It reads **only** the approved stage report it was handed (Part B), plus the exact slices that report names. No agent carries memory from one stage to the next.
-4. **Gates are the truth.** Code is good when its gates are green:
-    - the locked tests;
-    - the regression suites;
-    - gatechain;
-    - PDD `prove`, which runs mutation testing: it plants small bugs to check that the tests actually catch them.
+1. **Every stage ends in something the owner can inspect and approve.** The stage's agent writes a **stage report**. Part A is the approval package (§7).
+2. **The project manager boots the next agent, and only after the owner's approval.** No other agent starts agents. No stage starts on unapproved input.
+3. **Handoffs are documents.** Every agent starts in a fresh session. It reads only Part B of the approved report it was handed, plus the slices that report names.
+4. **Proof, not opinion.** Work is accepted by mechanical gates, not by opinion reviews:
+    - **SHIP** makes the tests green under the gates;
+    - **PROVE/HARDEN** shows that the tests actually constrain the behaviour, with mutation grades, noise, properties and integrity runs.
 
-   Opinion reviews add findings; they never overrule a gate.
-5. **Tests are written before code, by a different agent, and then locked.** The implementer can't change them. A disagreement is a dispute (§8) or a change request (§6), never an edit.
-6. **Fewest tokens that still give a correct result.** The rules in §9 are binding for every role.
-7. **Requirements change only through the owner.** No agent edits the PRD's requirements, an ADR's decision, a golden case or an approved binding. It files a change request (§6).
-8. [AGENTS.md](../../AGENTS.md) applies to every role: citations, `UNRESOLVED`, the golden set, and merges into `main` only after the owner's yes.
+   Green without proof isn't done.
+5. **Behaviour is pinned before it's changed.** Code that a unit touches gets characterisation tests first. Released behaviour becomes a baseline that every later change is checked against.
+6. **Tests and code come from different agents.** The pinner writes tests before the code exists; the test hardener strengthens them afterwards. Neither writes implementation, and the implementer never edits a test.
+7. **The golden cases are the recovered specification.** Requirements change only through the owner, by change request (§5).
+8. **Fewest tokens that still give a correct result** (§9).
+9. [AGENTS.md](../../AGENTS.md) applies to every role: citations, `UNRESOLVED`, the golden set, and merges into `main` only after the owner's yes.
 
 ## 2. Phases and iterations
 
-| Phase | Iteration | Goal | Ends with (what the owner inspects) | RUP milestone |
+| Phase | Iteration | How it runs | Ends with (what the owner inspects) | RUP milestone |
 | --- | --- | --- | --- | --- |
-| Inception | I | Vision and requirements | PRD v0.5, 348 golden cases ✓ | LCO ✓ |
-| Elaboration | E1 | Architecture | ARCHITECTURE.md, ADR-0001..0022, S4 report ✓ | |
+| Inception | I | done | PRD v0.5, 348 golden cases ✓ | LCO ✓ |
+| Elaboration | E1 | done | Architecture, ADR-0001..0022, S4 ✓ | |
 | | E2 | Process design (this document) | [E2 approval package](../iterations/E2/approval-package.md) | |
-| | E3 | Build the delivery pipeline | Dry-run report: one real task through every stage | |
-| | E4 | Architecture baseline: walking skeleton (M0 + M1), spike S2 | Live demo: a Tickets thread asks "what is priority?" and gets the approved, cited answer; the human handoff works | **LCA** |
-| Construction | C1 | Rules questions from the library (M2); spikes S1, S3, S4-F | Demo + pass rate per rules family | |
-| | C2 | Disputes, penalties, integrity (M3) | Demo of a dispute on buttons; zero leaks | |
-| | C3 | Messy input and the AI edge (M4) | Robustness report: zero confidently wrong answers; 100% of easy gate cases | |
-| | C4 | Operations on the owner's desktop (M5) | Outage test on the host | **IOC** |
-| Transition | T1 | Release candidate (M6) | Release report against PRD §8 | |
-| | T2 | Pilot on the live server | Pilot report | **PR** |
-
-The exit criteria per iteration are in PLAN.md. They come from the milestone exits in [ROADMAP.md](../plan/ROADMAP.md) §3.
+| | E3 | Build the delivery and PDD tooling (§5.1) | The dry-run report | |
+| | **E4** | **PDD cycle 0:** the walking skeleton, plus spike S2 | Live demo of the skeleton, and its hardening report | **LCA** |
+| Construction | C1–C4 | **PDD cycles 1–4** (§4), one capability each; more cycles if RE-MAP finds work | For each cycle: demo, hardening report, re-map | **IOC** after C4 |
+| Transition | T1 | **PROVE ALL → RELEASE PIN** (§5.3) | Release proof, and the v1.0 behaviour baseline | |
+| | T2 | **DEPLOY → PILOT MAP** (§5.3) | Pilot report, and new cases mapped from real calls | **PR** |
 
 ## 3. Roles
 
-Each role is one instruction file in `.claude/agents/`. The owner is the fifteenth role.
+Each role has one file in `.claude/agents/`. The owner is the fifteenth role.
 
-| Role | File | Model | Booted in | Produces |
+| Role | File | Model | Stage(s) | Produces |
 | --- | --- | --- | --- | --- |
-| **Owner** | — | — | — | Approvals, decisions, inputs (test server, texts), knowledge review |
-| **Project manager** | `project-manager.md` | Opus | By the owner, once per approval | Iteration briefs, iteration assessments, boots every other agent, runs the inner loop, keeps `STATE.md` |
-| Requirements specifier | `requirements-specifier.md` | Sonnet | Change requests | OQ drafts in PRD §12, decision-log entries after the owner decides |
-| Software architect | `architect.md` | Sonnet | Change requests that touch an ADR; design-pack review in E4 | ADR proposals, architecture notes |
-| Process engineer | `process-engineer.md` | Sonnet | E2; process changes from an assessment | This document, the agent files, the templates |
-| Toolsmith | `toolsmith.md` | Sonnet | E3; tooling defects | `pipeline/` scripts, gate configuration |
-| Spike engineer | `spike-engineer.md` | Sonnet | Spike stages | `spikes/<id>/`, spike report |
-| Designer | `designer.md` | Sonnet | Stage 2 | Design pack: task cards and the test list |
-| Test implementer | `test-implementer.md` | Sonnet | Stage 3; gate G6 survivors; disputes | Locked failing tests, the test pack |
-| Implementer | `implementer.md` | Sonnet | Stage 4 (code tasks) | Code that turns the locked tests green |
-| Knowledge author | `knowledge-author.md` | Sonnet | Stage 4 (knowledge tasks) | `ai-draft` library content, bindings, lexicon |
-| Case author | `case-author.md` | Sonnet | Stage 4 (case tasks); held-out sessions | Golden cases (SOURCE CHECK REQUIRED) |
-| Integrator-tester | `integrator-tester.md` | Sonnet | Stage 5; pilot monitoring | Integration build, test evaluation, demo script |
-| Reviewer | `reviewer.md` | Sonnet | Stage 6 | At most 10 findings |
-| Deployment manager | `deployment-manager.md` | Sonnet | C4, T1, T2 | Deployment scripts, deployment log |
+| **Owner** | — | — | TRIAGE, every approval | Roadmap sign-off, approvals, decisions, inputs, knowledge review |
+| **Project manager** | `project-manager.md` | Opus | All: boots every role | `STATE.md`, the SHIP inner loop, escalations, merge requests, the E3 dry-run report |
+| Cartographer | `cartographer.md` | Sonnet | MAP, RE-MAP, PILOT MAP | System map, risk inventory, trap register, proposed roadmap; the cycle's evidence |
+| Carver | `carver.md` | Sonnet | CARVE | Unit cards: interfaces, spec tests to write, pins needed, allowed paths |
+| Spike engineer | `spike-engineer.md` | Sonnet | CARVE (riskiest assumption) | Spike report |
+| Pinner | `pinner.md` | Sonnet | PIN, RELEASE PIN | Characterisation tests (green) and spec tests (red), locked |
+| Implementer | `implementer.md` | Sonnet | SHIP (code units) | Code that turns the locked tests green |
+| Knowledge author | `knowledge-author.md` | Sonnet | SHIP (knowledge units) | `ai-draft` library content, bindings, lexicon |
+| Case author | `case-author.md` | Sonnet | SHIP (case units); held-out sessions | Golden cases, SOURCE CHECK REQUIRED |
+| **Test hardener** | `test-hardener.md` | Sonnet | PROVE/HARDEN, PROVE ALL | Stronger tests, mutation grades, robustness and integrity evidence |
+| Deployment manager | `deployment-manager.md` | Sonnet | C4 units, DEPLOY | Packaging, runbook, deployment log |
+| Requirements specifier | `requirements-specifier.md` | Sonnet | Change requests | OQ drafts; decision records after the owner decides |
+| Software architect | `architect.md` | Sonnet | Architecture change requests; E4 CARVE review | ADR proposals, the carve review |
+| Process engineer | `process-engineer.md` | Sonnet | E2; approved process changes | This document, the agent files, the templates |
+| Toolsmith | `toolsmith.md` | Sonnet | E3; tooling defects | `pipeline/`, the gatechain and PDD configuration |
 
-Only the project manager uses Opus, because it takes the judgement calls (escalations, splits, assessments) while reading only short documents.
+## 4. The PDD cycle (E4, C1–C4)
 
-## 4. The standard iteration (E4, C1–C4, T1)
+The reports go in `docs/iterations/<cycle>/`. There is one owner approval per stage. SHIP's per-unit loop runs without the owner; the owner approves its assembled result.
 
-Seven stages. Each has one role, one stage report, and one owner approval. The project manager boots the next stage only when the owner has approved the previous report.
-
-| # | Stage | Role | Reads (Part B of the previous report, plus) | Writes | Gates before the report | Owner inspects |
+| # | Stage | Role | Does | Writes | Gates | Owner inspects |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1 | **Iteration brief** | Project manager | The previous assessment, the PLAN.md row, `backlog.json` | `01-brief.md` | Every task has acceptance criteria and a role | What you'll see at the end, the tasks in scope, the exit criteria in plain words |
-| 2 | **Design pack** | Designer | `01-brief.md`, requirement and ADR slices, existing interfaces | `02-design.md` + `cards/<task>.md` | `card-lint` (§9) on every card; every exit criterion maps to a test or golden case | A one-page overview; the tests to write, each as "when …, the bot must …" with its requirement ID |
-| 3 | **Test pack** | Test implementer | `02-design.md`, the cards, the golden cases named | Tests + `03-tests.md` | RED check: every new test fails for the right reason; then the tests are **locked** | Every test in plain words; the red run, which proves they test something |
-| 4 | **Increment** | Implementer, knowledge author, case author (per task) | Its card, its locked tests, its digest if retrying | Code or content + `04-increment.md` (assembled by the project manager) | Inner loop (§8): G0–G6, or G8 for knowledge | Per task: green or escalated, attempts used; knowledge items next to their sources, for review |
-| 5 | **Build & evaluation** | Integrator-tester | `04-increment.md`, the exit criteria | `05-evaluation.md` + `demo.md` | G7 on the iteration branch; the iteration's suites | Pass rate against every exit criterion; defects; a demo script you run yourself |
-| 6 | **Review** | Reviewer | `05-evaluation.md`, the iteration's diff stat | `06-review.md` | — | At most 10 findings; blocking ones become tasks for the next iteration, or a rework loop now |
-| 7 | **Iteration assessment** | Project manager | 01–06 | `07-assessment.md` | Every exit criterion ✓, or explicitly waived by the owner | The demo, the evidence per exit criterion, lessons, the proposed next iteration, and the **merge-to-main request** |
+| 1 | **MAP** | Cartographer | Runs `pdd map` on the code. Maps the cycle's scope (PLAN.md row, `backlog.json`) against the spec: requirements and golden cases that are unbound, unproven or at risk, known traps, and code the units will touch. **Proposes** a risk-ranked unit roadmap and the per-module mutation thresholds (§8). | `01-map.md` + roadmap ledger | Every gate case and requirement in scope is on the map | The map, the risk inventory and the proposed roadmap, in plain words |
+| 2 | **TRIAGE** | **Owner** (the project manager records) | The owner approves, denies, edits, splits or reorders units (`pdd roadmap`). Sign-off freezes the ledger (`pdd roadmap signoff`). | `02-triage.md` (ledger decisions) | — | *(The owner's own stage.)* |
+| 3 | **CARVE** | Carver (+ spike engineer, + architect in E4) | Turns each unit into a card (at most 400 non-test lines). The **riskiest assumption** gets a thin end-to-end spike first; S1, S2 and S3 run here, in the cycle that needs them. | `03-carve.md` + `cards/<unit>.md` (+ spike reports) | `card-lint`; the riskiest spike PASSES, or its verdict goes to the owner | The unit cards as "when …, the bot must …"; the spike verdicts |
+| 4 | **PIN** | Pinner | (a) **Characterises** the current behaviour of everything the units touch; these tests must pass. (b) Writes the **spec tests** from the cards and golden cases; these must fail. Locks both sets. | Tests + `04-pin.md` | RED check; `pin-values`, `boundary-tests` | What's pinned (green), what's specified (red), in plain words |
+| 5 | **SHIP** | Implementer, knowledge author, case author (per unit) | Makes each unit green under the SHIP gates, one commit per unit; the project manager runs the inner loop (§8) | Code or content + `05-ship.md` (assembled by the project manager) | G0–G5 (or G8) | Per unit: green or escalated, attempts; knowledge items next to their sources |
+| 6 | **PROVE / HARDEN** | **Test hardener** | **Test hardening** (§8.2): mutation-grades every changed module and kills the survivors; noise variants of every golden case in scope; property tests; integrity-setting runs; near-miss and leak tests; `gatechain --push` on the cycle branch. A hardened test that exposes a real bug sends that unit back to SHIP. | `06-harden.md` | H1–H6 | The hardening report: grades against thresholds, survivors killed, robustness and leak numbers, bugs found |
+| 7 | **RE-MAP** | Cartographer | Re-runs `pdd map` on the merged cycle branch. Records what is now proven, drift and new traps. Checks every exit criterion. Writes the demo script, and **proposes the next cycle's units**. | `07-remap.md` + `demo.md` | Every exit criterion ✓, or waived by the owner | The evidence per exit criterion, the demo you run, the new traps, and the **merge-to-main request** |
 
-**Rejections.** If the owner rejects a report, the project manager re-boots the same stage with the reason. The new report replaces the old one; the old one is kept with the suffix `-rejected-n`.
+**Rejections.** If the owner rejects a report, the project manager re-boots the same stage with the reason. The old report is kept as `-rejected-<n>`.
 
-**Stage 4 runs per task.** The owner doesn't approve each task: the gates do. The owner approves the assembled increment once.
+## 5. Other chains
 
-## 5. Other stage chains
+### 5.1 E3: build the tooling
 
-**E3: build the delivery pipeline.**
+E3 can't use the PDD cycle, because it builds the PDD tooling.
 
-1. The project manager writes the brief.
-2. The toolsmith builds the pipeline tasks from `backlog.json` (`T-P*`, `T-A1`, `T-A2`). Each is test-first, checked interactively, because the gates don't exist yet.
-3. The integrator-tester does a dry run: one real task (T-A4) through stages 2–5.
+1. The project manager writes the E3 brief: the tasks with `iteration: E3`.
+2. The toolsmith builds each task test-first, checked by its own fixture tests.
+3. The project manager runs a **dry run**: one real unit (T-A4) through CARVE, PIN, SHIP and PROVE/HARDEN. It writes the dry-run report from the status lines and token logs:
+    - was every handoff self-sufficient?
+    - what did each stage cost in tokens?
+    - did a planted weak test get caught by H1/H2?
 
-The dry-run report is the approval package.
+### 5.2 Spikes
 
-**Spike stage** (placed in an iteration by its brief):
+A spike runs inside CARVE when the riskiest assumption needs one.
 
-1. The project manager writes the spike brief. It gives the SPIKES.md criteria and the owner inputs needed. A spike without its inputs waits, and the brief says so.
-2. The spike engineer writes `S<n>-report.md`. It lists every criterion with its measured value and PASS, FAIL or OWNER-DECIDES, plus the options if it failed.
+- The project manager boots the spike engineer with the SPIKES.md section and the owner inputs.
+- A spike without its inputs waits, and CARVE continues with the other units.
+- The report gives every criterion as PASS, FAIL or OWNER-DECIDES. **The owner gives the verdict.**
 
-The owner gives the verdict. A spike never decides its own fail option.
+### 5.3 Transition
 
-**T2: pilot.**
+| # | Stage | Role | Does | Gates | Owner inspects |
+| --- | --- | --- | --- | --- | --- |
+| T1.1 | **PROVE ALL** | Test hardener | System-wide hardening: `pdd grade` on every module; the full golden gate suite; all 68 integrity runs; robustness at all severities; the AI sets on Pro; held-out aggregates (generalisation) | H1–H6 over the whole system; every PRD §8 criterion; OQ-12 settled | The release proof: each §8 criterion with its evidence |
+| T1.2 | **RELEASE PIN** | Pinner | Freezes the released behaviour as the **v1.0 characterisation baseline**. From now on, every change must pass it, or change it through an approved unit. | Baseline green; release tag | The baseline report; the owner approves the release |
+| T2.1 | **DEPLOY** | Deployment manager | Installs on the host with the runbook; the owner enters the credentials; smoke test | Smoke test green | The deployment log |
+| T2.2 | **PILOT MAP** | Cartographer | Two weeks live. Maps real calls against the spec: misses, wrong escalations, near-leaks. They become proposed golden cases and roadmap units. | No leaks; spend under the cap | The pilot report and the proposed cases; the owner accepts the product |
 
-1. The deployment manager deploys and writes the deployment log.
-2. The integrator-tester monitors and writes the pilot report.
-3. The owner accepts or rejects the product.
+### 5.4 Change requests
 
-**Change request (CR)**, a side channel open to every role:
+This is a side channel, open to every stage.
 
-1. The agent stops and writes `docs/iterations/<it>/CR-<n>.md` from the template. Its stage status becomes `blocked`.
-2. The project manager boots the requirements specifier, or the architect if an ADR is involved. They write the options and a proposed OQ or ADR text.
+1. The agent writes `CR-<n>.md` from the template, and stops with `blocked`.
+2. The project manager boots the requirements specifier, or the architect if an ADR is involved, who writes the options and a proposed OQ or ADR text.
 3. The owner decides.
-4. The requirements specifier records the decision (PRD §10 and §12, per AGENTS.md).
-5. The project manager resumes the blocked stage.
+4. The decision is recorded (PRD §10 and §12, per AGENTS.md).
+5. The blocked stage resumes.
 
-**Process change.** An assessment may propose one. The owner approves it; then the process engineer edits this document, the agent files or the templates, in a commit named `Process: …`.
+### 5.5 Process changes
 
-## 6. Artifacts and where they live
+A RE-MAP may propose a process change. After the owner approves it, the process engineer edits this document, the agent files or the templates (commit `Process: …`).
+
+## 6. Artifacts
 
 ```text
-docs/process/DEVELOPMENT-CASE.md        this document
-docs/process/AGENT-RULES.md             common rules every agent reads first
-docs/process/templates/                 stage-report, design-card, change-request, status line
-.claude/agents/<role>.md                one instruction file per role
-docs/plan/PLAN.md                       iteration scope and exit criteria
-docs/plan/backlog.json                  every task: acceptance, deps, role, iteration
-docs/iterations/<it>/STATE.md           project manager's state: stages, approvals, next action
-docs/iterations/<it>/NN-<stage>.md      stage reports (Part A for the owner, Part B for the next agent)
-docs/iterations/<it>/cards/<task>.md    task cards (the designer's output)
-docs/iterations/<it>/digests/           gate failure digests, ≤ 40 lines each
-docs/iterations/<it>/CR-<n>.md          change requests
-pipeline/                               gate, slice and support scripts (built in E3)
-spikes/<id>/                            spike code, never merged into packages
+docs/process/DEVELOPMENT-CASE.md, AGENT-RULES.md, templates/
+.claude/agents/<role>.md
+docs/plan/PLAN.md, backlog.json
+docs/iterations/<cycle>/STATE.md                          project manager's state
+docs/iterations/<cycle>/01-map.md … 07-remap.md, demo.md  stage reports
+docs/iterations/<cycle>/cards/<unit>.md                   unit cards
+docs/iterations/<cycle>/digests/                          gate digests, ≤ 40 lines
+docs/iterations/<cycle>/CR-<n>.md                         change requests
+docs/process/traps.md                                     trap register (the cartographer's, cumulative)
+.pdd/                                                     PDD configuration, roadmap ledger, thresholds
+pipeline/                                                 gate and slice scripts (E3)
+spikes/<id>/                                              spike code, never merged into packages
 ```
 
 ## 7. Stage reports, approvals and booting
 
-**Stage report.** Every stage writes one, from [templates/stage-report.md](templates/stage-report.md).
+**Stage report** ([templates/stage-report.md](templates/stage-report.md)):
 
-- **Part A, for the owner (the approval package):**
-    1. what was done, in plain words;
-    2. how to inspect it: a file, a command, or a demo;
+- **Part A, for the owner:**
+    1. what was done;
+    2. how to inspect it;
     3. gate results, with numbers;
-    4. decisions needed, each with options and a recommendation;
+    4. decisions needed, with options and a recommendation;
     5. what the next stage will do.
-- **Part B, for the next agent (the handoff):** the inputs to read (paths and slice references), constraints, open issues, and the exact job of the next stage. The next agent reads Part B, never Part A's prose.
+- **Part B, for the next agent:** what to read, allowed paths, constraints, open issues, and the exact job.
 
-**Approval.** The owner writes one of these in the report's `Decision` line, or tells the project manager, which records it:
+**Approval.** The owner writes one of these in the `Decision` line, or tells the project manager, which records it:
 
 - `APPROVED`;
 - `APPROVED WITH NOTES: …` (the notes are copied into Part B);
 - `REJECTED: …`.
 
-**Booting.** The owner starts (or resumes) the project manager with `claude --agent project-manager`, then says "continue", or "continue E4".
+**Booting.** The owner starts `claude --agent project-manager` and says "continue".
 
-1. The project manager reads `STATE.md`.
-2. It checks the last report's decision.
-3. It boots the next role as a **subagent** (Claude Code's Agent tool, with `subagent_type` set to the role name). The prompt names only the report's path.
-4. It reads back only the subagent's status line (§9) and Part A's headings.
-5. It updates `STATE.md`, commits, and stops with a one-line message to the owner: "Stage N ready for your approval: <path>".
+1. The project manager reads `STATE.md` and checks the last report's decision.
+2. It boots the next role as a **subagent** (the Agent tool, `subagent_type` set to the role name). The prompt names only the input report.
+3. It reads back only the status line.
+4. It updates `STATE.md`, commits, and stops with: "Stage <N> ready for your approval: <path>".
 
-**Fallback.** If subagents can't run long enough, the project manager runs the same role headless (`claude -p --agent <role>`) through Bash. E3's dry run chooses.
+**Fallback:** headless `claude -p --agent <role>`, if E3's T-P4 finds subagents unsuitable.
 
-## 8. The inner loop and the gates (stage 4)
+## 8. Gates
 
-For each task, in dependency order:
+### 8.1 SHIP gates and the inner loop
 
-1. The project manager boots the implementer, or the knowledge or case author, with the card.
-2. The role finishes with `done`, `dispute` or `blocked`.
-3. The project manager runs `node pipeline/gate.mjs --task <id>`. This costs no tokens.
-4. The result decides the next step:
-    - **green:** the task branch is merged into the iteration branch;
-    - **red:** the digest goes to a **fresh** session of the same role, with its previous attempt notes (at most 5 lines per attempt). The budget is **3 attempts**.
-    - **G6 survivors** (mutants the tests missed): back to the test implementer (2 rounds). Its tests are re-locked, then the implementer continues.
-    - **Dispute** (at most 15 lines: test, claim, spec line): a fresh test implementer rules, and never sees the code.
-        - The test contradicts the card: it fixes and re-locks the test. The attempt isn't counted.
-        - The test matches the card: the test is upheld, and the attempt counts.
-        - The spec itself is in doubt: it files a change request.
-    - **Budget spent:** the project manager itself decides one of:
-        - HINT: at most 20 lines added to the card, then 2 more attempts;
-        - SPLIT the task;
-        - RETEST: back to the test implementer with a reason;
-        - RESET: discard the branch and re-ship;
-        - a change request to the owner.
-    - **Hard cap:** 10 sessions per task, then the owner decides.
+Per unit, in dependency order:
+
+1. The project manager boots the unit's role with its card.
+2. The project manager runs `node pipeline/gate.mjs --unit <id>` (it costs no tokens) and acts on the result:
+    - **green:** merged into the cycle branch;
+    - **red:** the digest goes to a **fresh** session of the same role, with its attempt notes. The budget is 3 attempts.
+    - **dispute** (at most 15 lines): a fresh **pinner** rules without seeing the code. It fixes the test (the attempt isn't counted), upholds it (the attempt counts), or files a change request.
+    - **budget spent:** the project manager chooses HINT (at most 20 lines on the card, then 2 more attempts), SPLIT, RE-PIN, RESET, or a change request. The hard cap is 10 sessions per unit.
 
 | Gate | Checks |
 | --- | --- |
-| G0 lock | Test files match their locked hashes; the diff stays inside the card's allowed paths |
-| G1 build | Typecheck, lint, dependency rule (`core` has no I/O, ADR-0001), string-literal lint (NFR-I18N-1) |
-| G2 task | The card's tests |
-| G3 regression | All unit and property tests; the golden gate suite on the bound cases, once per integrity setting |
+| G0 lock | Tests match their locked hashes; the diff stays inside the card's allowed paths |
+| G1 build | Typecheck, lint, dependency rule (ADR-0001), string-literal lint (NFR-I18N-1) |
+| G2 unit | The card's spec tests |
+| G3 regression | All tests, including **every characterisation pin** (from v1.0 on, the release baseline), plus the golden gate suite on bound cases, once per integrity setting |
 | G4 gatechain | `npx gatechain --fast` |
-| G5 pdd check | `pdd check`, with its blocking gates (silent failure, dead branch, no-op paths, trace requirements) |
-| G6 prove | `pdd prove` on the boundaries the task changed (mutation adequacy) |
-| G7 integration | `npx gatechain --push` and the iteration's full suites (ROADMAP §6), on the iteration branch |
-| G8 knowledge | Bundle validation, citation resolution (NFR-ACC-3), the family's golden cases. Replaces G5–G6 for knowledge tasks. |
+| G5 pdd check | Block mode: `pin-values`, `boundary-tests`, `no-op-paths`, `silent-failure`, `dead-branch`, `cover-the-mirror`, `trace-requirements`, `cohesion` |
+| G8 knowledge | Bundle validation, citation resolution (NFR-ACC-3), the family's golden cases. Replaces G4–G5 for knowledge and case units. |
 
-**The digest** is written by the gate script and capped at 40 lines:
+### 8.2 Test hardening (PROVE / HARDEN, and PROVE ALL)
+
+The test hardener runs these, and strengthens the tests until they pass. **It never edits implementation.**
+
+When a new, correct test fails because the code is wrong, the hardener locks the test and writes a digest. That unit goes back to SHIP, with a budget of 2 rounds, then the project manager.
+
+| Gate | Checks | Threshold (owner, 2026-09-29) |
+| --- | --- | --- |
+| **H1 boundaries** | `pdd prove` on every named boundary in changed code | **100%** killed |
+| **H2 mutation grade** | `pdd grade` per changed module | **≥ 90%** for `core` (engine, verifier, escalation, audiences, composer, matcher); **≥ 75%** for adapters, `pipeline`, `eval`, `app` |
+| **H3 robustness** | `golden/tools/noisify.mjs` at severities 1–3, with fixed seeds, over every golden case in scope, plus stored human variants | **Zero confidently wrong** (NFR-ROB-1); the answer is the same as for clean text, or a clarifying question |
+| **H4 properties** | Property tests for the engine's invariants: facts in any order give the same branch (NFR-IMP-1); replaying the case log gives the same state; the audience guard holds for every content type | All pass, 1,000 runs each, seeds recorded |
+| **H5 integrity and leaks** | Every integrity case, once per setting; near-miss variants (one fact changed); leak tests over every player-audience message | Every expectation met; **zero leaks** |
+| **H6 branch proof** | `npx gatechain --push` (`mutate-diff`, `graded`, `trace`) on the cycle branch | Exit 0 |
+
+In **MAP**, the cartographer may propose different thresholds for a module, with a reason. They apply only after the owner approves them in TRIAGE.
+
+**The digest** is capped at 40 lines:
 
 - the failing gate;
-- at most 5 failures, each as test name → `covers:` tags → expected vs actual (300 characters at most) → `file:line`;
-- or, for G6, the surviving mutants.
+- at most 5 failures, each as test → `covers:` tags → expected vs actual → `file:line`;
+- or the surviving mutants, each as `file:line`, the operator and the original.
 
 ## 9. Context and token rules (binding)
 
-- **Fresh sessions only.** Every agent reads [AGENT-RULES.md](AGENT-RULES.md), its own file, and Part B of the report it was handed. Nothing else is preloaded.
-- **Never read big documents whole.** `PRD.md`, `ARCHITECTURE.md`, the ADRs and source documents are read by ID or heading:
-    - with `node pipeline/slice.mjs <ref>` once E3 has built it;
-    - until then, with Grep on the ID, plus context lines.
-- **Card limits (`card-lint`):**
-    - at most 80 lines;
-    - a read list of at most 8 `file:line-line` ranges;
-    - every test maps to a requirement ID or golden case;
-    - an estimated change of at most 400 non-test lines, otherwise the task is split.
-- **Status line.** Every agent's final message ends with:
+- **Fresh sessions only.** An agent reads AGENT-RULES.md, its own file, and Part B of its input.
+- **Big documents are read by slice** (`node pipeline/slice.mjs <ref>`; before E3, Grep with context), never whole.
+- **Cards** are at most 80 lines, with a read list of at most 8 ranges, and every test mapped to a requirement or golden case.
+- **The status line** ends every agent's final message:
 
   `STATUS {"result":"done|dispute|blocked|split","report":"<path>","note":"≤200 chars"}`
-- **The project manager never reads code, diffs, logs or full test output.** It reads only status lines, Part A headings, digests and `STATE.md`.
-- **Session limits:** the project manager boots subagents with a stated turn budget (§3 files give theirs). Token use per session is logged in `STATE.md`, so the assessment shows what each stage cost.
+- **The project manager never reads code, diffs, logs or full test output.** Tokens per stage are logged in `STATE.md`.
 
 ## 10. Traceability
 
-Every test carries a `covers:` tag, for example `// covers: FR-Q-1 golden:<caseId>`. gatechain `trace` and PDD `trace-requirements` fail any stated requirement with no test.
+Every test carries a `covers:` tag, for example `// covers: FR-Q-1 golden:<caseId>`. Characterisation tests carry `// pins: <module>`.
 
-The chain is: requirement → golden case → binding → test → code, and each link can be checked by a tool.
+The chain is: requirement → golden case → binding → spec test → code → mutation grade. gatechain `trace` and PDD `trace-requirements` enforce it.
 
 ## 11. The golden set and the held-out set
 
-- In-repo golden cases are specification. Test and knowledge roles read them **by ID**.
-- New cases stay SOURCE CHECK REQUIRED until the owner signs them off.
-- **The held-out set** is written only by case-author sessions that the owner starts **in the private repository**. No agent in this repository ever reads held-out cases. The held-out runner prints aggregates only, and the project manager sees only those aggregates.
+- Golden cases are read by ID, and new ones stay SOURCE CHECK REQUIRED until the owner signs them off.
+- **Held-out cases** are written only in case-author sessions that the owner starts in the private repository. No agent here reads them, and results are reported as aggregates only (PROVE ALL).
 
 ## 12. Git
 
 | Branch | Created by | Merged by |
 | --- | --- | --- |
-| `it/<iteration>` | Project manager, from `main`, in stage 1 | Project manager, into `main`, **only after the owner's yes** in stage 7 (AGENTS.md) |
-| `task/<id>` | Project manager, in stage 4 | Project manager, into `it/<iteration>` after the gates are green (no owner yes needed: not `main`) |
-| `spike/<id>` | Project manager | Never into `main` (only the report, via the iteration branch) |
-
-Commits are small, and name the stage or task ID and the reason.
+| `cycle/<id>` | Project manager, from `main`, at MAP | Project manager, into `main`, **only after the owner's yes** at RE-MAP (AGENTS.md) |
+| `unit/<id>` | Project manager, at SHIP | Project manager, into `cycle/<id>`, when the SHIP gates are green |
+| `spike/<id>` | Project manager, at CARVE | Never into `main` (only the report travels, via the cycle branch) |

@@ -18,13 +18,13 @@ You are the **toolsmith** (RUP environment discipline). Obey `docs/process/AGENT
     - Also add the engineering-discipline plugin (via `--plugin-dir` in `.claude/settings.json`) and `.no-engineering-sop`.
 3. **T-P2:** `pipeline/slice.mjs <ref>` for `FR-*`/`NFR-*`/`D*`/`OQ-*` (the PRD), `ADR-<n>§<x>`, `ARCH§<x>`, `golden:<id>`, `CR:<rule>`, `IPG:<x>`, `MTR:<x>`. It prints only that item. An unknown ref exits 1.
 4. **T-P3:** `pipeline/gate.mjs`:
-    - `--task <id> [--fast]`: G0–G6, or G8;
-    - `--lock <task>`;
-    - `--integration`: G7.
+    - `--unit <id> [--fast]`: the SHIP gates G0–G5, or G8;
+    - `--lock <unit>`;
+    - `--harden <cycle>`: H1–H6 against the thresholds in `.pdd/thresholds.json`.
 
-   Exit codes 0, 1 and 2. It writes a digest to `docs/iterations/<it>/digests/<task>-<n>.md`, capped at 40 lines in the §8 format, and raw logs to the gitignored `pipeline/logs/`. It also carries a `card-lint` subcommand.
+   Exit codes 0, 1 and 2. It writes a digest to `docs/iterations/<cycle>/digests/<unit>-<n>.md`, capped at 40 lines in the §8 format, and raw logs to the gitignored `pipeline/logs/`. It also carries a `card-lint` subcommand. Write the default thresholds file from DEVELOPMENT-CASE §8.2.
 5. **T-P4:** check the boot mechanism. Can the project manager boot each role as a subagent (the Agent tool, `subagent_type`) with the role's model, and how long can a subagent run? Otherwise, check `claude -p --agent <role>` headless on the owner's Pro plan: is it permitted (ADR-0016), and how does it behave at a usage limit? Write `pipeline/BOOT.md` with the verdict.
 
-**Test-first even here:** write a fixture test per gate or ref kind first. For example, a planted swallowed error must fail G4/G5, a planted weak test must fail G6, and an edited locked test must fail G0. Then implement.
+**Test-first even here:** write a fixture test per gate or ref kind first. For example, a planted swallowed error must fail G4/G5, a planted weak test must fail H1/H2, and an edited locked test must fail G0. Then implement.
 
 **Turn budget:** 60 per task.

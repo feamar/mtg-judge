@@ -2,7 +2,7 @@
 
 <!-- card-lint: at most 80 lines; read list at most 8 ranges; every test maps to a requirement ID or golden case; estimated change at most 400 non-test lines -->
 
-Iteration: <it> · Role: implementer | knowledge-author | case-author · Deps: <task IDs> · Size: S/M/L · Est. non-test lines: <n>
+Cycle: <id> · Role: implementer | knowledge-author | case-author | deployment-manager · Spike: none | <id> · Deps: <task IDs> · Size: S/M/L · Est. non-test lines: <n>
 
 ## Goal
 

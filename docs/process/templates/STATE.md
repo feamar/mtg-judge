@@ -2,7 +2,7 @@
 
 Maintained by the project manager only. It is read first in every project-manager session.
 
-- **Iteration:** <it> · **Branch:** `it/<it>` · **Plan row:** PLAN.md §<n>
+- **Cycle:** <id> · **Branch:** `cycle/<id>` · **Plan row:** PLAN.md §<n>
 - **Current stage:** <N name> · **Status:** running | awaiting-owner | blocked (CR-n) | done
 - **Next action:** <one line>
 
@@ -10,14 +10,14 @@ Maintained by the project manager only. It is read first in every project-manage
 
 | # | Stage | Report | Decision | Tokens |
 | --- | --- | --- | --- | --- |
-| 1 | Iteration brief | `01-brief.md` | | |
+| 1 | MAP | `01-map.md` | | |
 
-## Tasks (stage 4)
+## Units (SHIP)
 
-| Task | Role | State | Attempts | Sessions | Last gate |
+| Unit | Role | State | Attempts | Sessions | Last gate |
 | --- | --- | --- | --- | --- | --- |
 
-<!-- States: queued, red, shipping, green, merged, escalated, blocked-CR, split -->
+<!-- States: queued, pinned, shipping, green, merged, hardening, back-to-ship, proven, escalated, blocked-CR, split -->
 
 ## Change requests
 

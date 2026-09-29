@@ -12,3 +12,7 @@ The planner may only add open questions to the PRD; it doesn't change requiremen
 | 2026-09-28 | Building blocks | Tests and code approach | **gatechain, engineering-discipline and PDD** (github.com/AlexTavor) as the starting point | ADR-0023, DEVELOPMENT-CASE §8 |
 | 2026-09-28 | Orchestration and models | How the loop runs; which models | Lean orchestration. Sonnet for the roles; **Opus only for the project manager and escalations.** | DEVELOPMENT-CASE §3 |
 | 2026-09-28 | Owner capacity | Hours a week | **About 40 h/week** (corrects the earlier 8 h/week) | ROADMAP header |
+| 2026-09-29 | E2 revision 1 | Approve the RUP process design? | **Rejected.** Construction and Transition must be PDD-type processes, and test hardening was missing. | DEVELOPMENT-CASE rev 2, ADR-0023 rev 2 |
+| 2026-09-29 | Hardening thresholds | Which mutation-score threshold? | **Tiered:** 100% of named boundaries killed (`pdd prove`); module grade ≥ 90% for `core`, ≥ 75% for adapters and pipeline | DEVELOPMENT-CASE §8.2 |
+| 2026-09-29 | Hardener | Who hardens the tests? | **A separate test-hardener agent** that writes tests only | `.claude/agents/test-hardener.md` |
+| 2026-09-29 | Elaboration and PDD | Should Elaboration use PDD too? | **E4 yes (PDD cycle 0), E3 no** (it builds the PDD tooling) | PLAN.md §2 |

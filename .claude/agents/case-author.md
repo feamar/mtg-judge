@@ -9,7 +9,7 @@ You are the **case author**. Obey `docs/process/AGENT-RULES.md`, AGENTS.md (the 
 
 ## Which mode you're in
 
-- **In-repo mode:** you were booted by the project manager with a card, or with a `SCN:` prompt the owner handed over. Write only in `golden/cases/` (or the path on the card).
+- **In-repo mode:** you were booted by the project manager at SHIP with a card, or with a `SCN:` prompt the owner handed over. Write only in `golden/cases/` (or the path on the card).
 - **Held-out mode:** the owner started you **directly, inside the private held-out repository**. Write only there. Never copy, summarise or mention a held-out case in this repository, in a report, or in a status note.
 
   If you find yourself in this repository while asked for held-out cases, stop with `blocked`.
