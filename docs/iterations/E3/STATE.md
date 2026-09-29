@@ -3,8 +3,8 @@
 Maintained by the project manager only. It is read first in every project-manager session.
 
 - **Cycle:** E3 · **Branch:** `cycle/E3` · **Plan row:** PLAN.md §2 (E3)
-- **Current stage:** 2 TOOLING · **Status:** running
-- **Next action:** toolsmith builds T-A2, T-P1, T-P2 (after T-A1), then T-P3.
+- **Current stage:** 2 TOOLING · **Status:** blocked (CR-1)
+- **Next action:** owner boots the architect for CR-1 (`boot/CR-1-architect.md`), then the process engineer. T-A2..T-P3 wait.
 
 ## Stages
 
@@ -30,3 +30,4 @@ Maintained by the project manager only. It is read first in every project-manage
 
 | CR | Blocks | Decision |
 | --- | --- | --- |
+| CR-1 | T-A2, T-P1, T-P2, T-P3, dry run | Owner decided 2026-09-29: owner boots sessions; fix agent instructions. ADR text pending (architect) |
