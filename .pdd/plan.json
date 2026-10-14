@@ -1,0 +1,15 @@
+{
+  "title": "mtg-judge",
+  "batches": [
+    {"id": "1-0", "name": "PI-1 documents", "goal": "Requirements, functional design and the build plan for PI-1", "exit_criteria": "Each document below is ready by its Ready when line in process.md"}
+  ],
+  "tracks": ["DOCS"],
+  "items": [
+    {"id": "W1", "title": "docs/vision.md", "batch": "1-0", "track": "DOCS", "depends_on": [], "size": "M", "risk": "low", "delivers": [], "note": "Code-and-specs start from mtg-judge (cycle/E3, 5210244); includes the foundation pass"},
+    {"id": "W2", "title": "docs/prd/pi-1.md and docs/behaviors.md", "batch": "1-0", "track": "DOCS", "depends_on": ["W1"], "size": "L", "risk": "low", "delivers": []},
+    {"id": "W3", "title": "features/*.feature", "batch": "1-0", "track": "DOCS", "depends_on": ["W2"], "size": "M", "risk": "low", "delivers": []},
+    {"id": "W4", "title": "docs/architecture.md", "batch": "1-0", "track": "DOCS", "depends_on": ["W2"], "size": "L", "risk": "medium", "delivers": []},
+    {"id": "W5", "title": "docs/stack.md", "batch": "1-0", "track": "DOCS", "depends_on": ["W4"], "size": "M", "risk": "low", "delivers": []},
+    {"id": "W6", "title": ".pdd/plan.json, the build", "batch": "1-0", "track": "DOCS", "depends_on": ["W3", "W5"], "size": "M", "risk": "low", "delivers": []}
+  ]
+}
