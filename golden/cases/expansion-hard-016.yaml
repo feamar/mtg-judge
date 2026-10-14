@@ -1,0 +1,98 @@
+# Imported from judge-lab-architecture-testset.json by golden/tools/import-judge-lab-bundle.mjs. Edit the source record, not this file.
+id: "expansion-hard-016"
+title: "Painter mills into Emrakul"
+family: "Repetition and pending triggers"
+tag: "hard"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-28"
+  note: "Owner stated on 2026-09-28 that he verified all 207 scenarios and asked to include them as verified. Status in the bundle record: outcome DRAFT FOR OWNER REVIEW, sources SOURCE CHECK REQUIRED."
+set: "dev"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "Legacy"
+  rel: "not-material"
+  framework: null
+  inGame: null
+input:
+  raw:
+    - seat: "P1"
+      text: "Painter chose blue. Bob's library contains ordinary cards and one Emrakul, the Aeons Torn, with no shuffle replacement effects. Alice activates Grindstone targeting Bob. Does Emrakul's graveyard trigger interrupt Grindstone as soon as it is milled?"
+  cards:
+    - "Painter's Servant"
+    - "Grindstone"
+    - "Emrakul, the Aeons Torn"
+  assumptions:
+    - "No unmentioned effects change the stated interaction."
+    - "The stated resolutions occur only after the required priority passes."
+expect:
+  kind: "rules-question"
+  disposition: "RESOLVED"
+  answer: "No. Grindstone finishes resolving first; Emrakul's trigger is then put on the stack."
+  propositions:
+    - "The common color keeps the process going while pairs can be milled."
+    - "Emrakul creates a triggered ability, not a replacement that immediately shuffles."
+    - "No priority is received mid-resolution."
+    - "Milling an empty library alone does not cause a loss."
+  chain:
+    - sources:
+        - "CR:117.2e"
+        - "CR:603.3"
+        - "CR:701.17a"
+        - "CR:704.5b"
+        - "Oracle:Painter's Servant"
+        - "Oracle:Grindstone"
+        - "Oracle:Emrakul, the Aeons Torn"
+      propositions: []
+      consequence: "No. Grindstone finishes resolving first; Emrakul's trigger is then put on the stack."
+  requiredCitations:
+    - "CR:117.2e"
+    - "CR:603.3"
+    - "CR:701.17a"
+    - "CR:704.5b"
+    - "Oracle:Painter's Servant"
+    - "Oracle:Grindstone"
+    - "Oracle:Emrakul, the Aeons Torn"
+  requiredQuestions: []
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+    - "reveal-integrity-suspicion"
+  escalate: false
+provenance:
+  sourceQuestionId: "HARD-016"
+  scenarioFile: "expansion-hard-016-painter-mills-into-emrakul.md"
+  bucket: "Hard"
+  pilot: false
+  originalSetting: "Legacy"
+  bundle: "Judge Lab — architecture phase testset"
+  bundleSchema: "judge-lab-testset-bundle/1.0"
+  references:
+    - label: "CR 117.2e"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 603.3"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 701.17a"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 704.5b"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+  origin: "Original Judge Lab expansion"
+  created_at: "2026-09-27"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#HARD-016"
+  source_versions:
+    CR: "2026-09-25"
+    MTR: "2026-02-27"
+    IPG: "2024-09-23"
+    JAR: "2024-09-23"
+    MTRA: "Current page retrieved 2026-09-27; page lists latest update 2025-06-24"
+    Oracle: "Scryfall mirror retrieved 2026-09-27"
+  oracle_snapshots:
+    Painter's Servant: "Painter's Servant\n{2} · Artifact Creature — Scarecrow\nAs this creature enters, choose a color.\nAll cards that aren't on the battlefield, spells, and permanents are the chosen color in addition to their other colors.\n1/3"
+    Grindstone: "Grindstone\n{1} · Artifact\n{3}, {T}: Target player mills two cards. If two cards that share a color were milled this way, repeat this process."
+    Emrakul, the Aeons Torn: "Emrakul, the Aeons Torn\n{15} · Legendary Creature — Eldrazi\nThis spell can't be countered.\nWhen you cast this spell, take an extra turn after this one.\nFlying, protection from spells that are one or more colors, annihilator 6\nWhen Emrakul is put into a graveyard from anywhere, its owner shuffles their graveyard into their library.\n15/15"
+  cr_reference_existence_checked: true
+  not_executable_engine_test: "This is a candidate evaluation record, not an implementation of CR execution."

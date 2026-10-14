@@ -1,0 +1,41 @@
+id: scn-001b-shuffled-card-from-hand
+title: "Card accidentally shuffled into the library: unknown card (from the hand), MTRA"
+narrative: golden/scenarios/card-accidentally-shuffled-into-library.md
+family: investigation
+variantOf: scn-001a-shuffled-public-card
+validation:
+  status: VALIDATED
+  by: Frank
+  on: 2026-09-27
+  note: "Owner ruling 2026-09-27: Hidden Card Error; the library is the set with the excess card. The library is shuffled afterwards (the random part stays random). Known cards on top/bottom are only asked about if the library wasn't just fully shuffled; here it was, so the question is left out."
+tag: easy
+set: dev
+origin: owner-scenario
+sources: { cr: 2026-09-25, ipg: "blogs.magicjudges.org, read 2026-09-27", addendum: MTRA@2025-06-24 }
+context: { format: cEDH, rel: Competitive, framework: MTRA@2025-06-24, seats: 4, inGame: true }
+input:
+  raw:
+    - { seat: P1, text: "shuffled a card into my deck on accident" }
+    - { seat: P1, text: "a card from my hand fell in while i was shuffling for my tutor. and that is where we are now" }
+  choices:
+    cardAndOriginZone: { P1: "A card from my hand" }
+    identityKnown: false
+    isCommander: false
+    activeSeat: P1
+    turnOrder: [P1, P2, P3, P4]
+expect:
+  kind: dispute
+  intent: hidden-card-error
+  answer: "Hidden Card Error, Warning. The library holds an excess card whose identity is unknown. Under the MTRA the library is revealed only to P4, the opponent furthest in turn order from the active player (P1 is both the active and the infracting player). P4 chooses any card from it, which is put into P1's hand. P4 may not discuss the choice."
+  deciding: ["The excess card's identity is unknown", "Framework is MTRA", "Seating and active player decide who chooses"]
+  infraction: "Game Play Error — Hidden Card Error"
+  penalty: "Warning"
+  fix: ["Reveal the library only to P4", "P4 chooses any card from it; it goes to P1's hand", "No discussion of the choice", "Shuffle the library (the random part stays random; the library was just fully shuffled, so no known top/bottom cards)"]
+  deliveryPattern: explain-then-penalty
+  requiredCitations: ["IPG:2.3", "MTRA:Hidden Card Error"]
+  requiredQuestions: [cardAndOriginZone, identityKnown, activeSeat, turnOrder]
+  intake: { narrator: P1, endedBy: wrap-up, prompt: what-is-your-question, noInterruption: true }
+  forbiddenQuestions: [knownTopOrBottomCards]
+  mustNot: [ask-full-board-state, remedy-by-private-message, classify-as-game-rule-violation]
+  escalate: false
+notes: "The remedy is carried out at the table by instruction (FR-INT-3): the judge tells P1 to show the library only to P4. It never uses a private message to carry out the remedy."

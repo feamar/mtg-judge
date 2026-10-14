@@ -1,0 +1,92 @@
+# Imported from judge-lab-architecture-testset.json by golden/tools/import-judge-lab-bundle.mjs. Edit the source record, not this file.
+id: "expansion-hard-041"
+title: "Containment Priest on an escaped creature"
+family: "Cast history"
+tag: "hard"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-28"
+  note: "Owner stated on 2026-09-28 that he verified all 207 scenarios and asked to include them as verified. Status in the bundle record: outcome DRAFT FOR OWNER REVIEW, sources SOURCE CHECK REQUIRED."
+set: "dev"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "cEDH"
+  rel: "not-material"
+  framework: null
+  inGame: null
+input:
+  raw:
+    - seat: "P1"
+      text: "Bob controls Containment Priest. Alice legally escapes Oracle from her graveyard and it resolves. Does Priest exile it instead of allowing entry?"
+  cards:
+    - "Containment Priest"
+    - "Underworld Breach"
+    - "Thassa's Oracle"
+  assumptions:
+    - "No unmentioned effects change the stated interaction."
+    - "The stated resolutions occur only after the required priority passes."
+expect:
+  kind: "rules-question"
+  disposition: "RESOLVED"
+  answer: "No."
+  propositions:
+    - "Escape casts the creature spell."
+    - "Priest checks whether the creature was cast, not whether it was cast from hand or for its normal cost."
+  chain:
+    - sources:
+        - "CR:702.138a"
+        - "CR:601.2"
+        - "CR:614.12"
+        - "Oracle:Containment Priest"
+        - "Oracle:Underworld Breach"
+        - "Oracle:Thassa's Oracle"
+      propositions: []
+      consequence: "No."
+  requiredCitations:
+    - "CR:702.138a"
+    - "CR:601.2"
+    - "CR:614.12"
+    - "Oracle:Containment Priest"
+    - "Oracle:Underworld Breach"
+    - "Oracle:Thassa's Oracle"
+  requiredQuestions: []
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+    - "reveal-integrity-suspicion"
+  escalate: false
+provenance:
+  sourceQuestionId: "HARD-041"
+  scenarioFile: "expansion-hard-041-containment-priest-on-an-escaped-creature.md"
+  bucket: "Hard"
+  pilot: false
+  originalSetting: "cEDH"
+  bundle: "Judge Lab — architecture phase testset"
+  bundleSchema: "judge-lab-testset-bundle/1.0"
+  references:
+    - label: "CR 702.138a"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 601.2"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 614.12"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+  origin: "Original Judge Lab expansion"
+  created_at: "2026-09-27"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#HARD-041"
+  source_versions:
+    CR: "2026-09-25"
+    MTR: "2026-02-27"
+    IPG: "2024-09-23"
+    JAR: "2024-09-23"
+    MTRA: "Current page retrieved 2026-09-27; page lists latest update 2025-06-24"
+    Oracle: "Scryfall mirror retrieved 2026-09-27"
+  oracle_snapshots:
+    Containment Priest: "Containment Priest\n{1}{W} · Creature — Human Cleric\nFlash\nIf a nontoken creature would enter and it wasn't cast, exile it instead.\n2/2"
+    Underworld Breach: "Underworld Breach\n{1}{R} · Enchantment\nEach nonland card in your graveyard has escape. The escape cost is equal to the card's mana cost plus exile three other cards from your graveyard. (You may cast cards from your graveyard for their escape cost.)\nAt the beginning of the end step, sacrifice this enchantment."
+    Thassa's Oracle: "Thassa's Oracle\n{U}{U} · Creature — Merfolk Wizard\nWhen this creature enters, look at the top X cards of your library, where X is your devotion to blue. Put up to one of them on top of your library and the rest on the bottom of your library in a random order. If X is greater than or equal to the number of cards in your library, you win the game. (Each {U} in the mana costs of permanents you control counts toward your devotion to blue.)\n1/3"
+  cr_reference_existence_checked: true
+  not_executable_engine_test: "This is a candidate evaluation record, not an implementation of CR execution."

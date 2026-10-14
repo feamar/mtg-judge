@@ -1,0 +1,97 @@
+# Imported from judge-lab-architecture-testset.json by golden/tools/import-judge-lab-bundle.mjs. Edit the source record, not this file.
+id: "expansion-hard-028"
+title: "Windfall under Narset with Bowmasters"
+family: "Multiplayer draw events"
+tag: "hard"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-28"
+  note: "Owner stated on 2026-09-28 that he verified all 207 scenarios and asked to include them as verified. Status in the bundle record: outcome DRAFT FOR OWNER REVIEW, sources SOURCE CHECK REQUIRED."
+set: "dev"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "cEDH"
+  rel: "not-material"
+  framework: null
+  inGame: null
+input:
+  raw:
+    - seat: "P1"
+      text: "Four players: Alice, Bob, Carol, Dan. Bob controls Narset and Bowmasters. Alice has already drawn this turn; Carol and Dan have not. Windfall resolves outside a draw step and the greatest number discarded is seven. No other effects apply. How many cards does each draw, and how many Bowmasters draw triggers result?"
+  cards:
+    - "Windfall"
+    - "Narset, Parter of Veils"
+    - "Orcish Bowmasters"
+  assumptions:
+    - "No unmentioned effects change the stated interaction."
+    - "The stated resolutions occur only after the required priority passes."
+expect:
+  kind: "rules-question"
+  disposition: "RESOLVED"
+  answer: "Alice draws 0, Bob 7, Carol 1, Dan 1; Bob gets two Bowmasters draw triggers."
+  propositions:
+    - "Narset restricts Bob's opponents, not Bob."
+    - "It blocks all Alice's draws and permits only the first for each other opponent."
+    - "Bowmasters triggers only on those actual opponent draws, not on prevented draws or Bob's own draws."
+  chain:
+    - sources:
+        - "CR:121.2"
+        - "CR:101.2"
+        - "CR:603.2"
+        - "CR:117.2e"
+        - "Oracle:Windfall"
+        - "Oracle:Narset, Parter of Veils"
+        - "Oracle:Orcish Bowmasters"
+      propositions: []
+      consequence: "Alice draws 0, Bob 7, Carol 1, Dan 1; Bob gets two Bowmasters draw triggers."
+  requiredCitations:
+    - "CR:121.2"
+    - "CR:101.2"
+    - "CR:603.2"
+    - "CR:117.2e"
+    - "Oracle:Windfall"
+    - "Oracle:Narset, Parter of Veils"
+    - "Oracle:Orcish Bowmasters"
+  requiredQuestions: []
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+    - "reveal-integrity-suspicion"
+  escalate: false
+provenance:
+  sourceQuestionId: "HARD-028"
+  scenarioFile: "expansion-hard-028-windfall-under-narset-with-bowmasters.md"
+  bucket: "Hard"
+  pilot: false
+  originalSetting: "cEDH"
+  bundle: "Judge Lab — architecture phase testset"
+  bundleSchema: "judge-lab-testset-bundle/1.0"
+  references:
+    - label: "CR 121.2"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 101.2"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 603.2"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 117.2e"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+  origin: "Original Judge Lab expansion"
+  created_at: "2026-09-27"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#HARD-028"
+  source_versions:
+    CR: "2026-09-25"
+    MTR: "2026-02-27"
+    IPG: "2024-09-23"
+    JAR: "2024-09-23"
+    MTRA: "Current page retrieved 2026-09-27; page lists latest update 2025-06-24"
+    Oracle: "Scryfall mirror retrieved 2026-09-27"
+  oracle_snapshots:
+    Windfall: "Windfall\n{2}{U} · Sorcery\nEach player discards their hand, then draws cards equal to the greatest number of cards a player discarded this way."
+    Narset, Parter of Veils: "Narset, Parter of Veils\n{1}{U}{U} · Legendary Planeswalker — Narset\nEach opponent can't draw more than one card each turn.\n−2: Look at the top four cards of your library. You may reveal a noncreature, nonland card from among them and put it into your hand. Put the rest on the bottom of your library in a random order.\nLoyalty: 5"
+    Orcish Bowmasters: "Orcish Bowmasters\n{1}{B} · Creature — Orc Archer\nFlash\nWhen this creature enters and whenever an opponent draws a card except the first one they draw in each of their draw steps, this creature deals 1 damage to any target. Then amass Orcs 1.\n1/1"
+  cr_reference_existence_checked: true
+  not_executable_engine_test: "This is a candidate evaluation record, not an implementation of CR execution."

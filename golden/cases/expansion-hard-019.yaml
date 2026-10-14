@@ -1,0 +1,101 @@
+# Imported from judge-lab-architecture-testset.json by golden/tools/import-judge-lab-bundle.mjs. Edit the source record, not this file.
+id: "expansion-hard-019"
+title: "Dredge under Narset"
+family: "Dredge and draw limits"
+tag: "hard"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-28"
+  note: "Owner stated on 2026-09-28 that he verified all 207 scenarios and asked to include them as verified. Status in the bundle record: outcome DRAFT FOR OWNER REVIEW, sources SOURCE CHECK REQUIRED."
+set: "dev"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "Legacy"
+  rel: "not-material"
+  framework: null
+  inGame: null
+input:
+  raw:
+    - seat: "P1"
+      text: "Bob controls Narset. Alice has drawn no cards this turn and has at least twenty cards in her library. She resolves Brainstorm, replacing its first draw by dredging Grave-Troll. She has no other draw replacements. What happens to the other two draws and the return instruction?"
+  cards:
+    - "Narset, Parter of Veils"
+    - "Brainstorm"
+    - "Golgari Grave-Troll"
+  assumptions:
+    - "No unmentioned effects change the stated interaction."
+    - "The stated resolutions occur only after the required priority passes."
+expect:
+  kind: "rules-question"
+  disposition: "RESOLVED"
+  answer: "She draws one card for the second draw, cannot perform the third draw, then returns two cards from her hand."
+  propositions:
+    - "Dredging replaced the first draw, so it did not consume her one permitted draw."
+    - "The second draw does; Narset then prohibits the third."
+    - "The return instruction still applies."
+  chain:
+    - sources:
+        - "CR:702.52a"
+        - "CR:121.2"
+        - "CR:614.6"
+        - "CR:614.17c"
+        - "CR:608.2c"
+        - "Oracle:Narset, Parter of Veils"
+        - "Oracle:Brainstorm"
+        - "Oracle:Golgari Grave-Troll"
+      propositions: []
+      consequence: "She draws one card for the second draw, cannot perform the third draw, then returns two cards from her hand."
+  requiredCitations:
+    - "CR:702.52a"
+    - "CR:121.2"
+    - "CR:614.6"
+    - "CR:614.17c"
+    - "CR:608.2c"
+    - "Oracle:Narset, Parter of Veils"
+    - "Oracle:Brainstorm"
+    - "Oracle:Golgari Grave-Troll"
+  requiredQuestions: []
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+    - "reveal-integrity-suspicion"
+  escalate: false
+provenance:
+  sourceQuestionId: "HARD-019"
+  scenarioFile: "expansion-hard-019-dredge-under-narset.md"
+  bucket: "Hard"
+  pilot: false
+  originalSetting: "Legacy"
+  bundle: "Judge Lab — architecture phase testset"
+  bundleSchema: "judge-lab-testset-bundle/1.0"
+  references:
+    - label: "CR 702.52a"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 121.2"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 614.6"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 614.17c"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 608.2c"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+  origin: "Original Judge Lab expansion"
+  created_at: "2026-09-27"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#HARD-019"
+  source_versions:
+    CR: "2026-09-25"
+    MTR: "2026-02-27"
+    IPG: "2024-09-23"
+    JAR: "2024-09-23"
+    MTRA: "Current page retrieved 2026-09-27; page lists latest update 2025-06-24"
+    Oracle: "Scryfall mirror retrieved 2026-09-27"
+  oracle_snapshots:
+    Narset, Parter of Veils: "Narset, Parter of Veils\n{1}{U}{U} · Legendary Planeswalker — Narset\nEach opponent can't draw more than one card each turn.\n−2: Look at the top four cards of your library. You may reveal a noncreature, nonland card from among them and put it into your hand. Put the rest on the bottom of your library in a random order.\nLoyalty: 5"
+    Brainstorm: "Brainstorm\n{U} · Instant\nDraw three cards, then put two cards from your hand on top of your library in any order."
+    Golgari Grave-Troll: "Golgari Grave-Troll\n{4}{G} · Creature — Troll Skeleton\nThis creature enters with a +1/+1 counter on it for each creature card in your graveyard.\n{1}, Remove a +1/+1 counter from this creature: Regenerate this creature.\nDredge 6 (If you would draw a card, you may mill six cards instead. If you do, return this card from your graveyard to your hand.)\n0/0"
+  cr_reference_existence_checked: true
+  not_executable_engine_test: "This is a candidate evaluation record, not an implementation of CR execution."
