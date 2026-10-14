@@ -98,15 +98,15 @@ MTR, IPG or JAR keep those documents' meaning, in English, in every language.
   judge answers deterministically and fast. Owner-approved concept explanations, answering
   strategies and official card rulings are part of it. The knowledge bundle releases it. (Frank,
   2026-10-14; word: mlmd, to confirm)
-- **player-text parsing:** the small model turns what a player writes or says into a standardized
-  question. It never answers or rules, and doesn't count toward the AI share. (Frank, 2026-10-14)
-- **small model:** the lean, cheap language model that does player-text parsing. It runs on the
-  player's phone, on the host (for Discord), or online if its upkeep is paid for. Not: local LLM
-  (it isn't always local), AI model. (Frank, 2026-10-14; word: mlmd, to confirm)
-- **fallback model:** the advanced AI model that answers an AI fallback, and nothing else. Not: AI
-  model (alone), which leaves open which of the two is meant. (Frank, 2026-10-14; word: mlmd, to
-  confirm)
-- **AI fallback:** a question the encoded knowledge can't answer, answered by the fallback model
+- **player-text parsing:** the player question text standardizing AI (small) turns what a player writes or says into a
+  standardized question. It never answers or rules, and doesn't count toward the AI share.
+  (Frank, 2026-10-14)
+- **player question text standardizing AI (small):** the lean, cheap language model that does player-text parsing, and nothing
+  else. It runs on the player's phone, on the host (for Discord), or online if its upkeep is paid
+  for (Q8). Not: small model, local LLM, AI model. (Frank, 2026-10-14)
+- **AI judge backup model (frontier):** the advanced AI model that answers an AI fallback, and nothing else. Not:
+  fallback model, AI model (alone). (Frank, 2026-10-14)
+- **AI fallback:** a question the encoded knowledge can't answer, answered by the AI judge backup model (frontier)
   with cited rules and card text, and marked as not reviewed. At most 1–2% of questions. (Frank,
   2026-10-14; word: mlmd, to confirm)
 - **answering strategy:** a build-time graph over card features that answers one kind of question.

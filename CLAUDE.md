@@ -3,7 +3,7 @@
 An AI judge for Magic: The Gathering, available right away in Discord: it answers rules questions,
 rules on disputes and fixes the game, and applies tournament policy, handing off to human judges
 only when it can't rule safely. Rules, cards and most policy are encoded and approved by the owner
-at build time; at run time a small model only parses what players say, and the fallback model
+at build time; at run time the player question text standardizing AI (small) only parses what players say, and the AI judge backup model (frontier)
 answers at most 1–2% of questions. First context: online cEDH at Competitive REL.
 
 Operator: Frank, the owner; knows most about both the business and the technology (2026-10-14).

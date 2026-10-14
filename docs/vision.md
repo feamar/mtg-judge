@@ -26,9 +26,9 @@ manages events. (Frank, PRD §1, D1, NG1)
   comes first, then the teaching.
 - **Deterministic first, AI last; spend at build time, not at run time:** lookups, citations, card
   data, penalty tables and investigation procedures are deterministic, built once and approved by
-  the owner. At run time the small model only turns what players say into a standardized
+  the owner. At run time the player question text standardizing AI (small) only turns what players say into a standardized
   question. The encoded knowledge finds the answer, or finds that the question needs the player to
-  say more, and the reply comes from it. The fallback model is called only for an AI fallback.
+  say more, and the reply comes from it. The AI judge backup model (frontier) is called only for an AI fallback.
   (Frank, 2026-10-14; changes PRD P2 and D50, where the AI picked the procedure and phrased every
   question and explanation)
 - **The face of the game, impartial:** precise, very friendly, customer-centric; never takes a side;
@@ -107,9 +107,9 @@ a learning project" (Frank, PRD D13), and the plan's pilot ends when "the owner 
   results on messy input; "unresolved" is a valid result. (Frank, PRD NFR-ACC-1..3, NFR-ROB-1, D12,
   D30)
 - **AI share:** all cards and all rules are encoded, and most policy handling. At most 1–2% of
-  questions go to the fallback model; more means the architecture isn't good enough yet. Encoding
-  must not slow the judge down. Player-text parsing by the small model doesn't count: it never
-  answers or rules. Where the small model runs is open (Q8). (Frank, 2026-10-14; goes beyond PRD
+  questions go to the AI judge backup model (frontier); more means the architecture isn't good enough yet. Encoding
+  must not slow the judge down. Player-text parsing by the player question text standardizing AI (small) doesn't count: it never
+  answers or rules. Where the player question text standardizing AI (small) runs is open (Q8). (Frank, 2026-10-14; goes beyond PRD
   P2 and D50, whose cost model assumed a library hit rate as low as 20%)
 - **Consistency:** the same facts give the same ruling, whoever reports them, in whatever order or
   wording. (Frank, PRD NFR-IMP-1)
