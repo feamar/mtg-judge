@@ -26,11 +26,12 @@ manages events. (Frank, PRD §1, D1, NG1)
   comes first, then the teaching.
 - **Deterministic first, AI last; spend at build time, not at run time:** lookups, citations, card
   data, penalty tables and investigation procedures are deterministic, built once and approved by
-  the owner. At run time the player question text standardizing AI (small) only turns what players say into a standardized
-  question. The encoded knowledge finds the answer, or finds that the question needs the player to
-  say more, and the reply comes from it. The AI judge backup model (frontier) is called only for an AI fallback.
-  (Frank, 2026-10-14; changes PRD P2 and D50, where the AI picked the procedure and phrased every
-  question and explanation)
+  the owner. At run time the player question text standardizing AI (small) only turns what
+  players say into a standardized question. The encoded knowledge finds the answer, or finds that
+  the question needs the player to say more, and deterministic code writes the reply from
+  owner-approved templates. The AI judge backup model (frontier) is called only for an AI
+  fallback. (Frank, 2026-10-14; changes PRD P2 and D50, where the AI picked the procedure and
+  phrased every question and explanation)
 - **The face of the game, impartial:** precise, very friendly, customer-centric; never takes a side;
   a penalty is a learning moment.
 
