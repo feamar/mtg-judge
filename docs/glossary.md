@@ -103,9 +103,12 @@ MTR, IPG or JAR keep those documents' meaning, in English, in every language.
 
 ## Quality
 
-- **golden set:** the owner-approved cases that define a correct ruling. A **golden case** is one
-  of them. Not: case (a judge call), scenario (the golden case's readable Markdown view), test
-  record.
+- **golden set:** the owner-approved cases that define a correct ruling, in `golden/`. A **golden
+  case** is one of them. Not: case (a judge call), test record.
+- **case narrative:** a golden case's readable Markdown view. The folder keeps its source name,
+  `golden/scenarios/`, since 32 golden cases link to it. Not: scenario. (mlmd, 2026-10-14; Frank
+  agreed)
+- **scenario:** a Gherkin scenario in `features/`, tagged with its behavior's id. Only that.
 - **easy / hard:** the owner's tag on a golden case; hard means a complex rules interaction, a long
   investigation or rebuilding a complex board state.
 - **VALIDATED / SOURCE CHECK REQUIRED:** a golden case's status: the owner has / hasn't checked its

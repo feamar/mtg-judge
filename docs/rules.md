@@ -2,7 +2,8 @@
 
 State the rules every session follows, and what enforces each.
 
-Drafted 2026-10-13 by mlmd's foundation pass from mtg-judge (`cycle/E3`, `5210244`). No gate exists
+Drafted 2026-10-13 by mlmd's foundation pass from mtg-judge (`cycle/E3`, `5210244`); R1–R7 agreed by
+Frank, 2026-10-14. No gate exists
 in this repository yet: the gates are built in phase 2. Until then a rule that will be gated is
 marked **Reviewed (gated from phase 2)**: a person checks it at each document's review.
 
