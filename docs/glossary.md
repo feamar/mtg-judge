@@ -2,7 +2,7 @@
 
 Give every term one meaning, and name the words not to use for it.
 
-Drafted 2026-10-13 by mlmd's foundation pass from mtg-judge (`cycle/E3`, `5210244`): PRD §9, the
+Drafted 2026-10-13 by mlmd's foundation pass from mtg-judge (`cycle/E3`, `5210244`; since 2026-10-14 in `docs/source/`): PRD §9, the
 architecture and ADRs, the golden set and the code. A term marked *(mlmd, 2026-10-13)* is mlmd's
 choice of word, for Frank to confirm; unmarked meanings are the source's. Terms defined in the CR,
 MTR, IPG or JAR keep those documents' meaning, in English, in every language.

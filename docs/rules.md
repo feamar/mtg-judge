@@ -2,7 +2,7 @@
 
 State the rules every session follows, and what enforces each.
 
-Drafted 2026-10-13 by mlmd's foundation pass from mtg-judge (`cycle/E3`, `5210244`); R1–R7 agreed by
+Drafted 2026-10-13 by mlmd's foundation pass from mtg-judge (`cycle/E3`, `5210244`; since 2026-10-14 in `docs/source/`); R1–R7 agreed by
 Frank, 2026-10-14. No gate exists
 in this repository yet: the gates are built in phase 2. Until then a rule that will be gated is
 marked **Reviewed (gated from phase 2)**: a person checks it at each document's review.
@@ -23,7 +23,7 @@ marked **Reviewed (gated from phase 2)**: a person checks it at each document's 
 ## R3 No raw player data in the repository
 - **Says:** raw league exports and any text with real Discord names or IDs never enter the
   repository. Pseudonymisation is done by a script, which fails when a known name or ID survives.
-- **From:** PRD D51, NFR-PRIV-1; `docs/architecture/league-export-intake.md`.
+- **From:** PRD D51, NFR-PRIV-1; `docs/source/architecture/league-export-intake.md`.
 - **Tier:** Reviewed (gated from phase 2).
 
 ## R4 No user-facing text in code

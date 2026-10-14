@@ -2,7 +2,7 @@
 
 Record what the design stands on that nobody proved, and how it would be found wrong.
 
-Drafted 2026-10-13 by mlmd's foundation pass from mtg-judge (`cycle/E3`, `5210244`). A high-fragility
+Drafted 2026-10-13 by mlmd's foundation pass from mtg-judge (`cycle/E3`, `5210244`; since 2026-10-14 in `docs/source/`). A high-fragility
 assumption gets a PoC, or a decision that makes it not matter, before anything is built on it.
 
 | # | Assumption | Falsified if | Detector / verify by | Fragility | Fallback |

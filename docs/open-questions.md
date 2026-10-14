@@ -2,7 +2,7 @@
 
 Hold everything not decided, with its level and who needs the answer.
 
-Drafted 2026-10-13 from mtg-judge (`cycle/E3`, `5210244`): the PRD's open questions and the
+Drafted 2026-10-13 from mtg-judge (`cycle/E3`, `5210244`; since 2026-10-14 in `docs/source/`): the PRD's open questions and the
 contradictions mlmd found between the sources. Levels: large (could change the architecture),
 medium (changes behavior, not the architecture).
 

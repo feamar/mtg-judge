@@ -2,8 +2,8 @@
 
 Requirements · Decide the whole product: what it is, and which increment each feature belongs to.
 
-Imported 2026-10-13 from mtg-judge (`cycle/E3`, `5210244`): `docs/PRD.md` v0.5, `docs/architecture/`,
-`docs/plan/`, `golden/` and the code. From this import on, this document is the master copy; the
+Imported 2026-10-13 from mtg-judge (`cycle/E3`, `5210244`; since 2026-10-14 in `docs/source/`): `docs/source/PRD.md` v0.5, `docs/source/architecture/`,
+`docs/source/plan/`, `golden/` and the code. From this import on, this document is the master copy; the
 sources are inputs and are not kept in sync. "Frank (PRD D13)" marks a decision Frank made as product
 owner and recorded in the source; "Frank, 2026-10-13" one made in this interview; "mlmd, 2026-10-13"
 one mlmd made so work could continue, for Frank to confirm.
