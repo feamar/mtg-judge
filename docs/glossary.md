@@ -94,9 +94,15 @@ MTR, IPG or JAR keep those documents' meaning, in English, in every language.
 - **build pipeline:** the offline process that turns the source documents and card data into the
   knowledge bundle. Not: pipeline (alone), which in the source also names a code workspace.
 - **knowledge bundle:** the versioned, read-only release of everything the judge rules from.
-- **approved rulings library:** owner-approved answers: concept explanations, answering strategies,
-  official card rulings. Rules questions are answered from it first. A **library miss** gets a
-  cited AI answer marked as not reviewed.
+- **encoded knowledge:** all cards, all rules (the CR) and most policy handling, encoded so the
+  judge answers deterministically and fast. Owner-approved concept explanations, answering
+  strategies and official card rulings are part of it. The knowledge bundle releases it. (Frank,
+  2026-10-14; word: mlmd, to confirm)
+- **player-text parsing:** a local LLM turns what a player writes or says into a standardized
+  form. It never answers or rules, and doesn't count toward the AI share. (Frank, 2026-10-14)
+- **AI fallback:** a question the encoded knowledge can't answer, answered by the AI model with
+  cited rules and card text, and marked as not reviewed. At most 1–2% of questions. (Frank,
+  2026-10-14; word: mlmd, to confirm)
 - **answering strategy:** a build-time graph over card features that answers one kind of question.
 - **card features:** structured facts about a card that strategies reason over.
 - **stale:** an artifact or golden case that cites a source section that has changed.
@@ -132,6 +138,9 @@ MTR, IPG or JAR keep those documents' meaning, in English, in every language.
 - **MVP**, **Post-MVP**, **Future** as the PRD's scope tags: replaced by the increment a feature
   belongs to, or "none yet". "MVP" means only what mlmd means by it: increments aimed at a viability
   hypothesis.
+- **library** for the judge's pre-approved answers (the source's "approved rulings library",
+  "library hit", "library miss"): in Magic a library is a player's deck, and only that. Use
+  encoded knowledge and AI fallback. (Frank, 2026-10-14)
 - **spike S1–S4** as the source names them: in this project they are PoCs or spikes in mlmd's sense,
   named for what they ask (voice, Tickets, messy input, targeting).
 

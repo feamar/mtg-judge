@@ -55,7 +55,7 @@ reviews the judge's rulings as domain expert. (Frank, PRD §3)
 
 | # | Feature | Increment |
 | --- | --- | --- |
-| F1 | Rules questions: answered from the approved rulings library with cited rules and a teach-first explanation, minimal during a game; a library miss gets a cited AI answer marked as not reviewed | PI-1 |
+| F1 | Rules questions: answered from the encoded knowledge (all cards, all rules, most policy handling) with cited rules and a teach-first explanation, minimal during a game; the rare question it can't answer gets an AI fallback answer, cited and marked as not reviewed | PI-1 |
 | F2 | Disputes: narration intake, then fact-finding by build-time procedures (only the facts that decide), asked as open questions that players answer in their own words, never as buttons or choices, so that subtle hints stay visible (Frank, 2026-10-14; changes PRD FR-INV-2 and D50, which asked with buttons where possible); then a ruling with the game fix | PI-1 |
 | F3 | Infractions and penalties: identified under the event's policy framework; issued up to a Warning, recommended above; simple backups and partial fixes only | PI-1 |
 | F4 | Integrity: investigation notes, integrity categories and modes, a protected handoff on strong indicators, nothing revealed to players | PI-1 |
@@ -103,6 +103,11 @@ a learning project" (Frank, PRD D13), and the plan's pilot ends when "the owner 
   facts gathered; every citation resolves in the loaded source version; zero confidently wrong
   results on messy input; "unresolved" is a valid result. (Frank, PRD NFR-ACC-1..3, NFR-ROB-1, D12,
   D30)
+- **AI share:** all cards and all rules are encoded, and most policy handling. At most 1–2% of
+  questions go to the AI model; more means the architecture isn't good enough yet. Encoding must
+  not slow the judge down. Parsing players' text into a standardized form is done by a local LLM
+  and doesn't count: it never answers or rules. (Frank, 2026-10-14; goes beyond PRD P2 and D50, whose cost model assumed
+  a library hit rate as low as 20%)
 - **Consistency:** the same facts give the same ruling, whoever reports them, in whatever order or
   wording. (Frank, PRD NFR-IMP-1)
 - **Cost:** under $20 a month for the live judge at pilot volume (200–430 cases a month), about
