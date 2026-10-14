@@ -19,3 +19,5 @@ iteration notes. Those stay on the `cycle/E3` branch.
 
 ## README.md describes the pre-mlmd layout
 
+README.md still describes the PRD, ADRs and agent roles as the way in. Rewrite it once the Vision is
+ready. Found 2026-10-14.
