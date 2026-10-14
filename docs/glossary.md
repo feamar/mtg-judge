@@ -30,14 +30,16 @@ MTR, IPG or JAR keep those documents' meaning, in English, in every language.
   event's human judges and TOs.
 - **case:** one judge call's handling by the judge, from being summoned until a ruling or a
   handoff, and its record. Not: golden case (a test), ticket (the thread).
-- **rules question:** a case that asks how the rules work. About 75% of cases.
+- **rules question:** a case that asks how the rules work. (Frank, 2026-10-13: how often it occurs
+  is an estimate, not part of the meaning.)
 - **dispute:** a case where something happened in the game and the players need a ruling and a fix.
   Not: for two players' conflicting versions of one fact; call that **conflicting accounts**.
   *(mlmd, 2026-10-13: the architecture uses "Dispute" for both)*
-- **narration intake:** the judge asks the caller (or an agreed **volunteer**) to tell what happened
-  step by step, and follows along until a question is formulated or arises, or the story is
-  **wrapped up**. A pause never ends a narration. Not: silence (the source uses "silence" for a
-  wrap-up).
+- **narration intake:** the judge asks the caller to tell what happened step by step, and follows
+  along until a question is formulated or arises, or the story is **wrapped up**. A pause never ends
+  a narration. Not: silence (the source uses "silence" for a wrap-up).
+- **narrator:** the player telling what happened: the caller, or another player, most often the
+  caller's opponent or opponents, when the table agrees. Not: volunteer. (Frank, 2026-10-13)
 - **claim / fact:** a claim is what a player asserts about the rules, an infraction, a count or a
   remedy; it is checked, never taken as a fact. A **fact** has an origin: **reported** (a player
   said it), **observed** (from evidence), **derived** (worked out from rules, card text or
@@ -83,7 +85,9 @@ MTR, IPG or JAR keep those documents' meaning, in English, in every language.
 - **referral:** an event-management consequence (drop, re-entry, changed result) passed to the TO
   and never announced by the judge.
 - **play advice:** guidance that could influence a player's decisions; the MTR and IPG definitions
-  take precedence.
+  take precedence. The judge never gives play advice at Competitive REL or above; at Regular REL it
+  may say an action won't achieve what the player seems to want. (Frank, 2026-10-14; PRD D52,
+  FR-RUL-8)
 
 ## Knowledge and build
 

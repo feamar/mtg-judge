@@ -1,0 +1,93 @@
+# Imported from judge-lab-architecture-testset.json by golden/tools/import-judge-lab-bundle.mjs. Edit the source record, not this file.
+id: "expansion-hard-017"
+title: "Narset stops a Thief replacement"
+family: "Prohibitions and replacements"
+tag: "hard"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-28"
+  note: "Owner stated on 2026-09-28 that he verified all 207 scenarios and asked to include them as verified. Status in the bundle record: outcome DRAFT FOR OWNER REVIEW, sources SOURCE CHECK REQUIRED."
+set: "dev"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "cEDH"
+  rel: "not-material"
+  framework: null
+  inGame: null
+input:
+  raw:
+    - seat: "P1"
+      text: "Alice has already drawn this turn. Bob controls Narset and Carol controls Notion Thief. Alice resolves Brainstorm. Can Carol replace Alice's prohibited draws and draw three herself?"
+  cards:
+    - "Narset, Parter of Veils"
+    - "Notion Thief"
+    - "Brainstorm"
+  assumptions:
+    - "No unmentioned effects change the stated interaction."
+    - "The stated resolutions occur only after the required priority passes."
+expect:
+  kind: "rules-question"
+  disposition: "RESOLVED"
+  answer: "No."
+  propositions:
+    - "A draw that cannot happen cannot be modified by an ordinary replacement effect."
+    - "Narset's prohibition prevents the draw events before Notion Thief can replace them."
+    - "Brainstorm's return instruction still happens."
+  chain:
+    - sources:
+        - "CR:614.17c"
+        - "CR:609.3"
+        - "CR:608.2c"
+        - "Oracle:Narset, Parter of Veils"
+        - "Oracle:Notion Thief"
+        - "Oracle:Brainstorm"
+      propositions: []
+      consequence: "No."
+  requiredCitations:
+    - "CR:614.17c"
+    - "CR:609.3"
+    - "CR:608.2c"
+    - "Oracle:Narset, Parter of Veils"
+    - "Oracle:Notion Thief"
+    - "Oracle:Brainstorm"
+  requiredQuestions: []
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+    - "reveal-integrity-suspicion"
+  escalate: false
+provenance:
+  sourceQuestionId: "HARD-017"
+  scenarioFile: "expansion-hard-017-narset-stops-a-thief-replacement.md"
+  bucket: "Hard"
+  pilot: false
+  originalSetting: "cEDH"
+  bundle: "Judge Lab — architecture phase testset"
+  bundleSchema: "judge-lab-testset-bundle/1.0"
+  references:
+    - label: "CR 614.17c"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 609.3"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 608.2c"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+  origin: "Original Judge Lab expansion"
+  created_at: "2026-09-27"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#HARD-017"
+  source_versions:
+    CR: "2026-09-25"
+    MTR: "2026-02-27"
+    IPG: "2024-09-23"
+    JAR: "2024-09-23"
+    MTRA: "Current page retrieved 2026-09-27; page lists latest update 2025-06-24"
+    Oracle: "Scryfall mirror retrieved 2026-09-27"
+  oracle_snapshots:
+    Narset, Parter of Veils: "Narset, Parter of Veils\n{1}{U}{U} · Legendary Planeswalker — Narset\nEach opponent can't draw more than one card each turn.\n−2: Look at the top four cards of your library. You may reveal a noncreature, nonland card from among them and put it into your hand. Put the rest on the bottom of your library in a random order.\nLoyalty: 5"
+    Notion Thief: "Notion Thief\n{2}{U}{B} · Creature — Human Rogue\nFlash\nIf an opponent would draw a card except the first one they draw in each of their draw steps, instead that player skips that draw and you draw a card.\n3/1"
+    Brainstorm: "Brainstorm\n{U} · Instant\nDraw three cards, then put two cards from your hand on top of your library in any order."
+  cr_reference_existence_checked: true
+  not_executable_engine_test: "This is a candidate evaluation record, not an implementation of CR execution."

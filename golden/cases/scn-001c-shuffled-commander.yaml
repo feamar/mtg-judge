@@ -1,0 +1,38 @@
+id: scn-001c-shuffled-commander
+title: "Card accidentally shuffled into the library: the commander (known card)"
+narrative: golden/scenarios/card-accidentally-shuffled-into-library.md
+family: investigation
+variantOf: scn-001a-shuffled-public-card
+validation:
+  status: VALIDATED
+  by: Frank
+  on: 2026-09-27
+  note: "Owner ruling 2026-09-27: Hidden Card Error; the library is the set with the excess card. The library is shuffled afterwards (the random part stays random). Known cards on top/bottom are only asked about if the library wasn't just fully shuffled; here it was, so the question is left out."
+tag: easy
+set: dev
+origin: owner-scenario
+sources: { cr: 2026-09-25, ipg: "blogs.magicjudges.org, read 2026-09-27", addendum: MTRA@2025-06-24 }
+context: { format: cEDH, rel: Competitive, framework: MTRA@2025-06-24, seats: 4, inGame: true }
+input:
+  raw:
+    - { seat: P1, text: "shuffled a card into my deck on accident" }
+    - { seat: P1, text: "my commander was lying next to my deck and got shuffled in with it. thats when we called you over" }
+  choices:
+    cardAndOriginZone: { P1: "My commander, from the command zone" }
+    identityKnown: true
+    isCommander: true
+expect:
+  kind: dispute
+  intent: hidden-card-error
+  answer: "Hidden Card Error, Warning. The excess card is the commander, whose identity is known, so it is taken out of the library and returned to the command zone."
+  deciding: ["The excess card's identity is known (commander)"]
+  infraction: "Game Play Error — Hidden Card Error"
+  penalty: "Warning"
+  fix: ["Find the commander in the library", "Return it to the command zone", "Shuffle the library (the random part stays random; the library was just fully shuffled, so no known top/bottom cards)"]
+  deliveryPattern: explain-then-penalty
+  requiredCitations: ["IPG:2.3", "CR:903.9b"]
+  requiredQuestions: [cardAndOriginZone, isCommander]
+  intake: { narrator: P1, endedBy: wrap-up, prompt: what-is-your-question, noInterruption: true }
+  forbiddenQuestions: [knownTopOrBottomCards]
+  mustNot: [ask-full-board-state, classify-as-game-rule-violation]
+  escalate: false

@@ -1,0 +1,92 @@
+# Imported from judge-lab-architecture-testset.json by golden/tools/import-judge-lab-bundle.mjs. Edit the source record, not this file.
+id: "expansion-hard-049"
+title: "Counterbalance's trigger through removal"
+family: "Stack and source independence"
+tag: "hard"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-28"
+  note: "Owner stated on 2026-09-28 that he verified all 207 scenarios and asked to include them as verified. Status in the bundle record: outcome DRAFT FOR OWNER REVIEW, sources SOURCE CHECK REQUIRED."
+set: "dev"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "Legacy"
+  rel: "not-material"
+  framework: null
+  inGame: null
+input:
+  raw:
+    - seat: "P1"
+      text: "Bob controls Counterbalance. Alice casts Brainstorm, triggering it. Before the trigger resolves Alice destroys Counterbalance with Force of Vigor. Ignoring the separate trigger from Force, can the original trigger still counter Brainstorm if Bob reveals a one-mana card?"
+  cards:
+    - "Counterbalance"
+    - "Force of Vigor"
+    - "Brainstorm"
+  assumptions:
+    - "No unmentioned effects change the stated interaction."
+    - "The stated resolutions occur only after the required priority passes."
+expect:
+  kind: "rules-question"
+  disposition: "RESOLVED"
+  answer: "Yes."
+  propositions:
+    - "The original trigger remains independent of the destroyed enchantment."
+    - "Its comparison is performed when that ability resolves."
+  chain:
+    - sources:
+        - "CR:113.7a"
+        - "CR:608.2h"
+        - "CR:202.3"
+        - "Oracle:Counterbalance"
+        - "Oracle:Force of Vigor"
+        - "Oracle:Brainstorm"
+      propositions: []
+      consequence: "Yes."
+  requiredCitations:
+    - "CR:113.7a"
+    - "CR:608.2h"
+    - "CR:202.3"
+    - "Oracle:Counterbalance"
+    - "Oracle:Force of Vigor"
+    - "Oracle:Brainstorm"
+  requiredQuestions: []
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+    - "reveal-integrity-suspicion"
+  escalate: false
+provenance:
+  sourceQuestionId: "HARD-049"
+  scenarioFile: "expansion-hard-049-counterbalance-s-trigger-through-removal.md"
+  bucket: "Hard"
+  pilot: false
+  originalSetting: "Legacy"
+  bundle: "Judge Lab — architecture phase testset"
+  bundleSchema: "judge-lab-testset-bundle/1.0"
+  references:
+    - label: "CR 113.7a"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 608.2h"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 202.3"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+  origin: "Original Judge Lab expansion"
+  created_at: "2026-09-27"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#HARD-049"
+  source_versions:
+    CR: "2026-09-25"
+    MTR: "2026-02-27"
+    IPG: "2024-09-23"
+    JAR: "2024-09-23"
+    MTRA: "Current page retrieved 2026-09-27; page lists latest update 2025-06-24"
+    Oracle: "Scryfall mirror retrieved 2026-09-27"
+  oracle_snapshots:
+    Counterbalance: "Counterbalance\n{U}{U} · Enchantment\nWhenever an opponent casts a spell, you may reveal the top card of your library. If you do, counter that spell if it has the same mana value as the revealed card."
+    Force of Vigor: "Force of Vigor\n{2}{G}{G} · Instant\nIf it's not your turn, you may exile a green card from your hand rather than pay this spell's mana cost.\nDestroy up to two target artifacts and/or enchantments."
+    Brainstorm: "Brainstorm\n{U} · Instant\nDraw three cards, then put two cards from your hand on top of your library in any order."
+  cr_reference_existence_checked: true
+  not_executable_engine_test: "This is a candidate evaluation record, not an implementation of CR execution."

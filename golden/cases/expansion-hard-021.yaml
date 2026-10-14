@@ -1,0 +1,103 @@
+# Imported from judge-lab-architecture-testset.json by golden/tools/import-judge-lab-bundle.mjs. Edit the source record, not this file.
+id: "expansion-hard-021"
+title: "Breach resource ledger"
+family: "Combo resource accounting"
+tag: "hard"
+validation:
+  status: "VALIDATED"
+  by: "Frank"
+  on: "2026-09-28"
+  note: "Owner stated on 2026-09-28 that he verified all 207 scenarios and asked to include them as verified. Status in the bundle record: outcome DRAFT FOR OWNER REVIEW, sources SOURCE CHECK REQUIRED."
+set: "dev"
+origin: "judge-lab"
+sources:
+  cr: "2026-09-25"
+  oracle: "Scryfall Oracle mirror, see provenance"
+context:
+  format: "cEDH"
+  rel: "not-material"
+  framework: null
+  inGame: null
+input:
+  raw:
+    - seat: "P1"
+      text: "Breach was already on the battlefield before this turn. No spells have been cast this turn. Alice has UU floating, an empty hand, and a graveyard containing LED, Brain Freeze, and six other cards. She escapes LED using three other cards, resolves and activates it for UUU, then escapes Brain Freeze using the remaining three other cards. Both Freeze spells target Alice and resolve, milling six ordinary cards total. How much mana and how many graveyard cards remain?"
+  cards:
+    - "Underworld Breach"
+    - "Lion's Eye Diamond"
+    - "Brain Freeze"
+  assumptions:
+    - "No unmentioned effects change the stated interaction."
+    - "The stated resolutions occur only after the required priority passes."
+expect:
+  kind: "rules-question"
+  disposition: "RESOLVED"
+  answer: "Three blue mana and eight graveyard cards."
+  propositions:
+    - "LED costs no mana to escape and its activation raises the pool to five blue."
+    - "Freeze costs two of that mana."
+    - "Storm makes one copy because LED was the one prior spell."
+    - "The final graveyard contains LED, the six milled cards, and the resolved original Freeze."
+    - "This is a finite accounting exercise, not a declaration of unlimited resources."
+  chain:
+    - sources:
+        - "CR:702.138a"
+        - "CR:702.40a"
+        - "CR:707.10"
+        - "CR:601.2h"
+        - "CR:608.2c"
+        - "Oracle:Underworld Breach"
+        - "Oracle:Lion's Eye Diamond"
+        - "Oracle:Brain Freeze"
+      propositions: []
+      consequence: "Three blue mana and eight graveyard cards."
+  requiredCitations:
+    - "CR:702.138a"
+    - "CR:702.40a"
+    - "CR:707.10"
+    - "CR:601.2h"
+    - "CR:608.2c"
+    - "Oracle:Underworld Breach"
+    - "Oracle:Lion's Eye Diamond"
+    - "Oracle:Brain Freeze"
+  requiredQuestions: []
+  mustNot:
+    - "invent-infraction-or-penalty"
+    - "add-unmentioned-effects"
+    - "reveal-integrity-suspicion"
+  escalate: false
+provenance:
+  sourceQuestionId: "HARD-021"
+  scenarioFile: "expansion-hard-021-breach-resource-ledger.md"
+  bucket: "Hard"
+  pilot: false
+  originalSetting: "cEDH"
+  bundle: "Judge Lab — architecture phase testset"
+  bundleSchema: "judge-lab-testset-bundle/1.0"
+  references:
+    - label: "CR 702.138a"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 702.40a"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 707.10"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 601.2h"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+    - label: "CR 608.2c"
+      url: "https://media.wizards.com/2026/downloads/MagicCompRules%2020260925.txt"
+  origin: "Original Judge Lab expansion"
+  created_at: "2026-09-27"
+  source_url: "https://judge-lab.feamar.chatgpt.site/#HARD-021"
+  source_versions:
+    CR: "2026-09-25"
+    MTR: "2026-02-27"
+    IPG: "2024-09-23"
+    JAR: "2024-09-23"
+    MTRA: "Current page retrieved 2026-09-27; page lists latest update 2025-06-24"
+    Oracle: "Scryfall mirror retrieved 2026-09-27"
+  oracle_snapshots:
+    Underworld Breach: "Underworld Breach\n{1}{R} · Enchantment\nEach nonland card in your graveyard has escape. The escape cost is equal to the card's mana cost plus exile three other cards from your graveyard. (You may cast cards from your graveyard for their escape cost.)\nAt the beginning of the end step, sacrifice this enchantment."
+    Lion's Eye Diamond: "Lion's Eye Diamond\n{0} · Artifact\nDiscard your hand, Sacrifice this artifact: Add three mana of any one color. Activate only as an instant."
+    Brain Freeze: "Brain Freeze\n{1}{U} · Instant\nTarget player mills three cards.\nStorm (When you cast this spell, copy it for each spell cast before it this turn. You may choose new targets for the copies.)"
+  cr_reference_existence_checked: true
+  not_executable_engine_test: "This is a candidate evaluation record, not an implementation of CR execution."
