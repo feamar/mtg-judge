@@ -84,10 +84,21 @@ question text standardizing AI (small). (Frank, 2026-10-29)
 | F21 | Event policies set by the TO | none yet (PRD D61) |
 | F22 | The Portuguese Multiplayer Addendum as a policy framework | none yet (Frank, 2026-09-28, PRD OQ-37) |
 
-**Increments.** *(gap)*
+**Increments.** (Frank, 2026-10-29)
 
-**Viability hypothesis.** *(gap)* The sources state none. The PRD says "No business model. This is
-a learning project" (Frank, PRD D13), and the plan's pilot ends when "the owner accepts the product".
+| Increment | For | Used by |
+| --- | --- | --- |
+| PI-1 | A test release: the judge running in Discord, to try it out | Frank and the CriticalEDH owners |
+| PI-2 | The alpha release for players | CriticalEDH players |
+
+PI-1 holds F1–F11, the whole judge as the source planned it, tried out by Frank and the CriticalEDH
+owners. PI-2 opens the judge to players, and adds what the test showed was missing, plus the
+features from F12–F20 Frank chooses for it. (Frank, 2026-10-29)
+
+**Viability hypothesis.** None yet: the work is a set of features to build (Frank, 2026-10-29).
+Frank says when that changes. PRD D13 ("no business model, a learning project") stands, although the
+CriticalEDH owners have said they would gladly pay for the player question text standardizing AI
+(small).
 
 ## 3. Constraints and quality levels
 
