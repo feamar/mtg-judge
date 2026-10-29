@@ -143,8 +143,14 @@ MTR, IPG or JAR keep those documents' meaning, in English, in every language.
 
 ## Increments
 
-- **PI-1:** the first increment, the one the source calls "the MVP". *(mlmd, 2026-10-13: to settle
-  in the Vision's features topic)*
+- **PI-1 … PI-5:** the increments, in order: PI-1 the test release (the source's "MVP", without
+  its cost cap), PI-2 operations and stats, PI-3 voice, PI-4 the alpha release for players, PI-5
+  penalty history. (Frank, 2026-10-29)
+- **test release:** PI-1: the judge running in Discord for Frank and the CriticalEDH owners to try
+  out, before players use it. (Frank, 2026-10-29)
+- **alpha release:** PI-4: the first release CriticalEDH players use. (Frank, 2026-10-29)
+- **version 2.0:** Frank's word for the product after PI-5, when F14–F16 and F18–F20 are
+  reconsidered (Q9). Not yet defined. (Frank, 2026-10-29)
 
 ## Retired
 

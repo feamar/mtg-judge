@@ -74,13 +74,13 @@ question text standardizing AI (small). (Frank, 2026-10-29)
 | F11 | Build pipeline: imports the CR, MTR, IPG, the policy frameworks and card data into a versioned knowledge bundle; shows a diff per new source version; releases only after the golden set passes and the owner approves | PI-1 |
 | F12 | Voice in Discord: summoned only, through the same pipeline as text | PI-3, likely (Frank, 2026-10-29); waits on the voice PoC |
 | F13 | Operations: a daily owner summary, a health check, backups that expire, spend alerts (from the plan; not in the PRD) | PI-2 (Frank, 2026-10-29) |
-| F14 | 1v1 constructed formats (Standard, Pioneer, Modern, Legacy, Vintage, Pauper) | *(gap)* |
-| F15 | Regular REL (JAR) and casual play; with no human judge available, the judge's best ruling marked as uncertain (PRD D35) | *(gap)* |
-| F16 | Phone app: text and voice, several players at one device | *(gap)* |
-| F17 | Penalty history across an event: upgrades, Turn Skips carried between rounds | *(gap)* |
-| F18 | Languages other than English | *(gap)* |
-| F19 | Photo input, then webcam input, of the board | *(gap)* |
-| F20 | Limited formats | *(gap)* |
+| F14 | 1v1 constructed formats (Standard, Pioneer, Modern, Legacy, Vintage, Pauper) | none yet; for version 2.0 (Frank, 2026-10-29; Q9) |
+| F15 | Regular REL (JAR) and casual play; with no human judge available, the judge's best ruling marked as uncertain (PRD D35) | none yet; for version 2.0 (Frank, 2026-10-29; Q9) |
+| F16 | Phone app: text and voice, several players at one device | none yet; for version 2.0 (Frank, 2026-10-29; Q9) |
+| F17 | Penalty history across an event: upgrades, Turn Skips carried between rounds | PI-5 (Frank, 2026-10-29) |
+| F18 | Languages other than English | none yet; for version 2.0 (Frank, 2026-10-29; Q9) |
+| F19 | Photo input, then webcam input, of the board | none yet; for version 2.0 (Frank, 2026-10-29; Q9) |
+| F20 | Limited formats | none yet; for version 2.0 (Frank, 2026-10-29; Q9) |
 | F21 | Event policies set by the TO | none yet (PRD D61) |
 | F22 | The Portuguese Multiplayer Addendum as a policy framework | none yet (Frank, 2026-09-28, PRD OQ-37) |
 
@@ -92,11 +92,13 @@ question text standardizing AI (small). (Frank, 2026-10-29)
 | PI-2 | Operations and stats: seeing how the judge does | Frank and the CriticalEDH owners |
 | PI-3 | Voice in Discord | Frank and the CriticalEDH owners |
 | PI-4 | The alpha release for players | CriticalEDH players |
+| PI-5 | Penalty history across an event | CriticalEDH players |
 
 PI-1 holds F1–F11 except F10, the whole judge as the source planned it, tried out by Frank and the CriticalEDH
 owners. PI-2 adds operations and all the stats (F13). PI-3 adds voice (F12), likely (Frank's
-word), and waits on the voice PoC. PI-4 opens the judge to players, and adds what the tests showed was missing, plus the features from F14–F20 Frank
-chooses for it. (Frank, 2026-10-29)
+word), and waits on the voice PoC. PI-4 opens the judge to players, and adds what the tests showed was missing. PI-5 adds penalty
+history (F17). F14–F16 and F18–F20 are out of scope for now, for version 2.0 (Q9). (Frank,
+2026-10-29)
 
 **Viability hypothesis.** None yet: the work is a set of features to build (Frank, 2026-10-29).
 Frank says when that changes. PRD D13 ("no business model, a learning project") stands, although the
