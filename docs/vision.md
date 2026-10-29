@@ -72,8 +72,8 @@ question text standardizing AI (small). (Frank, 2026-10-29)
 | F9 | Messy input: typos, slang, nicknames and transcription errors lead to the same answer as clean input, or the judge asks to rephrase | PI-1 |
 | F10 | Cost cap: at the monthly cap the judge answers rules questions only, on the cheapest model, and hands disputes off | PI-1 |
 | F11 | Build pipeline: imports the CR, MTR, IPG, the policy frameworks and card data into a versioned knowledge bundle; shows a diff per new source version; releases only after the golden set passes and the owner approves | PI-1 |
-| F12 | Voice in Discord: summoned only, through the same pipeline as text | PI-1 if the voice PoC succeeds; waits on it |
-| F13 | Operations: a daily owner summary, a health check, backups that expire, spend alerts (from the plan; not in the PRD) | PI-1 *(gap)* |
+| F12 | Voice in Discord: summoned only, through the same pipeline as text | PI-3, likely (Frank, 2026-10-29); waits on the voice PoC |
+| F13 | Operations: a daily owner summary, a health check, backups that expire, spend alerts (from the plan; not in the PRD) | PI-2 (Frank, 2026-10-29) |
 | F14 | 1v1 constructed formats (Standard, Pioneer, Modern, Legacy, Vintage, Pauper) | *(gap)* |
 | F15 | Regular REL (JAR) and casual play; with no human judge available, the judge's best ruling marked as uncertain (PRD D35) | *(gap)* |
 | F16 | Phone app: text and voice, several players at one device | *(gap)* |
@@ -89,11 +89,14 @@ question text standardizing AI (small). (Frank, 2026-10-29)
 | Increment | For | Used by |
 | --- | --- | --- |
 | PI-1 | A test release: the judge running in Discord, to try it out | Frank and the CriticalEDH owners |
-| PI-2 | The alpha release for players | CriticalEDH players |
+| PI-2 | Operations and stats: seeing how the judge does | Frank and the CriticalEDH owners |
+| PI-3 | Voice in Discord | Frank and the CriticalEDH owners |
+| PI-4 | The alpha release for players | CriticalEDH players |
 
 PI-1 holds F1–F11, the whole judge as the source planned it, tried out by Frank and the CriticalEDH
-owners. PI-2 opens the judge to players, and adds what the test showed was missing, plus the
-features from F12–F20 Frank chooses for it. (Frank, 2026-10-29)
+owners. PI-2 adds operations and all the stats (F13). PI-3 adds voice (F12), likely (Frank's
+word), and waits on the voice PoC. PI-4 opens the judge to players, and adds what the tests showed was missing, plus the features from F14–F20 Frank
+chooses for it. (Frank, 2026-10-29)
 
 **Viability hypothesis.** None yet: the work is a set of features to build (Frank, 2026-10-29).
 Frank says when that changes. PRD D13 ("no business model, a learning project") stands, although the
