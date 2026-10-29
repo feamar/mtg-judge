@@ -61,17 +61,17 @@ question text standardizing AI (small). (Frank, 2026-10-29)
 
 | # | Feature | Increment |
 | --- | --- | --- |
-| F1 | Rules questions: answered from the encoded knowledge (all cards, all rules, most policy handling) with cited rules and a teach-first explanation, minimal during a game; when the literal answer is obvious or the question could mean something else, the judge first asks what the player wants to know (Frank, 2026-10-14); the rare question it can't answer gets an AI fallback answer, cited and marked as not reviewed | PI-1 |
-| F2 | Disputes: narration intake, then fact-finding by build-time procedures (only the facts that decide), asked as open questions that players answer in their own words, never as buttons or choices, so that subtle hints stay visible (Frank, 2026-10-14; changes PRD FR-INV-2 and D50, which asked with buttons where possible); then a ruling with the game fix | PI-1 |
-| F3 | Infractions and penalties: identified under the event's policy framework; issued up to a Warning, recommended above; simple backups and partial fixes only | PI-1 |
-| F4 | Integrity: investigation notes, integrity categories and modes, a protected handoff on strong indicators, nothing revealed to players | PI-1 |
-| F5 | Handoff to human judges, with the facts gathered first and a neutral message to players | PI-1 |
+| F1 | Rules questions: answered from the encoded knowledge (all cards, all rules, most policy handling) with cited rules and a teach-first explanation, minimal during a game; when the literal answer is obvious or the question could mean something else, the judge first asks what the player wants to know (Frank, 2026-10-14); the rare question it can't answer gets an AI fallback answer, cited and marked as not reviewed | PI-0 |
+| F2 | Disputes: narration intake, then fact-finding by build-time procedures (only the facts that decide), asked as open questions that players answer in their own words, never as buttons or choices, so that subtle hints stay visible (Frank, 2026-10-14; changes PRD FR-INV-2 and D50, which asked with buttons where possible); then a ruling with the game fix | PI-0 |
+| F3 | Infractions and penalties: identified under the event's policy framework; issued up to a Warning, recommended above; simple backups and partial fixes only | PI-0 |
+| F4 | Integrity: investigation notes, integrity categories and modes, a protected handoff on strong indicators, nothing revealed to players | PI-0 |
+| F5 | Handoff to human judges, with the facts gathered first and a neutral message to players | PI-0 |
 | F6 | Event context: set up by the TO; shared by join code; the Admin maps the TO role per server | PI-1 |
 | F7 | Tickets: the judge joins the tickets the server's existing ticket bot opens (on CriticalEDH: the Tickets bot, thread mode; PRD D43, Frank, 2026-10-29); detection is pluggable | PI-1 |
-| F8 | Case record: kept 7 days, readable by human judges and the TO, exportable as a golden case candidate; notes whether the AI judge backup model (frontier) answered, so the AI share can be counted from PI-1 on (Frank, 2026-10-29) | PI-1 |
-| F9 | Messy input: typos, slang, nicknames and transcription errors lead to the same answer as clean input, or the judge asks to rephrase | PI-1 |
+| F8 | Case record: kept 7 days, readable by human judges and the TO, exportable as a golden case candidate; notes whether the AI judge backup model (frontier) answered, so the AI share can be counted from PI-1 on (Frank, 2026-10-29) | PI-0 |
+| F9 | Messy input: typos, slang, nicknames and transcription errors lead to the same answer as clean input, or the judge asks to rephrase | PI-0 |
 | F10 | Cost cap: at the monthly cap the judge answers rules questions only, on the cheapest model, and hands disputes off | none yet: not needed while the CriticalEDH owners pay for both models (A21; Frank, 2026-10-29) |
-| F11 | Build pipeline: imports the CR, MTR, IPG, the policy frameworks and card data into a versioned knowledge bundle; shows a diff per new source version; releases only after the golden set passes and the owner approves | PI-1 |
+| F11 | Build pipeline: imports the CR, MTR, IPG, the policy frameworks and card data into a versioned knowledge bundle; shows a diff per new source version; releases only after the golden set passes and the owner approves | PI-0 |
 | F12 | Voice in Discord: summoned only, through the same pipeline as text | PI-3, likely (Frank, 2026-10-29); waits on the voice PoC |
 | F13 | Operations: a daily owner summary, a health check, backups that expire, spend alerts (from the plan; not in the PRD) | PI-2 (Frank, 2026-10-29) |
 | F14 | 1v1 constructed formats (Standard, Pioneer, Modern, Legacy, Vintage, Pauper) | none yet; for version 2.0 (Frank, 2026-10-29; Q9) |
@@ -83,19 +83,22 @@ question text standardizing AI (small). (Frank, 2026-10-29)
 | F20 | Limited formats | none yet; for version 2.0 (Frank, 2026-10-29; Q9) |
 | F21 | Event policies set by the TO | none yet (PRD D61) |
 | F22 | The Portuguese Multiplayer Addendum as a policy framework | none yet (Frank, 2026-09-28, PRD OQ-37) |
+| F23 | Paste-in judge: Frank pastes a real case from CriticalEDH into the judge on his computer, answers its questions, and copies its replies back himself; no Discord. Claude Code, on Frank's own subscription, stands in for the AI judge backup model (frontier), and its tokens are counted to infer the cost (Q10) | PI-0 (Frank, 2026-10-29) |
 
 **Increments.** (Frank, 2026-10-29)
 
 | Increment | For | Used by |
 | --- | --- | --- |
+| PI-0 | The full judge without Discord, on about 50 real cases pasted in by hand: what it uses, and what it would cost | Frank |
 | PI-1 | A test release: the judge running in Discord, to try it out | Frank and the CriticalEDH owners |
 | PI-2 | Operations and stats: seeing how the judge does | Frank and the CriticalEDH owners |
 | PI-3 | Voice in Discord | Frank and the CriticalEDH owners |
 | PI-4 | The alpha release for players | CriticalEDH players |
 | PI-5 | Penalty history across an event | CriticalEDH players |
 
-PI-1 holds F1–F11 except F10, the whole judge as the source planned it, tried out by Frank and the CriticalEDH
-owners. PI-2 adds operations and all the stats (F13). PI-3 adds voice (F12), likely (Frank's
+PI-0 holds the full judge (F1–F5, F8, F9, F11) behind a paste-in interface (F23), used by Frank
+alone on about 50 real cases, to measure the AI share and the tokens. PI-1 puts it into Discord
+(F6, F7) for Frank and the CriticalEDH owners to try out. PI-2 adds operations and all the stats (F13). PI-3 adds voice (F12), likely (Frank's
 word), and waits on the voice PoC. PI-4 opens the judge to players, and adds what the tests showed was missing. PI-5 adds penalty
 history (F17). F14–F16 and F18–F20 are out of scope for now, for version 2.0 (Q9). (Frank,
 2026-10-29)
@@ -121,21 +124,24 @@ CriticalEDH owners have said they would gladly pay for the player question text 
   card set triggers a rebuild: diff, rebuild, golden set, owner approval. Starting it is one easy
   step, and the updated judge goes live without players on Discord noticing: no downtime, no lost
   case. (Frank, 2026-10-14; changes PRD D25, which had a manual rebuild for document versions only)
-- **Accuracy:** 100% of easy golden cases pass; up to about 2% of real cases handed off, with their
+- **Accuracy:** from PI-1 on, every release meets the release criteria (Frank, 2026-10-29): 100% of
+  easy golden cases pass; up to about 2% of real cases handed off, with their
   facts gathered; every citation resolves in the loaded source version; zero confidently wrong
   results on messy input; "unresolved" is a valid result. (Frank, PRD NFR-ACC-1..3, NFR-ROB-1, D12,
   D30)
 - **AI share:** all cards and all rules are encoded, and most policy handling. At most 1–2% of
   questions go to the AI judge backup model (frontier); more means the architecture isn't good enough yet. The
-  share is measured first, from PI-1 on, and the encoding is improved until it holds; PI-1, the
+  share is measured first, from PI-0 on, and the encoding is improved until it holds; PI-1, the
   test release, doesn't have to meet it yet (Frank, 2026-10-29). Encoding
   must not slow the judge down. Player-text parsing by the player question text standardizing AI (small) doesn't count: it never
   answers or rules. For Discord it runs online, and the CriticalEDH owners pay for its upkeep (Frank, 2026-10-29). (Frank, 2026-10-14; goes beyond PRD
   P2 and D50, whose cost model assumed a library hit rate as low as 20%)
 - **Consistency:** the same facts give the same ruling, whoever reports them, in whatever order or
   wording. (Frank, PRD NFR-IMP-1)
-- **Cost:** under $20 a month for the live judge at pilot volume (200–430 cases a month), about
-  $0.05–0.10 a case all in. Building and testing cost no paid API spend (rule R1). (Frank, PRD
+- **Cost:** cheap, and a good sell to the CriticalEDH owners, who pay for the models (A21). The
+  figure is worked out in the build stages from what is measured (Q10; Frank, 2026-10-29). The
+  source's figure, under $20 a month at pilot volume (200–430 cases a month), about $0.05–0.10 a
+  case all in, is a reference until then. Building and testing cost no paid API spend (rule R1). (Frank, PRD
   NFR-COST-1, D14, D45)
 - **Speed:** text replies within single-digit seconds; voice under 1 second if voice ships. (Frank,
   PRD NFR-LAT-1, D63)

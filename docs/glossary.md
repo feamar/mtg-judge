@@ -143,8 +143,8 @@ MTR, IPG or JAR keep those documents' meaning, in English, in every language.
 
 ## Increments
 
-- **PI-1 … PI-5:** the increments, in order: PI-1 the test release (the source's "MVP", without
-  its cost cap), PI-2 operations and stats, PI-3 voice, PI-4 the alpha release for players, PI-5
+- **PI-0 … PI-5:** the increments, in order: PI-0 the paste-in judge, PI-1 the test release (the
+  source's "MVP", without its cost cap), PI-2 operations and stats, PI-3 voice, PI-4 the alpha release for players, PI-5
   penalty history. (Frank, 2026-10-29)
 - **test release:** PI-1: the judge running in Discord for Frank and the CriticalEDH owners to try
   out, before players use it. (Frank, 2026-10-29)
