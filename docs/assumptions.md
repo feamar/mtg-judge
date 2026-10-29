@@ -25,7 +25,7 @@ assumption gets a PoC, or a decision that makes it not matter, before anything i
 | A16 | Scryfall- and WotC-derived text may be used this way | WotC's reply restricts it | WotC's reply (PRD OQ-12) | medium | Short quotes, rule numbers and links only |
 | A17 | The owner's always-on desktop is an acceptable host | Outages, or Docker can't be enabled | Uptime; a firmware check | low | A Windows service, or a VPS |
 | A19 | Players' own wording carries the subtle hints that show cheating or facts shaded in their favour, and the judge can pick them up | Integrity cases answered in free text go undetected | Integrity golden cases with free-text answers | high | Hand off to human judges whenever the account is thin |
-| A20 | The player question text standardizing AI (small) parses players' text fast enough for replies within single-digit seconds, wherever it runs (Q8) | Parsing alone takes seconds per message | A parsing PoC on the hardware Q8 chooses | medium | An online small model: it costs money against the cap, but still doesn't count toward the AI share |
+| A20 | The player question text standardizing AI (small) parses players' text fast enough for replies within single-digit seconds, running online (Frank, 2026-10-29) | Parsing alone takes seconds per message | A parsing PoC with the online model chosen | medium | A smaller or nearer online model |
 
 Dropped: A18 "one Discord account is one player" (Frank, 2026-10-14: not relevant). A1 to medium, A19,
 A20, Q7 and the A9 reading confirmed by Frank, 2026-10-14.

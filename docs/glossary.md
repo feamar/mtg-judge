@@ -19,6 +19,10 @@ MTR, IPG or JAR keep those documents' meaning, in English, in every language.
 - **Admin:** the one global user (Frank) who chooses, per server, which Discord role is the TO role.
 - **owner:** Frank, as the product's owner: approves library entries, procedures, golden cases and
   releases. Not: product owner (same thing; use "owner").
+- **CriticalEDH:** the cEDH Discord server where the judge is first hosted. (Frank, 2026-10-29)
+- **CriticalEDH owners:** the people who own the CriticalEDH server and are its TOs. They pay
+  the upkeep of the player question text standardizing AI (small). Not: the Crit. (Frank, 2026-10-29; word: mlmd,
+  to confirm)
 - **Tickets bot:** the third-party bot (tickets.bot) that opens a ticket per judge call on Frank's
   server. "Bot" is used only for third-party bots. *(mlmd, 2026-10-13)*
 
@@ -102,8 +106,9 @@ MTR, IPG or JAR keep those documents' meaning, in English, in every language.
   standardized question. It never answers or rules, and doesn't count toward the AI share.
   (Frank, 2026-10-14)
 - **player question text standardizing AI (small):** the lean, cheap language model that does player-text parsing, and nothing
-  else. It runs on the player's phone, on the host (for Discord), or online if its upkeep is paid
-  for (Q8). Not: small model, local LLM, AI model. (Frank, 2026-10-14)
+  else. For Discord it runs online, its upkeep paid by the CriticalEDH owners (Frank,
+  2026-10-29); in the phone app,
+  on the phone. Not: small model, local LLM, AI model. (Frank, 2026-10-14)
 - **AI judge backup model (frontier):** the advanced AI model that answers an AI fallback, and nothing else. Not:
   fallback model, AI model (alone). (Frank, 2026-10-14)
 - **AI fallback:** a question the encoded knowledge can't answer, answered by the AI judge backup model (frontier)
