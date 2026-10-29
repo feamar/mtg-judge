@@ -26,6 +26,7 @@ assumption gets a PoC, or a decision that makes it not matter, before anything i
 | A17 | The owner's always-on desktop is an acceptable host | Outages, or Docker can't be enabled | Uptime; a firmware check | low | A Windows service, or a VPS |
 | A19 | Players' own wording carries the subtle hints that show cheating or facts shaded in their favour, and the judge can pick them up | Integrity cases answered in free text go undetected | Integrity golden cases with free-text answers | high | Hand off to human judges whenever the account is thin |
 | A20 | The player question text standardizing AI (small) parses players' text fast enough for replies within single-digit seconds, running online (Frank, 2026-10-29) | Parsing alone takes seconds per message | A parsing PoC with the online model chosen | medium | A smaller or nearer online model |
+| A21 | The CriticalEDH owners pay for the AI judge backup model (frontier) as well as the player question text standardizing AI (small) (Frank, 2026-10-29: "can be assumed") | They decline, or the spend grows past what they will pay | Ask them before PI-1 goes live; the spend alerts (PI-2) | medium (F10's cost cap comes back) | F10 in the next increment: at the cap only the frontier model stops, and AI fallbacks are handed off |
 
 Dropped: A18 "one Discord account is one player" (Frank, 2026-10-14: not relevant). A1 to medium, A19,
 A20, Q7 and the A9 reading confirmed by Frank, 2026-10-14.
