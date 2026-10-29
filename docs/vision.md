@@ -150,7 +150,9 @@ CriticalEDH owners have said they would gladly pay for the player question text 
 - **Privacy:** the owner is in the EU (GDPR). Case records deleted after 7 days; deletion on
   request; consent before any voice capture. Pseudonymised player text (seat labels, no Discord
   names) may go to a third-party AI provider, also outside the EU. (Frank, PRD NFR-PRIV-1, D39, D44)
-- **Languages:** English only in PI-1, with nothing hard-coded in English (rule R4). Terms the CR,
+  Names are taken out before text reaches either model: by Frank, by hand, when he pastes a case
+  into PI-0; by deterministic code from PI-1 on. (Frank, 2026-10-29)
+- **Languages:** English only up to PI-5 (other languages, F18, wait for version 2.0), with nothing hard-coded in English (rule R4). Terms the CR,
   MTR or IPG define are never translated. (Frank, PRD D16, NFR-I18N-1)
 - **Tone:** precise, very friendly, customer-centric; never sarcastic or blaming; set by the owner's
   examples. (Frank, PRD P3, NFR-TONE-1, D65)
