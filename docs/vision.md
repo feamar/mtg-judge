@@ -68,7 +68,7 @@ question text standardizing AI (small). (Frank, 2026-10-29)
 | F5 | Handoff to human judges, with the facts gathered first and a neutral message to players | PI-1 |
 | F6 | Event context: set up by the TO; shared by join code; the Admin maps the TO role per server | PI-1 |
 | F7 | Tickets: the judge joins the tickets the server's existing ticket bot opens (on CriticalEDH: the Tickets bot, thread mode; PRD D43, Frank, 2026-10-29); detection is pluggable | PI-1 |
-| F8 | Case record: kept 7 days, readable by human judges and the TO, exportable as a golden case candidate | PI-1 |
+| F8 | Case record: kept 7 days, readable by human judges and the TO, exportable as a golden case candidate; notes whether the AI judge backup model (frontier) answered, so the AI share can be counted from PI-1 on (Frank, 2026-10-29) | PI-1 |
 | F9 | Messy input: typos, slang, nicknames and transcription errors lead to the same answer as clean input, or the judge asks to rephrase | PI-1 |
 | F10 | Cost cap: at the monthly cap the judge answers rules questions only, on the cheapest model, and hands disputes off | none yet: not needed while the CriticalEDH owners pay for both models (A21; Frank, 2026-10-29) |
 | F11 | Build pipeline: imports the CR, MTR, IPG, the policy frameworks and card data into a versioned knowledge bundle; shows a diff per new source version; releases only after the golden set passes and the owner approves | PI-1 |
@@ -126,7 +126,9 @@ CriticalEDH owners have said they would gladly pay for the player question text 
   results on messy input; "unresolved" is a valid result. (Frank, PRD NFR-ACC-1..3, NFR-ROB-1, D12,
   D30)
 - **AI share:** all cards and all rules are encoded, and most policy handling. At most 1–2% of
-  questions go to the AI judge backup model (frontier); more means the architecture isn't good enough yet. Encoding
+  questions go to the AI judge backup model (frontier); more means the architecture isn't good enough yet. The
+  share is measured first, from PI-1 on, and the encoding is improved until it holds (Frank,
+  2026-10-29). Encoding
   must not slow the judge down. Player-text parsing by the player question text standardizing AI (small) doesn't count: it never
   answers or rules. For Discord it runs online, and the CriticalEDH owners pay for its upkeep (Frank, 2026-10-29). (Frank, 2026-10-14; goes beyond PRD
   P2 and D50, whose cost model assumed a library hit rate as low as 20%)
