@@ -127,8 +127,8 @@ CriticalEDH owners have said they would gladly pay for the player question text 
   D30)
 - **AI share:** all cards and all rules are encoded, and most policy handling. At most 1–2% of
   questions go to the AI judge backup model (frontier); more means the architecture isn't good enough yet. The
-  share is measured first, from PI-1 on, and the encoding is improved until it holds (Frank,
-  2026-10-29). Encoding
+  share is measured first, from PI-1 on, and the encoding is improved until it holds; PI-1, the
+  test release, doesn't have to meet it yet (Frank, 2026-10-29). Encoding
   must not slow the judge down. Player-text parsing by the player question text standardizing AI (small) doesn't count: it never
   answers or rules. For Discord it runs online, and the CriticalEDH owners pay for its upkeep (Frank, 2026-10-29). (Frank, 2026-10-14; goes beyond PRD
   P2 and D50, whose cost model assumed a library hit rate as low as 20%)
