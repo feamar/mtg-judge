@@ -23,8 +23,10 @@ MTR, IPG or JAR keep those documents' meaning, in English, in every language.
 - **CriticalEDH owners:** the people who own the CriticalEDH server and are its TOs. They pay
   the upkeep of the player question text standardizing AI (small). Not: the Crit. (Frank, 2026-10-29; word: mlmd,
   to confirm)
-- **Tickets bot:** the third-party bot (tickets.bot) that opens a ticket per judge call on Frank's
-  server. "Bot" is used only for third-party bots. *(mlmd, 2026-10-13)*
+- **Tickets bot:** the third-party bot (tickets.bot) that opens a ticket per judge call on the
+  CriticalEDH server, in thread mode. "Bot" is used only for third-party bots. *(mlmd,
+  2026-10-13)* The source's "the owner's server" (PRD D43) is CriticalEDH; Frank has none of his
+  own. (Frank, 2026-10-29)
 
 ## Cases
 

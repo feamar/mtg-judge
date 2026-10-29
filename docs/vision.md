@@ -67,7 +67,7 @@ question text standardizing AI (small). (Frank, 2026-10-29)
 | F4 | Integrity: investigation notes, integrity categories and modes, a protected handoff on strong indicators, nothing revealed to players | PI-1 |
 | F5 | Handoff to human judges, with the facts gathered first and a neutral message to players | PI-1 |
 | F6 | Event context: set up by the TO; shared by join code; the Admin maps the TO role per server | PI-1 |
-| F7 | Tickets: the judge joins the tickets the server's existing ticket bot opens (Tickets bot, thread mode); detection is pluggable | PI-1 |
+| F7 | Tickets: the judge joins the tickets the server's existing ticket bot opens (on CriticalEDH: the Tickets bot, thread mode; PRD D43, Frank, 2026-10-29); detection is pluggable | PI-1 |
 | F8 | Case record: kept 7 days, readable by human judges and the TO, exportable as a golden case candidate | PI-1 |
 | F9 | Messy input: typos, slang, nicknames and transcription errors lead to the same answer as clean input, or the judge asks to rephrase | PI-1 |
 | F10 | Cost cap: at the monthly cap the judge answers rules questions only, on the cheapest model, and hands disputes off | PI-1 |
