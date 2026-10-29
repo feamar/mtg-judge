@@ -146,6 +146,9 @@ MTR, IPG or JAR keep those documents' meaning, in English, in every language.
 - **PI-0 … PI-5:** the increments, in order: PI-0 the paste-in judge, PI-1 the test release (the
   source's "MVP", without its cost cap), PI-2 operations and stats, PI-3 voice, PI-4 the alpha release for players, PI-5
   penalty history. (Frank, 2026-10-29)
+- **paste-in judge:** PI-0 (F23): the full judge on Frank's computer, without Discord; Frank pastes
+  real cases in and decides what to post. Not: prototype, which in mlmd is an experiment to
+  explore a design. (Frank, 2026-10-29)
 - **test release:** PI-1: the judge running in Discord for Frank and the CriticalEDH owners to try
   out, before players use it. (Frank, 2026-10-29)
 - **alpha release:** PI-4: the first release CriticalEDH players use. (Frank, 2026-10-29)
