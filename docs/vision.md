@@ -6,7 +6,8 @@ Imported 2026-10-13 from mtg-judge (`cycle/E3`, `5210244`; since 2026-10-14 in `
 `docs/source/plan/`, `golden/` and the code. From this import on, this document is the master copy; the
 sources are inputs and are not kept in sync. "Frank (PRD D13)" marks a decision Frank made as product
 owner and recorded in the source; "Frank, 2026-10-13" one made in this interview; "mlmd, 2026-10-13"
-one mlmd made so work could continue, for Frank to confirm.
+one mlmd made so work could continue, which Frank confirmed in that topic's confirm block (topics
+1–4, through 2026-11-01).
 
 ## 1. Problem, users and core
 

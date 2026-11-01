@@ -4,7 +4,8 @@ Give every term one meaning, and name the words not to use for it.
 
 Drafted 2026-10-13 by mlmd's foundation pass from mtg-judge (`cycle/E3`, `5210244`; since 2026-10-14 in `docs/source/`): PRD §9, the
 architecture and ADRs, the golden set and the code. A term marked *(mlmd, 2026-10-13)* is mlmd's
-choice of word, for Frank to confirm; unmarked meanings are the source's. Terms defined in the CR,
+choice of word; Frank agreed to all of them on 2026-10-14 (glossary rounds 1–3), and to the later
+ones marked "word: mlmd" by 2026-11-01. Unmarked meanings are the source's. Terms defined in the CR,
 MTR, IPG or JAR keep those documents' meaning, in English, in every language.
 
 ## The product and its people
@@ -22,7 +23,7 @@ MTR, IPG or JAR keep those documents' meaning, in English, in every language.
 - **CriticalEDH:** the cEDH Discord server where the judge is first hosted. (Frank, 2026-10-29)
 - **CriticalEDH owners:** the people who own the CriticalEDH server and are its TOs. They pay
   the upkeep of the player question text standardizing AI (small). Not: the Crit. (Frank, 2026-10-29; word: mlmd,
-  to confirm)
+  Frank agreed)
 - **Tickets bot:** the third-party bot (tickets.bot) that opens a ticket per judge call on the
   CriticalEDH server, in thread mode. "Bot" is used only for third-party bots. *(mlmd,
   2026-10-13)* The source's "the owner's server" (PRD D43) is CriticalEDH; Frank has none of his
@@ -106,7 +107,7 @@ MTR, IPG or JAR keep those documents' meaning, in English, in every language.
 - **encoded knowledge:** all cards, all rules (the CR) and most policy handling, encoded so the
   judge answers deterministically and fast. Owner-approved concept explanations, answering
   strategies and official card rulings are part of it. The knowledge bundle releases it. (Frank,
-  2026-10-14; word: mlmd, to confirm)
+  2026-10-14; word: mlmd, Frank agreed)
 - **player-text parsing:** the player question text standardizing AI (small) turns what a player writes or says into a
   standardized question. It never answers or rules, and doesn't count toward the AI share.
   (Frank, 2026-10-14)
@@ -118,7 +119,7 @@ MTR, IPG or JAR keep those documents' meaning, in English, in every language.
   fallback model, AI model (alone). (Frank, 2026-10-14)
 - **AI fallback:** a question the encoded knowledge can't answer, answered by the AI judge backup model (frontier)
   with cited rules and card text, and marked as not reviewed. At most 1–2% of questions. (Frank,
-  2026-10-14; word: mlmd, to confirm)
+  2026-10-14; word: mlmd, Frank agreed)
 - **answering strategy:** a build-time graph over card features that answers one kind of question.
 - **card features:** structured facts about a card that strategies reason over.
 - **stale:** an artifact or golden case that cites a source section that has changed.
