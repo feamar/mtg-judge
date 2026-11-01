@@ -143,8 +143,10 @@ CriticalEDH owners have said they would gladly pay for the player question text 
   source's figure, under $20 a month at pilot volume (200–430 cases a month), about $0.05–0.10 a
   case all in, is a reference until then. Building and testing cost no paid API spend (rule R1). (Frank, PRD
   NFR-COST-1, D14, D45)
-- **Speed:** text replies within single-digit seconds; voice under 1 second if voice ships. (Frank,
-  PRD NFR-LAT-1, D63)
+- **Speed:** text replies within single-digit seconds. (Frank, PRD NFR-LAT-1, D63) Voice, if it
+  ships, answers within about 1 second, the way a spoken assistant does, and the ruling may follow
+  after the judge has thought it through. (Frank, 2026-11-01; changes PRD D63, under 1 second for
+  the whole reply)
 - **Availability:** around the clock; short restarts are fine; a ticket opened during an outage is
   picked up afterwards. (Frank, PRD NFR-AVAIL-1)
 - **Privacy:** the owner is in the EU (GDPR). Case records deleted after 7 days; deletion on
@@ -172,7 +174,7 @@ when keeping it possible costs little now and would cost a lot later. (mlmd, 202
 | --- | --- | --- |
 | Front ends after the paste-in judge: Discord, then the phone app (F16), the web, WhatsApp | PI-1; F16 version 2.0 (Q9); web and WhatsApp none yet | The core emits neutral questions and messages addressed to an audience, so PI-0's paste-in front end and PI-1's Discord are two adapters of one core (rule R5). The web and phone need inbound connections, which a host with outbound connections only rules out. (mlmd, 2026-11-01: PI-0 has no Discord) |
 | A paid frontier model, and the cost cap (F10) | PI-1; F10 none yet | The AI judge backup model (frontier) behind a port: Claude Code stands in for it in PI-0 (F23), a paid API from PI-1 on. It can be switched off at run time, and AI fallbacks are then handed off (A21's fallback). (mlmd, 2026-11-01) |
-| Voice in Discord (F12) | PI-3, likely | One pipeline for text and voice: speech-to-text in front of player-text parsing, and nothing after it knows the difference. Replies under 1 second leave little room for an online round trip (A15, A20). (mlmd, 2026-11-01) |
+| Voice in Discord (F12) | PI-3, likely | One pipeline for text and voice: speech-to-text in front of player-text parsing, and nothing after it knows the difference (mlmd, 2026-11-01). The voice front end speaks within about 1 second while the ruling is still being worked out, so the core's reply can arrive later than the spoken answer (Frank, 2026-11-01; A15) |
 | Several players at one device (voice, the phone app) | PI-3; F16 version 2.0 | No assumption that one account is one player; no fixed player count or two-player assumption. Already true in PI-0, where Frank relays every player's words. (mlmd, 2026-11-01) |
 | Photo, video and live-stream evidence (F19); the judge asking for another kind of input | Version 2.0 (Q9) | No text-only input pipeline; facts can come from evidence (observed facts) |
 | Parsing and rules on the phone (F16) | Version 2.0 (Q9) | The player question text standardizing AI (small) behind a port, since it runs online for Discord (Frank, 2026-10-29) and on the phone in the app; the knowledge bundle portable; the core free of I/O (rule R5) |

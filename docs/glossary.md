@@ -60,6 +60,9 @@ MTR, IPG or JAR keep those documents' meaning, in English, in every language.
 - **handoff:** the judge passes a case to the human judges in the judge-only channel, with a case
   summary, facts, disputed facts, citations, its provisional reading and why. Not: escalation (same
   thing; use "handoff"). *(mlmd, 2026-10-13)*
+- **penalty record:** one event's infractions per player, keyed by Discord name, kept until the
+  event ends and never sent to a model (PI-5). Not: case record, which goes after 7 days.
+  (Frank, 2026-11-01; word: mlmd, to confirm)
 - **investigation notes:** what the judge saw that suggests cheating; only human judges and the TO
   see them.
 
