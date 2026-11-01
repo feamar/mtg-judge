@@ -25,7 +25,7 @@ Every feature F1–F23 has an increment or "none yet".
 
 | # | Finding | Status | How settled |
 | --- | --- | --- | --- |
-| V2 | F10 says that at the cap the judge answers rules questions "on the cheapest model", which names neither model, and hands disputes off (PRD D46). §4 and A21's fallback, confirmed 2026-11-01, say only the frontier model stops and AI fallbacks are handed off | open | Question to Frank: either way one of his decisions changes |
+| V2 | F10 says that at the cap the judge answers rules questions "on the cheapest model", which names neither model, and hands disputes off (PRD D46). §4 and A21's fallback, confirmed 2026-11-01, say only the frontier model stops and AI fallbacks are handed off | settled (Frank, 2026-11-01) | Asked, as either way one of his decisions changes. Only the frontier model stops; F10 rewritten, D46 replaced |
 | V3 | "AI share" counted per question (§3, Frank) and per case (A10); F8 still counted it "from PI-1 on", although §3 measures it from PI-0 | settled (mlmd) | Per question, in the case records, from PI-0 on; glossary entry added |
 | V4 | "library entry" and "library hit rate" (§3 Owner approval and AI share, R6, A4, Q5, the glossary's owner): a word Frank retired on 2026-10-14 | settled (mlmd) | "concept explanation", the glossary's own part of the encoded knowledge; entry added |
 | V5 | "policy framework" also used for an addendum (F11 "the policy frameworks", F22, §3 Platform) | settled (mlmd) | F11 "the multiplayer addenda"; F22 "the addendum in a policy framework"; §3 "MTR and IPG with the MTRA" |
