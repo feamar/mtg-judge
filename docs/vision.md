@@ -179,7 +179,7 @@ when keeping it possible costs little now and would cost a lot later. (mlmd, 202
 | Other languages (F18) | Version 2.0 (Q9) | Nothing hard-coded in English (rule R4) |
 | Other formats, RELs, policy frameworks (F14, F15, F20, F22) | Version 2.0 (Q9); F22 none yet | Format, REL and framework are data, not code |
 | Event policies (F21) | None yet | The precedence layers kept as data, so a TO's layer can sit above the addendum and never over game rules (PRD D61). (mlmd, 2026-11-01) |
-| Penalty history across an event (F17) | PI-5 | Penalty upgrade paths kept as data. A player's infractions are linked across the event's rounds by their Discord name, kept in the judge's records and never sent to a model (Frank, 2026-11-01). An event typically runs a week (Frank, 2026-11-01), so the penalty record is kept until the event ends, not 7 days from each case (mlmd, 2026-11-01) |
+| Penalty history across an event (F17) | PI-5 | Penalty upgrade paths kept as data. A player's infractions are linked across the event's rounds by their Discord name, kept in the judge's records and never sent to a model (Frank, 2026-11-01). An event runs for a month (Frank, 2026-11-01), so the penalty record is kept until the event ends, not 7 days from each case (mlmd, 2026-11-01) |
 | Millions of users, more than 10,000 golden cases | None yet | Storage and case handling that can move off a single machine |
 | Other ticket bots | None yet | Ticket detection behind a pluggable adapter (F7 builds it pluggable in PI-1) |
 
