@@ -4,8 +4,8 @@ Requirements · Decide the whole product: what it is, and which increment each f
 
 Imported 2026-10-13 from mtg-judge (`cycle/E3`, `5210244`; since 2026-10-14 in `docs/source/`): `docs/source/PRD.md` v0.5, `docs/source/architecture/`,
 `docs/source/plan/`, `golden/` and the code. From this import on, this document is the master copy; the
-sources are inputs and are not kept in sync. "Frank (PRD D13)" marks a decision Frank made as product
-owner and recorded in the source; "Frank, 2026-10-13" one made in this interview; "mlmd, 2026-10-13"
+sources are inputs and are not kept in sync. "Frank (PRD D13)" marks a decision Frank made as owner
+and recorded in the source; "Frank, 2026-10-13" one made in this interview; "mlmd, 2026-10-13"
 one mlmd made so work could continue, which Frank confirmed in that topic's confirm block (topics
 1–4, through 2026-11-01).
 
@@ -42,12 +42,12 @@ manages events. (Frank, PRD §1, D1, NG1)
 | --- | --- | --- |
 | Player | ask questions, start disputes, answer the judge's questions and follow its instructions | only the conversation they are in |
 | Human judge | receive handoffs, review rulings | all rulings in the event, and investigation notes |
-| Tournament organizer (TO) | set up the event context | as a judge |
-| Admin (one, global: the product owner) | choose which Discord role is the TO role, per server | as a TO, across all events |
+| Tournament organizer (TO) | set up the event context | as a human judge |
+| Admin (one, global: the owner) | choose which Discord role is the TO role, per server | as a TO, across all events |
 
 (Frank, PRD §3, D40)
 
-**Pilot user:** Frank, who judges online on Discord and in person, plays in friend groups, and
+**First user:** Frank, who judges online on Discord and in person, plays in friend groups, and
 reviews the judge's rulings as domain expert. (Frank, PRD §3)
 
 **Primary context:** online cEDH tournaments at Competitive REL, on Discord. (Frank, PRD §1, D4, D20)
@@ -56,9 +56,10 @@ question text standardizing AI (small). (Frank, 2026-10-29)
 
 ## 2. Features, increments and MVPs
 
-*Draft from PRD §4, §6 and the plan; the increments and the hypothesis are settled in this topic.*
+*From PRD §4 and §6 and the source's plan. A feature without a marker is the PRD's (Frank); the
+increments and the hypothesis are Frank's (2026-10-29).*
 
-**Features.** The source's MVP is drafted as PI-1.
+**Features.**
 
 | # | Feature | Increment |
 | --- | --- | --- |
@@ -69,12 +70,12 @@ question text standardizing AI (small). (Frank, 2026-10-29)
 | F5 | Handoff to human judges, with the facts gathered first and a neutral message to players | PI-0 |
 | F6 | Event context: set up by the TO; shared by join code; the Admin maps the TO role per server | PI-1 |
 | F7 | Tickets: the judge joins the tickets the server's existing ticket bot opens (on CriticalEDH: the Tickets bot, thread mode; PRD D43, Frank, 2026-10-29); detection is pluggable | PI-1 |
-| F8 | Case record: kept 7 days, readable by human judges and the TO, exportable as a golden case candidate; notes whether the AI judge backup model (frontier) answered, so the AI share can be counted from PI-1 on (Frank, 2026-10-29) | PI-0 |
+| F8 | Case record: kept 7 days, readable by human judges and the TO, exportable as a golden case candidate; notes for each question whether the AI judge backup model (frontier) answered it, so the AI share can be counted from PI-0 on (Frank, 2026-10-29; per question: mlmd, 2026-11-01) | PI-0 |
 | F9 | Messy input: typos, slang, nicknames and transcription errors lead to the same answer as clean input, or the judge asks to rephrase | PI-0 |
 | F10 | Cost cap: at the monthly cap the judge answers rules questions only, on the cheapest model, and hands disputes off | none yet: not needed while the CriticalEDH owners pay for both models (A21; Frank, 2026-10-29) |
-| F11 | Build pipeline: imports the CR, MTR, IPG, the policy frameworks and card data into a versioned knowledge bundle; shows a diff per new source version; releases only after the golden set passes and the owner approves | PI-0 |
+| F11 | Build pipeline: imports the CR, MTR, IPG, the multiplayer addenda and card data into a versioned knowledge bundle; shows a diff per new source version; releases only after the golden set passes and the owner approves | PI-0 |
 | F12 | Voice in Discord: summoned only, through the same pipeline as text | PI-3, likely (Frank, 2026-10-29); waits on the voice PoC |
-| F13 | Operations: a daily owner summary, a health check, backups that expire, spend alerts (from the plan; not in the PRD) | PI-2 (Frank, 2026-10-29) |
+| F13 | Operations: a daily owner summary, a health check, backups that expire, spend alerts (from the source's plan; not in the PRD) | PI-2 (Frank, 2026-10-29) |
 | F14 | 1v1 constructed formats (Standard, Pioneer, Modern, Legacy, Vintage, Pauper) | none yet; for version 2.0 (Frank, 2026-10-29; Q9) |
 | F15 | Regular REL (JAR) and casual play; with no human judge available, the judge's best ruling marked as uncertain (PRD D35) | none yet; for version 2.0 (Frank, 2026-10-29; Q9) |
 | F16 | Phone app: text and voice, several players at one device | none yet; for version 2.0 (Frank, 2026-10-29; Q9) |
@@ -83,8 +84,9 @@ question text standardizing AI (small). (Frank, 2026-10-29)
 | F19 | Photo input, then webcam input, of the board | none yet; for version 2.0 (Frank, 2026-10-29; Q9) |
 | F20 | Limited formats | none yet; for version 2.0 (Frank, 2026-10-29; Q9) |
 | F21 | Event policies set by the TO | none yet (PRD D61) |
-| F22 | The Portuguese Multiplayer Addendum as a policy framework | none yet (Frank, 2026-09-28, PRD OQ-37) |
+| F22 | The Portuguese Multiplayer Addendum as the addendum in a policy framework | none yet (Frank, 2026-09-28, PRD OQ-37) |
 | F23 | Paste-in judge: Frank pastes a real case from CriticalEDH into the judge on his computer, answers its questions, and copies its replies back himself; no Discord. Claude Code, on Frank's own subscription, stands in for the AI judge backup model (frontier), and its tokens are counted to infer the cost (Q10) | PI-0 (Frank, 2026-10-29) |
+| F24 | Web and WhatsApp front ends (PRD §4) | none yet (mlmd, 2026-11-01: listed in §4 only until the review) |
 
 **Increments.** (Frank, 2026-10-29)
 
@@ -97,10 +99,10 @@ question text standardizing AI (small). (Frank, 2026-10-29)
 | PI-4 | The alpha release for players | CriticalEDH players |
 | PI-5 | Penalty history across an event | CriticalEDH players |
 
-PI-0 holds the full judge (F1–F5, F8, F9, F11) behind a paste-in interface (F23), used by Frank
+PI-0 holds the full judge (F1–F5, F8, F9, F11) behind a paste-in front end (F23), used by Frank
 alone on about 50 real cases, to measure the AI share and the tokens. PI-1 puts it into Discord
 (F6, F7) for Frank and the CriticalEDH owners to try out. PI-2 adds operations and all the stats (F13). PI-3 adds voice (F12), likely (Frank's
-word), and waits on the voice PoC. PI-4 opens the judge to players, and adds what the tests showed was missing. PI-5 adds penalty
+word), and waits on the voice PoC. PI-4 opens the judge to players, and adds what trying it out in PI-1 to PI-3 showed was missing. PI-5 adds penalty
 history (F17). F14–F16 and F18–F20 are out of scope for now, for version 2.0 (Q9). (Frank,
 2026-10-29)
 
@@ -111,11 +113,11 @@ CriticalEDH owners have said they would gladly pay for the player question text 
 
 ## 3. Constraints and quality levels
 
-*Draft from PRD §2, §4, §5, §7 and §8.*
+*From PRD §2, §4, §5, §7 and §8; each line is marked.*
 
 - **Platform:** Discord, text input; voice only if its PoC succeeds. cEDH (multiplayer, usually 4
-  seats) at Competitive REL. One policy framework per event: plain MTR and IPG, or the MTRA (Notion
-  version) (Frank, 2026-09-28, PRD OQ-37). Never Professional REL; never event management
+  seats) at Competitive REL. One policy framework per event: plain MTR and IPG, or MTR and IPG with the
+  MTRA (Notion version) (Frank, 2026-09-28, PRD OQ-37). Never Professional REL; never event management
   (pairings, standings, points, rounds, registration, timers). (Frank, PRD NG1, NG3, NG4)
 - **Sources of truth:** every ruling traces to the sections of the CR, Oracle text and official
   rulings, MTR, IPG and the event's addendum that support it, never to general knowledge. Two
@@ -136,12 +138,12 @@ CriticalEDH owners have said they would gladly pay for the player question text 
   test release, doesn't have to meet it yet (Frank, 2026-10-29). Encoding
   must not slow the judge down. Player-text parsing by the player question text standardizing AI (small) doesn't count: it never
   answers or rules. For Discord it runs online, and the CriticalEDH owners pay for its upkeep (Frank, 2026-10-29). (Frank, 2026-10-14; goes beyond PRD
-  P2 and D50, whose cost model assumed a library hit rate as low as 20%)
+  P2 and D50, whose cost model assumed as few as 20% of questions answered without AI)
 - **Consistency:** the same facts give the same ruling, whoever reports them, in whatever order or
   wording. (Frank, PRD NFR-IMP-1)
 - **Cost:** cheap, and a good sell to the CriticalEDH owners, who pay for the models (A21). The
   figure is worked out in the build stages from what is measured (Q10; Frank, 2026-10-29). The
-  source's figure, under $20 a month at pilot volume (200–430 cases a month), about $0.05–0.10 a
+  source's figure, under $20 a month at the source's expected volume (200–430 cases a month), about $0.05–0.10 a
   case all in, is a reference until then. Building and testing cost no paid API spend (rule R1). (Frank, PRD
   NFR-COST-1, D14, D45)
 - **Speed:** text replies within single-digit seconds. (Frank, PRD NFR-LAT-1, D63) Voice, if it
@@ -160,19 +162,20 @@ CriticalEDH owners have said they would gladly pay for the player question text 
   MTR or IPG define are never translated. (Frank, PRD D16, NFR-I18N-1)
 - **Tone:** precise, very friendly, customer-centric; never sarcastic or blaming; set by the owner's
   examples. (Frank, PRD P3, NFR-TONE-1, D65)
-- **Owner approval:** every AI-drafted procedure, penalty row, addendum edit, library entry and
-  answering strategy is approved by the owner before its first release (rule R6). (Frank, PRD D47)
+- **Owner approval:** every AI-drafted procedure, penalty-table row, addendum edit, concept
+  explanation and answering strategy is approved by the owner before its first release (rule R6). (Frank, PRD D47)
 
 ## 4. What the architecture must keep possible
 
-*Draft from PRD §4 ("design for it, don't build it", D31) and the architecture constraints.*
+*From PRD §4 ("design for it, don't build it", D31) and the architecture constraints. A row
+without a marker is the PRD's (Frank, D31).*
 
 A later feature is one outside the increment being built, planned or not. It is listed here only
 when keeping it possible costs little now and would cost a lot later. (mlmd, 2026-11-01)
 
 | Later feature | Increment | What it needs from the architecture |
 | --- | --- | --- |
-| Front ends after the paste-in judge: Discord, then the phone app (F16), the web, WhatsApp | PI-1; F16 version 2.0 (Q9); web and WhatsApp none yet | The core emits neutral questions and messages addressed to an audience, so PI-0's paste-in front end and PI-1's Discord are two adapters of one core (rule R5). The web and phone need inbound connections, which a host with outbound connections only rules out. (mlmd, 2026-11-01: PI-0 has no Discord) |
+| Front ends after the paste-in judge: Discord, then the phone app (F16), the web and WhatsApp (F24) | PI-1; F16 version 2.0 (Q9); F24 none yet | The core emits neutral questions and messages addressed to an audience, so PI-0's paste-in front end and PI-1's Discord are two adapters of one core (rule R5). The web and phone need inbound connections, which a host with outbound connections only rules out. (mlmd, 2026-11-01: PI-0 has no Discord) |
 | A paid frontier model, and the cost cap (F10) | PI-1; F10 none yet | The AI judge backup model (frontier) behind a port: Claude Code stands in for it in PI-0 (F23), a paid API from PI-1 on. It can be switched off at run time, and AI fallbacks are then handed off (A21's fallback). (mlmd, 2026-11-01) |
 | Voice in Discord (F12) | PI-3, likely | One pipeline for text and voice: speech-to-text in front of player-text parsing, and nothing after it knows the difference (mlmd, 2026-11-01). The voice front end speaks within about 1 second while the ruling is still being worked out, so the core's reply can arrive later than the spoken answer (Frank, 2026-11-01; A15) |
 | Several players at one device (voice, the phone app) | PI-3; F16 version 2.0 | No assumption that one account is one player; no fixed player count or two-player assumption. Already true in PI-0, where Frank relays every player's words. (mlmd, 2026-11-01) |

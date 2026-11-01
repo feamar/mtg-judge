@@ -41,7 +41,7 @@ marked **Reviewed (gated from phase 2)**: a person checks it at each document's 
   check stays in mtg-judge. To be confirmed when `docs/architecture.md` is written.
 
 ## R6 Only the owner makes a drafted artifact reviewed
-- **Says:** every AI-drafted procedure, penalty-table row, addendum edit, library entry and
+- **Says:** every AI-drafted procedure, penalty-table row, addendum edit, concept explanation and
   answering strategy stays marked as a draft until the owner approves it. No session marks one
   approved, and no release contains a draft.
 - **From:** PRD FR-BUILD-4, D47; ADR-0007 §2.

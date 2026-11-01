@@ -18,7 +18,7 @@ MTR, IPG or JAR keep those documents' meaning, in English, in every language.
 - **TO:** tournament organizer: sets up the event context. Every member of the server role the
   Admin maps to TO.
 - **Admin:** the one global user (Frank) who chooses, per server, which Discord role is the TO role.
-- **owner:** Frank, as the product's owner: approves library entries, procedures, golden cases and
+- **owner:** Frank, as the product's owner: approves concept explanations, procedures, golden cases and
   releases. Not: product owner (same thing; use "owner").
 - **CriticalEDH:** the cEDH Discord server where the judge is first hosted. (Frank, 2026-10-29)
 - **CriticalEDH owners:** the people who own the CriticalEDH server and are its TOs. They pay
@@ -120,6 +120,11 @@ MTR, IPG or JAR keep those documents' meaning, in English, in every language.
 - **AI fallback:** a question the encoded knowledge can't answer, answered by the AI judge backup model (frontier)
   with cited rules and card text, and marked as not reviewed. At most 1–2% of questions. (Frank,
   2026-10-14; word: mlmd, Frank agreed)
+- **AI share:** the share of players' questions that are AI fallbacks, counted per question from
+  the case records. Player-text parsing doesn't count. Not: per case. (Frank, 2026-10-14; per
+  question: mlmd, 2026-11-01)
+- **concept explanation:** an owner-approved explanation of one rules concept, part of the encoded
+  knowledge. What the source's "library entry" meant when it was AI-drafted. (Frank, 2026-10-14; word: mlmd, 2026-11-01)
 - **answering strategy:** a build-time graph over card features that answers one kind of question.
 - **card features:** structured facts about a card that strategies reason over.
 - **stale:** an artifact or golden case that cites a source section that has changed.
@@ -165,8 +170,11 @@ MTR, IPG or JAR keep those documents' meaning, in English, in every language.
   belongs to, or "none yet". "MVP" means only what mlmd means by it: increments aimed at a viability
   hypothesis.
 - **library** for the judge's pre-approved answers (the source's "approved rulings library",
-  "library hit", "library miss"): in Magic a library is a player's deck, and only that. Use
-  encoded knowledge and AI fallback. (Frank, 2026-10-14)
+  "library hit", "library miss", "library entry"): in Magic a library is a player's deck, and
+  only that. Use encoded knowledge, AI fallback and concept explanation. (Frank, 2026-10-14;
+  concept explanation: mlmd, 2026-11-01)
+- **pilot** for the source's first deployment and its user: use the increment (PI-0, PI-1, PI-4)
+  or "first user". (mlmd, 2026-11-01)
 - **spike S1–S4** as the source names them: in this project they are PoCs or spikes in mlmd's sense,
   named for what they ask (voice, Tickets, messy input, targeting).
 
