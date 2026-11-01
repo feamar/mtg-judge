@@ -60,9 +60,6 @@ MTR, IPG or JAR keep those documents' meaning, in English, in every language.
 - **handoff:** the judge passes a case to the human judges in the judge-only channel, with a case
   summary, facts, disputed facts, citations, its provisional reading and why. Not: escalation (same
   thing; use "handoff"). *(mlmd, 2026-10-13)*
-- **penalty record:** one event's infractions per player, keyed by Discord name, kept until the
-  event ends and never sent to a model (PI-5). Not: case record, which goes after 7 days.
-  (Frank, 2026-11-01; word: mlmd, to confirm)
 - **investigation notes:** what the judge saw that suggests cheating; only human judges and the TO
   see them.
 
@@ -72,6 +69,9 @@ MTR, IPG or JAR keep those documents' meaning, in English, in every language.
   card text; the card Thassa's Oracle is always named in full.
 - **policy framework:** the MTR and IPG plus zero or one multiplayer addendum, chosen per event.
   Not: framework (alone) in player-facing text.
+- **TopDeck.gg:** the online tournament platform whose database holds an event's penalties; the
+  judge reads them there and stores none of its own (PI-5). Its MTRA is a separate document (see
+  MTRA). (Frank, 2026-11-01)
 - **MTRA:** the Multiplayer Tournament Addendum. The TopDeck.gg and the Notion versions are
   different documents; an event names the one it uses.
 - **event context:** the per-event settings the TO makes: format, REL, policy framework, roles,
