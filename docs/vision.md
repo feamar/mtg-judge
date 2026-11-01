@@ -151,7 +151,9 @@ CriticalEDH owners have said they would gladly pay for the player question text 
   request; consent before any voice capture. Pseudonymised player text (seat labels, no Discord
   names) may go to a third-party AI provider, also outside the EU. (Frank, PRD NFR-PRIV-1, D39, D44)
   Names are taken out before text reaches either model: by Frank, by hand, when he pastes a case
-  into PI-0; by deterministic code from PI-1 on. (Frank, 2026-10-29)
+  into PI-0; by deterministic code from PI-1 on. (Frank, 2026-10-29) From PI-5, an event's
+  penalty record is kept until the event ends, keyed by Discord name and never sent to a model
+  (Frank, 2026-11-01; how long: mlmd, 2026-11-01).
 - **Languages:** English only up to PI-5 (other languages, F18, wait for version 2.0), with nothing hard-coded in English (rule R4). Terms the CR,
   MTR or IPG define are never translated. (Frank, PRD D16, NFR-I18N-1)
 - **Tone:** precise, very friendly, customer-centric; never sarcastic or blaming; set by the owner's
@@ -163,14 +165,23 @@ CriticalEDH owners have said they would gladly pay for the player question text 
 
 *Draft from PRD §4 ("design for it, don't build it", D31) and the architecture constraints.*
 
-| Later feature | What it needs from the architecture |
-| --- | --- |
-| Other front ends: the phone app, the web, WhatsApp | Discord not hard-coded; the core emits neutral questions and messages addressed to an audience. The web and phone need inbound connections, which a host with outbound connections only rules out |
-| Several players at one device (voice, phone app) | No assumption that one account is one player; no fixed player count or two-player assumption |
-| Photo, video and live-stream evidence; the judge asking for another kind of input | No text-only input pipeline; facts can come from evidence (observed facts) |
-| On-device or hybrid use: rules data and inference on the phone | The knowledge bundle portable; the core free of I/O (rule R5) |
-| Other languages | Nothing hard-coded in English (rule R4) |
-| Other formats, RELs, policy frameworks | Format, REL and framework are data, not code |
-| Penalty history across an event | Penalty upgrade paths kept as data |
-| Millions of users, more than 10,000 golden cases | Storage and case handling that can move off a single machine |
-| Other ticket bots | Ticket detection behind a pluggable adapter |
+A later feature is one outside the increment being built, planned or not. It is listed here only
+when keeping it possible costs little now and would cost a lot later. (mlmd, 2026-11-01)
+
+| Later feature | Increment | What it needs from the architecture |
+| --- | --- | --- |
+| Front ends after the paste-in judge: Discord, then the phone app (F16), the web, WhatsApp | PI-1; F16 version 2.0 (Q9); web and WhatsApp none yet | The core emits neutral questions and messages addressed to an audience, so PI-0's paste-in front end and PI-1's Discord are two adapters of one core (rule R5). The web and phone need inbound connections, which a host with outbound connections only rules out. (mlmd, 2026-11-01: PI-0 has no Discord) |
+| A paid frontier model, and the cost cap (F10) | PI-1; F10 none yet | The AI judge backup model (frontier) behind a port: Claude Code stands in for it in PI-0 (F23), a paid API from PI-1 on. It can be switched off at run time, and AI fallbacks are then handed off (A21's fallback). (mlmd, 2026-11-01) |
+| Voice in Discord (F12) | PI-3, likely | One pipeline for text and voice: speech-to-text in front of player-text parsing, and nothing after it knows the difference. Replies under 1 second leave little room for an online round trip (A15, A20). (mlmd, 2026-11-01) |
+| Several players at one device (voice, the phone app) | PI-3; F16 version 2.0 | No assumption that one account is one player; no fixed player count or two-player assumption. Already true in PI-0, where Frank relays every player's words. (mlmd, 2026-11-01) |
+| Photo, video and live-stream evidence (F19); the judge asking for another kind of input | Version 2.0 (Q9) | No text-only input pipeline; facts can come from evidence (observed facts) |
+| Parsing and rules on the phone (F16) | Version 2.0 (Q9) | The player question text standardizing AI (small) behind a port, since it runs online for Discord (Frank, 2026-10-29) and on the phone in the app; the knowledge bundle portable; the core free of I/O (rule R5) |
+| Other languages (F18) | Version 2.0 (Q9) | Nothing hard-coded in English (rule R4) |
+| Other formats, RELs, policy frameworks (F14, F15, F20, F22) | Version 2.0 (Q9); F22 none yet | Format, REL and framework are data, not code |
+| Event policies (F21) | None yet | The precedence layers kept as data, so a TO's layer can sit above the addendum and never over game rules (PRD D61). (mlmd, 2026-11-01) |
+| Penalty history across an event (F17) | PI-5 | Penalty upgrade paths kept as data. A player's infractions are linked across the event's rounds by their Discord name, kept in the judge's records and never sent to a model (Frank, 2026-11-01). An event typically runs a week (Frank, 2026-11-01), so the penalty record is kept until the event ends, not 7 days from each case (mlmd, 2026-11-01) |
+| Millions of users, more than 10,000 golden cases | None yet | Storage and case handling that can move off a single machine |
+| Other ticket bots | None yet | Ticket detection behind a pluggable adapter (F7 builds it pluggable in PI-1) |
+
+The features for version 2.0 (F14–F16, F18–F20) stay listed until Q9 decides which of them go in.
+(Frank, 2026-10-29)
