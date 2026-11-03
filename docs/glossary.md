@@ -47,6 +47,11 @@ MTR, IPG or JAR keep those documents' meaning, in English, in every language.
   a narration. Not: silence (the source uses "silence" for a wrap-up).
 - **narrator:** the player telling what happened: the caller, or another player, most often the
   caller's opponent or opponents, when the table agrees. Not: volunteer. (Frank, 2026-10-13)
+- **seat label:** how a player is named in a case's text: Seat 1 to Seat N, never a Discord name.
+  (Vision, Privacy; word: mlmd, 2026-11-03)
+- **audience:** who a message from the judge is for: one seat, all players at the table, or the
+  human judges. The core addresses every message to an audience; the front end delivers it.
+  (mlmd, 2026-11-03)
 - **claim / fact:** a claim is what a player asserts about the rules, an infraction, a count or a
   remedy; it is checked, never taken as a fact. A **fact** has an origin: **reported** (a player
   said it), **observed** (from evidence), **derived** (worked out from rules, card text or
@@ -158,6 +163,9 @@ MTR, IPG or JAR keep those documents' meaning, in English, in every language.
 - **paste-in judge:** PI-0 (F23): the full judge on Frank's computer, without Discord; Frank pastes
   real cases in and decides what to post. Not: prototype, which in mlmd is an experiment to
   explore a design. (Frank, 2026-10-29)
+- **paste-in front end:** PI-0's only front end: where Frank pastes a case's messages and copies the
+  judge's replies. An adapter of the core, as Discord is from PI-1. Not: paste-in interface. (mlmd,
+  2026-11-01, review V10)
 - **test release:** PI-1: the judge running in Discord for Frank and the CriticalEDH owners to try
   out, before players use it. (Frank, 2026-10-29)
 - **alpha release:** PI-4: the first release CriticalEDH players use. (Frank, 2026-10-29)
