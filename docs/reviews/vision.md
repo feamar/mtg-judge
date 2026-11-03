@@ -60,3 +60,7 @@ Every feature F1–F23 has an increment or "none yet".
 | # | Finding | Status | How settled |
 | --- | --- | --- | --- |
 | V21 | §2–§4 still began "Draft from …", and several rows carried no marker (Ready when: every decision is marked with who made it) | settled (mlmd) | Each section's note names its source, and that unmarked rows are the PRD's (Frank) |
+
+mlmd's fixes were reported to Frank on 2026-11-01. Under mlmd's D-39 (Frank and Alex, 2026-11-03)
+a confirmation round is asked only for decisions that matter toward implementation, and none of
+these does, so they stand unless Frank objects. Their markers stay "mlmd, 2026-11-01".
